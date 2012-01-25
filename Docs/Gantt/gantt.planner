@@ -38,53 +38,53 @@
         </predecessors>
       </task>
     </task>
-    <task id="6" name="Phase de r&#xE9;alisation" note="" work="1584000" start="20120201T170000Z" end="20120405T170000Z" work-start="20120202T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <task id="7" name="Conception" note="" work="1008000" start="20120201T170000Z" end="20120313T170000Z" work-start="20120202T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+    <task id="6" name="Phase de r&#xE9;alisation" note="" work="1670400" start="20120201T170000Z" end="20120409T170000Z" work-start="20120202T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="7" name="Conception" note="" work="1094400" start="20120201T170000Z" end="20120316T170000Z" work-start="20120202T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="1" type="FS"/>
         </predecessors>
-        <task id="8" name="Formalisation" note="" work="576000" start="20120201T170000Z" end="20120224T170000Z" work-start="20120202T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-        <task id="9" name="Sp&#xE9;cifications" note="" work="432000" start="20120224T170000Z" end="20120313T170000Z" work-start="20120225T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <task id="8" name="Formalisation" note="" work="604800" start="20120201T170000Z" end="20120225T170000Z" work-start="20120202T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+        <task id="9" name="Sp&#xE9;cifications" note="" work="489600" start="20120225T170000Z" end="20120316T170000Z" work-start="20120227T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
           <predecessors>
             <predecessor id="1" predecessor-id="8" type="FS"/>
           </predecessors>
         </task>
       </task>
-      <task id="10" name="D&#xE9;veloppement" note="" work="576000" start="20120313T170000Z" end="20120405T170000Z" work-start="20120314T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="10" name="D&#xE9;veloppement" note="" work="576000" start="20120316T170000Z" end="20120409T170000Z" work-start="20120317T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="7" type="FS"/>
         </predecessors>
       </task>
     </task>
-    <task id="11" name="Phase de test" note="" work="288000" duration="288000" start="20120405T170000Z" end="20120417T170000Z" work-start="20120406T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-duration">
+    <task id="11" name="Phase de test" note="" work="288000" duration="288000" start="20120409T170000Z" end="20120420T170000Z" work-start="20120410T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-duration">
       <constraint type="must-start-on" time="20120416T000000Z"/>
-      <task id="12" name="Tests" note="" work="144000" start="20120405T170000Z" end="20120411T170000Z" work-start="20120406T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="12" name="Tests" note="" work="144000" start="20120409T170000Z" end="20120414T170000Z" work-start="20120410T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="6" type="FS"/>
         </predecessors>
       </task>
-      <task id="13" name="Evaluation" note="" work="144000" start="20120411T170000Z" end="20120417T170000Z" work-start="20120412T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="13" name="Evaluation" note="" work="144000" start="20120414T170000Z" end="20120420T170000Z" work-start="20120416T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="12" type="FS"/>
         </predecessors>
       </task>
     </task>
-    <task id="14" name="Phase de cl&#xF4;ture" note="" work="288000" start="20120417T170000Z" end="20120423T170000Z" work-start="20120418T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+    <task id="14" name="Phase de cl&#xF4;ture" note="" work="288000" start="20120420T170000Z" end="20120426T170000Z" work-start="20120421T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
       <predecessors>
         <predecessor id="1" predecessor-id="11" type="FS"/>
       </predecessors>
-      <task id="15" name="Finalisation du rapport" note="" work="144000" start="20120417T170000Z" end="20120423T170000Z" work-start="20120418T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="15" name="Finalisation du rapport" note="" work="144000" start="20120420T170000Z" end="20120426T170000Z" work-start="20120421T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="22" type="FS"/>
         </predecessors>
       </task>
-      <task id="16" name="Mise en place soutenance" note="" work="144000" start="20120417T170000Z" end="20120423T170000Z" work-start="20120418T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="16" name="Mise en place soutenance" note="" work="144000" start="20120420T170000Z" end="20120426T170000Z" work-start="20120421T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="13" type="FS"/>
         </predecessors>
       </task>
     </task>
-    <task id="17" name="Suivit" note="" work="2016000" start="20120118T000000Z" end="20120514T000000Z" work-start="20120118T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+    <task id="17" name="Suivit" note="" work="2332800" start="20120118T000000Z" end="20120514T000000Z" work-start="20120118T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
       <task id="18" name="Bilan de mis -parcours" note="" work="0" start="20120302T000000Z" end="20120302T000000Z" work-start="20120302T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
         <constraint type="must-start-on" time="20120302T000000Z"/>
       </task>
@@ -101,7 +101,7 @@
       <task id="21" name="Envoi travail complet" note="" work="0" start="20120514T000000Z" end="20120514T000000Z" work-start="20120514T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
         <constraint type="must-start-on" time="20120514T000000Z"/>
       </task>
-      <task id="22" name="R&#xE9;daction continue du rapport" note="" work="2016000" start="20120118T000000Z" end="20120407T170000Z" work-start="20120118T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="22" name="R&#xE9;daction continue du rapport" note="" work="2332800" start="20120118T000000Z" end="20120420T170000Z" work-start="20120118T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
     </task>
   </tasks>
   <resource-groups/>
