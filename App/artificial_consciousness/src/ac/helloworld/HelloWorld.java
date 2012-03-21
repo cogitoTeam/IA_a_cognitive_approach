@@ -10,8 +10,9 @@ public class HelloWorld {
 	 */
 	public static void main(String[] args) {
 		logger.debug("Hello World log4j");
-		
-		System.out.println("Hello World ! (Si log4j est configuré, un fichier helloworld.log doit être créé dans le rep log");
+
+		System.out
+				.println("Hello World ! (Si log4j est configuré, un fichier helloworld.log doit être créé dans le rep log");
 	}
 
 }
