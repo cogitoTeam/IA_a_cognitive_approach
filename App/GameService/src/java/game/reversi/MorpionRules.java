@@ -4,29 +4,32 @@
  *****************/
 
 
-package game;
+package game.reversi;
 
+import game.Board;
+import game.Board.Position;
 import game.Game.Player;
+import game.Rules;
 import java.util.List;
 
 
-class ReversiRules extends Rules
+class MorpionRules extends Rules
 {
     /** SINGLETON **/
     
-    private static ReversiRules instance = null;
-    public static ReversiRules getInstance()
+    private static MorpionRules instance = null;
+    public static MorpionRules getInstance()
     {
         if(instance == null)
-            instance = new ReversiRules();
+            instance = new MorpionRules();
         return instance;
     }
-    private ReversiRules() { }
+    private MorpionRules() { }
     
     
     
     /** IMPLEMENT INTERFACE **/
-       
+    
     @Override
     public boolean isDraw(Board board) 
     {
@@ -40,19 +43,19 @@ class ReversiRules extends Rules
     }
     
     @Override
-    public List<Board.Position> getLegalMoves(Board board, Game.Player player) 
+    public List<Position> getLegalMoves(Board board, Player player) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean isLegalMove(Board.Position p, Board board, Game.Player player) 
+    public boolean isLegalMove(Position p, Board board, Player player) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void performMove(Board.Position p, Board board, Game.Player player) 
+    public void performMove(Position p, Board board, Player player) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }

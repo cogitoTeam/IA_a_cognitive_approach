@@ -4,7 +4,9 @@
  *****************/
 
 
-package game;
+package game.morpion;
+
+import game.Board;
 
 
 public class ReversiBoard extends Board

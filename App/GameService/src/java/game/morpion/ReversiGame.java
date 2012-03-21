@@ -4,7 +4,9 @@
  *****************/
 
 
-package game;
+package game.morpion;
+
+import game.Game;
 
 
 public class ReversiGame extends Game
