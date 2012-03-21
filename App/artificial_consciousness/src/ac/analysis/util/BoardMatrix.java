@@ -28,7 +28,7 @@ public abstract class BoardMatrix {
 			for (int col = 0; col < n_cols; col++)
 				matrix[row][col] = Cell.EMPTY;
 
-	} 
+	}
 
 	// access
 	public int get_n_rows() {
@@ -42,8 +42,8 @@ public abstract class BoardMatrix {
 	public void fill_cell(Cell c, int row_c, int col_c) {
 		matrix[row_c][col_c] = c;
 	}
-	
-	//to_String
+
+	// to_String
 	@Override
 	public String toString() {
 		String t = new String();
@@ -54,7 +54,6 @@ public abstract class BoardMatrix {
 		}
 		return t;
 	}
-	
-	
+
 	/** TODO finish **/
 }

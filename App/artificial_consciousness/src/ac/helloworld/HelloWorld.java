@@ -2,6 +2,13 @@ package ac.helloworld;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * Classe d'Hello World
+ * 
+ * @author thibaut
+ * 
+ */
 public class HelloWorld {
 	private static final Logger logger = Logger.getLogger(HelloWorld.class);
 
