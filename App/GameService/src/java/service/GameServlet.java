@@ -52,6 +52,6 @@ public class GameServlet extends HttpServlet
     @Override
     public String getServletInfo() 
     {
-        return "Game-master (referee) service";
+        return "Game-master (referee) service.";
     }
 }
