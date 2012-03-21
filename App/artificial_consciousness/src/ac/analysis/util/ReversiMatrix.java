@@ -4,7 +4,7 @@
  *****************/
 
 
-package analysis;
+package ac.analysis.util;
 
 
 public class ReversiMatrix extends BoardMatrix
