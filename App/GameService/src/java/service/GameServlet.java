@@ -20,8 +20,10 @@ public class GameServlet extends HttpServlet
         try 
         {
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+            // TODO : id of game and turn
             out.println("<game id=\"123\" turn=\"456\">");
             out.println("<board>");
+                out.println("<piece colour=\"white\" x=\"7\" y=\"8\"/>");
             out.println("</board>");
             out.println("</game>");
         }
