@@ -30,6 +30,13 @@ class MorpionRules extends Rules
     
     /** IMPLEMENT INTERFACE **/
     
+    // query
+    @Override
+    public Player getFirstPlayer() 
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     @Override
     public boolean isDraw(Board board) 
     {
@@ -54,8 +61,15 @@ class MorpionRules extends Rules
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    // modification
     @Override
     public void performMove(Position p, Board board, Player player) 
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
+    public void reset(Board board) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }

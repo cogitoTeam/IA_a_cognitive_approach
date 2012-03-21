@@ -21,6 +21,7 @@ public abstract class Game
     
     private final Rules rules;
     private final Board board;
+    private Player current_player;
     
     /** METHODS **/
     
@@ -29,6 +30,13 @@ public abstract class Game
     {
         rules = _rules;
         board = _board;
+    }
+    
+    // modification
+    public void restart()
+    {
+        rules.reset(board);
+        current_player = rules.getFirstPlayer();
     }
     
 }

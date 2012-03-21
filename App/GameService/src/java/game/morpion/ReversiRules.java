@@ -30,6 +30,15 @@ class ReversiRules extends Rules
     
     /** IMPLEMENT INTERFACE **/
        
+    
+    // query
+    
+    @Override
+    public Player getFirstPlayer() 
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     @Override
     public boolean isDraw(Board board) 
     {
@@ -54,8 +63,15 @@ class ReversiRules extends Rules
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    // modification
     @Override
     public void performMove(Board.Position p, Board board, Game.Player player) 
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void reset(Board board)
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
