@@ -6,6 +6,7 @@
 
 package game;
 
+import game.Game.Player;
 import java.util.List;
 
 
@@ -25,6 +26,18 @@ class ReversiRules extends Rules
     
     
     /** IMPLEMENT INTERFACE **/
+       
+    @Override
+    public boolean isDraw(Board board) 
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean hasWon(Board board, Player player) 
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
     @Override
     public List<Board.Position> getLegalMoves(Board board, Game.Player player) 
@@ -43,4 +56,5 @@ class ReversiRules extends Rules
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
 }

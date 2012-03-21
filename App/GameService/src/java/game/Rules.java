@@ -16,6 +16,10 @@ public abstract class Rules
     /** PUBLIC INTERFACE **/
  
     // query
+    public abstract boolean isDraw(Board board);
+    
+    public abstract boolean hasWon(Board board, Game.Player player);
+    
     public abstract List<Board.Position> getLegalMoves(Board board, 
                                                         Game.Player player);
     public abstract boolean isLegalMove(Board.Position p, Board board, 

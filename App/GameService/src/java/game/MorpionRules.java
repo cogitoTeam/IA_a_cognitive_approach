@@ -29,6 +29,18 @@ class MorpionRules extends Rules
     /** IMPLEMENT INTERFACE **/
     
     @Override
+    public boolean isDraw(Board board) 
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean hasWon(Board board, Player player) 
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
     public List<Position> getLegalMoves(Board board, Player player) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
