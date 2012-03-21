@@ -20,13 +20,10 @@ public class GameServlet extends HttpServlet
         try 
         {
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
-            out.println("<head>");
-            out.println("<title>Servlet GameServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet GameServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println("<game id=\"123\" turn=\"456\">");
+            out.println("<board>");
+            out.println("</board>");
+            out.println("</game>");
         }
         finally 
         {            
@@ -35,14 +32,16 @@ public class GameServlet extends HttpServlet
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, 
+                        HttpServletResponse response)
     throws ServletException, IOException 
     {
         processRequest(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, 
+                        HttpServletResponse response)
     throws ServletException, IOException 
     {
         processRequest(request, response);
