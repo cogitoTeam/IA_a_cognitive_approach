@@ -18,18 +18,23 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-MorpionBoard.N_ROWS = 4;
-MorpionBoard.N_COLS = 4;
-
-function MorpionBoard()
+function parse_board(data)
 {
-	/** ATTRIBUTES **/
-	var typ = MorpionBoard;
-	var obj = new Board(typ.N_ROWS, typ.N_COLS);
-	
-	
-	/** METHODS **/
-	
-	/** RETURN INSTANCE **/
-	return obj;
+  // todo
+  console.log(data);
 }
+
+var board_request =
+{
+  url: "../ws",
+  dataType: "xml",
+  success: parse_board,
+  //complete: poll_board,
+  timeout: 30000
+}
+
+function poll_board()
+{
+    $.ajax(board_request);
+}
+

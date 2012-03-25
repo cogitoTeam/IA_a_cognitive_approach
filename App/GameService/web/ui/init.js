@@ -18,23 +18,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/** GLOBAL VARIABLES **/
+
+// html5 objects
 var canvas = document.getElementById('game_canvas');
 var canvas_info = document.getElementById('info_canvas');
 var context = canvas.getContext('2d');
 var context_info  = canvas_info.getContext('2d');
 
+// the main application holder
+var game;
+
 /** RESOURCE MANAGEMENT **/
 var loading = 0;
 var resourceLoaded = function()
 {
-	// one less to wait for
-	if(loading > 0)
-		loading--;
-	else
-		alert("more loaded than loading: wat!?");
+    // one less to wait for
+    if(loading > 0)
+            loading--;
 }
 
-var DATA_LOCATION = "data/";
+var DATA_LOCATION = "../data/";
 
 // simple image-loading API
 function load_image(file_name)

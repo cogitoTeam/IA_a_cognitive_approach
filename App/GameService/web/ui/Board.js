@@ -45,30 +45,30 @@ function Board(_n_rows, _n_cols)
 	
 	var draw_cell = function(row, col, cell_value)
 	{
-		var image = null;
-		
-		// choose image
-		switch(cell_value)
-		{
-			case typ.CELL_WHITE:
-				image = Game.IMAGE_WHITE;
-				break;
-			case typ.CELL_BLACK:
-				image = Game.IMAGE_BLACK;
-				break;
-			default:
-			case typ.CELL_EMPTY:
-				break;
-		}
-		
-		// draw image
-		if(image != null)
-			context.drawImage(image, col*cell_w, row*cell_h, cell_w, cell_h);
-		else
-		{
-			context.fillStyle = Game.C_BACKGROUND;
-			context.fillRect(col*cell_w, row*cell_h, cell_w, cell_h);
-		}
+            var image = null;
+
+            // choose image
+            switch(cell_value)
+            {
+                    case typ.CELL_WHITE:
+                            image = Game.IMAGE_WHITE;
+                            break;
+                    case typ.CELL_BLACK:
+                            image = Game.IMAGE_BLACK;
+                            break;
+                    default:
+                    case typ.CELL_EMPTY:
+                            break;
+            }
+
+            // draw image
+            if(image != null)
+                    context.drawImage(image, col*cell_w, row*cell_h, cell_w, cell_h);
+            else
+            {
+                    context.fillStyle = Game.C_BACKGROUND;
+                    context.fillRect(col*cell_w, row*cell_h, cell_w, cell_h);
+            }
 			
 	}
 	
@@ -77,9 +77,9 @@ function Board(_n_rows, _n_cols)
 	// update
 	obj.redraw = function()
 	{
-		for(row = 0; row < n_rows; row++)
-			for(col = 0; col < n_cols; col++)
-				draw_cell(row, col, cells[row][col]);
+            for(row = 0; row < n_rows; row++)
+                    for(col = 0; col < n_cols; col++)
+                            draw_cell(row, col, cells[row][col]);
 	}
 	
 	// modification
