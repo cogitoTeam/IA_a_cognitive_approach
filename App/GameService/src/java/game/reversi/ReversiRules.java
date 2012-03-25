@@ -4,7 +4,7 @@
  *****************/
 
 
-package game.morpion;
+package game.reversi;
 
 import game.Board;
 import game.Game;
@@ -50,12 +50,6 @@ class ReversiRules extends Rules
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
-    @Override
-    public List<Board.Position> getLegalMoves(Board board, Game.Player player) 
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     @Override
     public boolean isLegalMove(Board.Position p, Board board, Game.Player player) 
@@ -65,7 +59,7 @@ class ReversiRules extends Rules
 
     // modification
     @Override
-    public void performMove(Board.Position p, Board board, Game.Player player) 
+    public Game.State performMove(Board.Position p, Board board, Game.Player player) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }

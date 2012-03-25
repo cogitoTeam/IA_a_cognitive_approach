@@ -23,13 +23,16 @@ public abstract class Rules
     
     public abstract boolean hasWon(Board board, Game.Player player);
     
-    public abstract List<Board.Position> getLegalMoves(Board board, 
-                                                        Game.Player player);
+    public List<Board.Position> getLegalMoves(Board board, 
+                                                        Game.Player player)
+    {
+        return null;
+    }
     public abstract boolean isLegalMove(Board.Position p, Board board, 
                                         Game.Player player);
     
     // modification
-    public abstract void performMove(Board.Position p, Board board, 
+    public abstract Game.State performMove(Board.Position p, Board board, 
                                     Game.Player player);
 
     public abstract void reset(Board board);

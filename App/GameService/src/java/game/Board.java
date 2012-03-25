@@ -6,6 +6,8 @@
 
 package game;
 
+import game.Game.Player;
+
 
 public abstract class Board 
 {
@@ -56,6 +58,17 @@ public abstract class Board
     
 
     // modification
+    public void clear()
+    {
+        // local variables
+        Position p = new Position(0, 0);
+        
+        // set all cells empty
+        for(p.row = 0; p.row < get_n_rows(); p.row++)
+            for(p.col = 0; p.col < get_n_cols(); p.col++)
+                cells[p.row][p.col] = Cell.EMPTY;
+    }
+    
     public Cell setCell(Position p, Cell new_value)
     {
         if(p.row < get_n_rows() && p.col < get_n_cols())
@@ -67,8 +80,15 @@ public abstract class Board
         else
             return Cell.OUT_OF_BOUNDS;
     }
+    
+    public Cell setCellOwner(Position p, Game.Player new_owner)
+    {
+        Cell new_value = (new_owner == Player.WHITE) ? 
+                            Cell.PIECE_WHITE : Cell.PIECE_BLACK;
+        return setCell(p, new_value);
+    }
 
-    // access
+    // query
     public int get_n_rows()
     {
         return cells.length;
@@ -85,5 +105,23 @@ public abstract class Board
             return Cell.OUT_OF_BOUNDS;
         else
             return cells[p.row][p.col];
+    }
+    
+    public Player getCellOwner(Position p)
+    {
+        Cell cell = getCell(p);
+        switch(cell)
+        {
+            case PIECE_WHITE:
+                return Player.WHITE;
+                
+            case PIECE_BLACK:
+                return Player.BLACK;
+                
+            case OUT_OF_BOUNDS:
+            case EMPTY:
+            default:
+                return null;
+        }
     }
 }

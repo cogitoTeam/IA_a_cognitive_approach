@@ -19,7 +19,8 @@ public abstract class Game
     
     public static enum State
     {
-        CONTINUE,
+        TURN_WHITE,
+        TURN_BLACK,
         VICTORY_WHITE,
         VICTORY_BLACK,
         DRAW
@@ -29,7 +30,7 @@ public abstract class Game
     
     private final Rules rules;
     private final Board board;
-    private Player current_player;
+    private State state;
     
     /** METHODS **/
     
@@ -41,45 +42,39 @@ public abstract class Game
     }
     
     // main
-    public void performMove(Position p)
+    public boolean tryMove(Board.Position p)
     {
-        // perform the move and change player
-        current_turn = rules.performMove(row, col, board, current_turn);
-        // redraw the game board
-        board.redraw();
-
-        // the game continues ?
-        if(current_turn < n_players)
+        // find the current player
+        Player player = getCurrentPlayer();
+        
+        // perform the move only if legal
+        if(player != null && rules.isLegalMove(p, board, player))
         {
-            // ai turn ?
-            if (!is_human[current_turn])
-            {
-                var ai_choice = ai.bestMove(board, current_turn);
-
-                // check if the ai's move is legal
-                if(rules.isLegalMove(ai_choice[0], ai_choice[1], board,
-                                                        current_turn))
-                    performMove(ai_choice[0], ai_choice[1]);
-                else
-                    alert("ai performed illegal move");
-            }
+            state = rules.performMove(p, board, player);
+            // signal success
+            return true;
         }
-        else
+        
+        // signal failure
+        return false;
+    }
+    
+    // query
+    public State getState()
+    {
+        return state;
+    }
+    
+    public Player getCurrentPlayer()
+    {
+        switch(state)
         {
-            // draw ?
-            if(current_turn == typ.DRAW)
-                alert("draw");
-
-            // black victory ?
-            else if(current_turn == typ.VICTORY_BLACK)
-                alert("black wins");
-
-            // white victory ?
-            else if(current_turn == typ.VICTORY_WHITE)
-                alert("white wins");
-
-            // restart either way
-            obj.restart();
+            case TURN_WHITE: 
+                return Player.WHITE;
+            case TURN_BLACK: 
+                return Player.BLACK;
+            default:
+                return null;
         }
     }
     
@@ -87,7 +82,8 @@ public abstract class Game
     public void restart()
     {
         rules.reset(board);
-        current_player = rules.getFirstPlayer();
+        state = (rules.getFirstPlayer() == Player.WHITE) ? 
+                State.TURN_WHITE : State.TURN_BLACK;
     }
     
 }

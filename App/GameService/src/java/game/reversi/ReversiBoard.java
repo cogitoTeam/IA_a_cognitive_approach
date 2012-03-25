@@ -4,7 +4,7 @@
  *****************/
 
 
-package game.morpion;
+package game.reversi;
 
 import game.Board;
 
