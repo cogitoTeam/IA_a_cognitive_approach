@@ -6,6 +6,9 @@
 
 package game;
 
+import game.Board.Position;
+import java.util.List;
+
 
 public abstract class Game 
 {
@@ -23,7 +26,7 @@ public abstract class Game
         TURN_BLACK,
         VICTORY_WHITE,
         VICTORY_BLACK,
-        DRAW
+        DRAW;
     }
     
     /** ATTRIBUTES **/
@@ -35,14 +38,15 @@ public abstract class Game
     /** METHODS **/
     
     // creation
-    public Game(Rules _rules, Board _board)
+    protected Game(Rules _rules, Board _board)
     {
         rules = _rules;
         board = _board;
+        restart();
     }
     
     // main
-    public boolean tryMove(Board.Position p)
+    public boolean tryMove(Position p)
     {
         // find the current player
         Player player = getCurrentPlayer();
@@ -76,6 +80,26 @@ public abstract class Game
             default:
                 return null;
         }
+    }
+  
+    @Override
+    public String toString()
+    {
+        // local variables
+        List<Position> moves = rules.getLegalMoves(board, getCurrentPlayer());
+        String result = "<game state=\"" + state + "\">\n";
+        
+        // add the board state
+        result += board + "\n";
+        
+        // add legal moves
+        result += "<rules n_moves=\"" + moves.size() + "\">";
+        for(Position p : moves)
+            result += "\n<move " + p + "/>";
+        result += "</rules>";
+        
+        // finished
+        return result + "</game>";
     }
     
     // modification

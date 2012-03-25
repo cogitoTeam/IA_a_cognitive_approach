@@ -10,7 +10,6 @@ import game.Board;
 import game.Game;
 import game.Game.Player;
 import game.Rules;
-import java.util.List;
 
 
 class ReversiRules extends Rules
@@ -36,7 +35,7 @@ class ReversiRules extends Rules
     @Override
     public Player getFirstPlayer() 
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return Player.WHITE;
     }
     
     @Override
@@ -67,7 +66,10 @@ class ReversiRules extends Rules
     @Override
     public void reset(Board board)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // remove all pieces
+        board.clear();
+        
+        // place 4 pieces, 2 white and 2 black, in the center
     }
 
 }

@@ -12,7 +12,6 @@ import game.Game;
 import game.Game.Player;
 import game.Game.State;
 import game.Rules;
-import java.util.List;
 
 
 class MorpionRules extends Rules
@@ -42,18 +41,8 @@ class MorpionRules extends Rules
     @Override
     public boolean isDraw(Board board) 
     {
-        // local variables
-        Position p = new Position(0, 0);
-        
-        // it's a draw if none of the cells are empty
-        for(p.row = 0; p.row < board.get_n_rows(); p.row++)
-                for(p.col = 0; p.col < board.get_n_cols(); p.col++)
-                        if(board.getCell(p) == Board.Cell.EMPTY)
-                            // a cell is empty : it's not a draw !
-                            return false;
-        
-        // no cells are empty
-        return true;
+        // return true if every cell is occupied
+        return (board.get_n_pieces() == board.get_n_rows()*board.get_n_cols());
     }
 
     @Override
@@ -156,7 +145,8 @@ class MorpionRules extends Rules
     @Override
     public void reset(Board board) 
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // simply clear the board, that's all there is to it ;)
+        board.clear();
     }
 
 }
