@@ -27,14 +27,19 @@ Game.DRAW = 4;
 Game.IMAGE_WHITE = load_image("york.png");
 Game.IMAGE_BLACK = load_image("tudor.png");
 
-Game.C_BACKGROUND = 'rgb(22,22,22)';
-Game.C_TEXT = 'rgb(255,255,255)';
+Game.C_BACKGROUND = 'rgb(128,128,128)';
+Game.C_TEXT = 'rgb(0,0,0)';
 
 function Game()
 {
     /** ATTRIBUTES **/
+    
+    // receiver 
     var obj = this;
     var typ = Game;
+    
+    // true attributes
+    var board = null;
     var current_turn;
     var n_players = 2;
     var is_human = [true, true];
@@ -102,6 +107,20 @@ function Game()
     }
 
     /** METHODS **/
+    obj.update_from_xml = function(data)
+    {
+        // parse new game state
+        /// TODO
+        console.log("Game");
+        console.log(data);
+        
+        // update board
+        /// FIXME -- pass the "board" tag
+        if(obj.board == null)
+            obj.board = new Board();
+        obj.board.update_from_xml(data);
+    }
+    
     obj.restart = function()
     {
     }

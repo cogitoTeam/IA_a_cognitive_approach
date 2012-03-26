@@ -31,8 +31,10 @@ function main()
     }
     else
     {
-        context.fillStyle = 'rgb(255, 255, 255)';
+        context.fillStyle = Game.C_BACKGROUND;
         context.fillRect(0,0,canvas.width, canvas.height);
+        
+        context.fillStyle = Game.C_TEXT;
         context.font = "20pt Arial";
         context.textAlign = "center";
         context.textBaseline = "middle";
