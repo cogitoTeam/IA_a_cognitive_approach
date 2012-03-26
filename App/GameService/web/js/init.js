@@ -40,8 +40,6 @@ var resourceLoaded = function()
             loading--;
 }
 
-var DATA_LOCATION = "../data/";
-
 // simple image-loading API
 function load_image(file_name)
 {

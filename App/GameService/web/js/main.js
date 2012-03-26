@@ -23,23 +23,30 @@ function main()
     // keep checking till loaded
     if(!loading)
     {
-        // create the game object
-        game = new Game();
-        
-        // start polling the web-service for board-updates
-        poll_board();
-    }
-    else
-    {
+        // clear canvas
         context.fillStyle = Game.C_BACKGROUND;
         context.fillRect(0,0,canvas.width, canvas.height);
         
+        // create the game object
+        game = new Game();
+    }
+    else
+    {
+        // clear canvases
+        context.fillStyle = Game.C_BACKGROUND;
+        context.fillRect(0,0,canvas.width, canvas.height);
+        context_info.fillStyle = Game.C_BACKGROUND;
+        context_info.fillRect(0,0,canvas_info.width, canvas_info.height);
+        
+        // draw "loading" text
         context.fillStyle = Game.C_TEXT;
         context.font = "20pt Arial";
         context.textAlign = "center";
         context.textBaseline = "middle";
         context.fillText("Loading " + loading + " resources...",
                                         canvas.width/2, canvas.height/2);
+                                        
+        // check again in 0.5 seconds
         setTimeout("main()", 500);
     }
 }

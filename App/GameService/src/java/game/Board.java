@@ -165,9 +165,11 @@ public abstract class Board
             for(p.col = 0; p.col < get_n_cols(); p.col++)
             {
                 Player owner = getCellOwner(p);
-                result += "<cell " + p 
-                        + " owner=\"" + ((owner == null) ? "NOBODY" : owner) 
-                        + "\"/>";
+                result += "<cell " + p;
+                if(owner != null)
+                    result += " owner=\"" + owner + "\"/>";
+                else
+                    result += "/>";
             }
         
         // finished

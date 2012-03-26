@@ -13,8 +13,8 @@ public class MorpionGame extends Game
 {
     /** METHODS **/
     
-    public MorpionGame()
+    public MorpionGame(int id)
     {
-        super(MorpionRules.getInstance(), new MorpionBoard());
+        super(id, MorpionRules.getInstance(), new MorpionBoard());
     }
 }

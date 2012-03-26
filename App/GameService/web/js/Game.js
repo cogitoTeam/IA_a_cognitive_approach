@@ -42,6 +42,7 @@ function Game()
     var board = null;
     var current_turn;
     var n_players = 2;
+    var id = null;
     var is_human = [true, true];
 
     /** SUBROUTINES **/
@@ -103,10 +104,13 @@ function Game()
             default:
                 break;
         }
+        
+        // draw icon of winning/current name
         if(image != null)
             context_info.drawImage(image, canvas_info.width-canvas_info.height, 
                                     0, canvas_info.height, canvas_info.height);
 
+        // draw player name
         if(text != null)
         {
             // always the same font, alignment and so on
@@ -118,10 +122,13 @@ function Game()
             context_info.fillText(text, canvas_info.width-canvas_info.height,
                                                     canvas_info.height/2);
         }
-    }
-
-    var performMove = function (row, col)
-    {
+        
+        // draw game id
+        context_info.textAlign = "left";
+        context_info.textBaseline = "middle";
+        context_info.fillText("Client "+id, 16, canvas_info.height/2);
+        
+        
     }
 
     /** METHODS **/
@@ -129,6 +136,7 @@ function Game()
     {
         /** Parse new game state **/
         current_turn = xml_parse_state(data[0].getAttribute('state'));
+        id = Number(data[0].getAttribute('id'));
         
         /** Parse new board state **/
         // create the board if it doesn't already exist
@@ -140,17 +148,15 @@ function Game()
         /** Update the view to take changes into account **/
         redraw();
     }
-    
-    obj.restart = function()
-    {
-    }
 
     obj.clickEvent = function(x, y)
     {
         // restart the game if it's a draw or somebody has won
         if(current_turn >= n_players)
         {
-            obj.restart();
+            ajax_request_restart(id);
+            board.clear();
+            redraw();
             return;	// consume the event
         }
 
@@ -166,11 +172,11 @@ function Game()
         var col = board.x_to_col(x);
 
         // the server will check if the move is legal
-        performMove(row, col);
+        ajax_request_move(id, row, col, current_turn);
     }
 
     /** INITIALISE **/
-    obj.restart();
+    ajax_request_id();
 
     /** RETURN INSTANCE **/
     return obj;

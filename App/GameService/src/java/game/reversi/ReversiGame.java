@@ -13,8 +13,8 @@ public class ReversiGame extends Game
 {
     /** METHODS **/
     
-    public ReversiGame()
+    public ReversiGame(int id)
     {
-        super(ReversiRules.getInstance(), new ReversiBoard());
+        super(id, ReversiRules.getInstance(), new ReversiBoard());
     }
 }
