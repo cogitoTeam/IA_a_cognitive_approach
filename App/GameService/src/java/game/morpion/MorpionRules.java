@@ -101,7 +101,7 @@ class MorpionRules extends Rules
         for(int i = 0; i < board.get_n_cols(); i++)
         {
             p.row = i;
-            p.col = board.get_n_rows()-1-1;
+            p.col = board.get_n_cols()-1-i;
             if(board.getCellOwner(p) != player)
                 break;
             else
