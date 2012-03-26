@@ -3,9 +3,6 @@
  */
 package ac.shared;
 
-import ac.shared.advanced_concept.AdvancedConcept;
-import ac.shared.advanced_concept.AdvancedConceptCore;
-
 /**
  * This class represents a graded advanced concept
  * 
