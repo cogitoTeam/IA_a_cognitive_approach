@@ -25,8 +25,8 @@ public class GameServlet extends HttpServlet
         PrintWriter out = response.getWriter();
         try 
         {
-            out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
-            out.println(game);
+            out.print("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+            out.print(game);
         }
         finally 
         {            

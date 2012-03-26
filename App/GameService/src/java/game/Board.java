@@ -157,7 +157,7 @@ public abstract class Board
         // local variables
         String result = "<board n_rows=\"" + get_n_rows() 
                         + "\" n_cols=\"" + get_n_cols() 
-                        + "\" n_pieces=\"" + get_n_pieces() + "\">\n";
+                        + "\" n_pieces=\"" + get_n_pieces() + "\">";
         Position p = new Position(0, 0);
         
         // read the board positions
@@ -165,8 +165,9 @@ public abstract class Board
             for(p.col = 0; p.col < get_n_cols(); p.col++)
             {
                 Player owner = getCellOwner(p);
-                if(owner != null)
-                    result += "<piece " + p + " owner=\""+ owner +"\"/>";
+                result += "<cell " + p 
+                        + " owner=\"" + ((owner == null) ? "NOBODY" : owner) 
+                        + "\"/>";
             }
         
         // finished

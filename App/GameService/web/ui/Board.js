@@ -40,8 +40,34 @@ function Board()
 
     /** PRIVATE METHODS **/
     
+        
+    var xml_update_cell = function(element)
+    {
+        // where ?
+        var row = element.getAttribute('row');
+        var col = element.getAttribute('col');
+        
+        // what ?
+        var owner = element.getAttribute('owner');
+        var value;
+        if(owner == "WHITE")
+            value = Board.CELL_WHITE;
+        else if (owner == "BLACK")
+            value = Board.CELL_BLACK;
+        else // owner == "NOBODY"
+            value = Board.CELL_EMPTY;
+        
+        // perform the update
+        obj.setCell(row, col, value);
+        
+    }
+    
     var resize = function(_n_rows, _n_cols)
     {
+        // if size is the same don't bother reallocating memory
+        if(n_rows == _n_rows && n_cols == _n_cols)
+            return;
+        
         // initialise board size
         n_rows = _n_rows;
         n_cols = _n_cols;
@@ -92,6 +118,7 @@ function Board()
     // update
     obj.redraw = function()
     {
+        // redraw each individual cell
         for(row = 0; row < n_rows; row++)
             for(col = 0; col < n_cols; col++)
                 draw_cell(row, col, cells[row][col]);
@@ -99,10 +126,19 @@ function Board()
 
     // modification
 
-    obj.update_from_xml = function(data)
+    obj.update_from_xml = function(element)
     {
-        console.log("board")
-        console.log(data);
+        // read the size of the board from the element
+        resize(element.getAttribute('n_rows'), element.getAttribute('n_cols'));
+        
+        // read the board positions
+        var n_pieces = element.getAttribute('n_pieces')
+        if(n_pieces > 0)
+        {
+            var pieces = element.childNodes;
+            for(i = 0; i < pieces.length; i++)
+                xml_update_cell(pieces.item(i));
+        }
     }
 
     obj.setCell = function(row, col, new_value)

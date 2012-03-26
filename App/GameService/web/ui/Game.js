@@ -45,6 +45,24 @@ function Game()
     var is_human = [true, true];
 
     /** SUBROUTINES **/
+    var xml_parse_state = function(attribute)
+    {
+        switch(attribute)
+        {
+            case "TURN_WHITE":
+                return Game.WHITE;
+            case "TURN_BLACK":
+                return Game.BLACK;
+            case "VICTORY_WHITE":
+                return Game.VICTORY_WHITE;
+            case "VICTORY_BLACK":
+                return Game.VICTORY_BLACK;
+            case "DRAW":
+            default:
+                return Game.DRAW;
+        }
+    }
+    
     var redraw = function()
     {
         // redraw the game board
@@ -109,16 +127,18 @@ function Game()
     /** METHODS **/
     obj.update_from_xml = function(data)
     {
-        // parse new game state
-        /// TODO
-        console.log("Game");
-        console.log(data);
+        /** Parse new game state **/
+        current_turn = xml_parse_state(data[0].getAttribute('state'));
         
-        // update board
-        /// FIXME -- pass the "board" tag
-        if(obj.board == null)
-            obj.board = new Board();
-        obj.board.update_from_xml(data);
+        /** Parse new board state **/
+        // create the board if it doesn't already exist
+        if(board == null)
+            board = new Board();
+        // update board using the 'board' element of the XML document
+        board.update_from_xml(data[0].childNodes[0]);
+        
+        /** Update the view to take changes into account **/
+        redraw();
     }
     
     obj.restart = function()
