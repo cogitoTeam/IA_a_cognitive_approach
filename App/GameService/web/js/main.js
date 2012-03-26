@@ -32,9 +32,11 @@ function main()
     }
     else
     {
-        // clear canvas
+        // clear canvases
         context.fillStyle = Game.C_BACKGROUND;
         context.fillRect(0,0,canvas.width, canvas.height);
+        context_info.fillStyle = Game.C_BACKGROUND;
+        context_info.fillRect(0,0,canvas_info.width, canvas_info.height);
         
         // draw "loading" text
         context.fillStyle = Game.C_TEXT;

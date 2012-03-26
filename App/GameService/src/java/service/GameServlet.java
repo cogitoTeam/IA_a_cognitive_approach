@@ -26,13 +26,16 @@ public class GameServlet extends HttpServlet
         // Get all parameters
         Map<String, String[]> parameters = request.getParameterMap();
         
-        // Is the client requesting a new game ?
-        if(parameters.containsKey("newgame"))
-            processNewGameRequest();
+        // Is the client requesting a specific game or a new one ?
+        GameManager gm = GameManager.getInstance();
+        if(parameters.containsKey("game_id"))
+            game = gm.getGame(Integer.parseInt(parameters.get("game_id")[0]));
+        else
+            game = gm.newGame();
         
         // Is the client requesting the current game be reset ?
         if(parameters.containsKey("restart"))
-            processRestartGameRequest();
+            game.restart();
         
         // Is the client requesting a move ?
         if(parameters.containsKey("row") && parameters.containsKey("col")
@@ -54,33 +57,19 @@ public class GameServlet extends HttpServlet
         }
     }
     
-    protected void processNewGameRequest()
-    {
-        game = GameManager.getInstance().newGame();
-    }
-    
-    protected void processRestartGameRequest()
-    {
-        game.restart();
-    }
-    
     protected void processMoveRequest(String s_row, String s_col, 
                                         String s_player)
     {
-        // check that there is indeed something to parse
-        if(s_row != null && s_col != null && s_player != null)
-        {
-            // parse position
-            Board.Position p = new Board.Position(Integer.parseInt(s_row),
-                                                    Integer.parseInt(s_col));
-            // parse player
-            Game.Player player = (Integer.parseInt(s_player) == 0) ?
-                                    Game.Player.WHITE :
-                                    Game.Player.BLACK;
-            
-            // try to perform the move
-            game.tryMove(p, player);
-        }
+        // parse position
+        Board.Position p = new Board.Position(Integer.parseInt(s_row),
+                                                Integer.parseInt(s_col));
+        // parse player
+        Game.Player player = (Integer.parseInt(s_player) == 0) ?
+                                Game.Player.WHITE :
+                                Game.Player.BLACK;
+
+        // try to perform the move
+        game.tryMove(p, player);
     }
     
     

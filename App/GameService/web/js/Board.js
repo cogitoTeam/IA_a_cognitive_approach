@@ -125,6 +125,13 @@ function Board()
     }
 
     // modification
+    
+    obj.clear = function()
+    {
+        for(row = 0; row < n_rows; row++)
+            for(col = 0; col < n_cols; col++)
+                obj.setCell(row, col, Board.CELL_EMPTY);
+    }
 
     obj.update_from_xml = function(element)
     {

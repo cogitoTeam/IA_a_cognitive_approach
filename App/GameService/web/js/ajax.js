@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /** GENERIC MESSAGE TEMPLATE **/
 
-const WEBSERVICE = "../ws";
+const WEBSERVICE = "./ws";
 
 var msg =
 {
@@ -44,25 +44,21 @@ function receive_board(data)
 
 /** REQUEST NEW GAME STATE **/
 
-function ajax_request_board()
+function ajax_request_move(id, row, col, player)
 {
+    msg.url = WEBSERVICE + "?game_id=" + id + "&row=" + row + "&col=" + col 
+                        + "&player=" + player;
     $.ajax(msg);
 }
 
-function ajax_request_move(row, col, player)
+function ajax_request_id()
 {
-    msg.url = WEBSERVICE+"?row="+row+"&col="+col+"&player="+player;
+    msg.url = WEBSERVICE;
     $.ajax(msg);
 }
 
-function ajax_request_new_game()
+function ajax_request_restart(id)
 {
-    msg.url = WEBSERVICE+"?newgame";
-    $.ajax(msg);
-}
-
-function ajax_request_restart()
-{
-    msg.url = WEBSERVICE+"?restart";
+    msg.url = WEBSERVICE + "?game_id=" + id + "&restart";
     $.ajax(msg);
 }
