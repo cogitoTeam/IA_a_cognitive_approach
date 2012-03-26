@@ -11,5 +11,5 @@ package ac.shared.relevant_structure;
  * @version 0.1
  */
 public class RelevantStructure {
-    
+
 }
