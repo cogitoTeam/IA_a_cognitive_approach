@@ -6,6 +6,9 @@
 
 package game;
 
+import game.Board.Position;
+import java.util.List;
+
 
 public abstract class Game 
 {
@@ -19,75 +22,92 @@ public abstract class Game
     
     public static enum State
     {
-        CONTINUE,
+        TURN_WHITE,
+        TURN_BLACK,
         VICTORY_WHITE,
         VICTORY_BLACK,
-        DRAW
+        DRAW;
     }
     
     /** ATTRIBUTES **/
     
     private final Rules rules;
     private final Board board;
-    private Player current_player;
+    private State state;
     
     /** METHODS **/
     
     // creation
-    public Game(Rules _rules, Board _board)
+    protected Game(Rules _rules, Board _board)
     {
         rules = _rules;
         board = _board;
+        restart();
     }
     
     // main
-    public void performMove(Position p)
+    public boolean tryMove(Position p)
     {
-        // perform the move and change player
-        current_turn = rules.performMove(row, col, board, current_turn);
-        // redraw the game board
-        board.redraw();
-
-        // the game continues ?
-        if(current_turn < n_players)
+        // find the current player
+        Player player = getCurrentPlayer();
+        
+        // perform the move only if legal
+        if(player != null && rules.isLegalMove(p, board, player))
         {
-            // ai turn ?
-            if (!is_human[current_turn])
-            {
-                var ai_choice = ai.bestMove(board, current_turn);
-
-                // check if the ai's move is legal
-                if(rules.isLegalMove(ai_choice[0], ai_choice[1], board,
-                                                        current_turn))
-                    performMove(ai_choice[0], ai_choice[1]);
-                else
-                    alert("ai performed illegal move");
-            }
+            state = rules.performMove(p, board, player);
+            // signal success
+            return true;
         }
-        else
+        
+        // signal failure
+        return false;
+    }
+    
+    // query
+    public State getState()
+    {
+        return state;
+    }
+    
+    public Player getCurrentPlayer()
+    {
+        switch(state)
         {
-            // draw ?
-            if(current_turn == typ.DRAW)
-                alert("draw");
-
-            // black victory ?
-            else if(current_turn == typ.VICTORY_BLACK)
-                alert("black wins");
-
-            // white victory ?
-            else if(current_turn == typ.VICTORY_WHITE)
-                alert("white wins");
-
-            // restart either way
-            obj.restart();
+            case TURN_WHITE: 
+                return Player.WHITE;
+            case TURN_BLACK: 
+                return Player.BLACK;
+            default:
+                return null;
         }
+    }
+  
+    @Override
+    public String toString()
+    {
+        // local variables
+        List<Position> moves = rules.getLegalMoves(board, getCurrentPlayer());
+        String result = "<game state=\"" + state + "\">";
+        
+        // add the board state
+        result += board;
+        
+        // add legal moves
+        result += "<rules n_moves=\"" + moves.size() + "\">";
+        for(Position p : moves)
+            result += "<move " + p + "/>";
+        result += "</rules>";
+        
+        // finished
+        return result + "</game>";
     }
     
     // modification
     public void restart()
     {
         rules.reset(board);
-        current_player = rules.getFirstPlayer();
+        state = (rules.getFirstPlayer() == Player.WHITE) ? 
+                State.TURN_WHITE : State.TURN_BLACK;
     }
     
 }

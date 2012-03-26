@@ -4,13 +4,12 @@
  *****************/
 
 
-package game.morpion;
+package game.reversi;
 
 import game.Board;
 import game.Game;
 import game.Game.Player;
 import game.Rules;
-import java.util.List;
 
 
 class ReversiRules extends Rules
@@ -36,7 +35,7 @@ class ReversiRules extends Rules
     @Override
     public Player getFirstPlayer() 
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return Player.WHITE;
     }
     
     @Override
@@ -50,12 +49,6 @@ class ReversiRules extends Rules
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
-    @Override
-    public List<Board.Position> getLegalMoves(Board board, Game.Player player) 
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     @Override
     public boolean isLegalMove(Board.Position p, Board board, Game.Player player) 
@@ -65,7 +58,7 @@ class ReversiRules extends Rules
 
     // modification
     @Override
-    public void performMove(Board.Position p, Board board, Game.Player player) 
+    public Game.State performMove(Board.Position p, Board board, Game.Player player) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -73,7 +66,10 @@ class ReversiRules extends Rules
     @Override
     public void reset(Board board)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // remove all pieces
+        board.clear();
+        
+        // place 4 pieces, 2 white and 2 black, in the center
     }
 
 }

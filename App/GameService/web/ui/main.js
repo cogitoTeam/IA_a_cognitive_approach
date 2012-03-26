@@ -17,28 +17,37 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-var game;
 
 function main() 
 {
-	// poll till loaded
-	if(!loading)
-		game = new Game(new MorpionRules(), new MorpionBoard(), new MorpionAI());
-	else
-	{
-		context.font = "20pt Arial";
-		context.textAlign = "center";
-		context.textBaseline = "middle";
-		context.fillText("Loading " + loading + " resources...",
-						 canvas.width/2, canvas.height/2);
-		setTimeout("main()", 500);
-	}
+    // keep checking till loaded
+    if(!loading)
+    {
+        // create the game object
+        game = new Game();
+        
+        // start polling the web-service for board-updates
+        poll_board();
+    }
+    else
+    {
+        context.fillStyle = Game.C_BACKGROUND;
+        context.fillRect(0,0,canvas.width, canvas.height);
+        
+        context.fillStyle = Game.C_TEXT;
+        context.font = "20pt Arial";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillText("Loading " + loading + " resources...",
+                                        canvas.width/2, canvas.height/2);
+        setTimeout("main()", 500);
+    }
 }
 
 canvas.onmousedown = function(event)
 {
-	game.clickEvent(event.layerX - canvas.offsetLeft,
-					event.layerY - canvas.offsetTop);
+  game.clickEvent(event.layerX - canvas.offsetLeft,
+                event.layerY - canvas.offsetTop);
 }
 
 // launch the program

@@ -6,6 +6,8 @@
 
 package game;
 
+import game.Game.Player;
+
 
 public abstract class Board 
 {
@@ -24,6 +26,11 @@ public abstract class Board
             n_rows = _n_rows;
             n_cols = _n_cols;
         }
+        @Override
+        public String toString()
+        {
+            return "n_rows=\"" + n_rows + "\" n_cols=\"" + n_cols + "\"";
+        }
     }
     
     public static class Position
@@ -34,6 +41,11 @@ public abstract class Board
         {
             row = _row;
             col = _col;
+        }
+        @Override
+        public String toString()
+        {
+            return "row=\"" + row + "\" col=\"" + col + "\"";
         }
     }
     
@@ -56,6 +68,17 @@ public abstract class Board
     
 
     // modification
+    public void clear()
+    {
+        // local variables
+        Position p = new Position(0, 0);
+        
+        // set all cells empty
+        for(p.row = 0; p.row < get_n_rows(); p.row++)
+            for(p.col = 0; p.col < get_n_cols(); p.col++)
+                cells[p.row][p.col] = Cell.EMPTY;
+    }
+    
     public Cell setCell(Position p, Cell new_value)
     {
         if(p.row < get_n_rows() && p.col < get_n_cols())
@@ -67,8 +90,15 @@ public abstract class Board
         else
             return Cell.OUT_OF_BOUNDS;
     }
+    
+    public Cell setCellOwner(Position p, Game.Player new_owner)
+    {
+        Cell new_value = (new_owner == Player.WHITE) ? 
+                            Cell.PIECE_WHITE : Cell.PIECE_BLACK;
+        return setCell(p, new_value);
+    }
 
-    // access
+    // query
     public int get_n_rows()
     {
         return cells.length;
@@ -78,6 +108,22 @@ public abstract class Board
     {
         return cells[0].length;
     }
+    
+    public int get_n_pieces()
+    {
+        // local variables
+        Position p = new Position(0, 0);
+        int count = 0;
+        
+        // count number of non-empty cells
+        for(p.row = 0; p.row < get_n_rows(); p.row++)
+            for(p.col = 0; p.col < get_n_cols(); p.col++)
+                if(getCell(p) != Board.Cell.EMPTY)
+                    count++;
+        
+        // finished
+        return count;
+    }
 
     public Cell getCell(Position p)
     {
@@ -85,5 +131,46 @@ public abstract class Board
             return Cell.OUT_OF_BOUNDS;
         else
             return cells[p.row][p.col];
+    }
+    
+    public Player getCellOwner(Position p)
+    {
+        Cell cell = getCell(p);
+        switch(cell)
+        {
+            case PIECE_WHITE:
+                return Player.WHITE;
+                
+            case PIECE_BLACK:
+                return Player.BLACK;
+                
+            case OUT_OF_BOUNDS:
+            case EMPTY:
+            default:
+                return null;
+        }
+    }
+    
+    @Override
+    public String toString()
+    {
+        // local variables
+        String result = "<board n_rows=\"" + get_n_rows() 
+                        + "\" n_cols=\"" + get_n_cols() 
+                        + "\" n_pieces=\"" + get_n_pieces() + "\">";
+        Position p = new Position(0, 0);
+        
+        // read the board positions
+        for(p.row = 0; p.row < get_n_rows(); p.row++)
+            for(p.col = 0; p.col < get_n_cols(); p.col++)
+            {
+                Player owner = getCellOwner(p);
+                result += "<cell " + p 
+                        + " owner=\"" + ((owner == null) ? "NOBODY" : owner) 
+                        + "\"/>";
+            }
+        
+        // finished
+        return result+"</board>";
     }
 }

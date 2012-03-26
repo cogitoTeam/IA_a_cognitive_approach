@@ -2,6 +2,8 @@
 
 package service;
 
+import game.Game;
+import game.morpion.MorpionGame;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -15,17 +17,16 @@ public class GameServlet extends HttpServlet
                                     HttpServletResponse response)
     throws ServletException, IOException 
     {
+        // Create game
+        Game game = new MorpionGame();
+        
+        // Send response
         response.setContentType("text/xml;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try 
         {
-            out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
-            // TODO : id of game and turn
-            out.println("<game id=\"123\" turn=\"456\">");
-            out.println("<board>");
-                out.println("<piece colour=\"white\" x=\"7\" y=\"8\"/>");
-            out.println("</board>");
-            out.println("</game>");
+            out.print("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+            out.print(game);
         }
         finally 
         {            
