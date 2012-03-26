@@ -18,17 +18,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function parse_board(data)
+function receive_board(data)
 {
-  // todo
-  console.log(data);
+  game.update_from_xml(data.getElementsByTagName('game'));
 }
 
 var board_request =
 {
   url: "../ws",
   dataType: "xml",
-  success: parse_board,
+  success: receive_board,
   //complete: poll_board,
   timeout: 30000
 }

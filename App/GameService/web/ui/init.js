@@ -29,7 +29,9 @@ var context_info  = canvas_info.getContext('2d');
 // the main application holder
 var game;
 
+
 /** RESOURCE MANAGEMENT **/
+
 var loading = 0;
 var resourceLoaded = function()
 {
@@ -53,4 +55,25 @@ function load_image(file_name)
   
   // return the handler
   return img;
+}
+
+
+/** DEBUG UTILITIES **/
+
+// http://davesquared.net/2008/07/write-out-fields-of-javascript-object.html
+function writeObj(obj, message)
+{
+  if (!message)
+      message = obj;
+  
+  var details = "\n" + message + "\n";
+  var fieldContents;
+  for (var field in obj) 
+  {
+    fieldContents = obj[field];
+    if (typeof(fieldContents) == "function")
+      fieldContents = "(function)";
+    details += "\t" + field + ": " + fieldContents + "\n";
+  }
+  console.log(details);
 }

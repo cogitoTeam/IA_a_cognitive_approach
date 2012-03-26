@@ -87,15 +87,15 @@ public abstract class Game
     {
         // local variables
         List<Position> moves = rules.getLegalMoves(board, getCurrentPlayer());
-        String result = "<game state=\"" + state + "\">\n";
+        String result = "<game state=\"" + state + "\">";
         
         // add the board state
-        result += board + "\n";
+        result += board;
         
         // add legal moves
         result += "<rules n_moves=\"" + moves.size() + "\">";
         for(Position p : moves)
-            result += "\n<move " + p + "/>";
+            result += "<move " + p + "/>";
         result += "</rules>";
         
         // finished

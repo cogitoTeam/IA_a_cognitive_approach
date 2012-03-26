@@ -27,19 +27,42 @@ Game.DRAW = 4;
 Game.IMAGE_WHITE = load_image("york.png");
 Game.IMAGE_BLACK = load_image("tudor.png");
 
-Game.C_BACKGROUND = 'rgb(22,22,22)';
-Game.C_TEXT = 'rgb(255,255,255)';
+Game.C_BACKGROUND = 'rgb(128,128,128)';
+Game.C_TEXT = 'rgb(0,0,0)';
 
 function Game()
 {
     /** ATTRIBUTES **/
+    
+    // receiver 
     var obj = this;
     var typ = Game;
+    
+    // true attributes
+    var board = null;
     var current_turn;
     var n_players = 2;
     var is_human = [true, true];
 
     /** SUBROUTINES **/
+    var xml_parse_state = function(attribute)
+    {
+        switch(attribute)
+        {
+            case "TURN_WHITE":
+                return Game.WHITE;
+            case "TURN_BLACK":
+                return Game.BLACK;
+            case "VICTORY_WHITE":
+                return Game.VICTORY_WHITE;
+            case "VICTORY_BLACK":
+                return Game.VICTORY_BLACK;
+            case "DRAW":
+            default:
+                return Game.DRAW;
+        }
+    }
+    
     var redraw = function()
     {
         // redraw the game board
@@ -102,6 +125,22 @@ function Game()
     }
 
     /** METHODS **/
+    obj.update_from_xml = function(data)
+    {
+        /** Parse new game state **/
+        current_turn = xml_parse_state(data[0].getAttribute('state'));
+        
+        /** Parse new board state **/
+        // create the board if it doesn't already exist
+        if(board == null)
+            board = new Board();
+        // update board using the 'board' element of the XML document
+        board.update_from_xml(data[0].childNodes[0]);
+        
+        /** Update the view to take changes into account **/
+        redraw();
+    }
+    
     obj.restart = function()
     {
     }
