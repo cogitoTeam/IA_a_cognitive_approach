@@ -4,14 +4,14 @@
 package ac.shared;
 
 /**
- * This class represents a graded advanced concept
+ * This class represents a graded advanced state board
  * 
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 26 mars 2012
  * @version 0.1
  */
-public class GradedAdvancedConceptRelevantStructure extends
-        AdvancedConceptRelevantStructure {
+public class GradedAdvancedStateBoardRelevantStructure extends
+        AdvancedStateBoardRelevantStructure {
 
     private Double grade;
 
@@ -20,7 +20,7 @@ public class GradedAdvancedConceptRelevantStructure extends
      * 
      * @param id
      */
-    public GradedAdvancedConceptRelevantStructure() {
+    public GradedAdvancedStateBoardRelevantStructure() {
         super();
     }
 

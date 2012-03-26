@@ -5,9 +5,9 @@ package ac.memory;
 
 import java.util.ArrayList;
 
-import ac.shared.AdvancedConceptRelevantStructure;
-import ac.shared.GradedAdvancedConceptRelevantStructure;
-import ac.shared.advanced_concept.AdvancedConcept;
+import ac.shared.AdvancedStateBoardRelevantStructure;
+import ac.shared.GradedAdvancedStateBoardRelevantStructure;
+import ac.shared.advanced_state_board.AdvancedStateBoard;
 import ac.shared.relevant_structure.RelevantStructure;
 
 /**
@@ -52,11 +52,11 @@ public class ActiveMemory {
 
     /**
      * @param acrs_list
-     *            Push a list of AdvancedConceptRelevantStructure in the primary
-     *            memory (pushed by the analysis module)
+     *            Push a list of AdvancedStateBoardRelevantStructure in the
+     *            primary memory (pushed by the analysis module)
      */
-    public void PutAdvancedConceptRelevantStructures(
-            ArrayList<AdvancedConceptRelevantStructure> acrs_list) {
+    public void PutAdvancedStateBoardRelevantStructures(
+            ArrayList<AdvancedStateBoardRelevantStructure> acrs_list) {
         ; // TODO the method
     }
 
@@ -65,7 +65,7 @@ public class ActiveMemory {
      * 
      * @return a list of Graded ACRS
      */
-    public ArrayList<GradedAdvancedConceptRelevantStructure> getGradedAdvancedConceptRelevantStructures() {
+    public ArrayList<GradedAdvancedStateBoardRelevantStructure> getGradedAdvancedStateBoardRelevantStructures() {
         // TODO the method
         return null;
     }
@@ -74,8 +74,8 @@ public class ActiveMemory {
      * @param gacrs
      *            The GACRS which has been chosen by the choice engine
      */
-    public void saveGradedAdvancedConceptRelevantStructure(
-            GradedAdvancedConceptRelevantStructure gacrs) {
+    public void saveGradedAdvancedStateBoardRelevantStructure(
+            GradedAdvancedStateBoardRelevantStructure gacrs) {
         // TODO the method
     }
 
@@ -101,26 +101,26 @@ public class ActiveMemory {
     }
 
     /**
-     * @return A list of lasts advanced concepts that led to victory.
+     * @return A list of lasts advanced state boards that led to victory.
      */
-    public ArrayList<AdvancedConcept> GetWonGamesAdvancedConcepts() {
+    public ArrayList<AdvancedStateBoard> GetWonGamesAdvancedStateBoards() {
         // TODO the method
         return null;
     }
 
     /**
-     * @return A list of lasts advanced concepts that led to defeat.
+     * @return A list of lasts advanced state boards that led to defeat.
      */
-    public ArrayList<AdvancedConcept> GetLostGamesAdvancedConcepts() {
+    public ArrayList<AdvancedStateBoard> GetLostGamesAdvancedStateBoards() {
         // TODO the method
         return null;
     }
 
     /**
-     * @return A list of lasts advanced concepts that are the most active in the
-     *         semantic memory.
+     * @return A list of lasts advanced state boards that are the most active in
+     *         the semantic memory.
      */
-    public ArrayList<AdvancedConcept> GetMostActiveAdvancedConcept() {
+    public ArrayList<AdvancedStateBoard> GetMostActiveAdvancedStateBoards() {
         // TODO the method
         return null;
     }
