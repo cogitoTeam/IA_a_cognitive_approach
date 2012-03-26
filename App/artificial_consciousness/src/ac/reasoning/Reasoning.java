@@ -1,5 +1,8 @@
 package ac.reasoning;
 
+import org.apache.log4j.Logger;
+
+
 /**
  * Cette classe représente le module de raisonnement.
  * 
@@ -7,25 +10,31 @@ package ac.reasoning;
  * @date 26 mars 2012
  * @version 0.1
  */
-public class Reasoning {
-    // ***************************************************************************
-    // ATTRIBUTS
-    // ***************************************************************************
+public class Reasoning
+{
+  
+  private static final Logger logger = Logger.getLogger(Reasoning.class);
+  
+  // ***************************************************************************
+  // ATTRIBUTS
+  // ***************************************************************************
 
-    private ChoiceEngine choice_engine;
-    private IntrospectionEngine introspection_engine;
+  private ChoiceEngine        choice_engine;
+  private IntrospectionEngine introspection_engine;
 
-    // ***************************************************************************
-    // PUBLIC METHODS
-    // ***************************************************************************
+  // ***************************************************************************
+  // PUBLIC METHODS
+  // ***************************************************************************
 
-    /**
-     * Active the ChoiceEngine
-     */
-    public void stimulate() {
-        introspection_engine.stop();
-        choice_engine.start();
-        introspection_engine.start();
-    }
+  /**
+   * Active the ChoiceEngine
+   */
+  public void stimulate()
+  {
+    logger.debug("stimulate");
+    introspection_engine.stop();
+    choice_engine.start();
+    introspection_engine.start();
+  }
 
 }

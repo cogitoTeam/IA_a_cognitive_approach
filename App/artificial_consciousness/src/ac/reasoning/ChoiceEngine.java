@@ -1,5 +1,7 @@
 package ac.reasoning;
 
+import org.apache.log4j.Logger;
+
 /**
  * Class ChoiceEngine Cette classe implémente la prise de décision
  * 
@@ -7,11 +9,23 @@ package ac.reasoning;
  * @date 26 mars 2012
  * @version 0.1
  */
-class ChoiceEngine {
+class ChoiceEngine
+{
 
-    void start() {
-        // TODO Auto-generated method stub
+  private static final Logger logger = Logger.getLogger(ChoiceEngine.class);
 
-    }
+  // ***************************************************************************
+  // ATTRIBUTS
+  // ***************************************************************************
+
+  // ***************************************************************************
+  // FRIENDLY METHODS
+  // ***************************************************************************
+
+  void start()
+  {
+    // TODO Auto-generated method stub
+
+  }
 
 }
