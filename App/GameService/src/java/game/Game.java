@@ -30,7 +30,7 @@ public abstract class Game
     }
     
     /** ATTRIBUTES **/
-    
+    private final int id;
     private final Rules rules;
     private final Board board;
     private State state;
@@ -38,18 +38,20 @@ public abstract class Game
     /** METHODS **/
     
     // creation
-    protected Game(Rules _rules, Board _board)
+    protected Game(int _id, Rules _rules, Board _board)
     {
+        id = _id;
         rules = _rules;
         board = _board;
         restart();
     }
     
     // main
-    public boolean tryMove(Position p)
+    public boolean tryMove(Position p, Player player)
     {
-        // find the current player
-        Player player = getCurrentPlayer();
+        // requesting player must be the current player
+        if(player != getCurrentPlayer())
+            return false;
         
         // perform the move only if legal
         if(player != null && rules.isLegalMove(p, board, player))
@@ -87,7 +89,7 @@ public abstract class Game
     {
         // local variables
         List<Position> moves = rules.getLegalMoves(board, getCurrentPlayer());
-        String result = "<game state=\"" + state + "\">";
+        String result = "<game id=\"" + id + "\" state=\"" + state + "\">";
         
         // add the board state
         result += board;

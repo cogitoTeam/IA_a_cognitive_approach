@@ -18,22 +18,51 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+/** GENERIC MESSAGE TEMPLATE **/
+
+const WEBSERVICE = "../ws";
+
+var msg =
+{
+  type: 'GET',
+  url: WEBSERVICE,
+  dataType: "xml",
+  success: receive_board,
+  //complete: request_board,
+  timeout: 30000
+}
+
+
+/** TREAT REPLY CALLBACK **/
+
 function receive_board(data)
 {
   game.update_from_xml(data.getElementsByTagName('game'));
 }
 
-var board_request =
+
+/** REQUEST NEW GAME STATE **/
+
+function ajax_request_board()
 {
-  url: "../ws",
-  dataType: "xml",
-  success: receive_board,
-  //complete: poll_board,
-  timeout: 30000
+    $.ajax(msg);
 }
 
-function poll_board()
+function ajax_request_move(row, col, player)
 {
-    $.ajax(board_request);
+    msg.url = WEBSERVICE+"?row="+row+"&col="+col+"&player="+player;
+    $.ajax(msg);
 }
 
+function ajax_request_new_game()
+{
+    msg.url = WEBSERVICE+"?newgame";
+    $.ajax(msg);
+}
+
+function ajax_request_restart()
+{
+    msg.url = WEBSERVICE+"?restart";
+    $.ajax(msg);
+}

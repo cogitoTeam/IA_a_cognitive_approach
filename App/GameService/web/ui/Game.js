@@ -120,10 +120,6 @@ function Game()
         }
     }
 
-    var performMove = function (row, col)
-    {
-    }
-
     /** METHODS **/
     obj.update_from_xml = function(data)
     {
@@ -140,17 +136,13 @@ function Game()
         /** Update the view to take changes into account **/
         redraw();
     }
-    
-    obj.restart = function()
-    {
-    }
 
     obj.clickEvent = function(x, y)
     {
         // restart the game if it's a draw or somebody has won
         if(current_turn >= n_players)
         {
-            obj.restart();
+            ajax_request_restart();
             return;	// consume the event
         }
 
@@ -166,11 +158,11 @@ function Game()
         var col = board.x_to_col(x);
 
         // the server will check if the move is legal
-        performMove(row, col);
+        ajax_request_move(row, col, current_turn);
     }
 
     /** INITIALISE **/
-    obj.restart();
+    ajax_request_new_game();
 
     /** RETURN INSTANCE **/
     return obj;
