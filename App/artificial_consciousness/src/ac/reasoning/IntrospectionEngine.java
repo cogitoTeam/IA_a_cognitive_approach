@@ -1,5 +1,7 @@
 package ac.reasoning;
 
+import org.apache.log4j.Logger;
+
 /**
  * Class IntrospectionEngine Cette classe implémente le moteur d'introspection
  * 
@@ -9,6 +11,17 @@ package ac.reasoning;
  */
 class IntrospectionEngine
 {
+
+  private static final Logger logger = Logger
+                                         .getLogger(IntrospectionEngine.class);
+
+  // ***************************************************************************
+  // ATTRIBUTS
+  // ***************************************************************************
+
+  // ***************************************************************************
+  // FRIENDLY METHODS
+  // ***************************************************************************
 
   void stop()
   {

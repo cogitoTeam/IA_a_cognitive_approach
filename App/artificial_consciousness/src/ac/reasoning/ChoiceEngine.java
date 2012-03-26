@@ -1,5 +1,7 @@
 package ac.reasoning;
 
+import org.apache.log4j.Logger;
+
 /**
  * Class ChoiceEngine Cette classe implémente la prise de décision
  * 
@@ -9,6 +11,16 @@ package ac.reasoning;
  */
 class ChoiceEngine
 {
+
+  private static final Logger logger = Logger.getLogger(ChoiceEngine.class);
+
+  // ***************************************************************************
+  // ATTRIBUTS
+  // ***************************************************************************
+
+  // ***************************************************************************
+  // FRIENDLY METHODS
+  // ***************************************************************************
 
   void start()
   {
