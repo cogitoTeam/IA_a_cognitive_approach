@@ -7,11 +7,13 @@ package ac.reasoning;
  * @date 26 mars 2012
  * @version 0.1
  */
-class ChoiceEngine {
+class ChoiceEngine
+{
 
-    void start() {
-        // TODO Auto-generated method stub
+  void start()
+  {
+    // TODO Auto-generated method stub
 
-    }
+  }
 
 }

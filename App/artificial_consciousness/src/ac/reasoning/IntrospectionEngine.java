@@ -7,16 +7,19 @@ package ac.reasoning;
  * @date 26 mars 2012
  * @version 0.1
  */
-class IntrospectionEngine {
+class IntrospectionEngine
+{
 
-    void stop() {
-        // TODO Auto-generated method stub
+  void stop()
+  {
+    // TODO Auto-generated method stub
 
-    }
+  }
 
-    void start() {
-        // TODO Auto-generated method stub
+  void start()
+  {
+    // TODO Auto-generated method stub
 
-    }
+  }
 
 }
