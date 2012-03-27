@@ -5,9 +5,9 @@ package ac.memory;
 
 import java.util.ArrayList;
 
-import ac.shared.AdvancedStateBoardRelevantStructure;
-import ac.shared.GradedAdvancedStateBoardRelevantStructure;
-import ac.shared.advanced_state_board.AdvancedStateBoard;
+import ac.shared.AdvancedBoardStateRelevantStructure;
+import ac.shared.GradedAdvancedBoardStateRelevantStructure;
+import ac.shared.advanced_board_state.AdvancedBoardState;
 import ac.shared.relevant_structure.RelevantStructure;
 
 /**
@@ -52,11 +52,11 @@ public class ActiveMemory {
 
     /**
      * @param acrs_list
-     *            Push a list of AdvancedStateBoardRelevantStructure in the
+     *            Push a list of AdvancedBoardStateRelevantStructure in the
      *            primary memory (pushed by the analysis module)
      */
-    public void PutAdvancedStateBoardRelevantStructures(
-            ArrayList<AdvancedStateBoardRelevantStructure> acrs_list) {
+    public void PutAdvancedBoardStateRelevantStructures(
+            ArrayList<AdvancedBoardStateRelevantStructure> acrs_list) {
         ; // TODO the method
     }
 
@@ -65,7 +65,7 @@ public class ActiveMemory {
      * 
      * @return a list of Graded ACRS
      */
-    public ArrayList<GradedAdvancedStateBoardRelevantStructure> getGradedAdvancedStateBoardRelevantStructures() {
+    public ArrayList<GradedAdvancedBoardStateRelevantStructure> getGradedAdvancedBoardStateRelevantStructures() {
         // TODO the method
         return null;
     }
@@ -74,8 +74,8 @@ public class ActiveMemory {
      * @param gacrs
      *            The GACRS which has been chosen by the choice engine
      */
-    public void saveGradedAdvancedStateBoardRelevantStructure(
-            GradedAdvancedStateBoardRelevantStructure gacrs) {
+    public void saveGradedAdvancedBoardStateRelevantStructure(
+            GradedAdvancedBoardStateRelevantStructure gacrs) {
         // TODO the method
     }
 
@@ -103,7 +103,7 @@ public class ActiveMemory {
     /**
      * @return A list of lasts advanced state boards that led to victory.
      */
-    public ArrayList<AdvancedStateBoard> GetWonGamesAdvancedStateBoards() {
+    public ArrayList<AdvancedBoardState> GetWonGamesAdvancedBoardStates() {
         // TODO the method
         return null;
     }
@@ -111,7 +111,7 @@ public class ActiveMemory {
     /**
      * @return A list of lasts advanced state boards that led to defeat.
      */
-    public ArrayList<AdvancedStateBoard> GetLostGamesAdvancedStateBoards() {
+    public ArrayList<AdvancedBoardState> GetLostGamesAdvancedBoardStates() {
         // TODO the method
         return null;
     }
@@ -120,7 +120,7 @@ public class ActiveMemory {
      * @return A list of lasts advanced state boards that are the most active in
      *         the semantic memory.
      */
-    public ArrayList<AdvancedStateBoard> GetMostActiveAdvancedStateBoards() {
+    public ArrayList<AdvancedBoardState> GetMostActiveAdvancedBoardStates() {
         // TODO the method
         return null;
     }

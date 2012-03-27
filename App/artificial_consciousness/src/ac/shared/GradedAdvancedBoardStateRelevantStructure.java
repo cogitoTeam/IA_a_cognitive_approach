@@ -10,8 +10,8 @@ package ac.shared;
  * @date 26 mars 2012
  * @version 0.1
  */
-public class GradedAdvancedStateBoardRelevantStructure extends
-        AdvancedStateBoardRelevantStructure {
+public class GradedAdvancedBoardStateRelevantStructure extends
+        AdvancedBoardStateRelevantStructure {
 
     private Double grade;
 
@@ -20,7 +20,7 @@ public class GradedAdvancedStateBoardRelevantStructure extends
      * 
      * @param id
      */
-    public GradedAdvancedStateBoardRelevantStructure() {
+    public GradedAdvancedBoardStateRelevantStructure() {
         super();
     }
 

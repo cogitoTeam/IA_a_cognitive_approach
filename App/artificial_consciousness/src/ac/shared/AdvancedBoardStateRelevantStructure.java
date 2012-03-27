@@ -10,6 +10,6 @@ package ac.shared;
  * @date 26 mars 2012
  * @version 0.1
  */
-public class AdvancedStateBoardRelevantStructure {
+public class AdvancedBoardStateRelevantStructure {
 
 }

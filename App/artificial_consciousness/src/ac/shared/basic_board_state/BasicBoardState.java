@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.shared.basic_state_board;
+package ac.shared.basic_board_state;
 
 /**
  * 
@@ -11,6 +11,6 @@ package ac.shared.basic_state_board;
  * @date 26 mars 2012
  * @version 0.1
  */
-public class BasicStateBoard {
+public class BasicBoardState {
     // TODO the class
 }
