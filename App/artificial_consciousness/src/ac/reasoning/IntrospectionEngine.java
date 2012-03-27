@@ -2,6 +2,8 @@ package ac.reasoning;
 
 import org.apache.log4j.Logger;
 
+import ac.memory.ActiveMemory;
+
 /**
  * Class IntrospectionEngine Cette classe implémente le moteur d'introspection
  * 
@@ -18,6 +20,17 @@ class IntrospectionEngine
   // ***************************************************************************
   // ATTRIBUTS
   // ***************************************************************************
+ 
+  private ActiveMemory  _memory;
+  
+  // ***************************************************************************
+  // CONSTRUCTORS
+  // ***************************************************************************
+
+  public IntrospectionEngine(ActiveMemory memory)
+  {
+    this._memory = memory;
+  }
 
   // ***************************************************************************
   // FRIENDLY METHODS

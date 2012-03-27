@@ -2,6 +2,8 @@ package ac.reasoning;
 
 import org.apache.log4j.Logger;
 
+import ac.memory.ActiveMemory;
+
 
 /**
  * Cette classe représente le module de raisonnement.
@@ -19,8 +21,24 @@ public class Reasoning
   // ATTRIBUTS
   // ***************************************************************************
 
-  private ChoiceEngine        choice_engine;
-  private IntrospectionEngine introspection_engine;
+  private ActiveMemory  _memory;
+  
+  private ChoiceEngine        _choice_engine;
+  private IntrospectionEngine _introspection_engine;
+  
+  // ***************************************************************************
+  // CONSTRUCTORS
+  // ***************************************************************************
+  
+  /**
+   * @param memory an instance of ActiveMemory
+   */
+  public Reasoning(ActiveMemory memory)
+  {
+    this._memory = memory;
+    this._choice_engine = new ChoiceEngine(this._memory);
+    this._introspection_engine = new IntrospectionEngine(this._memory);
+  }
 
   // ***************************************************************************
   // PUBLIC METHODS
@@ -32,9 +50,9 @@ public class Reasoning
   public void stimulate()
   {
     logger.debug("stimulate");
-    introspection_engine.stop();
-    choice_engine.start();
-    introspection_engine.start();
+    _introspection_engine.stop();
+    _choice_engine.start();
+    _introspection_engine.start();
   }
 
 }
