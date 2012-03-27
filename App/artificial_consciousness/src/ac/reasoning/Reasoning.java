@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 
 import ac.memory.ActiveMemory;
 
-
 /**
  * Cette classe représente le module de raisonnement.
  * 
@@ -14,24 +13,25 @@ import ac.memory.ActiveMemory;
  */
 public class Reasoning
 {
-  
-  private static final Logger logger = Logger.getLogger(Reasoning.class);
-  
-  // ***************************************************************************
-  // ATTRIBUTS
-  // ***************************************************************************
 
-  private ActiveMemory  _memory;
-  
+  private static final Logger logger = Logger.getLogger(Reasoning.class);
+
+  /* **************************************************************************
+   * ATTRIBUTS
+   * ************************************************************************ */
+
+  private ActiveMemory        _memory;
+
   private ChoiceEngine        _choice_engine;
   private IntrospectionEngine _introspection_engine;
-  
-  // ***************************************************************************
-  // CONSTRUCTORS
-  // ***************************************************************************
-  
+
+  /* **************************************************************************
+   * CONSTRUCTORS
+   * ************************************************************************ */
+
   /**
-   * @param memory an instance of ActiveMemory
+   * @param memory
+   *          an instance of ActiveMemory
    */
   public Reasoning(ActiveMemory memory)
   {
@@ -40,9 +40,9 @@ public class Reasoning
     this._introspection_engine = new IntrospectionEngine(this._memory);
   }
 
-  // ***************************************************************************
-  // PUBLIC METHODS
-  // ***************************************************************************
+  /* **************************************************************************
+   * PUBLIC METHODS
+   * ************************************************************************ */
 
   /**
    * Active the ChoiceEngine
