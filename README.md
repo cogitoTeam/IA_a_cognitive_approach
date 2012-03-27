@@ -8,4 +8,4 @@ Ce projet est réalisé par l'équipe COGITO composée de de quatre étudiants :
 * [William Dyce](http://wilbefast.com/)
 * [Thibaut Marmin](http://www.thibautmarmin.fr)
 * Namrata Patel
-* [Clément Sipieter](http://www.clement-sipieter.fr)
+* [Clément Sipieter](http://clement-sipieter.fr)
