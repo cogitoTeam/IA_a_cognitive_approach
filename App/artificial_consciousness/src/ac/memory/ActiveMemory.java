@@ -1,14 +1,11 @@
-/**
- * 
- */
 package ac.memory;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import ac.shared.AdvancedBoardStateRelevantStructure;
-import ac.shared.GradedAdvancedBoardStateRelevantStructure;
-import ac.shared.advanced_board_state.AdvancedBoardState;
-import ac.shared.relevant_structure.RelevantStructure;
+import book.Pair;
+
+import ac.shared.structure.CompleteBoardState;
+import ac.shared.structure.RelevantPartialBoardState;
 
 /**
  * The class Active Memory is in French the "Mémoire primaire". It acts as a
@@ -18,120 +15,64 @@ import ac.shared.relevant_structure.RelevantStructure;
  * @date 26 mars 2012
  * @version 0.1
  */
-public class ActiveMemory {
+public class ActiveMemory implements Memory {
 
-    /**
-     * Result of a game
-     * 
-     * @author Thibaut Marmin <marminthibaut@gmail.com>
-     * @date 26 mars 2012
-     * @version 0.1
+    /* (non-Javadoc)
+     * @see ac.memory.Memory#getRelevantPartialBoardStates()
      */
-    public enum resultGame {
-        /**
-         * Won game
-         */
-        WON,
-        /**
-         * Lost game
-         */
-        LOST,
-        /**
-         * Broken game
-         */
-        BROKEN
-    }
-
-    /**
-     * @return A number of RelevantStructure ordered by importance
-     */
-    public ArrayList<RelevantPartialBoardState> getRelevantStructures() {
-        // TODO the method
+    @Override
+    public List<RelevantPartialBoardState> getRelevantPartialBoardStates()
+            throws MemoryException {
+        // TODO Auto-generated method stub
         return null;
     }
 
-    /**
-     * @param acrs_list
-     *            Push a list of AdvancedBoardStateRelevantStructure in the
-     *            primary memory (pushed by the analysis module)
+    /* (non-Javadoc)
+     * @see ac.memory.Memory#putCompleteBoardState(ac.shared.structure.CompleteBoardState, java.util.List)
      */
-    public void PutAdvancedBoardStateRelevantStructures(
-            ArrayList<AdvancedBoardStateRelevantStructure> acrs_list) {
-        ; // TODO the method
+    @Override
+    public void putCompleteBoardState(CompleteBoardState cbs,
+            List<RelevantPartialBoardState> matching) throws MemoryException {
+        // TODO Auto-generated method stub
+        
     }
 
-    /**
-     * If Graded ACRS are available in the active memory, they are returned
-     * 
-     * @return a list of Graded ACRS
+    /* (non-Javadoc)
+     * @see ac.memory.Memory#getGradedCompleteBoardState()
      */
-    public ArrayList<GradedAdvancedBoardStateRelevantStructure> getGradedAdvancedBoardStateRelevantStructures() {
-        // TODO the method
+    @Override
+    public List<Pair<CompleteBoardState, Double>> getGradedCompleteBoardState()
+            throws MemoryException {
+        // TODO Auto-generated method stub
         return null;
     }
 
-    /**
-     * @param gacrs
-     *            The GACRS which has been chosen by the choice engine
+    /* (non-Javadoc)
+     * @see ac.memory.Memory#CompleteBoardStateChosen(ac.shared.structure.CompleteBoardState)
      */
-    public void saveGradedAdvancedBoardStateRelevantStructure(
-            GradedAdvancedBoardStateRelevantStructure gacrs) {
-        // TODO the method
+    @Override
+    public void CompleteBoardStateChosen(CompleteBoardState cbs)
+            throws MemoryException {
+        // TODO Auto-generated method stub
+        
     }
 
-    /**
-     * Beginning signal for a game. When you start a new game, you have to call
-     * this method.
+    /* (non-Javadoc)
+     * @see ac.memory.Memory#BeginOfGame()
      */
-    public void BeginOfGame() {
-        // TODO the method
+    @Override
+    public void BeginOfGame() throws MemoryException {
+        // TODO Auto-generated method stub
+        
     }
 
-    /**
-     * Ending signal for a game. At the end of a game, you have to call this
-     * method with a resultGame.
-     * 
-     * @param result
-     *            Result of the game
-     * @param score
-     *            Score of the game
+    /* (non-Javadoc)
+     * @see ac.memory.Memory#EndOfGame(ac.memory.Memory.FinalGameStatus, float)
      */
-    public void EndOfGame(resultGame result, double score) {
-        // TODO the method
-    }
-
-    /**
-     * @return A list of lasts advanced state boards that led to victory.
-     */
-    public ArrayList<AdvancedBoardState> GetWonGamesAdvancedBoardStates() {
-        // TODO the method
-        return null;
-    }
-
-    /**
-     * @return A list of lasts advanced state boards that led to defeat.
-     */
-    public ArrayList<AdvancedBoardState> GetLostGamesAdvancedBoardStates() {
-        // TODO the method
-        return null;
-    }
-
-    /**
-     * @return A list of lasts advanced state boards that are the most active in
-     *         the semantic memory.
-     */
-    public ArrayList<AdvancedBoardState> GetMostActiveAdvancedBoardStates() {
-        // TODO the method
-        return null;
-    }
-
-    /**
-     * Put new relevant structure in the semantic memory
-     * 
-     * @param rs
-     *            A relevant structure
-     */
-    public void PutRelevantStructure(RelevantPartialBoardState rs) {
-        // TODO the method
+    @Override
+    public void EndOfGame(FinalGameStatus status, float score)
+            throws MemoryException {
+        // TODO Auto-generated method stub
+        
     }
 }

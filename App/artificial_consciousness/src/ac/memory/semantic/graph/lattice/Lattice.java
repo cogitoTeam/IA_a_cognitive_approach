@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.memory.graph.lattice;
+package ac.memory.semantic.graph.lattice;
 
 import grph.Grph;
 

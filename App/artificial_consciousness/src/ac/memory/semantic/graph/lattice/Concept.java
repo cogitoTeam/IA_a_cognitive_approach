@@ -1,4 +1,4 @@
-package ac.memory.graph.lattice;
+package ac.memory.semantic.graph.lattice;
 
 import java.util.HashMap;
 import ac.shared.structure.CompleteBoardState;
