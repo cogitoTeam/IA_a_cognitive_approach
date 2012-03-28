@@ -11,7 +11,7 @@ import game.Game;
 
 public class MorpionGame extends Game
 {
-    /** METHODS **/
+    /* METHODS */
     
     public MorpionGame(int id)
     {

@@ -13,11 +13,11 @@ import java.util.List;
 
 public class MiniMaxAI extends AI
 {
-    /** CONSTANTS **/
+    /* CONSTANTS */
     private static final Player PMIN = Player.BLACK;
     private static final Player PMAX = Player.WHITE;
 
-    /** IMPLEMENTATIONS **/
+    /* IMPLEMENTATIONS */
 
     @Override
     public Position chooseMove(Rules rules, Board board, Player player)
@@ -27,7 +27,7 @@ public class MiniMaxAI extends AI
         return null;
     }
 
-    /** SUBROUTINES **/
+    /* SUBROUTINES */
 
     private int minimax(Rules rules, Board board, Player player)
     {

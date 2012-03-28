@@ -32,7 +32,7 @@ Game.C_TEXT = 'rgb(0,0,0)';
 
 function Game()
 {
-    /** ATTRIBUTES **/
+    /* ATTRIBUTES */
     
     // receiver 
     var obj = this;
@@ -45,7 +45,7 @@ function Game()
     var id = null;
     var is_human = [true, true];
 
-    /** SUBROUTINES **/
+    /* SUBROUTINES */
     var xml_parse_state = function(s_state, s_colour)
     {
         // parse the colour
@@ -138,10 +138,10 @@ function Game()
         
     }
 
-    /** METHODS **/
+    /* METHODS */
     obj.update_from_xml = function(data)
     {
-        /** Parse new game state **/
+        /* Parse new game state */
         var previous_turn = current_turn;
         current_turn = xml_parse_state(data[0].getAttribute('state'),
                                 data[0].childNodes[1].getAttribute('colour'));
@@ -151,14 +151,14 @@ function Game()
         // get the game identifier (for future queries)
         id = Number(data[0].getAttribute('id'));
         
-        /** Parse new board state **/
+        /* Parse new board state */
         // create the board if it doesn't already exist
         if(board == null)
             board = new Board();
         // update board using the 'board' element of the XML document
         board.update_from_xml(data[0].childNodes[0]);
         
-        /** Update the view to take changes into account **/
+        /* Update the view to take changes into account */
         redraw();
     }
 
@@ -188,9 +188,9 @@ function Game()
         ajax_request_move(id, row, col, current_turn);
     }
 
-    /** INITIALISE **/
+    /* INITIALISE */
     ajax_request_id();
 
-    /** RETURN INSTANCE **/
+    /* RETURN INSTANCE */
     return obj;
 }

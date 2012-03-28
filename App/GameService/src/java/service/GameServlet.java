@@ -1,4 +1,4 @@
-/* @author william */
+/** @author William J.D. **/
 
 package service;
 
@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GameServlet extends HttpServlet 
 {
-    /** ATTRIBUTES **/
+    /* ATTRIBUTES */
     Game game;
     
-    /** MAIN METHODS **/
+    /* MAIN METHODS */
     
     protected void processRequest(HttpServletRequest request, 
                                     HttpServletResponse response)
@@ -79,7 +79,7 @@ public class GameServlet extends HttpServlet
     
     
     
-    /** OVERRODES **/
+    /* OVERRODES */
 
     @Override
     protected void doGet(HttpServletRequest request, 

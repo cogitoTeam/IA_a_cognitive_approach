@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-/** GENERIC MESSAGE TEMPLATE **/
+/** GENERIC MESSAGE TEMPLATE */
 
 const WEBSERVICE = "./ws";
 
@@ -34,7 +34,7 @@ var msg =
 }
 
 
-/** TREAT REPLY CALLBACK **/
+/** TREAT REPLY CALLBACK */
 
 function receive_board(data)
 {
@@ -42,7 +42,7 @@ function receive_board(data)
 }
 
 
-/** REQUEST NEW GAME STATE **/
+/** REQUEST NEW GAME STATE */
 
 function ajax_request_move(id, row, col, player)
 {

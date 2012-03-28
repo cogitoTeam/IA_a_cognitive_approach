@@ -13,7 +13,7 @@ import java.util.List;
 
 public abstract class Game 
 {
-    /** NESTING **/
+    /* NESTING */
     
     public static enum Player
     {
@@ -32,12 +32,12 @@ public abstract class Game
     }
 
 
-    /** CONSTANTS **/
+    /* CONSTANTS */
     
     public static final Player AI_PLAYER = Player.BLACK;
 
 
-    /** ATTRIBUTES **/
+    /* ATTRIBUTES */
 
     private final int id;
     private final Rules rules;
@@ -46,7 +46,7 @@ public abstract class Game
     private State current_state;
     private Player current_player;
         
-    /** METHODS **/
+    /* METHODS */
     
     // creation
     protected Game(int _id, Rules _rules, Board _board)
@@ -114,7 +114,7 @@ public abstract class Game
     }
     
     
-    /** SUBROUTINES **/
+    /* SUBROUTINES */
     
     private void switchCurrentPlayer()
     {
@@ -122,7 +122,7 @@ public abstract class Game
                                                         : Player.WHITE;
     }
     
-    /** OVERRIDES **/
+    /* OVERRIDES */
   
     @Override
     public String toString()

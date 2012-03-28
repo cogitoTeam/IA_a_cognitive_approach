@@ -11,7 +11,7 @@ import game.Game;
 
 public class ReversiGame extends Game
 {
-    /** METHODS **/
+    /* METHODS */
     
     public ReversiGame(int id)
     {

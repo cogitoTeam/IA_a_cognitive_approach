@@ -15,7 +15,7 @@ import game.Rules;
 
 class ReversiRules extends Rules
 {
-    /** SINGLETON **/
+    /* SINGLETON */
     
     private static ReversiRules instance = null;
     public static ReversiRules getInstance()
@@ -28,7 +28,7 @@ class ReversiRules extends Rules
     
     
     
-    /** IMPLEMENT INTERFACE **/
+    /* IMPLEMENT INTERFACE */
        
     
     // query

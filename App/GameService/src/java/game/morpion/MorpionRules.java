@@ -16,7 +16,7 @@ import game.Rules;
 
 class MorpionRules extends Rules
 {
-    /** SINGLETON **/
+    /* SINGLETON */
     
     private static MorpionRules instance = null;
     public static MorpionRules getInstance()
@@ -29,7 +29,7 @@ class MorpionRules extends Rules
     
     
     
-    /** IMPLEMENT INTERFACE **/
+    /* IMPLEMENT INTERFACE */
     
     // query
     @Override

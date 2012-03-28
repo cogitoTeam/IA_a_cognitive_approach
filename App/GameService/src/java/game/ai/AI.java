@@ -12,7 +12,7 @@ import game.Game.Player;
 public abstract class AI
 {
 
-    /** INTERFACE **/
+    /* INTERFACE */
 
     public abstract Position chooseMove(Rules rules, Board board, Player player);
 

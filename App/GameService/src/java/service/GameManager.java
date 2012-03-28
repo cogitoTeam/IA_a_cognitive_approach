@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class GameManager 
 {
-    /** SINGLETON **/
+    /* SINGLETON */
     public static GameManager instance = null;
     public static synchronized GameManager getInstance()
     {
@@ -22,13 +22,13 @@ public class GameManager
         return instance;
     }
     
-    /** CLASS NAMESPACE ATTRIBUTES **/
+    /* CLASS NAMESPACE ATTRIBUTES */
     private static int next_id = 0;
     
-    /** ATTRIBUTES **/
+    /* ATTRIBUTES */
     private Map<Integer, Game> games;
     
-    /** METHODS **/
+    /* METHODS */
     
     // singleton
     private GameManager()

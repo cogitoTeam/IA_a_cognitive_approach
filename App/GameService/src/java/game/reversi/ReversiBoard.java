@@ -11,7 +11,7 @@ import game.Board;
 
 public class ReversiBoard extends Board
 {
-    /** METHODS **/
+    /* METHODS */
     
     public ReversiBoard()
     {

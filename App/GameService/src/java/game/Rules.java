@@ -16,10 +16,10 @@ import java.util.logging.Logger;
 
 public abstract class Rules
 {
-    /** CONSTANTS **/
+    /* CONSTANTS */
     private static final Logger logger = Logger.getLogger(Rules.class.getName());
 
-    /** ATTRIBUTES **/
+    /* ATTRIBUTES */
     
     /* METHODS */
 
@@ -70,7 +70,7 @@ public abstract class Rules
         return positions;
     }
 
-    /** PUBLIC INTERFACE **/
+    /* PUBLIC INTERFACE */
  
     // query
     public abstract Game.Player getFirstPlayer();

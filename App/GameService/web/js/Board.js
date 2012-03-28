@@ -25,7 +25,7 @@ Board.OUT_OF_BOUNDS = 3;
 
 function Board()
 {
-    /** ATTRIBUTES **/
+    /* ATTRIBUTES */
     
     // receiver
     var obj = this;
@@ -38,7 +38,7 @@ function Board()
     var cell_h = 0;
     var cells = new Array();
 
-    /** PRIVATE METHODS **/
+    /* PRIVATE METHODS */
     
         
     var xml_update_cell = function(element)
@@ -113,7 +113,7 @@ function Board()
 
     }
 
-    /** PUBLIC METHODS **/
+    /* PUBLIC METHODS */
 
     // update
     obj.redraw = function()
@@ -190,6 +190,6 @@ function Board()
         return (cell_w == 0) ? 0 : ~~(x/cell_w);
     }
 
-    /** RETURN INSTANCE **/
+    /* RETURN INSTANCE */
     return obj;
 }

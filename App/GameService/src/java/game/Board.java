@@ -11,7 +11,7 @@ import game.Game.Player;
 
 public abstract class Board
 {
-    /** NESTING **/
+    /* NESTING */
     public static enum Cell
     {
         EMPTY, PIECE_BLACK, PIECE_WHITE, OUT_OF_BOUNDS
@@ -49,15 +49,15 @@ public abstract class Board
         }
     }
     
-    /** CONTANTS **/
+    /* CONTANTS */
     
 
-    /** ATTRIBUTES **/
+    /* ATTRIBUTES */
             
     private Cell cells[][];
     
     
-    /** METHODS **/
+    /* METHODS */
     
     // creation
     public Board(Size s)
@@ -170,7 +170,7 @@ public abstract class Board
     }
 
 
-    /** OVERRIDES **/
+    /* OVERRIDES */
     @Override
     public String toString()
     {

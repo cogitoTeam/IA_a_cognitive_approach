@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/** GLOBAL VARIABLES **/
+/* GLOBAL VARIABLES */
 
 // html5 objects
 var canvas = document.getElementById('game_canvas');
@@ -30,7 +30,7 @@ var context_info  = canvas_info.getContext('2d');
 var game;
 
 
-/** RESOURCE MANAGEMENT **/
+/* RESOURCE MANAGEMENT */
 
 var loading = 0;
 var resourceLoaded = function()
@@ -56,7 +56,7 @@ function load_image(file_name)
 }
 
 
-/** DEBUG UTILITIES **/
+/* DEBUG UTILITIES */
 
 // http://davesquared.net/2008/07/write-out-fields-of-javascript-object.html
 function writeObj(obj, message)
