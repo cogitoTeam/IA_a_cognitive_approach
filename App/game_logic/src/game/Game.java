@@ -64,13 +64,13 @@ public class Game
     /* METHODS */
     
     // creation
-    protected Game(int _id, Rules _rules)
+    public Game(int _id, Rules _rules)
     {
         this(_id, _rules, null);
         restart();
     }
 
-    protected Game(int _id, Rules _rules, AI _ai)
+    public Game(int _id, Rules _rules, AI _ai)
     {
         id = _id;
         rules = _rules;
