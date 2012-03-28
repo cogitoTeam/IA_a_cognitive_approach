@@ -6,7 +6,7 @@
 
 package ac.frontier;
 
-import ac.frontier.BoardMatrix.Position;
+import game.BoardMatrix.Position;
 
 
 class Actuator 
