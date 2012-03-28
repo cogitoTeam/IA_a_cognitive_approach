@@ -16,9 +16,9 @@ public class MorpionSensor extends Sensor
 {
     /* IMPLEMENTATIONS */
     
-    public MorpionSensor(String s_url)
+    public MorpionSensor(String _s_server_url)
     {
-        super(s_url);
+        super(_s_server_url);
     }
     
     @Override

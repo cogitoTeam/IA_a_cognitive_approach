@@ -17,7 +17,8 @@ import javax.xml.parsers.ParserConfigurationException;
 public abstract class Frontier 
 { 
     /* CONSTANTS */
-    protected static final String default_url = "http://localhost:8084/game_service/ws";
+    protected static final String DEFAULT_S_SERVER_URL = 
+                                        "http://localhost:8084/game_service/ws";
     
   
     /* ATTRIBUTES */

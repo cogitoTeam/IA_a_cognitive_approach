@@ -18,13 +18,13 @@ public class ReversiFrontier extends Frontier
     @Override
     protected Actuator createActuator()
     {
-        return new ReversiActuator(Frontier.default_url);
+        return new ReversiActuator(Frontier.DEFAULT_S_SERVER_URL);
     }
 
     @Override
     protected Sensor createSensor()
     {
-        return new ReversiSensor(Frontier.default_url);
+        return new ReversiSensor(Frontier.DEFAULT_S_SERVER_URL);
     }
 
 }

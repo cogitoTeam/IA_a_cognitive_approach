@@ -22,12 +22,12 @@ class XMLClient
     /* ATTRIBUTES */
     
     private DocumentBuilder xml_builder;
-    protected final String base_url;
+    private final String s_server_url;
     
     /* METHODS */
     
     // creation
-    public XMLClient(String _base_url)
+    public XMLClient(String _s_server_url)
     {
         // Create the XML document builder
         try 
@@ -41,17 +41,23 @@ class XMLClient
         }
 
         // Create the URL object
-        base_url = _base_url;
+        s_server_url = _s_server_url;
     }
     
     // query
     
-    public Document getXML(String s_url)
+    public Document getXML()
+    {
+        return getXML("");
+    }
+    
+    
+    public Document getXML(String s_query)
     {
         try 
         {
             // get the document from url and parse
-            return xml_builder.parse(new URL(s_url).openStream());
+            return xml_builder.parse(new URL(s_server_url+"?"+s_query).openStream());
         } 
         catch (SAXException ex) 
         {

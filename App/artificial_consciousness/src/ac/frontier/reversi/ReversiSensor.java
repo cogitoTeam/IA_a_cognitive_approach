@@ -17,9 +17,9 @@ public class ReversiSensor extends Sensor
 {
     /* IMPLEMENTATIONS */
     
-    public ReversiSensor(String s_url)
+    public ReversiSensor(String _s_server_url)
     {
-        super(s_url);
+        super(_s_server_url);
     }
     
     @Override

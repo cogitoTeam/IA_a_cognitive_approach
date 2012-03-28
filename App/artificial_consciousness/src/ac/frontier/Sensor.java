@@ -24,16 +24,16 @@ public abstract class Sensor extends XMLClient
     /* METHODS */
     
     // creation
-    public Sensor(String _base_url)
+    public Sensor(String _s_server_url)
     {
-        super(_base_url);
+        super(_s_server_url);
     }
     
     // query
     public List<Option> getOptions(Player player)
     {
         // get an XML document from the server
-        Document doc = getXML(base_url);
+        Document doc = getXML();
         
         // parse the current board
         BoardMatrix board = parseBoard(doc.getDocumentElement()
@@ -53,7 +53,7 @@ public abstract class Sensor extends XMLClient
         return options;
     }
     
-    /* SUBROUTINES / INTERFACE */
+    /* SUBROUTINES */
     
     private BoardMatrix parseBoard(Node board_node)
     {
@@ -92,6 +92,8 @@ public abstract class Sensor extends XMLClient
         // return the resulting parsed board
         return board;
     }
+    
+    /* INTERFACE */
     
     protected abstract BoardMatrix createBoard();
     

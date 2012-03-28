@@ -7,14 +7,22 @@
 package ac.frontier.reversi;
 
 import ac.frontier.Actuator;
+import game.Rules;
+import game.reversi.ReversiRules;
 
 
 public class ReversiActuator extends Actuator
 {
     /* IMPLEMENTATIONS */
     
-    ReversiActuator(String s_url)
+    ReversiActuator(String _s_server_url)
     {
-        super(s_url);
+        super(_s_server_url);
+    }
+    
+    @Override
+    protected Rules getRules() 
+    {
+        return ReversiRules.getInstance();
     }
 }

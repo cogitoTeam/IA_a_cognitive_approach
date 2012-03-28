@@ -7,15 +7,23 @@
 package ac.frontier.morpion;
 
 import ac.frontier.Actuator;
+import game.Rules;
+import game.morpion.MorpionRules;
 
 
 public class MorpionActuator extends Actuator
 {
     /* IMPLEMENTATIONS */
     
-    MorpionActuator(String s_url) 
+    MorpionActuator(String _s_server_url) 
     {
-        super(s_url);
+        super(_s_server_url);
+    }
+
+    @Override
+    protected Rules getRules() 
+    {
+        return MorpionRules.getInstance();
     }
 
 }
