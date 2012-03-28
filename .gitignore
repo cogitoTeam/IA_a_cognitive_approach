@@ -1,5 +1,5 @@
-*~
-<<<<<<< HEAD
+
+
 /App/artificial_consciousness/nbproject/private/
 /App/artificial_consciousness/build/
 /App/GameLogic/nbproject/private/
@@ -8,7 +8,9 @@
 /App/game_logic/nbproject/private/
 /App/game_logic/build/
 /App/game_logic/dist/
-=======
+
+
+*~
 *.pydevproject
 .project
 .metadata
@@ -54,9 +56,5 @@ local.properties
 
 #log files
 *.log
-<<<<<<< HEAD
->>>>>>> modif gitignore
-=======
 
 Docs/Diags/.DS_Store
->>>>>>> again
