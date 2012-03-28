@@ -13,6 +13,12 @@ local.properties
 .settings/
 .loadpath
 
+# Netbeans project files
+nbproject/**
+build.xml
+log4j.properties
+manifest.mf
+
 # External tool builders
 .externalToolBuilders/
 
