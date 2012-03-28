@@ -36,4 +36,11 @@ public class Option
     {
         return result;
     }
+    
+    /* OVERRIDES */
+    @Override
+    public String toString()
+    {
+        return "<option " + move + ">" + result + "</option>";
+    }
 }

@@ -11,7 +11,7 @@ import java.io.IOException;
 import org.xml.sax.SAXException;
 
 
-class Actuator 
+public abstract class Actuator 
 {
     /* METHODS */
     
@@ -22,8 +22,9 @@ class Actuator
     }
     
     // command
-    void performMove(Position p)  throws IOException, SAXException
+    boolean tryMove(Position p)  throws IOException, SAXException
     {
+        // return true if the move succeed, false otherwise
         throw new UnsupportedOperationException("Not yet implemented");
     }
 

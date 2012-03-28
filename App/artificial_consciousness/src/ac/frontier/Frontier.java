@@ -7,8 +7,8 @@
 package ac.frontier;
 
 import game.BoardMatrix.Position;
+import game.Game.Player;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,10 +16,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 
-public class Frontier 
+public abstract class Frontier 
 { 
     /* CONSTANTS */
-    private static final String s_url = "http://localhost:8084/game_service/ws";
+    protected static final String default_url = "http://localhost:8084/game_service/ws";
     
   
     /* ATTRIBUTES */
@@ -37,8 +37,8 @@ public class Frontier
         try 
         {
             // attempt to create the external interface
-            actuator = new Actuator(s_url);
-            sensor = new Sensor(s_url);
+            actuator = createActuator();
+            sensor = createSensor();
         } 
         catch (ParserConfigurationException ex) 
         {
@@ -48,29 +48,32 @@ public class Frontier
     
     // query
     
-    public void performMove(Position p)
+    public boolean tryMove(Player player, Position p)
     {
+        // return true if the move succeed, false otherwise
         try 
         {
             // to send information via the external interface
-            actuator.performMove(p);
+            return actuator.tryMove(p);
         } 
         catch (IOException ex) 
         {
             Logger.getLogger(Frontier.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         } 
         catch (SAXException ex) 
         {
             Logger.getLogger(Frontier.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
     
-    public List<Option> getOptions()
+    public List<Option> getOptions(Player player)
     {
         try 
         {
             // to receive information via the external interface
-            return sensor.getOptions();
+            return sensor.getOptions(player);
         } 
         catch (IOException ex) 
         {
@@ -86,6 +89,12 @@ public class Frontier
     
     
 
+    /* INTERFACE / SUBROUTINES */
     
+    protected abstract Actuator createActuator() 
+            throws ParserConfigurationException;
+    
+    protected abstract Sensor createSensor()
+            throws ParserConfigurationException;
 
 }
