@@ -6,6 +6,8 @@
 
 package ac.frontier;
 
+import game.BoardMatrix;
+
 
 public class Option 
 {
