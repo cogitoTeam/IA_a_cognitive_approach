@@ -24,7 +24,7 @@ class ChoiceEngine
    * ATTRIBUTS
    * ************************************************************************ */
 
-  private ActiveMemory        _memory;
+  private ActiveMemory _memory;
 
   /* **************************************************************************
    * CONSTRUCTORS
