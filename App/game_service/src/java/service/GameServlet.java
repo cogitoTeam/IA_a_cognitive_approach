@@ -73,9 +73,16 @@ public class GameServlet extends HttpServlet
         Position p = new Position(Integer.parseInt(s_row),
                                                 Integer.parseInt(s_col));
         // parse player
-        Game.Player player = (Integer.parseInt(s_player) == 0) ?
-                                Game.Player.WHITE :
-                                Game.Player.BLACK;
+        
+        
+        Game.Player player;
+        if(s_player.equals("WHITE")) 
+            player = Game.Player.WHITE;
+        else if(s_player.equals("BLACK"))
+            player = Game.Player.BLACK;
+        else
+            player = null;
+            
 
         // try to perform the move
         game.tryMove(p, player);
