@@ -4,7 +4,7 @@
  *****************/
 
 
-package ac.analysis.util;
+package ac.frontier;
 
 
 public abstract class BoardMatrix

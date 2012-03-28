@@ -7,20 +7,20 @@
 package ac.frontier;
 
 
-public class FrontEnd 
+public class Frontier 
 {
     /* SINGLETON */
     
-    private static FrontEnd instance = null;
+    private static Frontier instance = null;
     
-    public static FrontEnd getInstance()
+    public static Frontier getInstance()
     {
         if(instance == null)
-            instance = new FrontEnd();
+            instance = new Frontier();
         return instance;
     }
     
-    private FrontEnd()
+    private Frontier()
     {
     }
 

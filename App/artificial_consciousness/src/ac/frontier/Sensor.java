@@ -7,7 +7,7 @@
 package ac.frontier;
 
 
-public class Sensor 
+class Sensor 
 {
 
 }

@@ -1,4 +1,4 @@
-package ac.analysis.util;
+package ac.frontier;
 
 /**
  * Classe ReversiMatrix
