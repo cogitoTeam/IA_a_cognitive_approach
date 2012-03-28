@@ -72,6 +72,8 @@ public interface LatticeContext {
      *            id of the attribute
      * @param id_object
      *            id of the object
+     * @param value
+     *            checked or not
      */
     void setStatus(long id_attribute, long id_object, boolean value);
 

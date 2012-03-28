@@ -17,7 +17,9 @@ import ac.shared.structure.RelevantPartialBoardState;
  */
 public class ActiveMemory implements Memory {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ac.memory.Memory#getRelevantPartialBoardStates()
      */
     @Override
@@ -27,17 +29,23 @@ public class ActiveMemory implements Memory {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see ac.memory.Memory#putCompleteBoardState(ac.shared.structure.CompleteBoardState, java.util.List)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * ac.memory.Memory#putCompleteBoardState(ac.shared.structure.CompleteBoardState
+     * , java.util.List)
      */
     @Override
     public void putCompleteBoardState(CompleteBoardState cbs,
             List<RelevantPartialBoardState> matching) throws MemoryException {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ac.memory.Memory#getGradedCompleteBoardState()
      */
     @Override
@@ -47,32 +55,39 @@ public class ActiveMemory implements Memory {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see ac.memory.Memory#CompleteBoardStateChosen(ac.shared.structure.CompleteBoardState)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ac.memory.Memory#CompleteBoardStateChosen(ac.shared.structure.
+     * CompleteBoardState)
      */
     @Override
     public void CompleteBoardStateChosen(CompleteBoardState cbs)
             throws MemoryException {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ac.memory.Memory#BeginOfGame()
      */
     @Override
     public void BeginOfGame() throws MemoryException {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ac.memory.Memory#EndOfGame(ac.memory.Memory.FinalGameStatus, float)
      */
     @Override
     public void EndOfGame(FinalGameStatus status, float score)
             throws MemoryException {
         // TODO Auto-generated method stub
-        
+
     }
 }
