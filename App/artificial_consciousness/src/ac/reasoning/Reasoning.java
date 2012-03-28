@@ -20,9 +20,9 @@ public class Reasoning
    * ATTRIBUTS
    * ************************************************************************ */
 
-  private ActiveMemory        _memory;
+  private ActiveMemory _memory;
 
-  private ChoiceEngine        _choice_engine;
+  private ChoiceEngine _choice_engine;
   private IntrospectionEngine _introspection_engine;
 
   /* **************************************************************************
