@@ -13,11 +13,15 @@ import game.Game.Player;
 import game.Rules;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
@@ -52,7 +56,14 @@ public abstract class Sensor
                                 .getElementsByTagName("board").item(0));
         
         // get legal moves
-        getRules().getLegalMoves(board, player);
+        List<Position> moves = getRules().getLegalMoves(board, player);
+        
+        // generate options based on legal moves
+        List<Option> options = new LinkedList<Option>();
+        for(Position move : moves)
+            // ad each option
+            options.add(new Option(move, getRules()
+                    .getResultingBoard(board, player, move)));
         
         // fixme
         return null;
@@ -76,8 +87,10 @@ public abstract class Sensor
             
             // parse position
             Position p = new Position(0, 0);
-            p.row = Integer.parseInt(attributes.getNamedItem("row").getNodeValue());
-            p.col = Integer.parseInt(attributes.getNamedItem("col").getNodeValue());
+            p.row = Integer.parseInt(attributes.getNamedItem("row")
+                                        .getNodeValue());
+            p.col = Integer.parseInt(attributes.getNamedItem("col")
+                                        .getNodeValue());
             
             // parse owner
             Player owner = null;
