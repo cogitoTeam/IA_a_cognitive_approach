@@ -4,18 +4,19 @@
  *****************/
 
 
-package game.morpion;
+package game;
 
-import game.BoardMatrix;
 import game.BoardMatrix.Position;
-import game.Game;
+import game.BoardMatrix.Size;
 import game.Game.Player;
 import game.Game.State;
-import game.Rules;
 
 
 public class MorpionRules extends Rules
 {
+    /* CONSTANTS */
+    private static final Size BOARD_SIZE = new Size(3, 3);
+    
     /* SINGLETON */
     
     private static MorpionRules instance = null;
@@ -155,6 +156,12 @@ public class MorpionRules extends Rules
     public String toString() 
     {
         return "morpion";
+    }
+
+    @Override
+    public BoardMatrix createBoard()
+    {
+        return new BoardMatrix(BOARD_SIZE);
     }
 
 }

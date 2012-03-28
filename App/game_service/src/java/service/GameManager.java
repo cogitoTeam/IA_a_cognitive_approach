@@ -6,7 +6,8 @@
 package service;
 
 import game.Game;
-import game.morpion.MorpionGame;
+import game.MorpionRules;
+import game.Rules;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,8 @@ public class GameManager
     private static int next_id = 0;
     
     /* ATTRIBUTES */
+    
+    private Rules rules;
     private Map<Integer, Game> games;
     
     /* METHODS */
@@ -34,6 +37,7 @@ public class GameManager
     private GameManager()
     {
         games = new HashMap<Integer, Game>();
+        rules = MorpionRules.getInstance();
     }
     
     // query
@@ -43,10 +47,15 @@ public class GameManager
     }
     
     // modification
+    public synchronized void setRules(Rules _rules)
+    {
+        rules = _rules;
+    }
+    
     public synchronized Game newGame()
     {
         // create and save the new game
-        Game game = new MorpionGame(next_id);
+        Game game = new Game(next_id, rules);
         games.put(next_id, game);
         
         // remember to increment the id generator!

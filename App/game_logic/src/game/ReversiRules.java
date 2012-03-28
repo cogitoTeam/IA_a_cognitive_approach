@@ -4,17 +4,18 @@
  *****************/
 
 
-package game.reversi;
+package game;
 
-import game.BoardMatrix;
 import game.BoardMatrix.Position;
-import game.Game;
+import game.BoardMatrix.Size;
 import game.Game.Player;
-import game.Rules;
 
 
 public class ReversiRules extends Rules
 {
+    /* CONSTANTS */
+    private static final Size BOARD_SIZE = new Size(8, 8);
+    
     /* SINGLETON */
     
     private static ReversiRules instance = null;
@@ -81,6 +82,12 @@ public class ReversiRules extends Rules
     public String toString() 
     {
         return "reversi";
+    }
+
+    @Override
+    public BoardMatrix createBoard() 
+    {
+        return new BoardMatrix(BOARD_SIZE);
     }
 
 }

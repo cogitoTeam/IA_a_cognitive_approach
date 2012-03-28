@@ -15,7 +15,7 @@ import java.util.List;
 import org.w3c.dom.Document;
 
 
-public class Sensor extends XMLClient
+class Sensor extends XMLClient
 {
     /* ATTRIBUTES */
     

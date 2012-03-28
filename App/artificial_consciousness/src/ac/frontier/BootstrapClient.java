@@ -7,12 +7,11 @@
 package ac.frontier;
 
 import game.BoardMatrix;
+import game.MorpionRules;
+import game.ReversiRules;
 import game.Rules;
-import game.morpion.MorpionRules;
-import game.reversi.ReversiRules;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 
 
 class BootstrapClient extends XMLClient

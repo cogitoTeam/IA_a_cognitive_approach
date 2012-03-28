@@ -91,7 +91,10 @@ public abstract class Rules
     
     public abstract boolean hasWon(BoardMatrix board, Player player);
 
-    public abstract boolean isLegalMove(Position p, BoardMatrix board, Player player);
+    public abstract boolean isLegalMove(Position p, BoardMatrix board, 
+                                        Player player);
+    
+    public abstract BoardMatrix createBoard();
     
     // modification
     public abstract Game.State performMove(Position p, BoardMatrix board,

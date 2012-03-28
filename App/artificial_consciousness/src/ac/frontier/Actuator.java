@@ -12,7 +12,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 
-public class Actuator extends XMLClient
+class Actuator extends XMLClient
 {
     /* METHODS */
     

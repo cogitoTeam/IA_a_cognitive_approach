@@ -3,7 +3,7 @@
  * @date   Mar 27, 2012
  *****************/
 
-package game.ai;
+package ai;
 
 import game.BoardMatrix;
 import game.BoardMatrix.Position;

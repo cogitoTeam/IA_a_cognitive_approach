@@ -6,12 +6,12 @@
 
 package game;
 
+import ai.AI;
 import game.BoardMatrix.Position;
-import game.ai.AI;
 import java.util.List;
 
 
-public abstract class Game 
+public class Game 
 {
     /* NESTING */
     
@@ -64,20 +64,17 @@ public abstract class Game
     /* METHODS */
     
     // creation
-    protected Game(int _id, Rules _rules, BoardMatrix _board)
+    protected Game(int _id, Rules _rules)
     {
-        id = _id;
-        rules = _rules;
-        board = _board;
-        ai = null;
+        this(_id, _rules, null);
         restart();
     }
 
-    protected Game(int _id, Rules _rules, BoardMatrix _board, AI _ai)
+    protected Game(int _id, Rules _rules, AI _ai)
     {
         id = _id;
         rules = _rules;
-        board = _board;
+        board = _rules.createBoard();
         ai = _ai;
         restart();
     }
@@ -163,7 +160,7 @@ public abstract class Game
     }
     
     // modification
-    public void restart()
+    public final void restart()
     {
         rules.reset(board);
         current_player = rules.getFirstPlayer();
