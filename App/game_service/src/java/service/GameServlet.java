@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GameServlet extends HttpServlet 
 {
     /* ATTRIBUTES */
-    Game game;
+    Game game = null;
     
     /* MAIN METHODS */
     
@@ -28,25 +28,29 @@ public class GameServlet extends HttpServlet
         
         // Is the client requesting a specific game or a new one ?
         GameManager gm = GameManager.getInstance();
+        game = null;
         if(parameters.containsKey("game_id"))
             game = gm.getGame(Integer.parseInt(parameters.get("game_id")[0]));
-        
         if(game == null)
             game = gm.newGame();
         
-        // Is the client requesting the current game be reset ?
-        if(parameters.containsKey("restart"))
-            game.restart();
+        // If a new game has been created ignore other requests
         else
         {
-            // Is the client requesting a move ?
-            if(parameters.containsKey("row") && parameters.containsKey("col")
-            && parameters.containsKey("player"))
-                    processMoveRequest(parameters.get("row")[0],
-                                        parameters.get("col")[0],
-                                        parameters.get("player")[0]);
+            // Is the client requesting the current game be reset ?
+            if(parameters.containsKey("restart"))
+                game.restart();
             else
-                game.failMove();
+            {
+                // Is the client requesting a move ?
+                if(parameters.containsKey("row") && parameters.containsKey("col")
+                && parameters.containsKey("player"))
+                        processMoveRequest(parameters.get("row")[0],
+                                            parameters.get("col")[0],
+                                            parameters.get("player")[0]);
+                else
+                    game.failMove();
+            }
         }
         
         // Send the response

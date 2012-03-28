@@ -33,8 +33,6 @@ class Sensor
 
         // Create the URL object
         base_url = _base_url;
-
-        
     }
     
     // query
@@ -43,6 +41,8 @@ class Sensor
         // get an XML document from the server
         Document doc = xml_builder.parse(new URL(base_url).openStream());
 
+        System.out.println(doc.getDocumentElement().getTagName());
+        
         // fixme
         return null;
     }
