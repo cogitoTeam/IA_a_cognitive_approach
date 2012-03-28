@@ -67,11 +67,19 @@ public abstract class Sensor
             p.col = Integer.parseInt(attributes.getNamedItem("col").getNodeValue());
             
             // parse owner
-            Player owner;
+            Player owner = null;
             Node n_owner = attributes.getNamedItem("owner");
             if(n_owner != null)
                 owner = Game.parsePlayer(n_owner.getNodeValue());
+            
+            // finally set the cell's owner
+            if(owner == null)
+                board.setCell(p, BoardMatrix.Cell.EMPTY);
+            else
+                board.setCellOwner(p, owner);
         }
+        
+        System.out.println(board);
         
         // fixme
         return null;
