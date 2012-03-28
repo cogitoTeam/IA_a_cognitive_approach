@@ -86,5 +86,9 @@ public abstract class Rules
                                             Player player);
 
     public abstract void reset(BoardMatrix board);
+    
+    // override
+    @Override
+    public abstract String toString();
 
 }

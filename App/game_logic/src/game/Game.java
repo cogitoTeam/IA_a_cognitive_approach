@@ -129,7 +129,9 @@ public abstract class Game
     {
         // local variables
         List<Position> moves = rules.getLegalMoves(board, getCurrentPlayer());
-        String result = "<game id=\"" + id + "\" state=\"" + current_state + "\">";
+        String result = "<game id=\"" + id 
+                    + "\" state=\"" + current_state 
+                    + "\" rules=\"" + rules + "\">";
         
         // add the board state
         result += board;

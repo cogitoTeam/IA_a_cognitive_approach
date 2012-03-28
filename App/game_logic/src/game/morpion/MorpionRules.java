@@ -151,4 +151,10 @@ class MorpionRules extends Rules
         board.clear();
     }
 
+    @Override
+    public String toString() 
+    {
+        return "morpion";
+    }
+
 }
