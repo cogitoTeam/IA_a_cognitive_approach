@@ -23,10 +23,11 @@ public abstract class Game
     
     public static enum State
     {
-        TURN_WHITE,
-        TURN_BLACK,
-        VICTORY_WHITE,
-        VICTORY_BLACK,
+        GAME_START,
+        MOVE_SUCCESS,
+        MOVE_FAILURE,
+        NO_CHANGE,
+        VICTORY,
         DRAW;
     }
 
@@ -42,7 +43,8 @@ public abstract class Game
     private final Rules rules;
     private final Board board;
     private final AI ai;
-    private State state;
+    private State current_state;
+    private Player current_player;
         
     /** METHODS **/
     
@@ -65,59 +67,69 @@ public abstract class Game
         restart();
     }
     
-    // main
-    public boolean tryMove(Position move, Player player)
+    // modification
+    
+    public void failMove()
     {
-        // requesting player must be the current player
-        if(player != getCurrentPlayer())
-            return false;
-        
-        // check if the move is legal for this player
-        if(player != null && rules.isLegalMove(move, board, player))
+        current_state = State.NO_CHANGE;
+    }
+    
+    public void tryMove(Position move, Player player)
+    {
+        // check that it's the right player playing
+        if(player != current_player)
         {
-            // perform the move
-            state = rules.performMove(move, board, player);
-
-            // if playing against an AI, respond to the move
-            if(ai != null && getCurrentPlayer() == AI_PLAYER)
-            {
-                Position ai_move = ai.chooseMove(rules, board, AI_PLAYER);
-                state = rules.performMove(ai_move, board, AI_PLAYER);
-            }
-
-            // signal success
-            return true;
+            current_state = State.MOVE_FAILURE;
+            // skip to the end
+            return;
         }
         
-        // signal failure
-        return false;
+        // if it's the right player's turn try to perform the move
+        current_state = rules.performMove(move, board, player);
+        
+        // check if the move end the game
+        if(current_state == State.MOVE_SUCCESS)
+        {
+            // switch the current player
+            switchCurrentPlayer();
+
+            // if playing against an AI, respond to the move
+            if(ai != null && current_player == AI_PLAYER)
+            {
+                Position ai_move = ai.chooseMove(rules, board, AI_PLAYER);
+                current_state = rules.performMove(ai_move, board, AI_PLAYER);
+            }
+        }
     }
     
     // query
     public State getState()
     {
-        return state;
+        return current_state;
     }
     
     public Player getCurrentPlayer()
     {
-        switch(state)
-        {
-            case TURN_WHITE: 
-                return Player.WHITE;
-            case TURN_BLACK: 
-                return Player.BLACK;
-            default:
-                return null;
-        }
+        return current_player;
     }
+    
+    
+    /** SUBROUTINES **/
+    
+    private void switchCurrentPlayer()
+    {
+        current_player = (current_player == Player.WHITE) ? Player.BLACK 
+                                                        : Player.WHITE;
+    }
+    
+    /** OVERRIDES **/
   
     @Override
     public String toString()
     {
         // local variables
         List<Position> moves = rules.getLegalMoves(board, getCurrentPlayer());
-        String result = "<game id=\"" + id + "\" state=\"" + state + "\">";
+        String result = "<game id=\"" + id + "\" state=\"" + current_state + "\">";
         
         // add the board state
         result += board;
@@ -137,8 +149,8 @@ public abstract class Game
     public void restart()
     {
         rules.reset(board);
-        state = (rules.getFirstPlayer() == Player.WHITE) ? 
-                State.TURN_WHITE : State.TURN_BLACK;
+        current_player = rules.getFirstPlayer();
+        current_state = State.GAME_START;
     }
     
 }

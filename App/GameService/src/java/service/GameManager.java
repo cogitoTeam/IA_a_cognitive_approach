@@ -47,7 +47,7 @@ public class GameManager
     {
         // create and save the new game
         Game game = new MorpionGame(next_id);
-        games.put(next_id, new MorpionGame(next_id));
+        games.put(next_id, game);
         
         // remember to increment the id generator!
         next_id++;

@@ -37,13 +37,17 @@ public class GameServlet extends HttpServlet
         // Is the client requesting the current game be reset ?
         if(parameters.containsKey("restart"))
             game.restart();
-        
-        // Is the client requesting a move ?
-        if(parameters.containsKey("row") && parameters.containsKey("col")
-        && parameters.containsKey("player"))
-                processMoveRequest(parameters.get("row")[0],
-                                    parameters.get("col")[0],
-                                    parameters.get("player")[0]);
+        else
+        {
+            // Is the client requesting a move ?
+            if(parameters.containsKey("row") && parameters.containsKey("col")
+            && parameters.containsKey("player"))
+                    processMoveRequest(parameters.get("row")[0],
+                                        parameters.get("col")[0],
+                                        parameters.get("player")[0]);
+            else
+                game.failMove();
+        }
         
         // Send the response
         response.setContentType("text/xml;charset=UTF-8");

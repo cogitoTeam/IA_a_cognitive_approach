@@ -7,6 +7,7 @@
 package game.reversi;
 
 import game.Board;
+import game.Board.Position;
 import game.Game;
 import game.Game.Player;
 import game.Rules;
@@ -70,6 +71,10 @@ class ReversiRules extends Rules
         board.clear();
         
         // place 4 pieces, 2 white and 2 black, in the center
+        for(Position p = new Position(3,3); p.row < 4; p.row++)
+            for(p.col = 3; p.col < 4; p.col++)
+                board.setCellOwner(p, ((p.row + p.col)%2 == 0) ? Player.WHITE 
+                                                                : Player.BLACK);
     }
 
 }

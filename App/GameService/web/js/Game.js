@@ -46,18 +46,25 @@ function Game()
     var is_human = [true, true];
 
     /** SUBROUTINES **/
-    var xml_parse_state = function(attribute)
+    var xml_parse_state = function(s_state, s_colour)
     {
-        switch(attribute)
+        // parse the colour
+        e_colour = (s_colour == "WHITE") ? Game.WHITE : Game.BLACK;
+        
+        // parse the state
+        switch(s_state)
         {
-            case "TURN_WHITE":
-                return Game.WHITE;
-            case "TURN_BLACK":
-                return Game.BLACK;
-            case "VICTORY_WHITE":
-                return Game.VICTORY_WHITE;
-            case "VICTORY_BLACK":
-                return Game.VICTORY_BLACK;
+            // don't change current player
+            case "NO_CHANGE":
+            case "MOVE_FAILURE":
+            case "GAME_START":
+            case "MOVE_SUCCESS":
+                return e_colour;
+                
+            // victory
+            case "VICTORY":
+                return (e_colour == Game.WHITE) ? Game.VICTORY_WHITE
+                                                : Game.VICTORY_BLACK;
             case "DRAW":
             default:
                 return Game.DRAW;
@@ -135,7 +142,13 @@ function Game()
     obj.update_from_xml = function(data)
     {
         /** Parse new game state **/
-        current_turn = xml_parse_state(data[0].getAttribute('state'));
+        var previous_turn = current_turn;
+        current_turn = xml_parse_state(data[0].getAttribute('state'),
+                                data[0].childNodes[1].getAttribute('colour'));
+        // if no change is detected don't bother continuing
+        if(previous_turn == current_turn)
+            return;
+        // get the game identifier (for future queries)
         id = Number(data[0].getAttribute('id'));
         
         /** Parse new board state **/
