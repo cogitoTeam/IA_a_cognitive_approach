@@ -9,7 +9,7 @@ package game;
 import game.Game.Player;
 
 
-public abstract class Board 
+public abstract class Board
 {
     /** NESTING **/
     public static enum Cell
@@ -68,6 +68,7 @@ public abstract class Board
     
 
     // modification
+
     public void clear()
     {
         // local variables
@@ -99,6 +100,23 @@ public abstract class Board
     }
 
     // query
+
+    public Board copy() throws InstantiationException, IllegalAccessException
+    {
+        // local variables
+        Board clone = this.getClass().newInstance();
+        Position p = new Position(0, 0);
+
+        // copy each cell
+        for(p.row = 0; p.row < get_n_rows(); p.row++)
+            for(p.col = 0; p.col < get_n_cols(); p.col++)
+                clone.cells[p.row][p.col] = this.cells[p.row][p.col];
+
+        // return the result
+        return clone;
+    }
+
+
     public int get_n_rows()
     {
         return cells.length;
@@ -150,7 +168,9 @@ public abstract class Board
                 return null;
         }
     }
-    
+
+
+    /** OVERRIDES **/
     @Override
     public String toString()
     {

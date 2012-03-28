@@ -10,19 +10,53 @@ import game.Board.Position;
 import game.Game.Player;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-public abstract class Rules 
+public abstract class Rules
 {
+    /** CONSTANTS **/
+    private static final Logger logger = Logger.getLogger(Rules.class.getName());
+
     /** ATTRIBUTES **/
     
-    /** IMPLEMENTED METHODS **/
+    /** METHODS **/
+
+    // query
+    public List<Board> getChildBoards(Board parent, Player player)
+    {
+        // local variables
+        List<Board> children = new LinkedList<Board>();
+        List<Position> moves = getLegalMoves(parent, player);
+
+        // collect possible children
+        for(Position move : moves)
+        {
+            try
+            {
+                // perform the move on a copy of the parent
+                Board child = parent.copy();
+                performMove(move, child, player);
+                // save the child in the list
+                children.add(child);
+            }
+            catch (Exception ex)
+            {
+                logger.log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
+
+        // return the result
+        return children;
+    }
 
     // query
     public List<Position> getLegalMoves(Board board, Player player)
     {
         // local variables
-        List<Position> result = new LinkedList<Position>();
+        List<Position> positions = new LinkedList<Position>();
         Position p = new Position(0, 0);
         
         // collect legal position
@@ -30,10 +64,10 @@ public abstract class Rules
             for(p.col = 0; p.col < board.get_n_cols(); p.col++)
                 if(isLegalMove(p, board, player))
                     // be sure to add a copy, not the original !
-                    result.add(new Position(p.row, p.col));
+                    positions.add(new Position(p.row, p.col));
         
-        // return the result
-        return result;
+        // return the positions
+        return positions;
     }
 
     /** PUBLIC INTERFACE **/
