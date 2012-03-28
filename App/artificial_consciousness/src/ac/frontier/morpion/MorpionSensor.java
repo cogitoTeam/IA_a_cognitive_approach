@@ -11,13 +11,12 @@ import game.BoardMatrix;
 import game.Rules;
 import game.morpion.MorpionBoardMatrix;
 import game.morpion.MorpionRules;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class MorpionSensor extends Sensor
 {
     /* IMPLEMENTATIONS */
     
-    public MorpionSensor(String s_url) throws ParserConfigurationException
+    public MorpionSensor(String s_url)
     {
         super(s_url);
     }

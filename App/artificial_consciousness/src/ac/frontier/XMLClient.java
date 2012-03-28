@@ -7,7 +7,6 @@
 package ac.frontier;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,11 +27,18 @@ class XMLClient
     /* METHODS */
     
     // creation
-    public XMLClient(String _base_url) throws ParserConfigurationException
+    public XMLClient(String _base_url)
     {
         // Create the XML document builder
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        xml_builder = factory.newDocumentBuilder();
+        try 
+        {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            xml_builder = factory.newDocumentBuilder();
+        } 
+        catch (ParserConfigurationException ex) 
+        {
+            Logger.getLogger(XMLClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // Create the URL object
         base_url = _base_url;
@@ -40,7 +46,7 @@ class XMLClient
     
     // query
     
-    public Document getDocument(String s_url)
+    public Document getXML(String s_url)
     {
         try 
         {

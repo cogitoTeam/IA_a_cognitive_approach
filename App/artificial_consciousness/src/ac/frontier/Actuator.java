@@ -7,8 +7,6 @@
 package ac.frontier;
 
 import game.BoardMatrix.Position;
-import java.io.IOException;
-import org.xml.sax.SAXException;
 
 
 public abstract class Actuator 
@@ -22,7 +20,7 @@ public abstract class Actuator
     }
     
     // command
-    boolean tryMove(Position p)  throws IOException, SAXException
+    boolean tryMove(Position p)
     {
         // return true if the move succeed, false otherwise
         throw new UnsupportedOperationException("Not yet implemented");

@@ -9,7 +9,6 @@ package ac.frontier.morpion;
 import ac.frontier.Actuator;
 import ac.frontier.Frontier;
 import ac.frontier.Sensor;
-import javax.xml.parsers.ParserConfigurationException;
 
 
 public class MorpionFrontier extends Frontier
@@ -17,13 +16,13 @@ public class MorpionFrontier extends Frontier
     /* IMPLEMENTATIONS */
     
     @Override
-    protected Actuator createActuator() throws ParserConfigurationException 
+    protected Actuator createActuator()
     {
         return new MorpionActuator(Frontier.default_url);
     }
 
     @Override
-    protected Sensor createSensor() throws ParserConfigurationException 
+    protected Sensor createSensor()
     {
         return new MorpionSensor(Frontier.default_url);
     }

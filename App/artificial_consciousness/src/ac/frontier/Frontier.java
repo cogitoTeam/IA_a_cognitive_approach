@@ -8,12 +8,10 @@ package ac.frontier;
 
 import game.BoardMatrix.Position;
 import game.Game.Player;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 
 
 public abstract class Frontier 
@@ -50,41 +48,14 @@ public abstract class Frontier
     
     public boolean tryMove(Player player, Position p)
     {
-        // return true if the move succeed, false otherwise
-        try 
-        {
-            // to send information via the external interface
-            return actuator.tryMove(p);
-        } 
-        catch (IOException ex) 
-        {
-            Logger.getLogger(Frontier.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        } 
-        catch (SAXException ex) 
-        {
-            Logger.getLogger(Frontier.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+        // to send information via the external interface
+        return actuator.tryMove(p);
     }
     
     public List<Option> getOptions(Player player)
     {
-        try 
-        {
-            // to receive information via the external interface
-            return sensor.getOptions(player);
-        } 
-        catch (IOException ex) 
-        {
-            Logger.getLogger(Frontier.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        } 
-        catch (SAXException ex) 
-        {
-            Logger.getLogger(Frontier.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+        // to receive information via the external interface
+        return sensor.getOptions(player);
     }
     
     

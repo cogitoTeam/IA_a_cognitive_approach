@@ -11,14 +11,13 @@ import game.BoardMatrix;
 import game.Rules;
 import game.reversi.ReversiBoardMatrix;
 import game.reversi.ReversiRules;
-import javax.xml.parsers.ParserConfigurationException;
 
 
 public class ReversiSensor extends Sensor
 {
     /* IMPLEMENTATIONS */
     
-    public ReversiSensor(String s_url) throws ParserConfigurationException
+    public ReversiSensor(String s_url)
     {
         super(s_url);
     }

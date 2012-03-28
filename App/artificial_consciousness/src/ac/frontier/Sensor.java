@@ -11,18 +11,12 @@ import game.BoardMatrix.Position;
 import game.Game;
 import game.Game.Player;
 import game.Rules;
-import java.io.IOException;
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 
 public abstract class Sensor extends XMLClient
@@ -30,18 +24,17 @@ public abstract class Sensor extends XMLClient
     /* METHODS */
     
     // creation
-    public Sensor(String _base_url) throws ParserConfigurationException
+    public Sensor(String _base_url)
     {
         super(_base_url);
     }
     
     // query
-    public List<Option> getOptions(Player player) throws IOException, SAXException
+    public List<Option> getOptions(Player player)
     {
         // get an XML document from the server
-        Document doc = getDocument(base_url);
+        Document doc = getXML(base_url);
         
-
         // parse the current board
         BoardMatrix board = parseBoard(doc.getDocumentElement()
                                 .getElementsByTagName("board").item(0));
