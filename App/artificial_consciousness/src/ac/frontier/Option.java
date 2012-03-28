@@ -7,27 +7,27 @@
 package ac.frontier;
 
 import game.BoardMatrix;
+import game.BoardMatrix.Position;
 
 
 public class Option 
 {
     /* ATTRIBUTES */
     
-    private BoardMatrix.Position move;
+    private Position move;
     private BoardMatrix result;
     
     /* METHODS */
     
     // creation
-    public Option(BoardMatrix.Position _move, BoardMatrix _result)
+    public Option(Position _move, BoardMatrix _result)
     {
         move = _move;
         result = _result;
     }
-    
-    
+      
     // query
-    public BoardMatrix.Position getMove()
+    public Position getMove()
     {
         return move;
     }
