@@ -21,7 +21,7 @@ public abstract class Rules
 
     /** ATTRIBUTES **/
     
-    /** METHODS **/
+    /* METHODS */
 
     // query
     public List<Board> getChildBoards(Board parent, Player player)

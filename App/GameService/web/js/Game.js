@@ -97,7 +97,7 @@ function Game()
                 image = typ.IMAGE_BLACK;
                 break;
 
-            case typ.VICTORY_BLACK:
+            case typ.DRAW:
                 text = "Draw...";
                 break;
 

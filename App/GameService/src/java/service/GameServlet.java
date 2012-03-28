@@ -30,7 +30,8 @@ public class GameServlet extends HttpServlet
         GameManager gm = GameManager.getInstance();
         if(parameters.containsKey("game_id"))
             game = gm.getGame(Integer.parseInt(parameters.get("game_id")[0]));
-        else
+        
+        if(game == null)
             game = gm.newGame();
         
         // Is the client requesting the current game be reset ?
