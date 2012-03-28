@@ -8,6 +8,7 @@ package ac.frontier;
 
 import ac.frontier.morpion.MorpionFrontier;
 import game.Game.Player;
+import java.util.List;
 
 
 public class TestFrontier 
@@ -16,6 +17,11 @@ public class TestFrontier
     {
         Frontier frontier = new MorpionFrontier();
         
-        frontier.getOptions(Player.WHITE);
+        
+        List<Option> l = frontier.getOptions(Player.WHITE);
+        
+        for(Option o : l)
+            System.out.println(o);  
+        
     }
 }

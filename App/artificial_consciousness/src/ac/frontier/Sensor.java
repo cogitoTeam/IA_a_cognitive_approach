@@ -65,8 +65,8 @@ public abstract class Sensor
             options.add(new Option(move, getRules()
                     .getResultingBoard(board, player, move)));
         
-        // fixme
-        return null;
+        // result the fruits of our labour !
+        return options;
     }
     
     /* SUBROUTINES / INTERFACE */
