@@ -1,4 +1,5 @@
 *~
+<<<<<<< HEAD
 /App/artificial_consciousness/nbproject/private/
 /App/artificial_consciousness/build/
 /App/GameLogic/nbproject/private/
@@ -7,3 +8,50 @@
 /App/game_logic/nbproject/private/
 /App/game_logic/build/
 /App/game_logic/dist/
+=======
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+*.class
+
+# Package Files #
+# *.jar
+# *.war
+# *.ear
+
+#temporary files
+*~
+
+#useless files
+*.dot
+*.neato
+*.png
+*.svg
+
+#log files
+*.log
+>>>>>>> modif gitignore
