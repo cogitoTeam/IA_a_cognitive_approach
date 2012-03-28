@@ -5,11 +5,11 @@
 
 package game.ai;
 
-import game.Board;
-import game.Board.Position;
+import java.util.List;
+import game.BoardMatrix;
+import game.BoardMatrix.Position;
 import game.Game.Player;
 import game.Rules;
-import java.util.List;
 
 public class MiniMaxAI extends AI
 {
@@ -20,16 +20,16 @@ public class MiniMaxAI extends AI
     /* IMPLEMENTATIONS */
 
     @Override
-    public Position chooseMove(Rules rules, Board board, Player player)
+    public Position chooseMove(Rules rules, BoardMatrix board, Player player)
     {
-        List<Board> children = rules.getChildBoards(board, player);
+        List<BoardMatrix> children = rules.getChildBoards(board, player);
 
         return null;
     }
 
     /* SUBROUTINES */
 
-    private int minimax(Rules rules, Board board, Player player)
+    private int minimax(Rules rules, BoardMatrix board, Player player)
     {
         return 0;
         /*List<Position> options = rules.getLegalMoves(board, player);

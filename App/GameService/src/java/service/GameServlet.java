@@ -2,7 +2,7 @@
 
 package service;
 
-import game.Board;
+import game.BoardMatrix.Position;
 import game.Game;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -66,7 +66,7 @@ public class GameServlet extends HttpServlet
                                         String s_player)
     {
         // parse position
-        Board.Position p = new Board.Position(Integer.parseInt(s_row),
+        Position p = new Position(Integer.parseInt(s_row),
                                                 Integer.parseInt(s_col));
         // parse player
         Game.Player player = (Integer.parseInt(s_player) == 0) ?

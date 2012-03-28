@@ -6,8 +6,8 @@
 
 package game.reversi;
 
-import game.Board;
-import game.Board.Position;
+import game.BoardMatrix;
+import game.BoardMatrix.Position;
 import game.Game;
 import game.Game.Player;
 import game.Rules;
@@ -40,32 +40,32 @@ class ReversiRules extends Rules
     }
     
     @Override
-    public boolean isDraw(Board board) 
+    public boolean isDraw(BoardMatrix board) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean hasWon(Board board, Player player) 
+    public boolean hasWon(BoardMatrix board, Player player) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean isLegalMove(Board.Position p, Board board, Game.Player player) 
+    public boolean isLegalMove(BoardMatrix.Position p, BoardMatrix board, Game.Player player) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // modification
     @Override
-    public Game.State performMove(Board.Position p, Board board, Game.Player player) 
+    public Game.State performMove(BoardMatrix.Position p, BoardMatrix board, Game.Player player) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void reset(Board board)
+    public void reset(BoardMatrix board)
     {
         // remove all pieces
         board.clear();

@@ -5,15 +5,16 @@
 
 package game.ai;
 
-import game.*;
-import game.Board.Position;
+import game.BoardMatrix;
+import game.BoardMatrix.Position;
 import game.Game.Player;
+import game.Rules;
 
 public abstract class AI
 {
 
     /* INTERFACE */
 
-    public abstract Position chooseMove(Rules rules, Board board, Player player);
+    public abstract Position chooseMove(Rules rules, BoardMatrix board, Player player);
 
 }

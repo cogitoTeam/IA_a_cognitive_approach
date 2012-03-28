@@ -6,7 +6,7 @@
 
 package game;
 
-import game.Board.Position;
+import game.BoardMatrix.Position;
 import game.Game.Player;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,10 +24,10 @@ public abstract class Rules
     /* METHODS */
 
     // query
-    public List<Board> getChildBoards(Board parent, Player player)
+    public List<BoardMatrix> getChildBoards(BoardMatrix parent, Player player)
     {
         // local variables
-        List<Board> children = new LinkedList<Board>();
+        List<BoardMatrix> children = new LinkedList<BoardMatrix>();
         List<Position> moves = getLegalMoves(parent, player);
 
         // collect possible children
@@ -36,7 +36,7 @@ public abstract class Rules
             try
             {
                 // perform the move on a copy of the parent
-                Board child = parent.copy();
+                BoardMatrix child = parent.copy();
                 performMove(move, child, player);
                 // save the child in the list
                 children.add(child);
@@ -53,7 +53,7 @@ public abstract class Rules
     }
 
     // query
-    public List<Position> getLegalMoves(Board board, Player player)
+    public List<Position> getLegalMoves(BoardMatrix board, Player player)
     {
         // local variables
         List<Position> positions = new LinkedList<Position>();
@@ -75,16 +75,16 @@ public abstract class Rules
     // query
     public abstract Game.Player getFirstPlayer();
     
-    public abstract boolean isDraw(Board board);
+    public abstract boolean isDraw(BoardMatrix board);
     
-    public abstract boolean hasWon(Board board, Player player);
+    public abstract boolean hasWon(BoardMatrix board, Player player);
 
-    public abstract boolean isLegalMove(Position p, Board board, Player player);
+    public abstract boolean isLegalMove(Position p, BoardMatrix board, Player player);
     
     // modification
-    public abstract Game.State performMove(Position p, Board board,
+    public abstract Game.State performMove(Position p, BoardMatrix board,
                                             Player player);
 
-    public abstract void reset(Board board);
+    public abstract void reset(BoardMatrix board);
 
 }

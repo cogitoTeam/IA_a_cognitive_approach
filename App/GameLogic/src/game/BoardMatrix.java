@@ -9,7 +9,7 @@ package game;
 import game.Game.Player;
 
 
-public abstract class Board
+public abstract class BoardMatrix
 {
     /* NESTING */
     public static enum Cell
@@ -60,7 +60,7 @@ public abstract class Board
     /* METHODS */
     
     // creation
-    public Board(Size s)
+    public BoardMatrix(Size s)
     {
         // create the matrix
         cells = new Cell[s.n_rows][s.n_cols];
@@ -101,10 +101,10 @@ public abstract class Board
 
     // query
 
-    public Board copy() throws InstantiationException, IllegalAccessException
+    public BoardMatrix copy() throws InstantiationException, IllegalAccessException
     {
         // local variables
-        Board clone = this.getClass().newInstance();
+        BoardMatrix clone = this.getClass().newInstance();
         Position p = new Position(0, 0);
 
         // copy each cell
@@ -136,7 +136,7 @@ public abstract class Board
         // count number of non-empty cells
         for(p.row = 0; p.row < get_n_rows(); p.row++)
             for(p.col = 0; p.col < get_n_cols(); p.col++)
-                if(getCell(p) != Board.Cell.EMPTY)
+                if(getCell(p) != BoardMatrix.Cell.EMPTY)
                     count++;
         
         // finished

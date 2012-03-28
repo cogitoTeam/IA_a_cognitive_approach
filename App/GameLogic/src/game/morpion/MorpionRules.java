@@ -6,8 +6,8 @@
 
 package game.morpion;
 
-import game.Board;
-import game.Board.Position;
+import game.BoardMatrix;
+import game.BoardMatrix.Position;
 import game.Game;
 import game.Game.Player;
 import game.Game.State;
@@ -39,14 +39,14 @@ class MorpionRules extends Rules
     }
     
     @Override
-    public boolean isDraw(Board board) 
+    public boolean isDraw(BoardMatrix board) 
     {
         // return true if every cell is occupied
         return (board.get_n_pieces() == board.get_n_rows()*board.get_n_cols());
     }
 
     @Override
-    public boolean hasWon(Board board, Player player) 
+    public boolean hasWon(BoardMatrix board, Player player) 
     {
         // local variables
         Position p = new Position(0, 0);
@@ -115,14 +115,14 @@ class MorpionRules extends Rules
     }
 
     @Override
-    public boolean isLegalMove(Position p, Board board, Player player) 
+    public boolean isLegalMove(Position p, BoardMatrix board, Player player) 
     {
-        return (board.getCell(p) == Board.Cell.EMPTY);
+        return (board.getCell(p) == BoardMatrix.Cell.EMPTY);
     }
 
     // modification
     @Override
-    public Game.State performMove(Position p, Board board, Player player) 
+    public Game.State performMove(Position p, BoardMatrix board, Player player) 
     {
         // check if the move is legal
         if(!isLegalMove(p, board, player))
@@ -145,7 +145,7 @@ class MorpionRules extends Rules
     }
     
     @Override
-    public void reset(Board board) 
+    public void reset(BoardMatrix board) 
     {
         // simply clear the board, that's all there is to it ;)
         board.clear();

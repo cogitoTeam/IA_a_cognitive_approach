@@ -6,9 +6,9 @@
 
 package game;
 
-import game.ai.AI;
-import game.Board.Position;
 import java.util.List;
+import game.BoardMatrix.Position;
+import game.ai.AI;
 
 
 public abstract class Game 
@@ -41,7 +41,7 @@ public abstract class Game
 
     private final int id;
     private final Rules rules;
-    private final Board board;
+    private final BoardMatrix board;
     private final AI ai;
     private State current_state;
     private Player current_player;
@@ -49,7 +49,7 @@ public abstract class Game
     /* METHODS */
     
     // creation
-    protected Game(int _id, Rules _rules, Board _board)
+    protected Game(int _id, Rules _rules, BoardMatrix _board)
     {
         id = _id;
         rules = _rules;
@@ -58,7 +58,7 @@ public abstract class Game
         restart();
     }
 
-    protected Game(int _id, Rules _rules, Board _board, AI _ai)
+    protected Game(int _id, Rules _rules, BoardMatrix _board, AI _ai)
     {
         id = _id;
         rules = _rules;
