@@ -48,20 +48,23 @@ public abstract class Frontier
     
     // query
     
-    public void performMove(Player player, Position p)
+    public boolean tryMove(Player player, Position p)
     {
+        // return true if the move succeed, false otherwise
         try 
         {
             // to send information via the external interface
-            actuator.performMove(p);
+            return actuator.tryMove(p);
         } 
         catch (IOException ex) 
         {
             Logger.getLogger(Frontier.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         } 
         catch (SAXException ex) 
         {
             Logger.getLogger(Frontier.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
     
