@@ -22,7 +22,7 @@ class XMLClient
     /* ATTRIBUTES */
     
     private DocumentBuilder xml_builder;
-    private final String s_server_url;
+    protected final String s_server_url;
     
     /* METHODS */
     

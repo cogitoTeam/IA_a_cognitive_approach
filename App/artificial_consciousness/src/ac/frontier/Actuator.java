@@ -8,12 +8,11 @@ package ac.frontier;
 
 import game.BoardMatrix.Position;
 import game.Game.Player;
-import game.Rules;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 
-public abstract class Actuator extends XMLClient
+public class Actuator extends XMLClient
 {
     /* METHODS */
     
@@ -46,9 +45,4 @@ public abstract class Actuator extends XMLClient
         // parse the state to discover whether the move attempt was a success
         return (s_state != null && s_state.equals("MOVE_SUCCESS"));
     }
-    
-    /* INTERFACE */
-    
-    protected abstract Rules getRules();
-
 }

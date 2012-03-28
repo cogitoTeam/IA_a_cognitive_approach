@@ -9,12 +9,9 @@ package ac.frontier;
 import game.BoardMatrix.Position;
 import game.Game.Player;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
 
 
-public abstract class Frontier 
+public class Frontier 
 { 
     /* CONSTANTS */
     protected static final String DEFAULT_S_SERVER_URL = 
@@ -34,19 +31,11 @@ public abstract class Frontier
     // creation
     public Frontier()
     {
-        try 
-        {
-            // attempt to create the external interface
-            actuator = createActuator();
-            sensor = createSensor();
-            
-            /// FIXME
-            game_id = 0;
-        } 
-        catch (ParserConfigurationException ex) 
-        {
-            Logger.getLogger(Frontier.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        // boot up the interface
+        BootstrapClient bootstrap = new BootstrapClient(DEFAULT_S_SERVER_URL);
+        game_id = bootstrap.getId();
+        sensor = bootstrap.getSensor();
+        actuator = bootstrap.getActuator();
     }
     
     // query
@@ -62,15 +51,5 @@ public abstract class Frontier
         // to receive information via the external interface
         return sensor.getOptions(game_id, player);
     }
-    
-    
-
-    /* INTERFACE / SUBROUTINES */
-    
-    protected abstract Actuator createActuator() 
-            throws ParserConfigurationException;
-    
-    protected abstract Sensor createSensor()
-            throws ParserConfigurationException;
 
 }
