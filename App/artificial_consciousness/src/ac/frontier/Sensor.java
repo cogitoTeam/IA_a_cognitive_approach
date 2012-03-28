@@ -30,10 +30,10 @@ public abstract class Sensor extends XMLClient
     }
     
     // query
-    public List<Option> getOptions(Player player)
+    public List<Option> getOptions(int game_id, Player player)
     {
         // get an XML document from the server
-        Document doc = getXML();
+        Document doc = getXML("game_id="+game_id);
         
         // parse the current board
         BoardMatrix board = parseBoard(doc.getDocumentElement()

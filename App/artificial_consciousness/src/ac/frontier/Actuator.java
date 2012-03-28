@@ -7,7 +7,10 @@
 package ac.frontier;
 
 import game.BoardMatrix.Position;
+import game.Game.Player;
 import game.Rules;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
 
 public abstract class Actuator extends XMLClient
@@ -15,20 +18,33 @@ public abstract class Actuator extends XMLClient
     /* METHODS */
     
     // creation
-    public Actuator(String _base_url)
+    public Actuator(String _s_server_url)
     {
-        super(_base_url);
+        super(_s_server_url);
     }
     
     // command
-    boolean tryMove(Position p)
+    boolean tryMove(int game_id, Player player, Position move)
     {
-        String s_url = "";
+        // prepare the query to send to the server
+        String s_query = "&game_id=" + game_id + "&row=" + move.row + "&col=" 
+                        + move.col + "&player=" + player;
         
         // return true if the move succeed, false otherwise
-        getXML(s_url);
+        return parseResult(getXML(s_query).getDocumentElement());
+    }
+    
+    
+    /* SUBROUTINES */
+    
+    private boolean parseResult(Node game_node)
+    {
+        // local variables
+        NamedNodeMap attributes = game_node.getAttributes();
+        String s_state = attributes.getNamedItem("state").getNodeValue();
         
-        return false;
+        // parse the state to discover whether the move attempt was a success
+        return (s_state != null && s_state.equals("MOVE_SUCCESS"));
     }
     
     /* INTERFACE */

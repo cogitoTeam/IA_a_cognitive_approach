@@ -25,6 +25,7 @@ public abstract class Frontier
    
     private Actuator actuator;
     private Sensor sensor;
+    private int game_id;
     
     
     
@@ -38,6 +39,9 @@ public abstract class Frontier
             // attempt to create the external interface
             actuator = createActuator();
             sensor = createSensor();
+            
+            /// FIXME
+            game_id = 0;
         } 
         catch (ParserConfigurationException ex) 
         {
@@ -47,16 +51,16 @@ public abstract class Frontier
     
     // query
     
-    public boolean tryMove(Player player, Position p)
+    public boolean tryMove(Player player, Position move)
     {
         // to send information via the external interface
-        return actuator.tryMove(p);
+        return actuator.tryMove(game_id, player, move);
     }
     
     public List<Option> getOptions(Player player)
     {
         // to receive information via the external interface
-        return sensor.getOptions(player);
+        return sensor.getOptions(game_id, player);
     }
     
     
