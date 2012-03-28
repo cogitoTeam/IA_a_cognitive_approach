@@ -6,6 +6,7 @@
 
 package ac.frontier;
 
+import game.BoardMatrix;
 import game.BoardMatrix.Position;
 import game.Game;
 import game.Game.Player;
@@ -22,7 +23,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
-class Sensor 
+public abstract class Sensor 
 {
     /* ATTRIBUTES */
     private DocumentBuilder xml_builder;
@@ -51,6 +52,9 @@ class Sensor
         NodeList cells = doc.getDocumentElement().getElementsByTagName("board")
                             .item(0).getChildNodes();
         
+        // parse the current board
+        BoardMatrix board = createBoard();
+        
         // parse each cell
         for(int i = 0; i < cells.getLength(); i++)
         {
@@ -72,4 +76,8 @@ class Sensor
         // fixme
         return null;
     }
+    
+    /* SUBROUTINES / INTERFACE */
+    
+    protected abstract BoardMatrix createBoard();
 }

@@ -8,7 +8,6 @@ package ac.frontier;
 
 import game.BoardMatrix.Position;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,10 +15,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 
-public class Frontier 
+public abstract class Frontier 
 { 
     /* CONSTANTS */
-    private static final String s_url = "http://localhost:8084/game_service/ws";
+    protected static final String default_url = "http://localhost:8084/game_service/ws";
     
   
     /* ATTRIBUTES */
@@ -37,8 +36,8 @@ public class Frontier
         try 
         {
             // attempt to create the external interface
-            actuator = new Actuator(s_url);
-            sensor = new Sensor(s_url);
+            actuator = createActuator();
+            sensor = createSensor();
         } 
         catch (ParserConfigurationException ex) 
         {
@@ -86,6 +85,12 @@ public class Frontier
     
     
 
+    /* INTERFACE / SUBROUTINES */
     
+    protected abstract Actuator createActuator() 
+            throws ParserConfigurationException;
+    
+    protected abstract Sensor createSensor()
+            throws ParserConfigurationException;
 
 }
