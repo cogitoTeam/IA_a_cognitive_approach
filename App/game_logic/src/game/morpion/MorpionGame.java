@@ -15,6 +15,6 @@ public class MorpionGame extends Game
     
     public MorpionGame(int id)
     {
-        super(id, MorpionRules.getInstance(), new MorpionBoardMatrix());
+        super(id, MorpionRules.getInstance(), new MorpionBoard());
     }
 }

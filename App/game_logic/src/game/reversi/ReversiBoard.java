@@ -9,11 +9,11 @@ package game.reversi;
 import game.BoardMatrix;
 
 
-public class ReversiBoardMatrix extends BoardMatrix
+public class ReversiBoard extends BoardMatrix
 {
     /* METHODS */
     
-    public ReversiBoardMatrix()
+    public ReversiBoard()
     {
         super(new BoardMatrix.Size(8, 8));
     }

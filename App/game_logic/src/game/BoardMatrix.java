@@ -7,9 +7,12 @@
 package game;
 
 import game.Game.Player;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 
-public abstract class BoardMatrix
+public class BoardMatrix
 {
     /* NESTING */
     public static enum Cell
@@ -60,14 +63,63 @@ public abstract class BoardMatrix
     /* METHODS */
     
     // creation
-    public BoardMatrix(Size s)
+    protected BoardMatrix(Size s)
     {
         // create the matrix
         cells = new Cell[s.n_rows][s.n_cols];
     }
     
+    public BoardMatrix(Node board_node)
+    {
+        // parse size
+        Size s = new Size(0, 0);
+        NamedNodeMap attributes = board_node.getAttributes();
+        s.n_rows = 
+            Integer.parseInt(attributes.getNamedItem("n_rows").getNodeValue());
+        s.n_cols = 
+            Integer.parseInt(attributes.getNamedItem("n_cols").getNodeValue());
+        
+        // create the matrix
+        cells = new Cell[s.n_rows][s.n_cols];
+        
+        // update cells from DOM node
+        parseCells(board_node);
+    }
+    
 
     // modification
+    
+    public final void parseCells(Node board_node)
+    {
+        // get the cell nodes from the document
+        NodeList nl_cells = board_node.getChildNodes();
+        
+        // parse each cell
+        for(int i = 0; i < nl_cells.getLength(); i++)
+        {
+            // local variables
+            NamedNodeMap attributes = nl_cells.item(i).getAttributes();
+            
+            // parse position
+            Position p = new Position(0, 0);
+            p.row = Integer.parseInt(attributes.getNamedItem("row")
+                                        .getNodeValue());
+            p.col = Integer.parseInt(attributes.getNamedItem("col")
+                                        .getNodeValue());
+            
+            // parse owner
+            Player owner = null;
+            Node n_owner = attributes.getNamedItem("owner");
+            if(n_owner != null)
+                owner = Game.parsePlayer(n_owner.getNodeValue());
+            
+            // finally set the cell's owner
+            if(owner == null)
+                setCell(p, BoardMatrix.Cell.EMPTY);
+            else
+                setCellOwner(p, owner);
+        }
+    }
 
     public void clear()
     {

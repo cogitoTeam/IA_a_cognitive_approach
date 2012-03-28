@@ -8,15 +8,11 @@ package ac.frontier;
 
 import game.BoardMatrix;
 import game.BoardMatrix.Position;
-import game.Game;
 import game.Game.Player;
 import game.Rules;
 import java.util.LinkedList;
 import java.util.List;
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 
 public class Sensor extends XMLClient
@@ -44,7 +40,7 @@ public class Sensor extends XMLClient
         Document doc = getXML("game_id="+game_id);
         
         // parse the current board
-        parseBoard(doc.getDocumentElement().getElementsByTagName("board")
+        board.parseCells(doc.getDocumentElement().getElementsByTagName("board")
                                                                     .item(0));
         
         // get legal moves
@@ -59,39 +55,5 @@ public class Sensor extends XMLClient
         
         // result the fruits of our labour !
         return options;
-    }
-    
-    /* SUBROUTINES */
-    
-    private void parseBoard(Node board_node)
-    {
-        // get the cell nodes from the document
-        NodeList cells = board_node.getChildNodes();
-        
-        // parse each cell
-        for(int i = 0; i < cells.getLength(); i++)
-        {
-            // local variables
-            NamedNodeMap attributes = cells.item(i).getAttributes();
-            
-            // parse position
-            Position p = new Position(0, 0);
-            p.row = Integer.parseInt(attributes.getNamedItem("row")
-                                        .getNodeValue());
-            p.col = Integer.parseInt(attributes.getNamedItem("col")
-                                        .getNodeValue());
-            
-            // parse owner
-            Player owner = null;
-            Node n_owner = attributes.getNamedItem("owner");
-            if(n_owner != null)
-                owner = Game.parsePlayer(n_owner.getNodeValue());
-            
-            // finally set the cell's owner
-            if(owner == null)
-                board.setCell(p, BoardMatrix.Cell.EMPTY);
-            else
-                board.setCellOwner(p, owner);
-        }
     }
 }

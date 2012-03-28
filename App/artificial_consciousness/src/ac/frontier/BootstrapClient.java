@@ -10,6 +10,7 @@ import game.BoardMatrix;
 import game.Rules;
 import game.morpion.MorpionRules;
 import game.reversi.ReversiRules;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -31,8 +32,8 @@ class BootstrapClient extends XMLClient
         super(_s_server_url);
 
         // ask the server for a new game, complete with identifier
-        Node game_node = getXML().getDocumentElement();
-        NamedNodeMap attributes = game_node.getAttributes();
+        Element game_element = getXML().getDocumentElement();
+        NamedNodeMap attributes = game_element.getAttributes();
         
         // parse the game identifier from the reply
         String s_game_id = attributes.getNamedItem("id").getNodeValue();
@@ -52,9 +53,8 @@ class BootstrapClient extends XMLClient
             rules = null;
             
         // parse the initial board
-        
-        /// TODO FINISH
-        BoardMatrix board = null;
+        BoardMatrix board = 
+          new BoardMatrix(game_element.getElementsByTagName("board").item(0));
         
         // finallycreate the sensor and actuator
         sensor = new Sensor(_s_server_url, rules, board);

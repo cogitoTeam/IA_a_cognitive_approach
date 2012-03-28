@@ -9,11 +9,11 @@ package game.morpion;
 import game.BoardMatrix;
 
 
-public class MorpionBoardMatrix extends BoardMatrix
+public class MorpionBoard extends BoardMatrix
 {
     /* METHODS */
     
-    public MorpionBoardMatrix()
+    public MorpionBoard()
     {
         super(new BoardMatrix.Size(3, 3));
     }

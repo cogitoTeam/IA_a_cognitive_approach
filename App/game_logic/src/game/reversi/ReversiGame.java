@@ -15,6 +15,6 @@ public class ReversiGame extends Game
     
     public ReversiGame(int id)
     {
-        super(id, ReversiRules.getInstance(), new ReversiBoardMatrix());
+        super(id, ReversiRules.getInstance(), new ReversiBoard());
     }
 }
