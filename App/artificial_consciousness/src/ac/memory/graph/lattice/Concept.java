@@ -1,11 +1,8 @@
-/**
- * 
- */
 package ac.memory.graph.lattice;
 
 import java.util.HashMap;
-import ac.shared.advanced_board_state.AdvancedBoardState;
-import ac.shared.relevant_structure.RelevantStructure;
+import ac.shared.structure.CompleteBoardState;
+import ac.shared.structure.RelevantPartialBoardState;
 
 /**
  * Concept generated in the lattice (node of a lattice)
@@ -16,8 +13,8 @@ import ac.shared.relevant_structure.RelevantStructure;
  */
 public class Concept {
 
-    private HashMap<Long, RelevantStructure> attributes;
-    private HashMap<Long, AdvancedBoardState> objects;
+    private HashMap<Long, RelevantPartialBoardState> attributes;
+    private HashMap<Long, CompleteBoardState> objects;
 
     private double neutrality;
     private double activity;
@@ -25,7 +22,7 @@ public class Concept {
     /**
      * @return the attributes of the concept
      */
-    public HashMap<Long, RelevantStructure> getAttributes() {
+    public HashMap<Long, RelevantPartialBoardState> getAttributes() {
         return attributes;
     }
 
@@ -33,7 +30,8 @@ public class Concept {
      * @param attributes
      *            the attributs to set
      */
-    public void setAttributes(HashMap<Long, RelevantStructure> attributes) {
+    public void setAttributes(
+            HashMap<Long, RelevantPartialBoardState> attributes) {
         this.attributes = attributes;
     }
 
@@ -42,14 +40,14 @@ public class Concept {
      * 
      * @param rs
      */
-    public void addAttribute(RelevantStructure rs) {
+    public void addAttribute(RelevantPartialBoardState rs) {
         this.attributes.put(rs.getId(), rs);
     }
 
     /**
      * @return the objects
      */
-    public HashMap<Long, AdvancedBoardState> getObjects() {
+    public HashMap<Long, CompleteBoardState> getObjects() {
         return objects;
     }
 
@@ -57,7 +55,7 @@ public class Concept {
      * @param objects
      *            the objects to set
      */
-    public void setObjects(HashMap<Long, AdvancedBoardState> objects) {
+    public void setObjects(HashMap<Long, CompleteBoardState> objects) {
         this.objects = objects;
     }
 
@@ -66,7 +64,7 @@ public class Concept {
      * 
      * @param object
      */
-    public void addObject(AdvancedBoardState object) {
+    public void addObject(CompleteBoardState object) {
         this.objects.put(object.getId(), object);
     }
 

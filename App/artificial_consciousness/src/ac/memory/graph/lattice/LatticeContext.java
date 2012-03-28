@@ -4,7 +4,7 @@
 package ac.memory.graph.lattice;
 
 import java.util.TreeMap;
-import ac.shared.relevant_structure.RelevantStructure;
+import ac.shared.structure.RelevantPartialBoardState;
 
 ;
 
@@ -17,14 +17,14 @@ import ac.shared.relevant_structure.RelevantStructure;
  */
 public class LatticeContext {
 
-    private TreeMap<Long, RelevantStructure> attributes;
+    private TreeMap<Long, RelevantPartialBoardState> attributes;
 
     /**
      * Add a relevant structure to the context
      * 
      * @param rs
      */
-    public void addAttribute(RelevantStructure rs) {
+    public void addAttribute(RelevantPartialBoardState rs) {
         attributes.put(rs.getId(), rs);
     }
 
@@ -32,7 +32,7 @@ public class LatticeContext {
      * @param id
      * @return a relevant structure
      */
-    public RelevantStructure getAttribute(long id) {
+    public RelevantPartialBoardState getAttribute(long id) {
         return attributes.get(id);
     }
 

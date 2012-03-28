@@ -45,7 +45,7 @@ public class ActiveMemory {
     /**
      * @return A number of RelevantStructure ordered by importance
      */
-    public ArrayList<RelevantStructure> getRelevantStructures() {
+    public ArrayList<RelevantPartialBoardState> getRelevantStructures() {
         // TODO the method
         return null;
     }
@@ -131,7 +131,7 @@ public class ActiveMemory {
      * @param rs
      *            A relevant structure
      */
-    public void PutRelevantStructure(RelevantStructure rs) {
+    public void PutRelevantStructure(RelevantPartialBoardState rs) {
         // TODO the method
     }
 }

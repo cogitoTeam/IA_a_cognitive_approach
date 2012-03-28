@@ -1,18 +1,18 @@
 /**
  * 
  */
-package ac.shared.advanced_board_state;
+package ac.shared.structure;
 
 /**
- * Advanced BoardState class
- * 
  * @author Thibaut Marmin <marminthibaut@gmail.com>
- * @date 26 mars 2012
+ * @date 28 mars 2012
  * @version 0.1
  */
-public class AdvancedBoardState {
+public abstract class AbstractBoardState {
 
-    private long id;
+    protected long id;
+
+    // TODO list of defining facts
 
     /**
      * Default constructor of an advanced boardstate
@@ -20,7 +20,8 @@ public class AdvancedBoardState {
      * @param id
      *            the id's advanced boardstate
      */
-    public AdvancedBoardState(String id) {
+    public AbstractBoardState(long id) {
+        this.id = id;
     }
 
     /**
