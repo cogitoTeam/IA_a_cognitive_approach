@@ -10,36 +10,32 @@ package ac.shared.advanced_board_state;
  * @date 26 mars 2012
  * @version 0.1
  */
-public class AdvancedBoardState
-{
+public class AdvancedBoardState {
 
-  private String id;
+    private long id;
 
-  /**
-   * Default constructor of an advanced boardstate
-   * 
-   * @param id
-   *          the id's advanced boardstate
-   */
-  public AdvancedBoardState(String id)
-  {
-  }
+    /**
+     * Default constructor of an advanced boardstate
+     * 
+     * @param id
+     *            the id's advanced boardstate
+     */
+    public AdvancedBoardState(String id) {
+    }
 
-  /**
-   * @return the id
-   */
-  public String getId()
-  {
-    return id;
-  }
+    /**
+     * @return the id
+     */
+    public long getId() {
+        return id;
+    }
 
-  /**
-   * @param id
-   *          the id to set
-   */
-  public void setId(String id)
-  {
-    this.id = id;
-  }
+    /**
+     * @param id
+     *            the id to set
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
 
 }

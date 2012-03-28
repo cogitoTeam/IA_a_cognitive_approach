@@ -3,8 +3,7 @@
  */
 package ac.memory.graph.lattice;
 
-import java.util.TreeSet;
-
+import java.util.TreeMap;
 import ac.shared.relevant_structure.RelevantStructure;
 
 ;
@@ -18,35 +17,23 @@ import ac.shared.relevant_structure.RelevantStructure;
  */
 public class LatticeContext {
 
-    private static TreeSet<RelevantStructure> relevant_structures;
-
-    static {
-        setRelevant_structures(new TreeSet<RelevantStructure>());
-    }
+    private TreeMap<Long, RelevantStructure> attributes;
 
     /**
      * Add a relevant structure to the context
      * 
      * @param rs
      */
-    public static void addRelevantStructure(RelevantStructure rs) {
-        relevant_structures.add(rs);
+    public void addAttribute(RelevantStructure rs) {
+        attributes.put(rs.getId(), rs);
     }
 
     /**
-     * @return the relevant_structures
+     * @param id
+     * @return a relevant structure
      */
-    public static TreeSet<RelevantStructure> getRelevant_structures() {
-        return relevant_structures;
-    }
-
-    /**
-     * @param relevant_structures
-     *            the relevant_structures to set
-     */
-    public static void setRelevant_structures(
-            TreeSet<RelevantStructure> relevant_structures) {
-        LatticeContext.relevant_structures = relevant_structures;
+    public RelevantStructure getAttribute(long id) {
+        return attributes.get(id);
     }
 
 }

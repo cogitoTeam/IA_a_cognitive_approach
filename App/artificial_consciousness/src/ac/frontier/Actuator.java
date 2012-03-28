@@ -7,13 +7,22 @@
 package ac.frontier;
 
 import game.BoardMatrix.Position;
+import java.io.IOException;
+import org.xml.sax.SAXException;
 
 
 class Actuator 
 {
     /* METHODS */
     
-    void performMove(Position p) 
+    // creation
+    public Actuator(String s_url)
+    {
+        
+    }
+    
+    // command
+    void performMove(Position p)  throws IOException, SAXException
     {
         throw new UnsupportedOperationException("Not yet implemented");
     }

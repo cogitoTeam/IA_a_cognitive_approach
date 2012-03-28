@@ -47,7 +47,8 @@ function receive_board(data)
 function ajax_request_move(id, row, col, player)
 {
     msg.url = WEBSERVICE + "?game_id=" + id + "&row=" + row + "&col=" + col 
-                        + "&player=" + player;
+                    + "&player=" + ((player == Game.WHITE) ? "WHITE" : "BLACK");
+    console.log(msg.url);
     $.ajax(msg);
 }
 

@@ -6,7 +6,7 @@ import ac.reasoning.Reasoning;
 
 public class Analysis
 {
-
+  
   private ActiveMemory _memory;
   private Reasoning _reasoning;
   private Frontier _frontier;

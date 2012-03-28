@@ -16,6 +16,7 @@ import ac.shared.advanced_board_state.AdvancedBoardState;
  */
 public class RelevantStructure implements Comparable<RelevantStructure> {
 
+    private long id;
     private LinkedList<AdvancedBoardState> state_board;
     private double weight;
 
@@ -69,6 +70,21 @@ public class RelevantStructure implements Comparable<RelevantStructure> {
      */
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    /**
+     * @return the id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * @param id
+     *            the id to set
+     */
+    public void setId(long id) {
+        this.id = id;
     }
 
 }
