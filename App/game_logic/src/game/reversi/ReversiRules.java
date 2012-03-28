@@ -13,7 +13,7 @@ import game.Game.Player;
 import game.Rules;
 
 
-class ReversiRules extends Rules
+public class ReversiRules extends Rules
 {
     /* SINGLETON */
     

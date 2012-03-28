@@ -14,7 +14,7 @@ import game.Game.State;
 import game.Rules;
 
 
-class MorpionRules extends Rules
+public class MorpionRules extends Rules
 {
     /* SINGLETON */
     

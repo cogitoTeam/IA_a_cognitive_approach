@@ -8,7 +8,9 @@ package ac.frontier.reversi;
 
 import ac.frontier.Sensor;
 import game.BoardMatrix;
+import game.Rules;
 import game.reversi.ReversiBoardMatrix;
+import game.reversi.ReversiRules;
 import javax.xml.parsers.ParserConfigurationException;
 
 
@@ -25,6 +27,12 @@ public class ReversiSensor extends Sensor
     protected BoardMatrix createBoard() 
     {
         return new ReversiBoardMatrix();
+    }
+
+    @Override
+    protected Rules getRules() 
+    {
+        return ReversiRules.getInstance();
     }
 
 }

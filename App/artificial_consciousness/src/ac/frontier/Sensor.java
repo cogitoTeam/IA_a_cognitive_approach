@@ -10,16 +10,14 @@ import game.BoardMatrix;
 import game.BoardMatrix.Position;
 import game.Game;
 import game.Game.Player;
+import game.Rules;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 
@@ -43,14 +41,29 @@ public abstract class Sensor
     }
     
     // query
-    public List<Option> getOptions() throws IOException, SAXException
+    public List<Option> getOptions(Player player) throws IOException, SAXException
     {
         // get an XML document from the server
         Document doc = xml_builder.parse(new URL(base_url).openStream());
+        
 
+        // parse the current board
+        BoardMatrix board = parseBoard(doc.getDocumentElement()
+                                .getElementsByTagName("board").item(0));
+        
+        // get legal moves
+        getRules().getLegalMoves(board, player);
+        
+        // fixme
+        return null;
+    }
+    
+    /* SUBROUTINES / INTERFACE */
+    
+    private BoardMatrix parseBoard(Node board_node)
+    {
         // get the cell nodes from the document
-        NodeList cells = doc.getDocumentElement().getElementsByTagName("board")
-                            .item(0).getChildNodes();
+        NodeList cells = board_node.getChildNodes();
         
         // parse the current board
         BoardMatrix board = createBoard();
@@ -79,13 +92,11 @@ public abstract class Sensor
                 board.setCellOwner(p, owner);
         }
         
-        System.out.println(board);
-        
-        // fixme
-        return null;
+        // return the resulting parsed board
+        return board;
     }
     
-    /* SUBROUTINES / INTERFACE */
-    
     protected abstract BoardMatrix createBoard();
+    
+    protected abstract Rules getRules();
 }

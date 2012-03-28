@@ -8,7 +8,9 @@ package ac.frontier.morpion;
 
 import ac.frontier.Sensor;
 import game.BoardMatrix;
+import game.Rules;
 import game.morpion.MorpionBoardMatrix;
+import game.morpion.MorpionRules;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class MorpionSensor extends Sensor
@@ -24,6 +26,12 @@ public class MorpionSensor extends Sensor
     protected BoardMatrix createBoard() 
     {
         return new MorpionBoardMatrix();
+    }
+
+    @Override
+    protected Rules getRules() 
+    {
+        return MorpionRules.getInstance();
     }
 
 }

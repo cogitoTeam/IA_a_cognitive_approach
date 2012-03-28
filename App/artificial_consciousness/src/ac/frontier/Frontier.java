@@ -7,6 +7,7 @@
 package ac.frontier;
 
 import game.BoardMatrix.Position;
+import game.Game.Player;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -47,7 +48,7 @@ public abstract class Frontier
     
     // query
     
-    public void performMove(Position p)
+    public void performMove(Player player, Position p)
     {
         try 
         {
@@ -64,12 +65,12 @@ public abstract class Frontier
         }
     }
     
-    public List<Option> getOptions()
+    public List<Option> getOptions(Player player)
     {
         try 
         {
             // to receive information via the external interface
-            return sensor.getOptions();
+            return sensor.getOptions(player);
         } 
         catch (IOException ex) 
         {
