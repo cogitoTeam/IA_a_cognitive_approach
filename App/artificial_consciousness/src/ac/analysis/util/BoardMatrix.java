@@ -1,95 +1,140 @@
+/*****************
+ * @author william
+ * @date 21-Mar-2012
+ *****************/
+
+
 package ac.analysis.util;
 
-/**
- * Classe BoardMatrix
- * 
- * @author wilbefast
- * @date 26 mars 2012
- * @version 0.1
- */
-public abstract class BoardMatrix {
-    /** NESTED DEFINITIONS **/
 
-    /**
-     * type that defines the different states of a matrix cell
-     */
-    public static enum Cell {
-        /**
-         * empty cell
-         */
-        EMPTY,
-        /**
-         * cell filled with a white piece
-         */
-        P_WHITE,
-        /**
-         * cell filled with a black piece
-         */
-        P_BLACK
+public abstract class BoardMatrix
+{
+    /* NESTING */
+    public static enum Cell
+    {
+        EMPTY, PIECE_BLACK, PIECE_WHITE, OUT_OF_BOUNDS
     }
-
-    /** ATTRIBUTES **/
-
-    private Cell matrix[][];
-
-    /**
-     * METHODS Constructor
-     * 
-     * @param n_rows
-     *            number of rows
-     * @param n_cols
-     *            number of columns
-     * **/
-
-    public BoardMatrix(int n_rows, int n_cols) {
-        // create matrix
-        matrix = new Cell[n_rows][n_cols];
-
-        // all cells are initially empty
-        for (int row = 0; row < n_rows; row++)
-            for (int col = 0; col < n_cols; col++)
-                matrix[row][col] = Cell.EMPTY;
-
-    }
-
-    // access
-    /**
-     * @return returns the number of rows
-     */
-    public int get_n_rows() {
-        return matrix.length;
-    }
-
-    /**
-     * @return returns the number of columns
-     */
-    public int get_n_cols() {
-        return matrix[0].length;
-    }
-
-    /**
-     * @param c
-     *            the cell to replace in the matrix
-     * @param row_c
-     *            cell row coordinate
-     * @param col_c
-     *            cell column coordinate
-     */
-    public void fill_cell(Cell c, int row_c, int col_c) {
-        matrix[row_c][col_c] = c;
-    }
-
-    // to_String
-    @Override
-    public String toString() {
-        String t = new String();
-        for (int row = 0; row < get_n_rows(); row++) {
-            for (int col = 0; col < get_n_cols(); col++)
-                t += matrix[row][col].toString() + "\t";
-            t += "\n";
+    
+    public static class Size
+    {
+        public int n_rows;
+        public int n_cols;
+        public Size(int _n_rows, int _n_cols)
+        {
+            n_rows = _n_rows;
+            n_cols = _n_cols;
         }
-        return t;
+        @Override
+        public String toString()
+        {
+            return "Size: n_rows=" + n_rows + " n_cols=" + n_cols;
+        }
+    }
+    
+    public static class Position
+    {
+        public int row;
+        public int col;
+        public Position(int _row, int _col)
+        {
+            row = _row;
+            col = _col;
+        }
+        @Override
+        public String toString()
+        {
+            return "Position: row=" + row + " col=" + col;
+        }
+    }
+    
+
+    /* ATTRIBUTES */
+            
+    private Size size;
+    private Cell cells[][];
+    
+    
+    /* METHODS */
+    
+    // creation
+    public BoardMatrix(Size _size)
+    {
+        // create the matrix
+        size = _size;
+        cells = new Cell[_size.n_rows][_size.n_cols];
+        
+    }
+    
+
+    // modification
+
+    public void clear()
+    {
+        // local variables
+        Position p = new Position(0, 0);
+        
+        // set all cells empty
+        for(p.row = 0; p.row < size.n_rows; p.row++)
+            for(p.col = 0; p.col < size.n_cols; p.col++)
+                cells[p.row][p.col] = Cell.EMPTY;
+    }
+    
+    public Cell setCell(Position p, Cell new_value)
+    {
+        if(p.row < size.n_rows && p.col < size.n_cols)
+        {
+            Cell previous_value = cells[p.row][p.col];
+            cells[p.row][p.col] = new_value;
+            return previous_value;
+        }
+        else
+            return Cell.OUT_OF_BOUNDS;
     }
 
-    /** TODO finish **/
+    // query
+
+    public BoardMatrix copy() throws InstantiationException, IllegalAccessException
+    {
+        // local variables
+        BoardMatrix clone = this.getClass().newInstance();
+        Position p = new Position(0, 0);
+
+        // copy each cell
+        for(p.row = 0; p.row < size.n_rows; p.row++)
+            for(p.col = 0; p.col < size.n_cols; p.col++)
+                clone.cells[p.row][p.col] = this.cells[p.row][p.col];
+
+        // return the result
+        return clone;
+    }
+
+
+    public Size get_size()
+    {
+        return size;
+    }
+    
+    public int get_n_pieces()
+    {
+        // local variables
+        Position p = new Position(0, 0);
+        int count = 0;
+        
+        // count number of non-empty cells
+        for(p.row = 0; p.row < size.n_rows; p.row++)
+            for(p.col = 0; p.col < size.n_cols; p.col++)
+                if(getCell(p) != Cell.EMPTY)
+                    count++;
+        
+        // finished
+        return count;
+    }
+
+    public Cell getCell(Position p)
+    {
+        if(p.row >= size.n_rows || p.col >= size.n_cols)
+            return Cell.OUT_OF_BOUNDS;
+        else
+            return cells[p.row][p.col];
+    }
 }

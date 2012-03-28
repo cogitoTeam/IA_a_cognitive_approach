@@ -13,6 +13,6 @@ public class ReversiMatrix extends BoardMatrix {
 
     public ReversiMatrix() {
         // Reversi game uses an 8 by 8 board
-        super(8, 8);
+        super(new Size(8, 8));
     }
 }
