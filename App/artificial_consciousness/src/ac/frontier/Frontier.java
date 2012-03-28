@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
 public class Frontier 
 { 
     /* CONSTANTS */
-    private static final String s_url = "http://localhost:8084/GameService/ws";
+    private static final String s_url = "http://localhost:8084/game_service/ws";
     
   
     /* ATTRIBUTES */

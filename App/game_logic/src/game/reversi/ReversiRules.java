@@ -76,5 +76,11 @@ class ReversiRules extends Rules
                 board.setCellOwner(p, ((p.row + p.col)%2 == 0) ? Player.WHITE 
                                                                 : Player.BLACK);
     }
+    
+    @Override
+    public String toString() 
+    {
+        return "reversi";
+    }
 
 }
