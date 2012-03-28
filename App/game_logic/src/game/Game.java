@@ -6,9 +6,9 @@
 
 package game;
 
-import java.util.List;
 import game.BoardMatrix.Position;
 import game.ai.AI;
+import java.util.List;
 
 
 public abstract class Game 
@@ -35,7 +35,22 @@ public abstract class Game
     /* CONSTANTS */
     
     public static final Player AI_PLAYER = Player.BLACK;
+    
+    
+    /* CLASS NAMESPACE FUNCTIONS */
 
+    public static Player parsePlayer(String s)
+    {
+        if(s.equals("WHITE") || s.equals("white"))
+            return Player.WHITE;
+        
+        else if(s.equals("BLACK") || s.equals("black"))
+            return Player.BLACK;
+        
+        else
+            return null;
+    }
+    
 
     /* ATTRIBUTES */
 
