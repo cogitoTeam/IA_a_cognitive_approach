@@ -5,6 +5,8 @@ package ac.memory.episodic;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import ac.shared.structure.CompleteBoardState;
 
 /**
@@ -13,6 +15,9 @@ import ac.shared.structure.CompleteBoardState;
  * @version 0.1
  */
 public class Move {
+    @SuppressWarnings("unused")
+    private static final Logger logger = Logger.getLogger(Move.class);
+
     CompleteBoardState board_state;
 
     Move next_move;

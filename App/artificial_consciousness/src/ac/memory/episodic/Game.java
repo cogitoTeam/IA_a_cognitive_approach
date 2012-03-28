@@ -3,8 +3,9 @@
  */
 package ac.memory.episodic;
 
-import java.lang.management.MemoryType;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
 
 import ac.memory.Memory;
 
@@ -16,6 +17,7 @@ import ac.memory.Memory;
  * @version 0.1
  */
 public class Game {
+    private static final Logger logger = Logger.getLogger(Game.class);
 
     private Move last_move;
     private Memory.FinalGameStatus final_status;
@@ -52,9 +54,17 @@ public class Game {
     }
 
     /**
+     * @return the quatity of moves
+     */
+    public int getQuantity() {
+        return quantity;
+    }
+
+    /**
      * Default constructor
      */
     public Game() {
+        logger.debug("Creating new Game");
         this.last_move = null;
         this.final_status = Memory.FinalGameStatus.UNDEFINED;
         this.score = 0;
@@ -69,6 +79,7 @@ public class Game {
      *            the new move
      */
     public void addMove(Move move) {
+        logger.debug("Adding move " + move + " to the game");
         Move last = this.last_move;
         move.setPrev_move(last);
         this.last_move = move;

@@ -9,8 +9,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import ac.helloworldlog4j.HelloWorldLog4j;
-
 /**
  * Episodic Memory implemented with a LinkedList. New recent game is added as
  * the first element of the list
@@ -52,13 +50,7 @@ public class ListEpisodicMemory implements EpisodicMemory {
      */
     @Override
     public List<Game> getLastGames(int number) {
-        LinkedList<Game> list = new LinkedList<Game>();
-
-        for (int i = 0; i < number; ++i) {
-            list.addLast(games.get(i));
-        }
-
-        return list;
+        return games.subList(0, number);
     }
 
     @Override
@@ -79,6 +71,7 @@ public class ListEpisodicMemory implements EpisodicMemory {
      */
     @Override
     public void addGame(Game game) {
+        logger.debug("Adding new game : " + game);
         this.games.addFirst(game);
         this.quantity += 1;
     }
