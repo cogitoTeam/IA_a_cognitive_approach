@@ -25,30 +25,21 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
-public abstract class Sensor 
+public abstract class Sensor extends XMLClient
 {
-    /* ATTRIBUTES */
-    private DocumentBuilder xml_builder;
-    private final String base_url;
-    
     /* METHODS */
     
     // creation
     public Sensor(String _base_url) throws ParserConfigurationException
     {
-        // Create the XML document builder
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        xml_builder = factory.newDocumentBuilder();
-
-        // Create the URL object
-        base_url = _base_url;
+        super(_base_url);
     }
     
     // query
     public List<Option> getOptions(Player player) throws IOException, SAXException
     {
         // get an XML document from the server
-        Document doc = xml_builder.parse(new URL(base_url).openStream());
+        Document doc = getDocument(base_url);
         
 
         // parse the current board
