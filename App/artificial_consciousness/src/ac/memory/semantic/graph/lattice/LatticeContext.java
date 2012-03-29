@@ -84,7 +84,8 @@ public interface LatticeContext {
      *            the object
      * @return a Map of attributes
      */
-    Map<Long, RelevantPartialBoardState> getAttributes(CompleteBoardState object);
+    Map<Long, RelevantPartialBoardState> getAttributesByObject(
+            CompleteBoardState object);
 
     /**
      * Get all the object checked for the attribute in parameter
@@ -93,7 +94,8 @@ public interface LatticeContext {
      *            the attribute
      * @return a Map of objects
      */
-    Map<Long, CompleteBoardState> getObjects(RelevantPartialBoardState attribute);
+    Map<Long, CompleteBoardState> getObjectsByAttribute(
+            RelevantPartialBoardState attribute);
 
     /**
      * Get all the attributes checked for the object in parameter
@@ -102,7 +104,7 @@ public interface LatticeContext {
      *            id of the object
      * @return a Map of attributes
      */
-    Map<Long, RelevantPartialBoardState> getAttributes(long id_object);
+    Map<Long, RelevantPartialBoardState> getAttributesByObject(long id_object);
 
     /**
      * Get all the object checked for the attribute in parameter
@@ -111,6 +113,16 @@ public interface LatticeContext {
      *            id of the attribute
      * @return a Map of objects
      */
-    Map<Long, CompleteBoardState> getObjects(long id_attribute);
+    Map<Long, CompleteBoardState> getObjectsByAttribute(long id_attribute);
+
+    /**
+     * @return all objects present in the context
+     */
+    Map<Long, CompleteBoardState> getObjects();
+
+    /**
+     * @return all attributes present
+     */
+    Map<Long, RelevantPartialBoardState> getAttributes();
 
 }

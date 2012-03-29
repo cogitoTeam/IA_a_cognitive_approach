@@ -4,9 +4,10 @@
 package ac.memory.semantic.graph.lattice;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeSet;
+
 import ac.shared.structure.CompleteBoardState;
 import ac.shared.structure.RelevantPartialBoardState;
 
@@ -24,7 +25,7 @@ public class HashMapLatticeContext implements LatticeContext {
     private Map<Long, CompleteBoardState> objects;
 
     // Object x Attribute
-    private Map<Long, HashSet<Long>> matrix;
+    private Map<Long, TreeSet<Long>> matrix;
 
     /**
      * Default constructor
@@ -32,7 +33,7 @@ public class HashMapLatticeContext implements LatticeContext {
     public HashMapLatticeContext() {
         this.attributes = new HashMap<Long, RelevantPartialBoardState>();
         this.objects = new HashMap<Long, CompleteBoardState>();
-        this.matrix = new HashMap<Long, HashSet<Long>>();
+        this.matrix = new HashMap<Long, TreeSet<Long>>();
     }
 
     /*
@@ -58,7 +59,7 @@ public class HashMapLatticeContext implements LatticeContext {
     @Override
     public void addObject(CompleteBoardState object) {
         this.objects.put(object.getId(), object);
-        this.matrix.put(object.getId(), new HashSet<Long>());
+        this.matrix.put(object.getId(), new TreeSet<Long>());
 
     }
 
@@ -122,11 +123,9 @@ public class HashMapLatticeContext implements LatticeContext {
      * .CompleteBoardState)
      */
     @Override
-    public Map<Long, RelevantPartialBoardState> getAttributes(
+    public Map<Long, RelevantPartialBoardState> getAttributesByObject(
             CompleteBoardState object) {
-        HashMap<Long, RelevantPartialBoardState> map = new HashMap<Long, RelevantPartialBoardState>();
-        // TODO
-        return map;
+        return getAttributesByObject(object.getId());
     }
 
     /*
@@ -137,10 +136,9 @@ public class HashMapLatticeContext implements LatticeContext {
      * .RelevantPartialBoardState)
      */
     @Override
-    public Map<Long, CompleteBoardState> getObjects(
+    public Map<Long, CompleteBoardState> getObjectsByAttribute(
             RelevantPartialBoardState attribute) {
-        // TODO Auto-generated method stub
-        return null;
+        return getObjectsByAttribute(attribute.getId());
     }
 
     /*
@@ -149,9 +147,15 @@ public class HashMapLatticeContext implements LatticeContext {
      * @see ac.memory.graph.lattice.LatticeContext#getAttributes(long)
      */
     @Override
-    public Map<Long, RelevantPartialBoardState> getAttributes(long id_object) {
-        // TODO Auto-generated method stub
-        return null;
+    public Map<Long, RelevantPartialBoardState> getAttributesByObject(
+            long id_object) {
+        HashMap<Long, RelevantPartialBoardState> map = new HashMap<Long, RelevantPartialBoardState>();
+
+        for (Long attribute_id : this.matrix.get(id_object)) {
+            map.put(attribute_id, this.attributes.get(attribute_id));
+        }
+
+        return map;
     }
 
     /*
@@ -160,9 +164,24 @@ public class HashMapLatticeContext implements LatticeContext {
      * @see ac.memory.graph.lattice.LatticeContext#getObjects(long)
      */
     @Override
-    public Map<Long, CompleteBoardState> getObjects(long id_attribute) {
-        // TODO Auto-generated method stub
-        return null;
+    public Map<Long, CompleteBoardState> getObjectsByAttribute(long id_attribute) {
+        HashMap<Long, CompleteBoardState> map = new HashMap<Long, CompleteBoardState>();
+
+        for (Iterator<CompleteBoardState> iterator = this.objects.values()
+                .iterator(); iterator.hasNext();) {
+            CompleteBoardState objet = iterator.next();
+            Long object_id = objet.getId();
+
+            for (Long id_att : this.matrix.get(object_id)) {
+                if (id_att.equals(id_attribute)) {
+                    map.put(object_id, this.objects.get(object_id));
+                    break;
+                }
+            }
+
+        }
+
+        return map;
     }
 
     public String toString() {
@@ -180,6 +199,26 @@ public class HashMapLatticeContext implements LatticeContext {
         }
         ret += "\n]]";
         return ret;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ac.memory.semantic.graph.lattice.LatticeContext#getObjects()
+     */
+    @Override
+    public Map<Long, CompleteBoardState> getObjects() {
+        return this.objects;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ac.memory.semantic.graph.lattice.LatticeContext#getAttributes()
+     */
+    @Override
+    public Map<Long, RelevantPartialBoardState> getAttributes() {
+        return this.attributes;
     }
 
 }
