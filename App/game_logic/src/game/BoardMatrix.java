@@ -7,6 +7,8 @@
 package game;
 
 import game.Game.Player;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -153,19 +155,32 @@ public class BoardMatrix
 
     // query
 
-    public BoardMatrix copy() throws InstantiationException, IllegalAccessException
+    public BoardMatrix copy()
     {
-        // local variables
-        BoardMatrix clone = this.getClass().newInstance();
-        Position p = new Position(0, 0);
+        try 
+        {
+            // local variables
+            BoardMatrix clone = this.getClass().newInstance();
+            Position p = new Position(0, 0);
 
-        // copy each cell
-        for(p.row = 0; p.row < get_n_rows(); p.row++)
-            for(p.col = 0; p.col < get_n_cols(); p.col++)
-                clone.cells[p.row][p.col] = this.cells[p.row][p.col];
+            // copy each cell
+            for(p.row = 0; p.row < get_n_rows(); p.row++)
+                for(p.col = 0; p.col < get_n_cols(); p.col++)
+                    clone.cells[p.row][p.col] = this.cells[p.row][p.col];
 
-        // return the result
-        return clone;
+            // return the result
+            return clone;
+        } 
+        catch (InstantiationException ex) 
+        {
+            Logger.getLogger(BoardMatrix.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } 
+        catch (IllegalAccessException ex) 
+        {
+            Logger.getLogger(BoardMatrix.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
 

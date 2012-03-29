@@ -13,6 +13,7 @@ import game.Rules;
 import java.util.LinkedList;
 import java.util.List;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 
 class Sensor extends XMLClient
@@ -20,6 +21,7 @@ class Sensor extends XMLClient
     /* ATTRIBUTES */
     
     private final Rules rules;
+    // the most recently seen board is stored in a kind of sensory memory
     private final BoardMatrix board;
     
     /* METHODS */
@@ -34,26 +36,31 @@ class Sensor extends XMLClient
     }
     
     // query
-    public List<Option> getOptions(int game_id, Player player)
+    public Percept getPercept(int game_id, Player player)
     {
         // get an XML document from the server
         Document doc = getXML("game_id="+game_id);
         
         // parse the current board
-        board.parseCells(doc.getDocumentElement().getElementsByTagName("board")
-                                                                    .item(0));
+        Node board_node = 
+                doc.getDocumentElement().getElementsByTagName("board").item(0);
+        board.parseCells(board_node);
+        
+        // create the percept
+        Percept percept = new Percept(board.copy());
         
         // get legal moves
         List<Position> moves = rules.getLegalMoves(board, player);
         
         // generate options based on legal moves
-        List<Option> options = new LinkedList<Option>();
         for(Position move : moves)
-            // ad each option
-            options.add(new Option(move, rules
-                    .getResultingBoard(board, player, move)));
+        {
+            // generate and add each option
+            BoardMatrix result = rules.getResultingBoard(board, player, move);
+            percept.addOption(move, result);
+        }
         
         // result the fruits of our labour !
-        return options;
+        return percept;
     }
 }

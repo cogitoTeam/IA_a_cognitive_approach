@@ -23,6 +23,7 @@ public class Frontier
     private Actuator actuator;
     private Sensor sensor;
     private int game_id;
+    private Player player;
     
     
     
@@ -40,16 +41,16 @@ public class Frontier
     
     // query
     
-    public boolean tryMove(Player player, Position move)
+    public boolean tryAction(Position move)
     {
         // to send information via the external interface
         return actuator.tryMove(game_id, player, move);
     }
     
-    public List<Option> getOptions(Player player)
+    public Percept getPercept()
     {
         // to receive information via the external interface
-        return sensor.getOptions(game_id, player);
+        return sensor.getPercept(game_id, player);
     }
 
 }

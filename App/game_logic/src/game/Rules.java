@@ -27,27 +27,14 @@ public abstract class Rules
     public BoardMatrix getResultingBoard(BoardMatrix parent, Player player, 
             Position move)
     {
-        try 
-        {
-            // perform the move on a copy of the parent
-            BoardMatrix child = parent.copy();
-            // provided of course that the move is legal
-            if(isLegalMove(move, parent, player))
-                performMove(move, child, player);
-            
-            // perform the move on a copy of the parent
-            return child;
-        }
-        catch (InstantiationException ex) 
-        {
-            Logger.getLogger(Rules.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        } 
-        catch (IllegalAccessException ex) 
-        {
-            Logger.getLogger(Rules.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+        // perform the move on a copy of the parent
+        BoardMatrix child = parent.copy();
+        // provided of course that the move is legal
+        if(isLegalMove(move, parent, player))
+            performMove(move, child, player);
+
+        // perform the move on a copy of the parent
+        return child;
     }
     
     public List<BoardMatrix> getChildBoards(BoardMatrix parent, Player player)
