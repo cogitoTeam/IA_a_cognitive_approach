@@ -4,9 +4,9 @@
  *****************/
 
 
-package app;
+package main;
 
-import minimax.MiniMax;
+import test.MiniMaxAgent;
 
 
 
@@ -15,7 +15,7 @@ public class Main
     public static void main(String[] args)
     {
         // create agent(s)
-        Agent agent = new MiniMax();
+        Agent agent = new MiniMaxAgent();
         
         // main loop
         boolean stop = false;

@@ -4,7 +4,7 @@
  *****************/
 
 
-package app;
+package main;
 
 import frontier.Action;
 import frontier.Frontier;

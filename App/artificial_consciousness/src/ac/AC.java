@@ -4,7 +4,7 @@ import ac.analysis.Analysis;
 import frontier.Frontier;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
-import app.Agent;
+import main.Agent;
 
 /**
  * 
