@@ -79,7 +79,7 @@ public class ListEpisodicMemoryTest {
         assertEquals(g4, e.getLastGame());
         assertEquals(4, e.getQuantity());
 
-        LinkedList<Game> ll = new LinkedList<>();
+        LinkedList<Game> ll = new LinkedList<Game>();
         ll.addFirst(g3);
         ll.addFirst(g4);
         assertEquals(ll, e.getLastGames(2));

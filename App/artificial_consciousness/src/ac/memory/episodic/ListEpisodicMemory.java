@@ -29,7 +29,7 @@ public class ListEpisodicMemory implements EpisodicMemory {
      * Default constructor
      */
     public ListEpisodicMemory() {
-        this.games = new LinkedList<>();
+        this.games = new LinkedList<Game>();
         this.quantity = 0;
     }
 
