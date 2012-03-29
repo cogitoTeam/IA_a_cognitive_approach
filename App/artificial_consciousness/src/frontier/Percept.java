@@ -19,15 +19,15 @@ public class Percept
     public static class Option
     {
         // attributes
-        private Position move;
+        private Action action;
         private BoardMatrix result;
         // methods
-        public Option(Position _move, BoardMatrix _result)
+        public Option(Action _action, BoardMatrix _result)
         {
-            move = _move;
+            action = _action;
             result = _result;
         }
-        public Position getMove() { return move; }
+        public Action getAction() { return action; }
         public BoardMatrix getResult() { return result; }
     }
     
@@ -68,7 +68,7 @@ public class Percept
     // modification
     public void addOption(Position move, BoardMatrix result)
     {
-        options.add(new Option(move, result));
+        options.add(new Option(new Action(move), result));
     }
     
 }

@@ -5,13 +5,13 @@
 
 package test;
 
-import main.Agent;
 import frontier.Action;
 import frontier.Percept;
 import game.BoardMatrix;
 import game.BoardMatrix.Position;
 import game.Game.Player;
 import game.Rules;
+import main.Agent;
 
 public class MiniMaxAgent extends Agent
 {
@@ -46,9 +46,8 @@ public class MiniMaxAgent extends Agent
     }
 
     @Override
-    protected void receive_feedback(boolean success) 
+    protected void action_failed(Action action) 
     {
-        System.out.println("did action succeed? " + success);
         // TODO
     }
     
