@@ -14,12 +14,18 @@ public class Main
 {
     public static void main(String[] args)
     {
+        // create agent(s)
         Agent agent = new MiniMax();
         
+        // main loop
         boolean stop = false;
         while(!stop)
         {
-            System.out.println(agent.state);
+            agent.update();
+            
+            // stop if the agent breaks down or requests euthanasia 
+            if(agent.getState() != Agent.State.NORMAL)
+                stop = true;
         }
     }
 }

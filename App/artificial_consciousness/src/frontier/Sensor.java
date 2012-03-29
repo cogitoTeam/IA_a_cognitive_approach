@@ -61,6 +61,7 @@ class Sensor extends XMLClient
         }
         
         // result the fruits of our labour !
+        System.out.println("connection success");
         return percept;
     }
 }

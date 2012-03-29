@@ -33,6 +33,7 @@ public abstract class Agent
     // creation
     protected Agent()
     {
+        frontier = new Frontier();
         state = State.NORMAL;
     }
     

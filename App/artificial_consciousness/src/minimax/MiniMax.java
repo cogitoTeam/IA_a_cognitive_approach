@@ -6,7 +6,10 @@
 package minimax;
 
 import app.Agent;
+import frontier.Action;
+import frontier.Percept;
 import game.BoardMatrix;
+import game.BoardMatrix.Position;
 import game.Game.Player;
 import game.Rules;
 
@@ -27,9 +30,32 @@ public class MiniMax extends Agent
         return null;
     }*/
 
+    
+    /* OVERRIDES */
+
+    @Override
+    protected void think() 
+    {
+        // minimax doesn't think
+    }
+
+    @Override
+    protected Action choose_reaction(Percept percept) 
+    {
+        return new Action(new Position(0, 0));
+    }
+
+    @Override
+    protected void receive_feedback(boolean success) 
+    {
+        // TODO
+    }
+    
+    
+    
     /* SUBROUTINES */
 
-    private int minimax(Rules rules, BoardMatrix board, Player player)
+    private int evaluate(Rules rules, BoardMatrix board, Player player)
     {
         return 0;
         /*List<Position> options = rules.getLegalMoves(board, player);
@@ -55,5 +81,4 @@ public class MiniMax extends Agent
         }*/
 
     }
-
 }
