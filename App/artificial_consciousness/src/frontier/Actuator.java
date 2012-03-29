@@ -29,8 +29,6 @@ class Actuator extends XMLClient
         String s_query = "&game_id=" + game_id + "&row=" + move.row + "&col=" 
                         + move.col + "&player=" + player;
         
-        System.out.println("sending action " + s_query);
-        
         // return true if the move succeed, false otherwise
         return parseResult(getXML(s_query).getDocumentElement());
     }

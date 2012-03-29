@@ -46,13 +46,18 @@ public class Frontier
         return actuator.tryMove(game_id, player, action.getMove());
     }
     
-    public Percept getPercept()
+    public Percept newPercept()
     {
         // to receive information via the external interface
         if(sensor.renewXML(game_id))
             return sensor.perceiveBoard(player);
         else
             return null;
+    }
+    
+    public Percept oldPercept()
+    {
+        return sensor.perceiveBoard(player);
     }
 
 }

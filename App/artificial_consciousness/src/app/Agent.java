@@ -17,7 +17,9 @@ public abstract class Agent
     
     public static enum State
     {
+        ASLEEP,
         NORMAL
+        // ... etc
     }
     
     
@@ -27,6 +29,16 @@ public abstract class Agent
     protected State state;
     
     
+
+    /* INTERFACE */
+    
+    protected abstract void think();
+    
+    protected abstract Action choose_reaction(Percept percept);
+    
+    protected abstract void receive_feedback(boolean success);
+    
+    
     
     /* METHODS */
     
@@ -34,27 +46,28 @@ public abstract class Agent
     protected Agent()
     {
         frontier = new Frontier();
-        state = State.NORMAL;
+        state = State.ASLEEP;
     }
     
-    // modification
-    public void update()
+    public void act()
     {
-        // check the environment for new information
-        Percept percept = frontier.getPercept();
-
-        // if there's nothing new in sight, reflect on what we already know
-        if(percept == null)
+        // we can't act if state is abnormal
+        if(state == State.ASLEEP)
         {
-            think();
+            awaken();
             return;
         }
         
-        // otherwise choose a reaction to the stimulus
-        Action action = choose_reaction(percept);
+        // check environment for new information
+        Percept percept = frontier.newPercept();
         
-        // the agent receives feedback based on the success of their action
-        receive_feedback(frontier.tryAction(action));
+        // if there's nothing new in sight, reflect on what we already know
+        if(percept == null)
+            think();
+        // otherwise react to this new environment state
+        else
+            react(percept);
+       
     }
     
     // query
@@ -63,11 +76,23 @@ public abstract class Agent
         return state;
     }
     
-    /* INTERFACE */
     
-    protected abstract void think();
+    /* SUBROUTINES */
     
-    protected abstract Action choose_reaction(Percept percept);
+    private void awaken()
+    {
+        // always act upon waking up
+        react(frontier.oldPercept());
+        state = State.NORMAL;
+    }
     
-    protected abstract void receive_feedback(boolean success);
+    private void react(Percept percept)
+    {
+        // choose a reaction to the stimulus
+        Action action = choose_reaction(percept);
+        
+        // the agent receives feedback based on the success of their action
+        receive_feedback(frontier.tryAction(action));
+    }
+    
 }
