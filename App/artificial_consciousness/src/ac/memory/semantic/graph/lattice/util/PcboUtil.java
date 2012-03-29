@@ -73,26 +73,47 @@ public class PcboUtil {
     public static String executeBinary(String fimi, Arch arch)
             throws IOException {
         logger.debug("Generation d'une commande d'execution FCBO");
+
+        logger.debug("Determination du shell");
+        String shell = "/bin/sh";
+        String arg = "-c";
+        if (arch.equals(Arch.windows_i686)) {
+            shell = "cmd.exe";
+            arg = "/C";
+        }
+
         String cmd = "echo '" + fimi + "' | ";
         cmd += System.getProperty("user.dir") + "/native/fcbo-static-"
                 + arch.toString().toLowerCase();
 
         cmd += " -V1 ";
-        logger.debug("Commande générée : " + cmd);
+        logger.debug("Shell : " + shell);
+        logger.debug("arg : " + arg);
+        logger.debug("Commande : " + cmd);
+        String[] args = { shell, arg, cmd };
 
         Process process = null;
         try {
-            process = Runtime.getRuntime().exec(cmd);
-            process.waitFor();
-        } catch (IOException | InterruptedException e) {
+            process = Runtime.getRuntime().exec(args);
+        } catch (IOException e) {
             logger.error(e.getMessage());
         }
-        BufferedReader input = new BufferedReader(new InputStreamReader(
-                process.getInputStream()));
-        String line;
+
         String retour = "";
-        while ((line = input.readLine()) != null) {
-            retour += line + "\n";
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    process.getInputStream()));
+            String line = "";
+            try {
+                while ((line = reader.readLine()) != null) {
+                    retour += line + "\n";
+                }
+            } finally {
+                reader.close();
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
 
         return retour;
