@@ -7,6 +7,7 @@
 package game;
 
 import game.Game.Player;
+import java.util.Arrays;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -225,6 +226,38 @@ public class BoardMatrix
 
 
     /* OVERRIDES */
+    
+    @Override
+    public boolean equals(Object other)
+    {
+        // check types
+        if(!(other instanceof BoardMatrix))
+            return false;
+        
+        // check that sizes are identical
+        BoardMatrix other_board = (BoardMatrix)other;
+        if(!this.size.equals(other_board.size))
+            return false;
+        
+        // check that all cells are identical
+        Position p = new Position(0, 0);
+        for(p.row = 0; p.row < size.n_rows; p.row++)
+            for(p.col = 0; p.col < size.n_cols; p.col++)
+                if(this.getCell(p) != other_board.getCell(p))
+                    return false;
+        
+        return true;
+    }
+
+    @Override
+    public int hashCode() 
+    {
+        int hash = 7;
+        hash = 19 * hash + (this.size != null ? this.size.hashCode() : 0);
+        hash = 19 * hash + Arrays.deepHashCode(this.cells);
+        return hash;
+    }
+    
     @Override
     public String toString()
     {

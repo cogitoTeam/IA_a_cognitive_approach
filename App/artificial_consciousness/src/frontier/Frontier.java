@@ -35,6 +35,7 @@ public class Frontier
         game_id = bootstrap.getId();
         sensor = bootstrap.getSensor();
         actuator = bootstrap.getActuator();
+        player = bootstrap.getPlayer();
     }
     
     // query

@@ -21,7 +21,7 @@ class Sensor extends XMLClient
     
     private final Rules rules;
     // the most recently seen board is stored in a kind of sensory memory
-    private final BoardMatrix board;
+    private BoardMatrix board;
     
     /* METHODS */
     
@@ -44,6 +44,10 @@ class Sensor extends XMLClient
         Node board_node = 
                 doc.getDocumentElement().getElementsByTagName("board").item(0);
         board.parseCells(board_node);
+        
+        // if no changes have occured, report nothing
+        if(doc.getDocumentElement().getAttribute("state").equals("NO_CHANGE"))
+            return null;
         
         // create the percept
         int value = rules.getValue(board, player);

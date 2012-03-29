@@ -37,17 +37,20 @@ public class MiniMax extends Agent
     protected void think() 
     {
         // minimax doesn't think
+        System.out.println("thinking...");
     }
 
     @Override
     protected Action choose_reaction(Percept percept) 
     {
+        System.out.println("chose action");
         return new Action(new Position(0, 0));
     }
 
     @Override
     protected void receive_feedback(boolean success) 
     {
+        System.out.println("did action succeed? " + success);
         // TODO
     }
     
