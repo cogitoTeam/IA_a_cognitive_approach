@@ -71,7 +71,7 @@ public class ListEpisodicMemory implements EpisodicMemory {
      */
     @Override
     public void addGame(Game game) {
-        logger.debug("Adding new game : " + game);
+        logger.debug("Adding new game : " + game.getDate());
         this.games.addFirst(game);
         this.quantity += 1;
     }
