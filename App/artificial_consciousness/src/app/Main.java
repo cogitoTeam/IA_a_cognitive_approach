@@ -21,6 +21,7 @@ public class Main
         boolean stop = false;
         while(!stop)
         {
+            // update the agent(s)
             agent.act();
             
             // stop if the agent breaks down or requests euthanasia 
