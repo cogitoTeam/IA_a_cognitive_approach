@@ -2,7 +2,6 @@ package ac;
 
 import ac.analysis.Analysis;
 import ac.frontier.Frontier;
-import ac.frontier.morpion.MorpionFrontier;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
 
@@ -13,7 +12,7 @@ import ac.reasoning.Reasoning;
  * @date 28 mars 2012
  * @version 0.1
  */
-public class AI
+public class AC
 {
 
   /* **************************************************************************
@@ -29,10 +28,10 @@ public class AI
    * CONSTRUCTOR
    * ************************************************************************ */
 
-  public AI()
+  public AC()
   {
     this._memory = new ActiveMemory();
-    this._frontier = new MorpionFrontier();
+    this._frontier = new Frontier();
     this._reasoning = new Reasoning(this._memory, this._frontier);
     this._analysis = new Analysis(this._memory, this._reasoning, this._frontier);
     
