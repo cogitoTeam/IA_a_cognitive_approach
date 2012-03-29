@@ -4,9 +4,12 @@
 package ac.memory.semantic.graph.lattice.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -44,21 +47,24 @@ public class PcboUtil {
      * @return the FIMI String sequence
      */
     public static String toFimi(LatticeContext context) {
-
         String ret = "";
-        for (CompleteBoardState object : context.getObjects().values()) {
 
+        logger.debug("Génération du FIMI");
+        boolean hasattribute;
+        for (CompleteBoardState object : context.getObjects().values()) {
+            hasattribute = false;
             for (Iterator<RelevantPartialBoardState> iterator = context
                     .getAttributesByObject(object).values().iterator(); iterator
                     .hasNext();) {
-                RelevantPartialBoardState attribute = (RelevantPartialBoardState) iterator
-                        .next();
-
-                ret += attribute.getId() + " ";
+                ret += ((RelevantPartialBoardState) iterator.next()).getId()
+                        + " ";
+                hasattribute = true;
 
             }
-            ret += "\n";
+            if (hasattribute)
+                ret += "\n";
         }
+        logger.debug("Génération du FIMI terminée");
         return ret;
     }
 
@@ -82,22 +88,34 @@ public class PcboUtil {
             arg = "/C";
         }
 
-        String cmd = "echo '" + fimi + "' | ";
-        cmd += System.getProperty("user.dir") + "/native/fcbo-static-"
-                + arch.toString().toLowerCase();
+        File file = new java.io.File("fimi.tmp.dat");
 
-        cmd += " -V1 ";
+        PrintWriter out = new PrintWriter(file);
+        out.write(fimi);
+        out.close();
+
+        String cmd = System.getProperty("user.dir") + "/native/fcbo-static-"
+                + arch.toString().toLowerCase() + " -V1 "
+                + System.getProperty("user.dir") + "/fimi.tmp.dat "
+                + System.getProperty("user.dir") + "/concepts.tmp.dat";
         logger.debug("Shell : " + shell);
         logger.debug("arg : " + arg);
         logger.debug("Commande : " + cmd);
         String[] args = { shell, arg, cmd };
 
+        logger.debug("Execution de la commande");
         Process process = null;
         try {
             process = Runtime.getRuntime().exec(args);
+
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
+
+        /*
+         * java.io.InputStream in = process.getInputStream(); int i = 0; while
+         * ((i = in.read()) != -1) ;
+         */
 
         String retour = "";
 
@@ -115,6 +133,8 @@ public class PcboUtil {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+
+        logger.debug("Execution de la commande terminée");
 
         return retour;
     }
