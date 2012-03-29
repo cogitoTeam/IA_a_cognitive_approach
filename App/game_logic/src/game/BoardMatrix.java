@@ -230,7 +230,7 @@ public class BoardMatrix
     {
         // local variables
         String result = 
-                "<board " + size + "n_pieces=\"" + get_n_pieces() + "\">";
+                "<board " + size + " n_pieces=\"" + get_n_pieces() + "\">";
         Position p = new Position(0, 0);
         
         // read the board positions
