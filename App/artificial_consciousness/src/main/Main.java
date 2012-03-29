@@ -4,9 +4,9 @@
  *****************/
 
 
-package app;
+package main;
 
-import minimax.MiniMax;
+import test.RandomAgent;
 
 
 
@@ -15,12 +15,13 @@ public class Main
     public static void main(String[] args)
     {
         // create agent(s)
-        Agent agent = new MiniMax();
+        Agent agent = new RandomAgent();
         
         // main loop
         boolean stop = false;
         while(!stop)
         {
+            // update the agent(s)
             agent.act();
             
             // stop if the agent breaks down or requests euthanasia 

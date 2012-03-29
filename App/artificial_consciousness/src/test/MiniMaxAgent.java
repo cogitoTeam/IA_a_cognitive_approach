@@ -3,17 +3,17 @@
  * @date   Mar 27, 2012
  *****************/
 
-package minimax;
+package test;
 
-import app.Agent;
 import frontier.Action;
 import frontier.Percept;
 import game.BoardMatrix;
 import game.BoardMatrix.Position;
 import game.Game.Player;
 import game.Rules;
+import main.Agent;
 
-public class MiniMax extends Agent
+public class MiniMaxAgent extends Agent
 {
     /* CONSTANTS */
     /*private static final Player PMIN = Player.BLACK;
@@ -46,9 +46,8 @@ public class MiniMax extends Agent
     }
 
     @Override
-    protected void receive_feedback(boolean success) 
+    protected void action_failed(Action action) 
     {
-        System.out.println("did action succeed? " + success);
         // TODO
     }
     

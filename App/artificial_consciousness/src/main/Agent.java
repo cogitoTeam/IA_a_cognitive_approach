@@ -4,7 +4,7 @@
  *****************/
 
 
-package app;
+package main;
 
 import frontier.Action;
 import frontier.Frontier;
@@ -18,7 +18,8 @@ public abstract class Agent
     public static enum State
     {
         ASLEEP,
-        NORMAL
+        NORMAL,
+        ERROR
         // ... etc
     }
     
@@ -36,7 +37,7 @@ public abstract class Agent
     
     protected abstract Action choose_reaction(Percept percept);
     
-    protected abstract void receive_feedback(boolean success);
+    protected abstract void action_failed(Action action);
     
     
     
@@ -92,7 +93,8 @@ public abstract class Agent
         Action action = choose_reaction(percept);
         
         // the agent receives feedback based on the success of their action
-        receive_feedback(frontier.tryAction(action));
+        if(!frontier.tryAction(action))
+            action_failed(action);
     }
     
 }

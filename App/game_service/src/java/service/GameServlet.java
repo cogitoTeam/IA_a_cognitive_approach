@@ -32,7 +32,7 @@ public class GameServlet extends HttpServlet
         if(parameters.containsKey("game_id"))
             game = gm.getGame(Integer.parseInt(parameters.get("game_id")[0]));
         if(game == null)
-            game = gm.newGame();
+            game = gm.findGame();
         
         // If a new game has been created ignore other requests
         else
