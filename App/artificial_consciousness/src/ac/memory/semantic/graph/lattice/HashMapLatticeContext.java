@@ -4,6 +4,8 @@
 package ac.memory.semantic.graph.lattice;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import ac.shared.structure.CompleteBoardState;
 import ac.shared.structure.RelevantPartialBoardState;
@@ -18,11 +20,20 @@ import ac.shared.structure.RelevantPartialBoardState;
 
 public class HashMapLatticeContext implements LatticeContext {
 
-    private HashMap<Long, RelevantPartialBoardState> attributes;
-    private HashMap<Long, CompleteBoardState> objects;
+    private Map<Long, RelevantPartialBoardState> attributes;
+    private Map<Long, CompleteBoardState> objects;
 
-    // Attribute x Object
-    private HashMap<Long, HashMap<Long, Boolean>> matrix;
+    // Object x Attribute
+    private Map<Long, HashSet<Long>> matrix;
+
+    /**
+     * Default constructor
+     */
+    public HashMapLatticeContext() {
+        this.attributes = new HashMap<Long, RelevantPartialBoardState>();
+        this.objects = new HashMap<Long, CompleteBoardState>();
+        this.matrix = new HashMap<Long, HashSet<Long>>();
+    }
 
     /*
      * (non-Javadoc)
@@ -47,6 +58,7 @@ public class HashMapLatticeContext implements LatticeContext {
     @Override
     public void addObject(CompleteBoardState object) {
         this.objects.put(object.getId(), object);
+        this.matrix.put(object.getId(), new HashSet<Long>());
 
     }
 
@@ -58,8 +70,8 @@ public class HashMapLatticeContext implements LatticeContext {
      * RelevantPartialBoardState, ac.shared.structure.CompleteBoardState)
      */
     @Override
-    public boolean getStatus(RelevantPartialBoardState attribute,
-            CompleteBoardState object) {
+    public boolean getStatus(CompleteBoardState object,
+            RelevantPartialBoardState attribute) {
         return getStatus(attribute.getId(), object.getId());
     }
 
@@ -72,9 +84,9 @@ public class HashMapLatticeContext implements LatticeContext {
      * boolean)
      */
     @Override
-    public void setStatus(RelevantPartialBoardState attribute,
-            CompleteBoardState object, boolean value) {
-        setStatus(attribute.getId(), object.getId(), value);
+    public void setStatus(CompleteBoardState object,
+            RelevantPartialBoardState attribute, boolean value) {
+        setStatus(object.getId(), attribute.getId(), value);
     }
 
     /*
@@ -83,8 +95,8 @@ public class HashMapLatticeContext implements LatticeContext {
      * @see ac.memory.graph.lattice.LatticeContext#getStatus(long, long)
      */
     @Override
-    public boolean getStatus(long id_attribute, long id_object) {
-        return this.matrix.get(id_attribute).get(id_object);
+    public boolean getStatus(long id_object, long id_attribute) {
+        return this.matrix.get(id_object).contains(id_object);
     }
 
     /*
@@ -93,8 +105,13 @@ public class HashMapLatticeContext implements LatticeContext {
      * @see ac.memory.graph.lattice.LatticeContext#setStatus(long, long)
      */
     @Override
-    public void setStatus(long id_attribute, long id_object, boolean value) {
-        this.matrix.get(id_attribute).put(id_object, value);
+    public void setStatus(long id_object, long id_attribute, boolean value) {
+        boolean contains = this.matrix.get(id_object).contains(id_attribute);
+
+        if (contains && !value)
+            this.matrix.get(id_object).remove(id_attribute);
+        else if (!contains && value)
+            this.matrix.get(id_object).add(id_attribute);
     }
 
     /*
@@ -126,7 +143,9 @@ public class HashMapLatticeContext implements LatticeContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ac.memory.graph.lattice.LatticeContext#getAttributes(long)
      */
     @Override
@@ -135,13 +154,32 @@ public class HashMapLatticeContext implements LatticeContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ac.memory.graph.lattice.LatticeContext#getObjects(long)
      */
     @Override
     public Map<Long, CompleteBoardState> getObjects(long id_attribute) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public String toString() {
+        String ret = "[[ LATTICE CONTEXT";
+        for (Iterator<CompleteBoardState> iterator = objects.values()
+                .iterator(); iterator.hasNext();) {
+            CompleteBoardState object = (CompleteBoardState) iterator.next();
+            ret += "\n  " + object.getId() + " | ";
+
+            for (Iterator<Long> iterator2 = matrix.get(object.getId())
+                    .iterator(); iterator2.hasNext();) {
+                Long id_attribute = (Long) iterator2.next();
+                ret += id_attribute + ", ";
+            }
+        }
+        ret += "\n]]";
+        return ret;
     }
 
 }

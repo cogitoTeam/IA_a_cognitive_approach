@@ -38,8 +38,8 @@ public interface LatticeContext {
      *            the object
      * @return the status (boolean)
      */
-    boolean getStatus(RelevantPartialBoardState attribute,
-            CompleteBoardState object);
+    boolean getStatus(CompleteBoardState object,
+            RelevantPartialBoardState attribute);
 
     /**
      * Set the status for an attribute and an object
@@ -51,8 +51,8 @@ public interface LatticeContext {
      * @param value
      *            the status (boolean)
      */
-    void setStatus(RelevantPartialBoardState attribute,
-            CompleteBoardState object, boolean value);
+    void setStatus(CompleteBoardState object,
+            RelevantPartialBoardState attribute, boolean value);
 
     /**
      * Get status in the lattice by id of the attribute and id of the object
@@ -63,7 +63,7 @@ public interface LatticeContext {
      *            id of the object
      * @return the status (boolean)
      */
-    boolean getStatus(long id_attribute, long id_object);
+    boolean getStatus(long id_object, long id_attribute);
 
     /**
      * Set the status for an attribute and an object (by ids)
@@ -75,7 +75,7 @@ public interface LatticeContext {
      * @param value
      *            checked or not
      */
-    void setStatus(long id_attribute, long id_object, boolean value);
+    void setStatus(long id_object, long id_attribute, boolean value);
 
     /**
      * Get all the attributes checked for the object in parameter
