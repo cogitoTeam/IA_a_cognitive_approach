@@ -4,7 +4,7 @@
  *****************/
 
 
-package ac.frontier;
+package frontier;
 
 import game.BoardMatrix;
 import game.MorpionRules;

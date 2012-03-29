@@ -4,13 +4,12 @@
  *****************/
 
 
-package ac.frontier;
+package frontier;
 
 import game.BoardMatrix;
 import game.BoardMatrix.Position;
 import game.Game.Player;
 import game.Rules;
-import java.util.LinkedList;
 import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -36,7 +35,7 @@ class Sensor extends XMLClient
     }
     
     // query
-    public Percept getPercept(int game_id, Player player)
+    public Percept parsePerceptXML(int game_id, Player player)
     {
         // get an XML document from the server
         Document doc = getXML("game_id="+game_id);

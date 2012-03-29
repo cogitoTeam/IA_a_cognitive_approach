@@ -4,11 +4,9 @@
  *****************/
 
 
-package ac.frontier;
+package frontier;
 
-import game.BoardMatrix.Position;
 import game.Game.Player;
-import java.util.List;
 
 
 public class Frontier 
@@ -41,16 +39,16 @@ public class Frontier
     
     // query
     
-    public boolean tryAction(Position move)
+    public boolean tryAction(Action action)
     {
         // to send information via the external interface
-        return actuator.tryMove(game_id, player, move);
+        return actuator.tryMove(game_id, player, action.getMove());
     }
     
     public Percept getPercept()
     {
         // to receive information via the external interface
-        return sensor.getPercept(game_id, player);
+        return sensor.parsePerceptXML(game_id, player);
     }
 
 }
