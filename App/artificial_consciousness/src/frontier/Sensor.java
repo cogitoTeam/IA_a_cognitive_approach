@@ -35,20 +35,27 @@ class Sensor extends XMLClient
     }
     
     // query
-    public Percept parsePerceptXML(int game_id, Player player)
+    
+    public boolean renewXML(int game_id)
     {
         // get an XML document from the server
         Document doc = getXML("game_id="+game_id);
+        
+        // if no changes have occured, report nothing
+        if(doc.getDocumentElement().getAttribute("state").equals("NO_CHANGE"))
+            return false;
         
         // parse the current board
         Node board_node = 
                 doc.getDocumentElement().getElementsByTagName("board").item(0);
         board.parseCells(board_node);
         
-        // if no changes have occured, report nothing
-        if(doc.getDocumentElement().getAttribute("state").equals("NO_CHANGE"))
-            return null;
-        
+        // success
+        return true;
+    }
+
+    public Percept perceiveBoard(Player player)
+    {
         // create the percept
         int value = rules.getValue(board, player);
         Percept percept = new Percept(board.copy(), value);
@@ -65,7 +72,6 @@ class Sensor extends XMLClient
         }
         
         // result the fruits of our labour !
-        System.out.println("connection success");
         return percept;
     }
 }

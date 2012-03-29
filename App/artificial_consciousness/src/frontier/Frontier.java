@@ -49,7 +49,10 @@ public class Frontier
     public Percept getPercept()
     {
         // to receive information via the external interface
-        return sensor.parsePerceptXML(game_id, player);
+        if(sensor.renewXML(game_id))
+            return sensor.perceiveBoard(player);
+        else
+            return null;
     }
 
 }
