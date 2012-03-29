@@ -6,7 +6,7 @@
 
 package main;
 
-import test.MiniMaxAgent;
+import test.RandomAgent;
 
 
 
@@ -15,7 +15,7 @@ public class Main
     public static void main(String[] args)
     {
         // create agent(s)
-        Agent agent = new MiniMaxAgent();
+        Agent agent = new RandomAgent();
         
         // main loop
         boolean stop = false;

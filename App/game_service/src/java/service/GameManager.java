@@ -10,6 +10,7 @@ import game.MorpionRules;
 import game.Rules;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
 
 public class GameManager 
@@ -30,6 +31,7 @@ public class GameManager
     
     private Rules rules;
     private Map<Integer, Game> games;
+    private Queue<Game> waiting;
     
     /* METHODS */
     
@@ -52,7 +54,18 @@ public class GameManager
         rules = _rules;
     }
     
-    public synchronized Game newGame()
+    public synchronized Game findGame()
+    {
+        // always join a game if possible
+        if(waiting.isEmpty())
+            return startGame();
+        else
+            return joinGame();
+    }
+    
+    /* SUBROUTINES */
+    
+    private synchronized Game startGame()
     {
         // create and save the new game
         Game game = new Game(next_id, rules);
@@ -61,9 +74,17 @@ public class GameManager
         // remember to increment the id generator!
         next_id++;
         
+        // add the game to the waiting queue
+        waiting.add(game);
+        
         // return the game we created
         return game;
     }
     
+    private synchronized Game joinGame()
+    {
+        // join the game at the head of the queue
+        return waiting.poll();
+    }
     
 }

@@ -23,8 +23,9 @@ public class RandomAgent extends Agent
     @Override
     protected Action choose_reaction(Percept percept) 
     {
-        // choose random option
+        // choose random action from amongts options
         int rand_i = (int)(Math.random()*percept.getOptions().size());
+        System.out.println("playing option number " + rand_i);
         return percept.getOptions().get(rand_i).getAction();
     }
 
