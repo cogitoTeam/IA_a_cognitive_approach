@@ -4,7 +4,7 @@
  *****************/
 
 
-package ac.frontier;
+package frontier;
 
 import java.io.IOException;
 import java.net.URL;

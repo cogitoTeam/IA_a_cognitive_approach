@@ -7,8 +7,7 @@
 package game;
 
 import game.Game.Player;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Arrays;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -59,30 +58,32 @@ public class BoardMatrix
 
     /* ATTRIBUTES */
             
-    private Cell cells[][];
+    private final Size size;
+    private final Cell cells[][];
     
     
     /* METHODS */
     
     // creation
-    protected BoardMatrix(Size s)
+    protected BoardMatrix(Size _size)
     {
+        size = _size;
         // create the matrix
-        cells = new Cell[s.n_rows][s.n_cols];
+        cells = new Cell[_size.n_rows][_size.n_cols];
     }
     
     public BoardMatrix(Node board_node)
     {
         // parse size
-        Size s = new Size(0, 0);
+        size = new Size(0, 0);
         NamedNodeMap attributes = board_node.getAttributes();
-        s.n_rows = 
+        size.n_rows = 
             Integer.parseInt(attributes.getNamedItem("n_rows").getNodeValue());
-        s.n_cols = 
+        size.n_cols = 
             Integer.parseInt(attributes.getNamedItem("n_cols").getNodeValue());
         
         // create the matrix
-        cells = new Cell[s.n_rows][s.n_cols];
+        cells = new Cell[size.n_rows][size.n_cols];
         
         // update cells from DOM node
         parseCells(board_node);
@@ -129,14 +130,14 @@ public class BoardMatrix
         Position p = new Position(0, 0);
         
         // set all cells empty
-        for(p.row = 0; p.row < get_n_rows(); p.row++)
-            for(p.col = 0; p.col < get_n_cols(); p.col++)
+        for(p.row = 0; p.row < size.n_rows; p.row++)
+            for(p.col = 0; p.col < size.n_cols; p.col++)
                 cells[p.row][p.col] = Cell.EMPTY;
     }
     
     public Cell setCell(Position p, Cell new_value)
     {
-        if(p.row < get_n_rows() && p.col < get_n_cols())
+        if(p.row < size.n_rows && p.col < size.n_cols)
         {
             Cell previous_value = cells[p.row][p.col];
             cells[p.row][p.col] = new_value;
@@ -157,41 +158,28 @@ public class BoardMatrix
 
     public BoardMatrix copy()
     {
-        try 
-        {
-            // local variables
-            BoardMatrix clone = this.getClass().newInstance();
-            Position p = new Position(0, 0);
+        // local variables
+        BoardMatrix clone = new BoardMatrix(this.size);
+        Position p = new Position(0, 0);
 
-            // copy each cell
-            for(p.row = 0; p.row < get_n_rows(); p.row++)
-                for(p.col = 0; p.col < get_n_cols(); p.col++)
-                    clone.cells[p.row][p.col] = this.cells[p.row][p.col];
+        // copy each cell
+        for(p.row = 0; p.row < size.n_rows; p.row++)
+            for(p.col = 0; p.col < size.n_cols; p.col++)
+                clone.cells[p.row][p.col] = this.cells[p.row][p.col];
 
-            // return the result
-            return clone;
-        } 
-        catch (InstantiationException ex) 
-        {
-            Logger.getLogger(BoardMatrix.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        } 
-        catch (IllegalAccessException ex) 
-        {
-            Logger.getLogger(BoardMatrix.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+        // return the result
+        return clone;
     }
 
 
-    public int get_n_rows()
+    public Size getSize()
     {
-        return cells.length;
+        return size;
     }
-
-    public int get_n_cols()
+    
+    public int get_n_cells()
     {
-        return cells[0].length;
+        return size.n_rows * size.n_cols;
     }
     
     public int get_n_pieces()
@@ -201,8 +189,8 @@ public class BoardMatrix
         int count = 0;
         
         // count number of non-empty cells
-        for(p.row = 0; p.row < get_n_rows(); p.row++)
-            for(p.col = 0; p.col < get_n_cols(); p.col++)
+        for(p.row = 0; p.row < size.n_rows; p.row++)
+            for(p.col = 0; p.col < size.n_cols; p.col++)
                 if(getCell(p) != BoardMatrix.Cell.EMPTY)
                     count++;
         
@@ -212,7 +200,7 @@ public class BoardMatrix
 
     public Cell getCell(Position p)
     {
-        if(p.row >= get_n_rows() || p.col >= get_n_cols())
+        if(p.row >= size.n_rows || p.col >= size.n_cols)
             return Cell.OUT_OF_BOUNDS;
         else
             return cells[p.row][p.col];
@@ -238,18 +226,49 @@ public class BoardMatrix
 
 
     /* OVERRIDES */
+    
+    @Override
+    public boolean equals(Object other)
+    {
+        // check types
+        if(!(other instanceof BoardMatrix))
+            return false;
+        
+        // check that sizes are identical
+        BoardMatrix other_board = (BoardMatrix)other;
+        if(!this.size.equals(other_board.size))
+            return false;
+        
+        // check that all cells are identical
+        Position p = new Position(0, 0);
+        for(p.row = 0; p.row < size.n_rows; p.row++)
+            for(p.col = 0; p.col < size.n_cols; p.col++)
+                if(this.getCell(p) != other_board.getCell(p))
+                    return false;
+        
+        return true;
+    }
+
+    @Override
+    public int hashCode() 
+    {
+        int hash = 7;
+        hash = 19 * hash + (this.size != null ? this.size.hashCode() : 0);
+        hash = 19 * hash + Arrays.deepHashCode(this.cells);
+        return hash;
+    }
+    
     @Override
     public String toString()
     {
         // local variables
-        String result = "<board n_rows=\"" + get_n_rows() 
-                        + "\" n_cols=\"" + get_n_cols() 
-                        + "\" n_pieces=\"" + get_n_pieces() + "\">";
+        String result = 
+                "<board " + size + " n_pieces=\"" + get_n_pieces() + "\">";
         Position p = new Position(0, 0);
         
         // read the board positions
-        for(p.row = 0; p.row < get_n_rows(); p.row++)
-            for(p.col = 0; p.col < get_n_cols(); p.col++)
+        for(p.row = 0; p.row < size.n_rows; p.row++)
+            for(p.col = 0; p.col < size.n_cols; p.col++)
             {
                 Player owner = getCellOwner(p);
                 result += "<cell " + p;

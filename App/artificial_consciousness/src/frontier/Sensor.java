@@ -4,13 +4,12 @@
  *****************/
 
 
-package ac.frontier;
+package frontier;
 
 import game.BoardMatrix;
 import game.BoardMatrix.Position;
 import game.Game.Player;
 import game.Rules;
-import java.util.LinkedList;
 import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -22,7 +21,7 @@ class Sensor extends XMLClient
     
     private final Rules rules;
     // the most recently seen board is stored in a kind of sensory memory
-    private final BoardMatrix board;
+    private BoardMatrix board;
     
     /* METHODS */
     
@@ -36,16 +35,27 @@ class Sensor extends XMLClient
     }
     
     // query
-    public Percept getPercept(int game_id, Player player)
+    
+    public boolean renewXML(int game_id)
     {
         // get an XML document from the server
         Document doc = getXML("game_id="+game_id);
+        
+        // if no changes have occured, report nothing
+        if(doc.getDocumentElement().getAttribute("state").equals("NO_CHANGE"))
+            return false;
         
         // parse the current board
         Node board_node = 
                 doc.getDocumentElement().getElementsByTagName("board").item(0);
         board.parseCells(board_node);
         
+        // success
+        return true;
+    }
+
+    public Percept perceiveBoard(Player player)
+    {
         // create the percept
         int value = rules.getValue(board, player);
         Percept percept = new Percept(board.copy(), value);

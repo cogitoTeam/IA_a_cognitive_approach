@@ -2,7 +2,7 @@ package ac.reasoning;
 
 import org.apache.log4j.Logger;
 
-import ac.frontier.Frontier;
+import frontier.Frontier;
 import ac.memory.ActiveMemory;
 
 /**

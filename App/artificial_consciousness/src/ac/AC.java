@@ -1,9 +1,10 @@
 package ac;
 
 import ac.analysis.Analysis;
-import ac.frontier.Frontier;
+import frontier.Frontier;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
+import app.Agent;
 
 /**
  * 
@@ -12,7 +13,7 @@ import ac.reasoning.Reasoning;
  * @date 28 mars 2012
  * @version 0.1
  */
-public class AC
+public class AC extends Agent
 {
 
   /* **************************************************************************

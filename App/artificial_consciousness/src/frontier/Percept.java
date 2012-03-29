@@ -4,7 +4,7 @@
  *****************/
 
 
-package ac.frontier;
+package frontier;
 
 import game.BoardMatrix;
 import game.BoardMatrix.Position;
@@ -58,6 +58,11 @@ public class Percept
     public List<Option> getOptions()
     {
         return options;
+    }
+    
+    public int getValue()
+    {
+        return value;
     }
     
     // modification

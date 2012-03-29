@@ -10,14 +10,10 @@ import game.BoardMatrix.Position;
 import game.Game.Player;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Logger;
 
 
 public abstract class Rules
 {
-    /* CONSTANTS */
-    private static final Logger logger = Logger.getLogger(Rules.class.getName());
-
     /* ATTRIBUTES */
     
     /* METHODS */
@@ -58,8 +54,8 @@ public abstract class Rules
         Position p = new Position(0, 0);
         
         // collect legal position
-        for(p.row = 0; p.row < board.get_n_rows(); p.row++)
-            for(p.col = 0; p.col < board.get_n_cols(); p.col++)
+        for(p.row = 0; p.row < board.getSize().n_rows; p.row++)
+            for(p.col = 0; p.col < board.getSize().n_cols; p.col++)
                 if(isLegalMove(p, board, player))
                     // be sure to add a copy, not the original !
                     positions.add(new Position(p.row, p.col));

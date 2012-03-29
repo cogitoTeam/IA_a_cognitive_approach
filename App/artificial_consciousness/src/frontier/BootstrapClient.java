@@ -4,9 +4,11 @@
  *****************/
 
 
-package ac.frontier;
+package frontier;
 
 import game.BoardMatrix;
+import game.Game;
+import game.Game.Player;
 import game.MorpionRules;
 import game.ReversiRules;
 import game.Rules;
@@ -21,6 +23,7 @@ class BootstrapClient extends XMLClient
     private final Sensor sensor;
     private final Actuator actuator;
     private final int id;
+    private final Player player;
     
     
     /* METHODS */
@@ -55,7 +58,13 @@ class BootstrapClient extends XMLClient
         BoardMatrix board = 
           new BoardMatrix(game_element.getElementsByTagName("board").item(0));
         
-        // finallycreate the sensor and actuator
+        // parse the player
+        attributes = game_element.getElementsByTagName("current_player")
+                        .item(0).getAttributes();
+        player = 
+            Game.parsePlayer(attributes.getNamedItem("colour").getNodeValue());
+        
+        // finally create the sensor and actuator
         sensor = new Sensor(_s_server_url, rules, board);
         actuator = new Actuator(_s_server_url);
     }
@@ -75,6 +84,11 @@ class BootstrapClient extends XMLClient
     public Actuator getActuator()
     {
         return actuator;
+    }
+    
+    public Player getPlayer()
+    {
+        return player;
     }
     
     /* SUBROUTINES */

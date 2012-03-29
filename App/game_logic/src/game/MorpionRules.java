@@ -43,7 +43,7 @@ public class MorpionRules extends Rules
     public boolean isDraw(BoardMatrix board) 
     {
         // return true if every cell is occupied
-        return (board.get_n_pieces() == board.get_n_rows()*board.get_n_cols());
+        return (board.get_n_pieces() == board.get_n_cells());
     }
 
     @Override
@@ -54,39 +54,39 @@ public class MorpionRules extends Rules
         int count;
 
         // check vertical '|' alignments
-        for(p.col = 0; p.col < board.get_n_cols(); p.col++)
+        for(p.col = 0; p.col < board.getSize().n_cols; p.col++)
         {
             count = 0;
-            for(p.row = 0; p.row < board.get_n_rows(); p.row++)
+            for(p.row = 0; p.row < board.getSize().n_rows; p.row++)
             {
                 if(board.getCellOwner(p) != player)
                     break;
                 else
                     count++;
             }
-            if(count == board.get_n_rows())
+            if(count == board.getSize().n_rows)
                 return true;
         }
 
         // check horizontal '--' alignments
-        for(p.row = 0; p.row < board.get_n_rows(); p.row++)
+        for(p.row = 0; p.row < board.getSize().n_rows; p.row++)
         {
             count = 0;
-            for(p.col = 0; p.col < board.get_n_rows(); p.col++)
+            for(p.col = 0; p.col < board.getSize().n_rows; p.col++)
             {
                 if(board.getCellOwner(p) != player)
                     break;
                 else
                     count++;
             }
-            if(count == board.get_n_cols())
+            if(count == board.getSize().n_cols)
                 return true;
         }
         
 
         // check for diagonal '\' alignments
         count = 0;
-        for(int i = 0; i < board.get_n_rows(); i++)
+        for(int i = 0; i < board.getSize().n_rows; i++)
         {
             p.row = p.col = i;
             if(board.getCellOwner(p) != player)
@@ -94,21 +94,21 @@ public class MorpionRules extends Rules
             else
                 count++;
         }
-        if(count == board.get_n_rows())
+        if(count == board.getSize().n_rows)
             return true;
 
         // check for diagonal '/' alignments
         count = 0;
-        for(int i = 0; i < board.get_n_cols(); i++)
+        for(int i = 0; i < board.getSize().n_cols; i++)
         {
             p.row = i;
-            p.col = board.get_n_cols()-1-i;
+            p.col = board.getSize().n_cols-1-i;
             if(board.getCellOwner(p) != player)
                 break;
             else
                 count++;
         }
-        if(count == board.get_n_cols())
+        if(count == board.getSize().n_cols)
             return true;
         
         // all possibilities have been exhausted
