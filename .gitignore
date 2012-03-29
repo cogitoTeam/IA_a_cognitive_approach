@@ -53,6 +53,7 @@ local.properties
 *.neato
 *.png
 *.svg
+*.tmp.dat
 
 #log files
 *.log
