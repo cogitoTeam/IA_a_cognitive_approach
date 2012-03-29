@@ -51,6 +51,13 @@ public class ReversiRules extends Rules
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    
+    @Override
+    public int getValue(BoardMatrix board, Player player) 
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
     public boolean isLegalMove(BoardMatrix.Position p, BoardMatrix board, Game.Player player) 

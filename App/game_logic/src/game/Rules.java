@@ -10,7 +10,6 @@ import game.BoardMatrix.Position;
 import game.Game.Player;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -77,6 +76,8 @@ public abstract class Rules
     public abstract boolean isDraw(BoardMatrix board);
     
     public abstract boolean hasWon(BoardMatrix board, Player player);
+    
+    public abstract int getValue(BoardMatrix board, Player player);
 
     public abstract boolean isLegalMove(Position p, BoardMatrix board, 
                                         Player player);

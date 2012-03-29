@@ -47,7 +47,8 @@ class Sensor extends XMLClient
         board.parseCells(board_node);
         
         // create the percept
-        Percept percept = new Percept(board.copy());
+        int value = rules.getValue(board, player);
+        Percept percept = new Percept(board.copy(), value);
         
         // get legal moves
         List<Position> moves = rules.getLegalMoves(board, player);

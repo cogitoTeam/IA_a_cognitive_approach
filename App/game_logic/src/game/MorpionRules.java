@@ -114,6 +114,13 @@ public class MorpionRules extends Rules
         // all possibilities have been exhausted
         return false;
     }
+    
+    
+    @Override
+    public int getValue(BoardMatrix board, Player player) 
+    {
+        return hasWon(board, player) ? 1 : isDraw(board) ? 0 : -1;
+    }
 
     @Override
     public boolean isLegalMove(Position p, BoardMatrix board, Player player) 

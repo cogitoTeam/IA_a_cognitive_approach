@@ -33,16 +33,18 @@ public class Percept
     
     /* ATTRIBUTES */
     
-    private BoardMatrix current_board;
-    private List<Option> options;
+    private final BoardMatrix current_board;
+    private final List<Option> options;
+    private final int value;
     
     
     /* METHODS */
     
     // creation
-    public Percept(BoardMatrix _current_board)
+    public Percept(BoardMatrix _current_board, int _value)
     {
         current_board = _current_board;
+        value = _value;
         // NB: there may not be any options to relay (eg. if the game is over)
         options = new LinkedList<Option>();
     }
