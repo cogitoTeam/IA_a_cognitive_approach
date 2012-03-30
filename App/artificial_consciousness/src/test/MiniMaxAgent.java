@@ -6,10 +6,11 @@
 package test;
 
 import frontier.Action;
-import frontier.MoveAction;
-import frontier.Percept;
+import frontier.Percept.Choices;
+import frontier.Percept.Defeat;
+import frontier.Percept.Draw;
+import frontier.Percept.Victory;
 import game.BoardMatrix;
-import game.BoardMatrix.Position;
 import game.Game.Player;
 import game.Rules;
 import main.Agent;
@@ -22,17 +23,9 @@ public class MiniMaxAgent extends Agent
     * 
     */
 
-    /* IMPLEMENTATIONS */
-
-    /*public Position chooseMove(Rules rules, BoardMatrix board, Player player)
-    {
-        List<BoardMatrix> children = rules.getChildBoards(board, player);
-
-        return null;
-    }*/
 
     
-    /* OVERRIDES */
+    /* IMPLEMENTATIONS */
 
     @Override
     protected void think() 
@@ -41,15 +34,30 @@ public class MiniMaxAgent extends Agent
     }
 
     @Override
-    protected Action choose_reaction(Percept percept) 
-    {
-        return new MoveAction(new Position(0, 0));
+    protected Action choices_reaction(Choices percept) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
+    protected Action victory_reaction(Victory percept) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected Action defeat_reaction(Defeat percept) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected Action draw_reaction(Draw percept) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
     protected void action_failed(Action action) 
     {
-        // TODO
+        // no fault tolerance implemented for this Agent
+        state = State.ERROR;
     }
     
     

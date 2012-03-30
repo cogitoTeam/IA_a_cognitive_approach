@@ -57,8 +57,7 @@ class Sensor extends XMLClient
     public Percept perceiveBoard(Player player)
     {
         // create the percept
-        //int value = rules.getValue(board, player);
-        MyTurnPercept percept = new MyTurnPercept(board.copy());
+        Percept.Choices percept = new Percept.Choices(board.copy());
         
         // get legal moves
         List<Position> moves = rules.getLegalMoves(board, player);
@@ -67,8 +66,9 @@ class Sensor extends XMLClient
         for(Position move : moves)
         {
             // generate and add each option
+            Action action = new Action.Move(move);
             BoardMatrix result = rules.getResultingBoard(board, player, move);
-            percept.addOption(move, result);
+            percept.getOptions().add(new Action.Option(action, result));
         }
         
         // result the fruits of our labour !

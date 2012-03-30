@@ -3,10 +3,14 @@
  * @date 30-Mar-2012
  *****************/
 
-
 package test;
 
-import frontier.*;
+import frontier.Action;
+import frontier.Percept;
+import frontier.Percept.Choices;
+import frontier.Percept.Defeat;
+import frontier.Percept.Draw;
+import frontier.Percept.Victory;
 import java.io.Console;
 import main.Agent;
 
@@ -27,36 +31,7 @@ public class MTurkAgent extends Agent
     }
 
     @Override
-    protected Action choose_reaction(Percept percept) 
-    {
-        // take your turn
-        if(percept instanceof MyTurnPercept)
-            return myturn_reaction((MyTurnPercept)percept);
-        
-        // the game has ended
-        else if(percept instanceof GameEndPercept)
-            return gameend_reaction((GameEndPercept)percept);
-        
-        // ... 
-        
-        // unknown
-        else
-        {
-            System.out.println("Received unknown percept!");
-            return null;
-        }
-    }
-
-    @Override
-    protected void action_failed(Action action) 
-    {
-        System.out.println("Invalid move!");
-    }
-    
-    
-    /* SUBROUTIES */
-    
-    private Action myturn_reaction(MyTurnPercept percept) 
+    protected Action choices_reaction(Choices percept) 
     {
         // ask user to make a choice
         System.out.println("It's your turn to make a move!");
@@ -68,30 +43,47 @@ public class MTurkAgent extends Agent
         // TODO -- finish
         return null;
     }
-    
-    private Action gameend_reaction(GameEndPercept percept)
+
+    @Override
+    protected Action victory_reaction(Victory percept)
     {
-        // tell the user that the game has ended
-        switch(percept.getResult())
-        {
-            case WIN:
-                System.out.print("You win!");
-                break;
-            case LOSE:
-                System.out.print("You lose!");
-                break;
-            default:
-            case DRAW:
-                System.out.print("It's a draw...");
-                break;
-        }
-        
+        System.out.print("You win!");
+        return gameend_reaction(percept);
+    }
+
+    @Override
+    protected Action defeat_reaction(Defeat percept) 
+    {
+        System.out.print("You lose!");
+        return gameend_reaction(percept);
+    }
+
+    @Override
+    protected Action draw_reaction(Draw percept)
+    {
+        System.out.print("It's a draw...");
+        return gameend_reaction(percept);
+    }
+
+    @Override
+    protected void action_failed(Action action) 
+    {
+        System.out.println("Invalid move!");
+        // no fault tolerance implemented for this Agent
+        state = State.ERROR;
+    }
+    
+    
+    /* SUBROUTIES */
+    
+    private Action gameend_reaction(Percept.GameEnd percept)
+    {
         // tell the user their score
         System.out.println("Your score: " + percept.getScore());
         
         // start a new game when the player is ready
         console.readLine("Press enter to restart...");
-        return new RestartAction();
+        return new Action.Restart();
     }
 
 }

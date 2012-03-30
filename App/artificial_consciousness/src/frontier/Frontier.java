@@ -42,11 +42,11 @@ public class Frontier
     
     public boolean tryAction(Action action)
     {
-        if(action instanceof MoveAction)
+        if(action instanceof Action.Move)
         {
             // to send move via the external interface
-            return actuator.tryMove(game_id, player, 
-                                    ((MoveAction)action).getMove());
+            Action.Move move = (Action.Move)action;
+            return actuator.tryMove(game_id, player, move.getPosition());
         }
         
         // TODO other types of actions
