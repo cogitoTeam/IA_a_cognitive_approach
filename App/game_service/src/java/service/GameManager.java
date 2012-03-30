@@ -11,6 +11,7 @@ import game.Rules;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class GameManager 
@@ -38,8 +39,9 @@ public class GameManager
     // singleton
     private GameManager()
     {
-        games = new HashMap<Integer, Game>();
         rules = MorpionRules.getInstance();
+        games = new HashMap<Integer, Game>();
+        waiting = new LinkedBlockingQueue<Game>();
     }
     
     // query
