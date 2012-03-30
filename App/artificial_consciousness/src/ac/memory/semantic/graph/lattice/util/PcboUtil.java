@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Iterator;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 import ac.memory.semantic.graph.lattice.LatticeContext;
