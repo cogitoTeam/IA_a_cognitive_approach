@@ -12,8 +12,6 @@ import org.neo4j.helpers.collection.IterableWrapper;
 import org.neo4j.kernel.Traversal;
 import org.neo4j.kernel.Uniqueness;
 
-import ac.shared.structure.RelevantPartialBoardState;
-
 /**
  * Wrapping class for attribute node
  * 
