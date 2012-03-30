@@ -10,7 +10,7 @@ import ac.shared.structure.CompleteBoardState;
  * @date 30 mars 2012
  * @version 0.1
  */
-public class NodeObject
+public class ObjectNode
 {
   static final String ID = "id";
   static final String OBJECT = "object";
@@ -18,7 +18,7 @@ public class NodeObject
   // START SNIPPET: the-node
   private final Node underlyingNode;
 
-  NodeObject(Node objectNode)
+  ObjectNode(Node objectNode)
   {
     this.underlyingNode = objectNode;
   }
@@ -53,8 +53,8 @@ public class NodeObject
   @Override
   public boolean equals(Object o)
   {
-    return o instanceof NodeObject
-        && underlyingNode.equals(((NodeObject) o).getUnderlyingNode());
+    return o instanceof ObjectNode
+        && underlyingNode.equals(((ObjectNode) o).getUnderlyingNode());
   }
 
   @Override

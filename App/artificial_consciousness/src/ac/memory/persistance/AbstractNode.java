@@ -20,20 +20,22 @@ import ac.shared.structure.RelevantPartialBoardState;
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 30 mars 2012
  * @version 0.1
+ * @param <ObjectType>
+ *          Object type to store
+ * @param <RelatedObjectType>
+ *          Related object type
  */
-public class NodeAttribute
+abstract public class AbstractNode<ObjectType, RelatedObjectType>
 {
   static final String ID = "id";
-  static final String TYPE_FIELD = "type";
-  static final String TYPE_VALUE = "attribute";
   static final String OBJECT = "object";
 
   // START SNIPPET: the-node
-  private final Node underlyingNode;
+  protected final Node underlyingNode;
 
-  NodeAttribute(Node attributeNode)
+  protected AbstractNode(Node node)
   {
-    this.underlyingNode = attributeNode;
+    this.underlyingNode = node;
   }
 
   protected Node getUnderlyingNode()
@@ -50,50 +52,31 @@ public class NodeAttribute
   }
 
   /**
+   * Return the RelevantPartialBoardState unserialized
+   * 
    * @return the RelevantePartialBoardState of the attribute
    * @throws IOException
    *           Should never happen
    * @throws ClassNotFoundException
    *           Error when unserialize
    */
-  public RelevantPartialBoardState getRelevantPartialBoardState()
-      throws IOException, ClassNotFoundException
+  public ObjectType getObject() throws IOException, ClassNotFoundException
   {
     // / UNSERIALIZE
     ByteArrayInputStream bis = new ByteArrayInputStream(
         (byte[]) underlyingNode.getProperty(OBJECT));
     ObjectInput in = new ObjectInputStream(bis);
-    return (RelevantPartialBoardState) in.readObject();
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return underlyingNode.hashCode();
-  }
-
-  @Override
-  public boolean equals(Object o)
-  {
-    return o instanceof NodeAttribute
-        && underlyingNode.equals(((NodeAttribute) o).getUnderlyingNode());
-  }
-
-  @Override
-  public String toString()
-  {
-    return TYPE_VALUE + "[" + getId() + "]";
+    return (ObjectType) in.readObject();
   }
 
   /**
-   * @return Objects related to this Attribute
+   * @return Node related to this Attribute
    */
-  public Iterable<NodeObject> getRelatedObjects()
+  public Iterable<RelatedObjectType> getRelatedObjects()
   {
-
     @SuppressWarnings("deprecation")
     TraversalDescription travDesc = Traversal.description().breadthFirst()
-        .relationships(RelTypes.ATTR_TO_OBJ).uniqueness(Uniqueness.NODE_GLOBAL)
+        .relationships(RelTypes.RELATED).uniqueness(Uniqueness.NODE_GLOBAL)
         .depthFirst().filter(Traversal.returnAll());
 
     return createObjectsFromPath(travDesc.traverse(underlyingNode));
@@ -105,18 +88,20 @@ public class NodeAttribute
    * @param object
    *          the object to associate
    */
-  public void addRelatedObject(NodeObject object)
+  @SuppressWarnings("unchecked")
+  public void addRelatedObject(RelatedObjectType object)
   {
     Transaction tx = underlyingNode.getGraphDatabase().beginTx();
     try
       {
         if (!this.equals(object))
           {
-            Relationship attrToObjectRel = getAttributesRelationshipTo(object);
-            if (attrToObjectRel == null)
+            Relationship related = getAttributesRelationshipTo(object);
+            if (related == null)
               {
-                underlyingNode.createRelationshipTo(object.getUnderlyingNode(),
-                    RelTypes.ATTR_TO_OBJ);
+                underlyingNode.createRelationshipTo(
+                    ((AbstractNode<ObjectType, RelatedObjectType>) object)
+                        .getUnderlyingNode(), RelTypes.RELATED);
               }
             tx.success();
           }
@@ -133,17 +118,17 @@ public class NodeAttribute
    * @param object
    *          the object
    */
-  public void removeRelatedObject(NodeObject object)
+  public void removeRelatedObject(RelatedObjectType object)
   {
     Transaction tx = underlyingNode.getGraphDatabase().beginTx();
     try
       {
         if (!this.equals(object))
           {
-            Relationship objectRel = getAttributesRelationshipTo(object);
-            if (objectRel != null)
+            Relationship related = getAttributesRelationshipTo(object);
+            if (related != null)
               {
-                objectRel.delete();
+                related.delete();
               }
             tx.success();
           }
@@ -154,32 +139,31 @@ public class NodeAttribute
       }
   }
 
-  private IterableWrapper<NodeObject, Path> createObjectsFromPath(
-      Traverser iterableToWrap)
+  @Override
+  public int hashCode()
   {
-    return new IterableWrapper<NodeObject, Path>(iterableToWrap)
-    {
-      @Override
-      protected NodeObject underlyingObjectToObject(Path path)
-      {
-        return new NodeObject(path.endNode());
-      }
-    };
+    return underlyingNode.hashCode();
   }
 
-  private Relationship getAttributesRelationshipTo(NodeObject object)
+  @SuppressWarnings("unchecked")
+  @Override
+  public boolean equals(Object o)
   {
-    Node objectNode = object.getUnderlyingNode();
-
-    for (Relationship rel : underlyingNode
-        .getRelationships(RelTypes.ATTR_TO_OBJ))
-      {
-        if (rel.getOtherNode(underlyingNode).equals(objectNode))
-          {
-            return rel;
-          }
-      }
-    return null;
+    return underlyingNode
+        .equals(((AbstractNode<ObjectType, RelatedObjectType>) o)
+            .getUnderlyingNode());
   }
+
+  @Override
+  public String toString()
+  {
+    return "Node[" + getId() + "]";
+  }
+
+  protected abstract IterableWrapper<RelatedObjectType, Path> createObjectsFromPath(
+      Traverser iterableToWrap);
+
+  protected abstract Relationship getAttributesRelationshipTo(
+      RelatedObjectType object);
 
 }

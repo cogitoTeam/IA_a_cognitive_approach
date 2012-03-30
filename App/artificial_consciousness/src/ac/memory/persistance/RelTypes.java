@@ -27,11 +27,7 @@ public enum RelTypes implements RelationshipType
    */
   OBJ,
   /**
-   * Relation between an attribute node and an object node
+   * Relation between two nodes
    */
-  ATTR_TO_OBJ,
-  /**
-   * Relation between and object node and an attribute node
-   */
-  OBJ_TO_ATTR;
+  RELATED;
 }
