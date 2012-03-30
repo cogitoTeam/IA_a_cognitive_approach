@@ -3,7 +3,6 @@ package ac.memory.persistance;
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
@@ -21,14 +20,14 @@ public class Neo4jService
   private static final String DB_PATH = System.getProperty("user.dir")
       + "/neo4j/";
   private static GraphDatabaseService database;
-  private static Index<Node> node_index;
-  private static Index<Relationship> relation_ship_index;
+  private static Index<Node> attr_index;
+  private static Index<Node> obj_index;
 
   static
     {
       database = null;
-      node_index = null;
-      relation_ship_index = null;
+      attr_index = null;
+      obj_index = null;
     }
 
   /**
@@ -47,25 +46,25 @@ public class Neo4jService
   }
 
   /**
-   * @return the unique instance of node index
+   * @return the unique instance of obj index
    */
-  public static Index<Node> getNodeIndex()
+  public static Index<Node> getObjIndex()
   {
-    if (node_index == null)
-      node_index = database.index().forNodes("nodes");
+    if (obj_index == null)
+      obj_index = database.index().forNodes("obj");
 
-    return node_index;
+    return obj_index;
   }
 
   /**
-   * @return the unique instance of relation ship index
+   * @return the unique instance of attr index
    */
-  public static Index<Relationship> getRelationShipIndex()
+  public static Index<Node> getAttrIndex()
   {
-    if (relation_ship_index == null)
-      relation_ship_index = database.index().forRelationships("relationship");
+    if (attr_index == null)
+      attr_index = database.index().forNodes("attr");
 
-    return relation_ship_index;
+    return attr_index;
   }
 
   private static void registerShutdownHook(final GraphDatabaseService graphDb)

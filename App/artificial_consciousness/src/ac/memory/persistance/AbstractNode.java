@@ -25,7 +25,7 @@ import org.neo4j.kernel.Uniqueness;
  */
 abstract public class AbstractNode<ObjectType, RelatedObjectType>
 {
-  static final String ID = "id";
+  static String ID;
   static final String OBJECT = "object";
 
   // START SNIPPET: the-node
@@ -58,6 +58,7 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
    * @throws ClassNotFoundException
    *           Error when unserialize
    */
+  @SuppressWarnings("unchecked")
   public ObjectType getObject() throws IOException, ClassNotFoundException
   {
     // / UNSERIALIZE
@@ -94,7 +95,7 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
       {
         if (!this.equals(object))
           {
-            Relationship related = getAttributesRelationshipTo(object);
+            Relationship related = getRelationshipTo(object);
             if (related == null)
               {
                 underlyingNode.createRelationshipTo(
@@ -123,7 +124,7 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
       {
         if (!this.equals(object))
           {
-            Relationship related = getAttributesRelationshipTo(object);
+            Relationship related = getRelationshipTo(object);
             if (related != null)
               {
                 related.delete();
@@ -161,7 +162,6 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   protected abstract IterableWrapper<RelatedObjectType, Path> createObjectsFromPath(
       Traverser iterableToWrap);
 
-  protected abstract Relationship getAttributesRelationshipTo(
-      RelatedObjectType object);
+  protected abstract Relationship getRelationshipTo(RelatedObjectType object);
 
 }

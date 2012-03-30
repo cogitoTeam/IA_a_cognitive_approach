@@ -4,8 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import ac.memory.persistance.RelTypes;
-import ac.shared.structure.RelevantPartialBoardState;
-
+import ac.shared.structure.CompleteBoardState;
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -20,21 +19,21 @@ import org.neo4j.helpers.collection.IterableWrapper;
  * @date 30 mars 2012
  * @version 0.1
  */
-public class AttributeNodeRepository extends
-    AbstractNodeRepository<RelevantPartialBoardState, AttributeNode>
+public class ObjectNodeRepository extends
+    AbstractNodeRepository<CompleteBoardState, ObjectNode>
 {
   /**
    * @param graphDb
    * @param index
    */
-  public AttributeNodeRepository(GraphDatabaseService graphDb, Index<Node> index)
+  public ObjectNodeRepository(GraphDatabaseService graphDb, Index<Node> index)
   {
     super(graphDb, index);
     refNode = getRootNode(graphDb);
   }
 
   private static final Logger logger = Logger
-      .getLogger(AttributeNodeRepository.class);
+      .getLogger(ObjectNodeRepository.class);
 
   /**
    * Create new node
@@ -48,8 +47,7 @@ public class AttributeNodeRepository extends
    *           if the attribute already exists
    */
   @Override
-  public AttributeNode createNode(RelevantPartialBoardState object)
-      throws Exception
+  public ObjectNode createNode(CompleteBoardState object) throws Exception
   {
     // to guard against duplications we use the lock grabbed on ref node
     // when
@@ -60,8 +58,8 @@ public class AttributeNodeRepository extends
       {
 
         logger.debug("Node creation");
-        Node newNodeAttribute = graphDb.createNode();
-        newNodeAttribute.setProperty("id", object.getId());
+        Node newNode = graphDb.createNode();
+        newNode.setProperty("id", object.getId());
 
         // / SERIALIZE TO BYTE[]
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -70,9 +68,9 @@ public class AttributeNodeRepository extends
         byte[] bytes = bos.toByteArray();
         // ///////////////////////
 
-        newNodeAttribute.setProperty("object", bytes);
+        newNode.setProperty("object", bytes);
 
-        refNode.createRelationshipTo(newNodeAttribute, RelTypes.ATTR);
+        refNode.createRelationshipTo(newNode, RelTypes.ATTR);
         // lock now taken, we can check if already exist in index
         Node alreadyExist = index.get(AttributeNode.ID, object.getId())
             .getSingle();
@@ -84,11 +82,11 @@ public class AttributeNodeRepository extends
           }
 
         logger.debug("Setting properties");
-        newNodeAttribute.setProperty(AttributeNode.ID, object.getId());
-        index.add(newNodeAttribute, AttributeNode.ID, object.getId());
+        newNode.setProperty(AttributeNode.ID, object.getId());
+        index.add(newNode, AttributeNode.ID, object.getId());
         tx.success();
         logger.debug("Ok new Attribute created");
-        return new AttributeNode(newNodeAttribute);
+        return new ObjectNode(newNode);
       }
     finally
       {
@@ -105,46 +103,45 @@ public class AttributeNodeRepository extends
    * @return the attribute
    */
   @Override
-  public AttributeNode getNodeById(long id)
+  public ObjectNode getNodeById(long id)
   {
     logger.debug("Getting an attribute by ID " + id);
-    Node attribute = index.get(AttributeNode.ID, id).getSingle();
-    if (attribute == null)
+    Node object = index.get(ObjectNode.ID, id).getSingle();
+    if (object == null)
       {
-        logger.warn("Attribute not found");
+        logger.warn("Object not found");
         throw new IllegalArgumentException("[" + id + "] not found");
       }
-    logger.debug("Attribute found");
-    return new AttributeNode(attribute);
+    logger.debug("Object found");
+    return new ObjectNode(object);
   }
 
   /**
    * Remove an attribute
    * 
-   * @param attribute
+   * @param node
    *          The attribute to remove
    */
   @Override
-  public void deleteNode(AttributeNode attribute)
+  public void deleteNode(ObjectNode node)
   {
-    logger
-        .debug("Opening transaction to delete attribute " + attribute.getId());
+    logger.debug("Opening transaction to delete attribute " + node.getId());
     Transaction tx = graphDb.beginTx();
     try
       {
-        Node nodeAttribute = attribute.getUnderlyingNode();
-        index.remove(nodeAttribute, AttributeNode.ID, attribute.getId());
+        Node nodeObject = node.getUnderlyingNode();
+        index.remove(nodeObject, ObjectNode.ID, node.getId());
         logger.debug("Removing related objects");
-        for (ObjectNode object : attribute.getRelatedObjects())
+        for (AttributeNode object : node.getRelatedObjects())
           {
-            attribute.removeRelatedObject(object);
+            node.removeRelatedObject(object);
           }
         logger.debug("Removing main relation");
-        nodeAttribute.getSingleRelationship(RelTypes.ATTR, Direction.INCOMING)
+        nodeObject.getSingleRelationship(RelTypes.ATTR, Direction.INCOMING)
             .delete();
 
-        logger.debug("Removing attribute node");
-        nodeAttribute.delete();
+        logger.debug("Removing object node");
+        nodeObject.delete();
         tx.success();
       }
     finally
@@ -158,23 +155,23 @@ public class AttributeNodeRepository extends
    * @return all NodeAttributes in the database
    */
   @Override
-  public Iterable<AttributeNode> getAllNodes()
+  public Iterable<ObjectNode> getAllNodes()
   {
     logger.debug("Getting all the attribute nodes");
-    return new IterableWrapper<AttributeNode, Relationship>(
+    return new IterableWrapper<ObjectNode, Relationship>(
         refNode.getRelationships(RelTypes.ATTR))
     {
       @Override
-      protected AttributeNode underlyingObjectToObject(Relationship attributeRel)
+      protected ObjectNode underlyingObjectToObject(Relationship objectRel)
       {
-        return new AttributeNode(attributeRel.getEndNode());
+        return new ObjectNode(objectRel.getEndNode());
       }
     };
   }
 
   private Node getRootNode(GraphDatabaseService graphDb)
   {
-    return getRootNode(graphDb, RelTypes.REF_ATTRIBUTES);
+    return getRootNode(graphDb, RelTypes.REF_OBJECTS);
   }
 
 }

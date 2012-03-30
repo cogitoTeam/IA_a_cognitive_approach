@@ -1,8 +1,6 @@
 package ac.memory.persistance;
 
 import ac.memory.persistance.RelTypes;
-import ac.shared.structure.RelevantPartialBoardState;
-
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -27,7 +25,7 @@ abstract public class AbstractNodeRepository<ObjectType, NodeType>
 
   protected GraphDatabaseService graphDb;
   protected Index<Node> index;
-  protected Node attributeRefNode;
+  protected Node refNode;
 
   /**
    * Default constructor
@@ -55,7 +53,7 @@ abstract public class AbstractNodeRepository<ObjectType, NodeType>
    * @throws Exception
    *           if the attribute already exists
    */
-  public abstract AttributeNode createAttribute(RelevantPartialBoardState object)
+  public abstract NodeType createNode(ObjectType object)
       throws Exception;
 
   /**
@@ -70,15 +68,15 @@ abstract public class AbstractNodeRepository<ObjectType, NodeType>
   /**
    * Remove an attribute
    * 
-   * @param attribute
+   * @param node
    *          The attribute to remove
    */
-  public abstract void deleteAttribute(NodeType attribute);
+  public abstract void deleteNode(NodeType node);
 
   /**
    * @return all NodeAttributes in the database
    */
-  public abstract Iterable<AttributeNode> getAllNodeAttributes();
+  public abstract Iterable<NodeType> getAllNodes();
 
   protected Node getRootNode(GraphDatabaseService graphDb, RelTypes rel_type)
   {

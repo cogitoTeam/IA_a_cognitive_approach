@@ -1,65 +1,58 @@
+/**
+ * 
+ */
 package ac.memory.persistance;
 
-import org.neo4j.graphdb.*;
-import ac.shared.structure.CompleteBoardState;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Path;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.traversal.Traverser;
+import org.neo4j.helpers.collection.IterableWrapper;
 
 /**
- * Wrapping class for object node
- * 
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 30 mars 2012
  * @version 0.1
  */
-public class ObjectNode
+public class ObjectNode extends AbstractNode<ObjectNode, AttributeNode>
 {
-  static final String ID = "id";
-  static final String OBJECT = "object";
 
-  // START SNIPPET: the-node
-  private final Node underlyingNode;
-
+  /**
+   * @param attributeNode
+   */
   ObjectNode(Node objectNode)
   {
-    this.underlyingNode = objectNode;
-  }
-
-  protected Node getUnderlyingNode()
-  {
-    return underlyingNode;
-  }
-
-  /**
-   * @return the Id of the object
-   */
-  public Long getId()
-  {
-    return (Long) underlyingNode.getProperty(ID);
-  }
-
-  /**
-   * @return the CompleteBoardState
-   */
-  public CompleteBoardState getObject()
-  {
-    return (CompleteBoardState) underlyingNode.getProperty(OBJECT);
+    super(objectNode);
+    ID = "id_obj";
   }
 
   @Override
-  public int hashCode()
+  protected IterableWrapper<AttributeNode, Path> createObjectsFromPath(
+      Traverser iterableToWrap)
   {
-    return underlyingNode.hashCode();
+    return new IterableWrapper<AttributeNode, Path>(iterableToWrap)
+    {
+      @Override
+      protected AttributeNode underlyingObjectToObject(Path path)
+      {
+        return new AttributeNode(path.endNode());
+      }
+    };
   }
 
   @Override
-  public boolean equals(Object o)
+  protected Relationship getRelationshipTo(AttributeNode object)
   {
-    return o instanceof ObjectNode
-        && underlyingNode.equals(((ObjectNode) o).getUnderlyingNode());
+    Node node = object.getUnderlyingNode();
+
+    for (Relationship rel : underlyingNode.getRelationships(RelTypes.RELATED))
+      {
+        if (rel.getOtherNode(underlyingNode).equals(node))
+          {
+            return rel;
+          }
+      }
+    return null;
   }
 
-  @Override
-  public String toString()
-  {
-    return "Person[" + getId() + "]";
-  }
 }

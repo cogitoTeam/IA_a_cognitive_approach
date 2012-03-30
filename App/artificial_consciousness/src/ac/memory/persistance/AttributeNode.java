@@ -16,15 +16,16 @@ import org.neo4j.helpers.collection.IterableWrapper;
  */
 public class AttributeNode extends AbstractNode<AttributeNode, ObjectNode>
 {
-
   /**
    * @param attributeNode
    */
   AttributeNode(Node attributeNode)
   {
     super(attributeNode);
+    ID = "id_attr";
   }
 
+  @Override
   protected IterableWrapper<ObjectNode, Path> createObjectsFromPath(
       Traverser iterableToWrap)
   {
@@ -38,7 +39,8 @@ public class AttributeNode extends AbstractNode<AttributeNode, ObjectNode>
     };
   }
 
-  protected Relationship getAttributesRelationshipTo(ObjectNode object)
+  @Override
+  protected Relationship getRelationshipTo(ObjectNode object)
   {
     Node node = object.getUnderlyingNode();
 
