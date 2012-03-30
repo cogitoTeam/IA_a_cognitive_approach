@@ -35,7 +35,10 @@ public abstract class Agent
     
     protected abstract void think();
     
-    protected abstract Action choose_reaction(Percept percept);
+    protected abstract Action choices_reaction(Percept.Choices percept);
+    protected abstract Action victory_reaction(Percept.Victory percept);
+    protected abstract Action defeat_reaction(Percept.Defeat percept);
+    protected abstract Action draw_reaction(Percept.Draw percept);
     
     protected abstract void action_failed(Action action);
     
@@ -90,7 +93,28 @@ public abstract class Agent
     private void react(Percept percept)
     {
         // choose a reaction to the stimulus
-        Action action = choose_reaction(percept);
+        Action action;
+        // reaction vary depending on the type of stimulus
+        switch(percept.getType())
+        {
+            case CHOICES:
+                action = choices_reaction((Percept.Choices)percept);
+                break;
+            case VICTORY:
+                action = victory_reaction((Percept.Victory)percept);
+                break;    
+            case DEFEAT:
+                action = defeat_reaction((Percept.Defeat)percept);
+                break;
+            case DRAW:
+                action = draw_reaction((Percept.Draw)percept);
+                break;
+            default:
+                System.out.println("Unknown Percept type " + percept.getType());
+                action = null;
+                break;
+                
+        }
         
         // the agent receives feedback based on the success of their action
         if(!frontier.tryAction(action))

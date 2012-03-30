@@ -6,7 +6,7 @@
 
 package main;
 
-import test.RandomAgent;
+import test.*;
 
 
 
@@ -15,7 +15,7 @@ public class Main
     public static void main(String[] args)
     {
         // create agent(s)
-        Agent agent = new RandomAgent();
+        Agent agent = new MTurkAgent();
         
         // main loop
         boolean stop = false;
