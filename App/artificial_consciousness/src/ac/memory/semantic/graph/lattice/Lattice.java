@@ -15,17 +15,17 @@ import grph.Grph;
  * @date 28 mars 2012
  * @version 0.1
  */
-public class Lattice {
-    private static final long serialVersionUID = -1770713032912319801L;
+public class Lattice
+{
+  Grph lattice;
+  Map<Integer, Concept> concepts;
 
-    Grph lattice;
-    Map<Integer, Concept> concepts;
-
-    /**
-     * Default constructor of the Lattice
-     */
-    public Lattice() {
-        this.lattice = new Grph();
-        this.concepts = new HashMap<Integer, Concept>();
-    }
+  /**
+   * Default constructor of the Lattice
+   */
+  public Lattice()
+  {
+    this.lattice = new Grph();
+    this.concepts = new HashMap<Integer, Concept>();
+  }
 }

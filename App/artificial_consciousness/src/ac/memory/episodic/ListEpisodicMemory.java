@@ -17,70 +17,72 @@ import org.apache.log4j.Logger;
  * @date 28 mars 2012
  * @version 0.1
  */
-public class ListEpisodicMemory implements EpisodicMemory {
-    private static final Logger logger = Logger
-            .getLogger(ListEpisodicMemory.class);
+public class ListEpisodicMemory implements EpisodicMemory
+{
+  private static final Logger logger = Logger
+      .getLogger(ListEpisodicMemory.class);
 
-    private LinkedList<Game> games;
+  private LinkedList<Game> games;
 
-    private long quantity;
+  private long quantity;
 
-    /**
-     * Default constructor
-     */
-    public ListEpisodicMemory() {
-        this.games = new LinkedList<Game>();
-        this.quantity = 0;
-    }
+  /**
+   * Default constructor
+   */
+  public ListEpisodicMemory()
+  {
+    this.games = new LinkedList<Game>();
+    this.quantity = 0;
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ac.memory.episodic.EpisodicMemory#getLastGame()
-     */
-    @Override
-    public Game getLastGame() {
-        return games.getFirst();
-    }
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.episodic.EpisodicMemory#getLastGame() */
+  @Override
+  public Game getLastGame()
+  {
+    return games.getFirst();
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ac.memory.episodic.EpisodicMemory#getLastGames(int)
-     */
-    @Override
-    public List<Game> getLastGames(int number) {
-        return games.subList(0, number);
-    }
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.episodic.EpisodicMemory#getLastGames(int) */
+  @Override
+  public List<Game> getLastGames(int number)
+  {
+    return games.subList(0, number);
+  }
 
-    @Override
-    public String toString() {
-        String ret = "[[ EPISODIC MEMORY | quantity = " + this.quantity + " :";
-        for (Iterator<Game> iterator = games.iterator(); iterator.hasNext();) {
-            Game game = (Game) iterator.next();
-            ret += "\n   " + game;
-        }
-        ret += "\n]]";
-        return ret;
-    }
+  @Override
+  public String toString()
+  {
+    String ret = "[[ EPISODIC MEMORY | quantity = " + this.quantity + " :";
+    for (Iterator<Game> iterator = games.iterator(); iterator.hasNext();)
+      {
+        Game game = (Game) iterator.next();
+        ret += "\n   " + game;
+      }
+    ret += "\n]]";
+    return ret;
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ac.memory.episodic.EpisodicMemory#addGame(ac.memory.episodic.Game)
-     */
-    @Override
-    public void addGame(Game game) {
-        logger.debug("Adding new game : " + game.getDate());
-        this.games.addFirst(game);
-        this.quantity += 1;
-    }
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.episodic.EpisodicMemory#addGame(ac.memory.episodic.Game) */
+  @Override
+  public void addGame(Game game)
+  {
+    logger.debug("Adding new game : " + game.getDate());
+    this.games.addFirst(game);
+    this.quantity += 1;
+  }
 
-    /**
-     * @return the quantity
-     */
-    public long getQuantity() {
-        return quantity;
-    }
+  /**
+   * @return the quantity
+   */
+  public long getQuantity()
+  {
+    return quantity;
+  }
 
 }

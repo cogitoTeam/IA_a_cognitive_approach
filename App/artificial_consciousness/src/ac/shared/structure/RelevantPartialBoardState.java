@@ -8,54 +8,62 @@ package ac.shared.structure;
  * @version 0.1
  */
 public class RelevantPartialBoardState extends AbstractBoardState implements
-        Comparable<RelevantPartialBoardState> {
+    Comparable<RelevantPartialBoardState>
+{
+  private static final long serialVersionUID = -8844815904283187121L;
 
-    /**
-     * @param id
-     */
-    public RelevantPartialBoardState(long id) {
-        super(id);
-    }
+  /**
+   * @param id
+   */
+  public RelevantPartialBoardState(long id)
+  {
+    super(id);
+  }
 
-    private double weight;
+  private double weight;
 
-    public int compareTo(RelevantPartialBoardState rs) {
-        if (getWeight() < rs.getWeight())
-            return -1;
-        else if (getWeight() > rs.getWeight())
-            return 1;
-        else
-            return 0;
-    }
+  public int compareTo(RelevantPartialBoardState rs)
+  {
+    if (getWeight() < rs.getWeight())
+      return -1;
+    else if (getWeight() > rs.getWeight())
+      return 1;
+    else
+      return 0;
+  }
 
-    /**
-     * @return the weight
-     */
-    public double getWeight() {
-        return weight;
-    }
+  /**
+   * @return the weight
+   */
+  public double getWeight()
+  {
+    return weight;
+  }
 
-    /**
-     * @param weight
-     *            the weight to set
-     */
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
+  /**
+   * @param weight
+   *          the weight to set
+   */
+  public void setWeight(double weight)
+  {
+    this.weight = weight;
+  }
 
-    /**
-     * @return the id
-     */
-    public long getId() {
-        return id;
-    }
+  /**
+   * @return the id
+   */
+  public long getId()
+  {
+    return id;
+  }
 
-    /**
-     * @param id
-     *            the id to set
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
+  /**
+   * @param id
+   *          the id to set
+   */
+  public void setId(long id)
+  {
+    this.id = id;
+  }
 
 }
