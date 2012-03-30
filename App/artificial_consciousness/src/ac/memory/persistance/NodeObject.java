@@ -1,21 +1,11 @@
-/**
- * 
- */
 package ac.memory.persistance;
 
-import org.neo4j.graphalgo.GraphAlgoFactory;
-import org.neo4j.graphalgo.PathFinder;
 import org.neo4j.graphdb.*;
-import org.neo4j.graphdb.traversal.*;
-import org.neo4j.graphdb.traversal.Traverser;
-import org.neo4j.helpers.collection.IterableWrapper;
-import org.neo4j.helpers.collection.IteratorUtil;
-import org.neo4j.kernel.Traversal;
-import org.neo4j.kernel.Uniqueness;
-
 import ac.shared.structure.CompleteBoardState;
 
 /**
+ * Wrapping class for object node
+ * 
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 30 mars 2012
  * @version 0.1

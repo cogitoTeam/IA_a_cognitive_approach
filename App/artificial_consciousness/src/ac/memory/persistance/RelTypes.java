@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ac.memory.persistance;
 
 import org.neo4j.graphdb.RelationshipType;

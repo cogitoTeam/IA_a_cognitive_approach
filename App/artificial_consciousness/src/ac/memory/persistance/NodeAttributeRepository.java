@@ -1,13 +1,8 @@
-/**
- * 
- */
 package ac.memory.persistance;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-
 import ac.memory.persistance.RelTypes;
 import ac.shared.structure.RelevantPartialBoardState;
 

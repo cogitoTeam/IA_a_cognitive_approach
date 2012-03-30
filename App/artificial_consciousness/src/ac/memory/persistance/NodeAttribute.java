@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ac.memory.persistance;
 
 import java.io.ByteArrayInputStream;
@@ -18,6 +15,8 @@ import org.neo4j.kernel.Uniqueness;
 import ac.shared.structure.RelevantPartialBoardState;
 
 /**
+ * Wrapping class for attribute node
+ * 
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 30 mars 2012
  * @version 0.1

@@ -16,8 +16,6 @@ import grph.Grph;
  * @version 0.1
  */
 public class Lattice {
-    private static final long serialVersionUID = -1770713032912319801L;
-
     Grph lattice;
     Map<Integer, Concept> concepts;
 

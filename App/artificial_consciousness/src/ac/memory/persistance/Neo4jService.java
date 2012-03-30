@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ac.memory.persistance;
 
 import org.apache.log4j.Logger;
