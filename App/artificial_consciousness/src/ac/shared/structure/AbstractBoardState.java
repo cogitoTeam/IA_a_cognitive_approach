@@ -3,12 +3,15 @@
  */
 package ac.shared.structure;
 
+import java.io.Serializable;
+
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 28 mars 2012
  * @version 0.1
  */
-public abstract class AbstractBoardState {
+public abstract class AbstractBoardState implements Serializable {
+    private static final long serialVersionUID = 6794929662400698592L;
 
     protected long id;
 

@@ -9,6 +9,7 @@ package ac.shared.structure;
  */
 public class RelevantPartialBoardState extends AbstractBoardState implements
         Comparable<RelevantPartialBoardState> {
+    private static final long serialVersionUID = -8844815904283187121L;
 
     /**
      * @param id
