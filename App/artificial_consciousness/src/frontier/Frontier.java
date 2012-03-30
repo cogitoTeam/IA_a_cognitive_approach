@@ -42,8 +42,19 @@ public class Frontier
     
     public boolean tryAction(Action action)
     {
-        // to send information via the external interface
-        return actuator.tryMove(game_id, player, action.getMove());
+        if(action instanceof MoveAction)
+        {
+            // to send move via the external interface
+            return actuator.tryMove(game_id, player, 
+                                    ((MoveAction)action).getMove());
+        }
+        
+        // TODO other types of actions
+        
+        
+        // unknown action type
+        else
+            return false;  
     }
     
     public Percept newPercept()

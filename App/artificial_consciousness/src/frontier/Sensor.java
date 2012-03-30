@@ -57,8 +57,8 @@ class Sensor extends XMLClient
     public Percept perceiveBoard(Player player)
     {
         // create the percept
-        int value = rules.getValue(board, player);
-        Percept percept = new Percept(board.copy(), value);
+        //int value = rules.getValue(board, player);
+        MyTurnPercept percept = new MyTurnPercept(board.copy());
         
         // get legal moves
         List<Position> moves = rules.getLegalMoves(board, player);

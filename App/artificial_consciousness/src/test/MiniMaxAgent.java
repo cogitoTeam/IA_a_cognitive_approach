@@ -6,6 +6,7 @@
 package test;
 
 import frontier.Action;
+import frontier.MoveAction;
 import frontier.Percept;
 import game.BoardMatrix;
 import game.BoardMatrix.Position;
@@ -42,7 +43,7 @@ public class MiniMaxAgent extends Agent
     @Override
     protected Action choose_reaction(Percept percept) 
     {
-        return new Action(new Position(0, 0));
+        return new MoveAction(new Position(0, 0));
     }
 
     @Override

@@ -1,11 +1,13 @@
 /*****************
  * @author william
- * @date 29-Mar-2012
+ * @date 30-Mar-2012
  *****************/
 
 
 package frontier;
 
-public abstract class Action 
+
+public class RestartAction extends Action
 {
+
 }
