@@ -1,7 +1,9 @@
 package ac;
 
 import ac.analysis.Analysis;
+import frontier.Action;
 import frontier.Frontier;
+import frontier.Percept;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
 import main.Agent;
@@ -56,5 +58,23 @@ public class AC extends Agent
   {
     return _frontier;
   }
+
+@Override
+protected void think() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+protected Action choose_reaction(Percept percept) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+protected void action_failed(Action action) {
+	// TODO Auto-generated method stub
+	
+}
 
 }

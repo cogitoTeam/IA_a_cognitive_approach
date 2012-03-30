@@ -37,7 +37,7 @@ class ChoiceEngine
 
   /* **************************************************************************
    * FRIENDLY METHODS
-   * ************************************************************************ */
+   * ************************************************************************ 
 
   void start()
   {
@@ -48,7 +48,7 @@ class ChoiceEngine
      * Search the BoardState with better grade
      * 
      * @TODO outsource this procedure
-     * —————————————————————————————————————————————————————————————————————— */
+     * —————————————————————————————————————————————————————————————————————— 
     GradedAdvancedBoardStateRelevantStructure better_bs = list_bs.get(0);
     double max_grade = better_bs.getGrade();
 
@@ -60,5 +60,5 @@ class ChoiceEngine
         }
     /* —————————————————————————————————————————————————————————————————————— */
 
-  }
 }
+

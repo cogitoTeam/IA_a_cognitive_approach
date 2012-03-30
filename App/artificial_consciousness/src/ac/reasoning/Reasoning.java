@@ -54,7 +54,7 @@ public class Reasoning
   {
     logger.debug("stimulate");
     _introspection_engine.stop();
-    _choice_engine.start();
+  //  _choice_engine.start();
     _introspection_engine.start();
   }
 
