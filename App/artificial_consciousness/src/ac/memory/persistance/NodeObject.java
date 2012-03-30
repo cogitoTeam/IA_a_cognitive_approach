@@ -10,48 +10,56 @@ import ac.shared.structure.CompleteBoardState;
  * @date 30 mars 2012
  * @version 0.1
  */
-public class NodeObject {
-    static final String ID = "id";
-    static final String OBJECT = "object";
+public class NodeObject
+{
+  static final String ID = "id";
+  static final String OBJECT = "object";
 
-    // START SNIPPET: the-node
-    private final Node underlyingNode;
+  // START SNIPPET: the-node
+  private final Node underlyingNode;
 
-    NodeObject(Node objectNode) {
-        this.underlyingNode = objectNode;
-    }
+  NodeObject(Node objectNode)
+  {
+    this.underlyingNode = objectNode;
+  }
 
-    protected Node getUnderlyingNode() {
-        return underlyingNode;
-    }
+  protected Node getUnderlyingNode()
+  {
+    return underlyingNode;
+  }
 
-    /**
-     * @return the Id of the object
-     */
-    public Long getId() {
-        return (Long) underlyingNode.getProperty(ID);
-    }
+  /**
+   * @return the Id of the object
+   */
+  public Long getId()
+  {
+    return (Long) underlyingNode.getProperty(ID);
+  }
 
-    /**
-     * @return the CompleteBoardState
-     */
-    public CompleteBoardState getObject() {
-        return (CompleteBoardState) underlyingNode.getProperty(OBJECT);
-    }
+  /**
+   * @return the CompleteBoardState
+   */
+  public CompleteBoardState getObject()
+  {
+    return (CompleteBoardState) underlyingNode.getProperty(OBJECT);
+  }
 
-    @Override
-    public int hashCode() {
-        return underlyingNode.hashCode();
-    }
+  @Override
+  public int hashCode()
+  {
+    return underlyingNode.hashCode();
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof NodeObject
-                && underlyingNode.equals(((NodeObject) o).getUnderlyingNode());
-    }
+  @Override
+  public boolean equals(Object o)
+  {
+    return o instanceof NodeObject
+        && underlyingNode.equals(((NodeObject) o).getUnderlyingNode());
+  }
 
-    @Override
-    public String toString() {
-        return "Person[" + getId() + "]";
-    }
+  @Override
+  public String toString()
+  {
+    return "Person[" + getId() + "]";
+  }
 }

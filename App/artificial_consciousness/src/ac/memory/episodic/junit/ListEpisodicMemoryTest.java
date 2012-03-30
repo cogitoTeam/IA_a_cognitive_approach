@@ -17,72 +17,81 @@ import ac.memory.episodic.ListEpisodicMemory;
  * @date 29 mars 2012
  * @version 0.1
  */
-public class ListEpisodicMemoryTest {
+public class ListEpisodicMemoryTest
+{
 
-    /**
-     * Test method for {@link ac.memory.episodic.ListEpisodicMemory}.
-     */
-    @Test
-    public void testGame() {
-        ListEpisodicMemory e = new ListEpisodicMemory();
-        try {
-            e.getLastGame();
-            fail("Should be empty");
-        } catch (Exception ex) {
+  /**
+   * Test method for {@link ac.memory.episodic.ListEpisodicMemory}.
+   */
+  @Test
+  public void testGame()
+  {
+    ListEpisodicMemory e = new ListEpisodicMemory();
+    try
+      {
+        e.getLastGame();
+        fail("Should be empty");
+      }
+    catch (Exception ex)
+      {
 
-        }
-        assertEquals(0, e.getQuantity());
+      }
+    assertEquals(0, e.getQuantity());
 
-        Game g1 = new Game();
-        e.addGame(g1);
-        assertEquals(g1, e.getLastGame());
-        assertEquals(1, e.getQuantity());
+    Game g1 = new Game();
+    e.addGame(g1);
+    assertEquals(g1, e.getLastGame());
+    assertEquals(1, e.getQuantity());
 
-        Game g2 = new Game();
-        e.addGame(g2);
-        assertEquals(g2, e.getLastGame());
-        assertEquals(2, e.getQuantity());
-    }
+    Game g2 = new Game();
+    e.addGame(g2);
+    assertEquals(g2, e.getLastGame());
+    assertEquals(2, e.getQuantity());
+  }
 
-    /**
-     * Test method for
-     * {@link ac.memory.episodic.ListEpisodicMemory#getLastGames(int)}.
-     */
-    @Test
-    public void testGetLastGames() {
-        ListEpisodicMemory e = new ListEpisodicMemory();
-        try {
-            e.getLastGame();
-            fail("Should be empty");
-        } catch (Exception ex) {
+  /**
+   * Test method for
+   * {@link ac.memory.episodic.ListEpisodicMemory#getLastGames(int)}.
+   */
+  @Test
+  public void testGetLastGames()
+  {
+    ListEpisodicMemory e = new ListEpisodicMemory();
+    try
+      {
+        e.getLastGame();
+        fail("Should be empty");
+      }
+    catch (Exception ex)
+      {
 
-        }
-        assertEquals(0, e.getQuantity());
+      }
+    assertEquals(0, e.getQuantity());
 
-        Game g1 = new Game();
-        e.addGame(g1);
-        assertEquals(g1, e.getLastGame());
-        assertEquals(1, e.getQuantity());
+    Game g1 = new Game();
+    e.addGame(g1);
+    assertEquals(g1, e.getLastGame());
+    assertEquals(1, e.getQuantity());
 
-        Game g2 = new Game();
-        e.addGame(g2);
-        assertEquals(g2, e.getLastGame());
-        assertEquals(2, e.getQuantity());
+    Game g2 = new Game();
+    e.addGame(g2);
+    assertEquals(g2, e.getLastGame());
+    assertEquals(2, e.getQuantity());
 
-        Game g3 = new Game();
-        e.addGame(g3);
-        assertEquals(g3, e.getLastGame());
-        assertEquals(3, e.getQuantity());
+    Game g3 = new Game();
+    e.addGame(g3);
+    assertEquals(g3, e.getLastGame());
+    assertEquals(3, e.getQuantity());
 
-        Game g4 = new Game();
-        e.addGame(g4);
-        assertEquals(g4, e.getLastGame());
-        assertEquals(4, e.getQuantity());
+    Game g4 = new Game();
+    e.addGame(g4);
+    assertEquals(g4, e.getLastGame());
+    assertEquals(4, e.getQuantity());
 
-        LinkedList<Game> ll = new LinkedList<Game>();
-        ll.addFirst(g3);
-        ll.addFirst(g4);
-        assertEquals(ll, e.getLastGames(2));
-    }
+    LinkedList<Game> ll = new LinkedList<Game>();
+    ll.addFirst(g3);
+    ll.addFirst(g4);
+    assertEquals(ll, e.getLastGames(2));
+  }
 
 }

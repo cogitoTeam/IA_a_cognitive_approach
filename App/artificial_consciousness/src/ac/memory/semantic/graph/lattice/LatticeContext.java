@@ -15,114 +15,115 @@ import ac.shared.structure.RelevantPartialBoardState;
  * @date 28 mars 2012
  * @version 0.1
  */
-public interface LatticeContext {
+public interface LatticeContext
+{
 
-    /**
-     * @param attribute
-     *            the attribute to add
-     */
-    void addAttribute(RelevantPartialBoardState attribute);
+  /**
+   * @param attribute
+   *          the attribute to add
+   */
+  void addAttribute(RelevantPartialBoardState attribute);
 
-    /**
-     * @param objet
-     *            object to add
-     */
-    void addObject(CompleteBoardState objet);
+  /**
+   * @param objet
+   *          object to add
+   */
+  void addObject(CompleteBoardState objet);
 
-    /**
-     * Get status in the lattice by an attribute and an object
-     * 
-     * @param attribute
-     *            the attribute
-     * @param object
-     *            the object
-     * @return the status (boolean)
-     */
-    boolean getStatus(CompleteBoardState object,
-            RelevantPartialBoardState attribute);
+  /**
+   * Get status in the lattice by an attribute and an object
+   * 
+   * @param attribute
+   *          the attribute
+   * @param object
+   *          the object
+   * @return the status (boolean)
+   */
+  boolean getStatus(CompleteBoardState object,
+      RelevantPartialBoardState attribute);
 
-    /**
-     * Set the status for an attribute and an object
-     * 
-     * @param attribute
-     *            the attribute
-     * @param object
-     *            the object
-     * @param value
-     *            the status (boolean)
-     */
-    void setStatus(CompleteBoardState object,
-            RelevantPartialBoardState attribute, boolean value);
+  /**
+   * Set the status for an attribute and an object
+   * 
+   * @param attribute
+   *          the attribute
+   * @param object
+   *          the object
+   * @param value
+   *          the status (boolean)
+   */
+  void setStatus(CompleteBoardState object,
+      RelevantPartialBoardState attribute, boolean value);
 
-    /**
-     * Get status in the lattice by id of the attribute and id of the object
-     * 
-     * @param id_attribute
-     *            id of the attribute
-     * @param id_object
-     *            id of the object
-     * @return the status (boolean)
-     */
-    boolean getStatus(long id_object, long id_attribute);
+  /**
+   * Get status in the lattice by id of the attribute and id of the object
+   * 
+   * @param id_attribute
+   *          id of the attribute
+   * @param id_object
+   *          id of the object
+   * @return the status (boolean)
+   */
+  boolean getStatus(long id_object, long id_attribute);
 
-    /**
-     * Set the status for an attribute and an object (by ids)
-     * 
-     * @param id_attribute
-     *            id of the attribute
-     * @param id_object
-     *            id of the object
-     * @param value
-     *            checked or not
-     */
-    void setStatus(long id_object, long id_attribute, boolean value);
+  /**
+   * Set the status for an attribute and an object (by ids)
+   * 
+   * @param id_attribute
+   *          id of the attribute
+   * @param id_object
+   *          id of the object
+   * @param value
+   *          checked or not
+   */
+  void setStatus(long id_object, long id_attribute, boolean value);
 
-    /**
-     * Get all the attributes checked for the object in parameter
-     * 
-     * @param object
-     *            the object
-     * @return a Map of attributes
-     */
-    Map<Long, RelevantPartialBoardState> getAttributesByObject(
-            CompleteBoardState object);
+  /**
+   * Get all the attributes checked for the object in parameter
+   * 
+   * @param object
+   *          the object
+   * @return a Map of attributes
+   */
+  Map<Long, RelevantPartialBoardState> getAttributesByObject(
+      CompleteBoardState object);
 
-    /**
-     * Get all the object checked for the attribute in parameter
-     * 
-     * @param attribute
-     *            the attribute
-     * @return a Map of objects
-     */
-    Map<Long, CompleteBoardState> getObjectsByAttribute(
-            RelevantPartialBoardState attribute);
+  /**
+   * Get all the object checked for the attribute in parameter
+   * 
+   * @param attribute
+   *          the attribute
+   * @return a Map of objects
+   */
+  Map<Long, CompleteBoardState> getObjectsByAttribute(
+      RelevantPartialBoardState attribute);
 
-    /**
-     * Get all the attributes checked for the object in parameter
-     * 
-     * @param id_object
-     *            id of the object
-     * @return a Map of attributes
-     */
-    Map<Long, RelevantPartialBoardState> getAttributesByObject(long id_object);
+  /**
+   * Get all the attributes checked for the object in parameter
+   * 
+   * @param id_object
+   *          id of the object
+   * @return a Map of attributes
+   */
+  Map<Long, RelevantPartialBoardState> getAttributesByObject(long id_object);
 
-    /**
-     * Get all the object checked for the attribute in parameter
-     * 
-     * @param id_attribute
-     *            id of the attribute
-     * @return a Map of objects
-     */
-    Map<Long, CompleteBoardState> getObjectsByAttribute(long id_attribute);
+  /**
+   * Get all the object checked for the attribute in parameter
+   * 
+   * @param id_attribute
+   *          id of the attribute
+   * @return a Map of objects
+   */
+  Map<Long, CompleteBoardState> getObjectsByAttribute(long id_attribute);
 
-    /**
-     * @return all objects present in the context
-     */
-    Map<Long, CompleteBoardState> getObjects();
+  /**
+   * @return all objects present in the context
+   */
+  Map<Long, CompleteBoardState> getObjects();
 
-    /**
-     * @return all attributes present
-     */
-    Map<Long, RelevantPartialBoardState> getAttributes();
+  /**
+   * @return all attributes present
+   */
+  Map<Long, RelevantPartialBoardState> getAttributes();
 
 }
