@@ -7,6 +7,7 @@
 package agent;
 
 import game.Game.Player;
+import agent.Action.Type;
 
 
 class Frontier 
@@ -42,19 +43,15 @@ class Frontier
     
     public boolean tryAction(Action action)
     {
-        if(action instanceof Action.Move)
+        switch(action.getType())
         {
-            // to send move via the external interface
-            Action.Move move = (Action.Move)action;
-            return actuator.tryMove(game_id, player, move.getPosition());
+            case MOVE:
+                Action.Move move = (Action.Move)action;
+                return actuator.tryMove(game_id, player, move.getPosition());
+            default:
+                return false;
+
         }
-        
-        // TODO other types of actions
-        
-        
-        // unknown action type
-        else
-            return false;  
     }
     
     public Percept newPercept()
