@@ -48,7 +48,9 @@ public class GameServlet extends HttpServlet
                         processMoveRequest(parameters.get("row")[0],
                                             parameters.get("col")[0],
                                             parameters.get("player")[0]);
-                else
+                // Is the move badly formed ?
+                else if(parameters.containsKey("row") || parameters.containsKey("col")
+                || parameters.containsKey("player"))
                     game.failMove();
             }
         }

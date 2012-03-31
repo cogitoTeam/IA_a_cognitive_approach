@@ -29,16 +29,28 @@ var msg =
   url: WEBSERVICE,
   dataType: "xml",
   success: receive_board,
-  //complete: request_board,
+  complete: request_complete,
   timeout: 30000
 }
 
 
-/** TREAT REPLY CALLBACK */
+/** TREAT REPLY CALLBACKS */
 
 function receive_board(data)
 {
   game.update_from_xml(data.getElementsByTagName('game'));
+}
+
+function request_complete()
+{
+    // send a new request after one second
+    setTimeout("get_new_request()", 1000);
+}
+
+function get_new_request()
+{
+    // send a new request after a certain delay
+    game.request_update();
 }
 
 
@@ -48,7 +60,13 @@ function ajax_request_move(id, row, col, player)
 {
     msg.url = WEBSERVICE + "?game_id=" + id + "&row=" + row + "&col=" + col 
                     + "&player=" + ((player == Game.WHITE) ? "WHITE" : "BLACK");
-    console.log(msg.url);
+    $.ajax(msg);
+}
+
+function ajax_request_refresh(id)
+{
+    console.log("asking for update");
+    msg.url = WEBSERVICE + "?game_id=" + id;
     $.ajax(msg);
 }
 
