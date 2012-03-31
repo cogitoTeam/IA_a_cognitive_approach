@@ -43,74 +43,101 @@ function Game()
     var current_turn;
     var n_players = 2;
     var id = null;
-    var is_human = [true, true];
+    var is_local = [false, false];
+    var waiting_for_player = true;
 
     /* SUBROUTINES */
     var xml_parse_state = function(s_state, s_colour)
     {
         // parse the colour
-        e_colour = (s_colour == "WHITE") ? Game.WHITE : Game.BLACK;
+        var i_colour = (s_colour == "WHITE") ? Game.WHITE : Game.BLACK;
+        var i_other = (i_colour+1)%2;
         
         // parse the state
         switch(s_state)
         {
+            // first player to join plays first
+            case "GAME_START":
+                // only the host sees the game start
+                if(waiting_for_player)
+                {
+                    is_local[i_colour] = true;
+                    is_local[i_other] = false;
+                }
+                return i_colour;
+                
+            case "PLAYER_JOINED":
+                // if I'm not the host then I must be the client
+                if(!is_local[i_colour])
+                {
+                    is_local[i_colour] = false;
+                    is_local[i_other] = true;
+                }
+                waiting_for_player = false;
+                return i_colour;
+            
             // don't change current player
             case "NO_CHANGE":
             case "MOVE_FAILURE":
-            case "GAME_START":
             case "MOVE_SUCCESS":
-                return e_colour;
+                return i_colour;
                 
             // victory
             case "VICTORY":
-                return (e_colour == Game.WHITE) ? Game.VICTORY_WHITE
+                return (i_colour == Game.WHITE) ? Game.VICTORY_WHITE
                                                 : Game.VICTORY_BLACK;
             case "DRAW":
-            default:
                 return Game.DRAW;
+                
+            default:
+                console.log("Unknown game state");
+                return -1;
         }
     }
     
-    var redraw = function()
+    var redraw_ui = function()
     {
-        // redraw the game board
-        board.redraw();
-
         // redraw the state information
         context_info.fillStyle = Game.C_BACKGROUND;
         context_info.fillRect(0,0,canvas_info.width, canvas_info.height);
 
         var image = null;
         var text = null;
-        switch(current_turn)
+        if(!waiting_for_player)
         {
-            case typ.WHITE:
-                text = "York turn";
-                image = typ.IMAGE_WHITE;
-                break;
+            var text_player = (is_local[current_turn]) ? "Your " : "Enemy "
+            switch(current_turn)
+            {
+                case typ.WHITE:
+                    text = text_player + "turn";
+                    image = typ.IMAGE_WHITE;
+                    break;
 
-            case typ.BLACK:
-                text = "Tudor turn";
-                image = typ.IMAGE_BLACK;
-                break;
+                case typ.BLACK:
+                    text = text_player + "turn";
+                    image = typ.IMAGE_BLACK;
+                    break;
 
-            case typ.VICTORY_WHITE:
-                text = "York victory!";
-                image = typ.IMAGE_WHITE;
-                break;
+                case typ.VICTORY_WHITE:
+                    text = (is_local[Game.WHITE]) ? "Victory!" : "Defeat!";
+                    image = typ.IMAGE_WHITE;
+                    break;
 
-            case typ.VICTORY_BLACK:
-                text = "Tudor victory!";
-                image = typ.IMAGE_BLACK;
-                break;
+                case typ.VICTORY_BLACK:
+                    text = (is_local[Game.BLACK]) ? "Victory!" : "Defeat!";
+                    image = typ.IMAGE_BLACK;
+                    break;
 
-            case typ.DRAW:
-                text = "Draw...";
-                break;
+                case typ.DRAW:
+                    text = "Draw...";
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
+        else
+            text = "Waiting for opponent...";
         
         // draw icon of winning/current name
         if(image != null)
@@ -131,23 +158,42 @@ function Game()
         }
         
         // draw game id
+        /*
         context_info.textAlign = "left";
         context_info.textBaseline = "middle";
         context_info.fillText("Client "+id, 16, canvas_info.height/2);
-        
-        
+        */
     }
 
     /* METHODS */
+    
+    obj.request_update = function()
+    {
+        ajax_request_refresh(id);
+    }
+    
     obj.update_from_xml = function(data)
     {
         /* Parse new game state */
-        var previous_turn = current_turn;
+        var previous_turn = current_turn; 
         current_turn = xml_parse_state(data[0].getAttribute('state'),
                                 data[0].childNodes[1].getAttribute('colour'));
-        // if no change is detected don't bother continuing
+                         
+        // redraw indicators to reflect changed game state
+        redraw_ui();
+        
+        // no point contuining if nothing has changed
         if(previous_turn == current_turn)
             return;
+        
+        // clear the board upon restart
+        if(previous_turn >= n_players)
+        {
+            board.clear();
+            board.redraw();
+            return;
+        }
+        
         // get the game identifier (for future queries)
         id = Number(data[0].getAttribute('id'));
         
@@ -159,7 +205,7 @@ function Game()
         board.update_from_xml(data[0].childNodes[0]);
         
         /* Update the view to take changes into account */
-        redraw();
+        board.redraw();
     }
 
     obj.clickEvent = function(x, y)
@@ -168,15 +214,20 @@ function Game()
         if(current_turn >= n_players)
         {
             ajax_request_restart(id);
-            board.clear();
-            redraw();
             return;	// consume the event
         }
-
-        // check if it's the human player's turn
-        if (!is_human[current_turn])
+        
+        // check if two players are indeed in the game
+        if(waiting_for_player)
         {
-            alert("wait your turn");
+            console.log("waiting for opponent...");
+            return;
+        }
+
+        // check if it's the local player's turn
+        if (!is_local[current_turn])
+        {
+            console.log("wait your turn...")
             return;
         }
 

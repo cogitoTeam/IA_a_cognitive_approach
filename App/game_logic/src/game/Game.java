@@ -23,6 +23,7 @@ public class Game
     public static enum State
     {
         GAME_START,
+        PLAYER_JOINED,
         MOVE_SUCCESS,
         MOVE_FAILURE,
         NO_CHANGE,
@@ -66,6 +67,11 @@ public class Game
     }
     
     // modification
+    
+    public void join()
+    {
+        current_state = State.PLAYER_JOINED;
+    }
     
     public void failMove()
     {
