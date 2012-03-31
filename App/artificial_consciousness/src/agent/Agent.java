@@ -4,11 +4,7 @@
  *****************/
 
 
-package main;
-
-import frontier.Action;
-import frontier.Frontier;
-import frontier.Percept;
+package agent;
 
 
 public abstract class Agent 

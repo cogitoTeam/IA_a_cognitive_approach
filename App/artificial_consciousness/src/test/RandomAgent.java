@@ -6,12 +6,12 @@
 
 package test;
 
-import frontier.Action;
-import frontier.Percept.Choices;
-import frontier.Percept.Defeat;
-import frontier.Percept.Draw;
-import frontier.Percept.Victory;
-import main.Agent;
+import agent.Action;
+import agent.Percept.Choices;
+import agent.Percept.Defeat;
+import agent.Percept.Draw;
+import agent.Percept.Victory;
+import agent.Agent;
 
 
 public class RandomAgent extends Agent

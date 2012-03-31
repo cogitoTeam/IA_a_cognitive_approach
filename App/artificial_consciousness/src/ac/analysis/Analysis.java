@@ -1,6 +1,6 @@
 package ac.analysis;
 
-import frontier.Frontier;
+import agent.Frontier;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
 

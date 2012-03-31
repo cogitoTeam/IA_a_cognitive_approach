@@ -1,17 +1,18 @@
 /*****************
  * @author william
- * @date 29-Mar-2012
+ * @date 31-Mar-2012
  *****************/
 
 
-package main;
+package test;
 
-import test.*;
+import agent.Agent;
 
 
-
-public class Main 
+public class Test 
 {
+    /* MAIN */
+    
     public static void main(String[] args)
     {
         // create agent(s)

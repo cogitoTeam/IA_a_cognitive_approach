@@ -5,14 +5,14 @@
 
 package test;
 
-import frontier.Action;
-import frontier.Percept;
-import frontier.Percept.Choices;
-import frontier.Percept.Defeat;
-import frontier.Percept.Draw;
-import frontier.Percept.Victory;
+import agent.Action;
+import agent.Percept;
+import agent.Percept.Choices;
+import agent.Percept.Defeat;
+import agent.Percept.Draw;
+import agent.Percept.Victory;
 import java.io.Console;
-import main.Agent;
+import agent.Agent;
 
 
 public class MTurkAgent extends Agent
