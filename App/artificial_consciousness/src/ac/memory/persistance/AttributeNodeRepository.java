@@ -20,60 +20,53 @@ import org.neo4j.helpers.collection.IterableWrapper;
  * @date 30 mars 2012
  * @version 0.1
  */
-public class NodeAttributeRepository
+public class AttributeNodeRepository extends
+    AbstractNodeRepository<RelevantPartialBoardState, AttributeNode>
 {
   private static final Logger logger = Logger
-      .getLogger(NodeAttributeRepository.class);
+      .getLogger(AttributeNodeRepository.class);
 
-  private final GraphDatabaseService graphDb;
-  private final Index<Node> index;
-  private final Node attributeRefNode;
+  static String ID_FIELD = "id_attr";
 
   /**
-   * Default constructor
-   * 
    * @param graphDb
-   *          the database
    * @param index
    */
-  public NodeAttributeRepository(GraphDatabaseService graphDb, Index<Node> index)
+  public AttributeNodeRepository(GraphDatabaseService graphDb, Index<Node> index)
   {
-    logger.debug("Building new NodeAttributeRepository");
-
-    this.graphDb = graphDb;
-    this.index = index;
-
-    attributeRefNode = getAttributesRootNode(graphDb);
+    super(graphDb, index, ID_FIELD);
+    refNode = getRootNode(graphDb);
+    logger.debug("Building new AttributeNodeRepository");
   }
 
   /**
-   * Create new attribute
+   * Create new node
    * 
    * @param id
-   *          ID of the attribtue
+   *          ID of the node
    * @param object
-   *          The RelevantePartialBoardState
+   *          The object attribute
    * @return the new NodeAttribute object
    * @throws Exception
    *           if the attribute already exists
    */
-  public NodeAttribute createAttribute(RelevantPartialBoardState object)
+  @Override
+  public AttributeNode createNode(RelevantPartialBoardState object)
       throws Exception
   {
     // to guard against duplications we use the lock grabbed on ref node
     // when
     // creating a relationship and are optimistic about person not existing
-    logger.debug("Open transaction for attribute creation");
+    logger.debug("Opening transaction for attribute node creation");
     Transaction tx = graphDb.beginTx();
     try
       {
 
-        logger.debug("Node creation");
+        logger.debug("Node creation with " + ID_FIELD + " = " + object.getId());
         Node newNodeAttribute = graphDb.createNode();
-        newNodeAttribute.setProperty("id", object.getId());
-        newNodeAttribute.setProperty(NodeAttribute.TYPE_FIELD,
-            NodeAttribute.TYPE_VALUE);
+        newNodeAttribute.setProperty(ID_FIELD, object.getId());
 
+        logger.debug("Serializing object");
         // / SERIALIZE TO BYTE[]
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(bos);
@@ -83,25 +76,29 @@ public class NodeAttributeRepository
 
         newNodeAttribute.setProperty("object", bytes);
 
-        attributeRefNode.createRelationshipTo(newNodeAttribute, RelTypes.ATTR);
+        logger.debug("Creating relationship to the root node");
+        refNode.createRelationshipTo(newNodeAttribute, RelTypes.ATTR);
+
         // lock now taken, we can check if already exist in index
-        Node alreadyExist = index.get(NodeAttribute.ID, object.getId())
+        logger.debug("Searching for Attribute with " + AttributeNode.ID_FIELD
+            + " = " + object.getId());
+        Node alreadyExist = index.get(AttributeNode.ID_FIELD, object.getId())
             .getSingle();
         if (alreadyExist != null)
           {
-            logger.warn("Transaction exited because of duplicate ID");
+            logger.warn("Transaction exited because of duplicate ID for attribute node type");
             tx.failure();
             throw new Exception("Attribute with this ID already exists ");
           }
 
         logger.debug("Setting properties");
-        newNodeAttribute.setProperty(NodeAttribute.ID, object.getId());
-        newNodeAttribute.setProperty(NodeAttribute.TYPE_FIELD,
-            NodeAttribute.TYPE_VALUE);
-        index.add(newNodeAttribute, NodeAttribute.ID, object.getId());
+        newNodeAttribute.setProperty(AttributeNode.ID_FIELD, object.getId());
+
+        logger.debug("Indexing " + ID_FIELD);
+        index.add(newNodeAttribute, AttributeNode.ID_FIELD, object.getId());
         tx.success();
         logger.debug("Ok new Attribute created");
-        return new NodeAttribute(newNodeAttribute);
+        return new AttributeNode(newNodeAttribute);
       }
     finally
       {
@@ -117,18 +114,18 @@ public class NodeAttributeRepository
    *          the ID
    * @return the attribute
    */
-  public NodeAttribute getAttributeById(long id)
+  @Override
+  public AttributeNode getNodeById(long id)
   {
     logger.debug("Getting an attribute by ID " + id);
-    Node attribute = index.get(NodeAttribute.ID, id).getSingle();
+    Node attribute = index.get(AttributeNode.ID_FIELD, id).getSingle();
     if (attribute == null)
       {
         logger.warn("Attribute not found");
-        throw new IllegalArgumentException(NodeAttribute.TYPE_VALUE + "[" + id
-            + "] not found");
+        throw new IllegalArgumentException("[" + id + "] not found");
       }
     logger.debug("Attribute found");
-    return new NodeAttribute(attribute);
+    return new AttributeNode(attribute);
   }
 
   /**
@@ -137,7 +134,8 @@ public class NodeAttributeRepository
    * @param attribute
    *          The attribute to remove
    */
-  public void deleteAttribute(NodeAttribute attribute)
+  @Override
+  public void deleteNode(AttributeNode attribute)
   {
     logger
         .debug("Opening transaction to delete attribute " + attribute.getId());
@@ -145,11 +143,16 @@ public class NodeAttributeRepository
     try
       {
         Node nodeAttribute = attribute.getUnderlyingNode();
-        index.remove(nodeAttribute, NodeAttribute.ID, attribute.getId());
-        logger.debug("Removing related objects");
-        for (NodeObject object : attribute.getRelatedObjects())
+
+        logger.debug("Removing from index " + ID_FIELD + " = "
+            + attribute.getId());
+        index.remove(nodeAttribute, AttributeNode.ID_FIELD, attribute.getId());
+
+        logger.debug("Removing relationships to objects");
+        for (Relationship rel : nodeAttribute.getRelationships(
+            RelTypes.RELATED, Direction.INCOMING))
           {
-            attribute.removeRelatedObject(object);
+            rel.delete();
           }
         logger.debug("Removing main relation");
         nodeAttribute.getSingleRelationship(RelTypes.ATTR, Direction.INCOMING)
@@ -169,44 +172,24 @@ public class NodeAttributeRepository
   /**
    * @return all NodeAttributes in the database
    */
-  public Iterable<NodeAttribute> getAllNodeAttributes()
+  @Override
+  public Iterable<AttributeNode> getAllNodes()
   {
     logger.debug("Getting all the attribute nodes");
-    return new IterableWrapper<NodeAttribute, Relationship>(
-        attributeRefNode.getRelationships(RelTypes.ATTR))
+    return new IterableWrapper<AttributeNode, Relationship>(
+        refNode.getRelationships(RelTypes.ATTR))
     {
       @Override
-      protected NodeAttribute underlyingObjectToObject(Relationship attributeRel)
+      protected AttributeNode underlyingObjectToObject(Relationship attributeRel)
       {
-        return new NodeAttribute(attributeRel.getEndNode());
+        return new AttributeNode(attributeRel.getEndNode());
       }
     };
   }
 
-  private Node getAttributesRootNode(GraphDatabaseService graphDb)
+  private Node getRootNode(GraphDatabaseService graphDb)
   {
-    Relationship rel = graphDb.getReferenceNode().getSingleRelationship(
-        RelTypes.REF_ATTRIBUTES, Direction.OUTGOING);
-
-    if (rel != null)
-      {
-        return rel.getEndNode();
-      }
-    else
-      {
-        Transaction tx = this.graphDb.beginTx();
-        try
-          {
-            Node refNode = this.graphDb.createNode();
-            this.graphDb.getReferenceNode().createRelationshipTo(refNode,
-                RelTypes.REF_ATTRIBUTES);
-            tx.success();
-            return refNode;
-          }
-        finally
-          {
-            tx.finish();
-          }
-      }
+    return getRootNode(graphDb, RelTypes.REF_ATTRIBUTES);
   }
+
 }
