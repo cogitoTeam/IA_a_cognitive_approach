@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 
+import org.apache.log4j.Logger;
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.traversal.*;
 import org.neo4j.graphdb.traversal.Traverser;
@@ -13,7 +14,7 @@ import org.neo4j.kernel.Traversal;
 import org.neo4j.kernel.Uniqueness;
 
 /**
- * Wrapping class for attribute node
+ * Wrapping class for node
  * 
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 30 mars 2012
@@ -25,15 +26,18 @@ import org.neo4j.kernel.Uniqueness;
  */
 abstract public class AbstractNode<ObjectType, RelatedObjectType>
 {
-  static String ID;
-  static final String OBJECT = "object";
+  private static final Logger logger = Logger.getLogger(AbstractNode.class);
+
+  private String ID_FIELD;
+  static String OBJECT = "object";
 
   // START SNIPPET: the-node
   protected final Node underlyingNode;
 
-  protected AbstractNode(Node node)
+  protected AbstractNode(Node node, String id_field)
   {
     this.underlyingNode = node;
+    this.ID_FIELD = id_field;
   }
 
   protected Node getUnderlyingNode()
@@ -42,17 +46,17 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   }
 
   /**
-   * @return the id of the attribute
+   * @return the id of the node
    */
   public Long getId()
   {
-    return (Long) underlyingNode.getProperty(ID);
+    return (Long) underlyingNode.getProperty(ID_FIELD);
   }
 
   /**
    * Return the RelevantPartialBoardState unserialized
    * 
-   * @return the RelevantePartialBoardState of the attribute
+   * @return the object of the node
    * @throws IOException
    *           Should never happen
    * @throws ClassNotFoundException
@@ -61,6 +65,8 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   @SuppressWarnings("unchecked")
   public ObjectType getObject() throws IOException, ClassNotFoundException
   {
+    logger.debug("Getting the object");
+    logger.debug("Un-serialize field");
     // / UNSERIALIZE
     ByteArrayInputStream bis = new ByteArrayInputStream(
         (byte[]) underlyingNode.getProperty(OBJECT));
@@ -69,10 +75,11 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   }
 
   /**
-   * @return Node related to this Attribute
+   * @return Node related to this Node
    */
   public Iterable<RelatedObjectType> getRelatedObjects()
   {
+    logger.debug("Getting the related objects");
     @SuppressWarnings("deprecation")
     TraversalDescription travDesc = Traversal.description().breadthFirst()
         .relationships(RelTypes.RELATED).uniqueness(Uniqueness.NODE_GLOBAL)
@@ -82,7 +89,7 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   }
 
   /**
-   * Associate new objet to this attribute
+   * Associate new node to this node
    * 
    * @param object
    *          the object to associate
@@ -90,6 +97,8 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   @SuppressWarnings("unchecked")
   public void addRelatedObject(RelatedObjectType object)
   {
+    logger.debug("Relate new object to the node");
+    logger.debug("Opening transaction");
     Transaction tx = underlyingNode.getGraphDatabase().beginTx();
     try
       {
@@ -107,18 +116,21 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
       }
     finally
       {
+        logger.debug("Transaction finished");
         tx.finish();
       }
   }
 
   /**
-   * Remove a relationship between the Attribute and an object
+   * Remove a relationship between the tow objects
    * 
    * @param object
    *          the object
    */
   public void removeRelatedObject(RelatedObjectType object)
   {
+    logger.debug("Removing relation between tow nodes");
+    logger.debug("Opening transaction");
     Transaction tx = underlyingNode.getGraphDatabase().beginTx();
     try
       {
@@ -135,6 +147,7 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
     finally
       {
         tx.finish();
+        logger.debug("Transaction finished");
       }
   }
 

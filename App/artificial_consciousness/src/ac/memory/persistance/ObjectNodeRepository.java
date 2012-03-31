@@ -22,29 +22,32 @@ import org.neo4j.helpers.collection.IterableWrapper;
 public class ObjectNodeRepository extends
     AbstractNodeRepository<CompleteBoardState, ObjectNode>
 {
+  private static final Logger logger = Logger
+      .getLogger(ObjectNodeRepository.class);
+
+  static String ID_FIELD = "id_obj";
+
   /**
    * @param graphDb
    * @param index
    */
   public ObjectNodeRepository(GraphDatabaseService graphDb, Index<Node> index)
   {
-    super(graphDb, index);
+    super(graphDb, index, ID_FIELD);
     refNode = getRootNode(graphDb);
+    logger.debug("Building new ObjectNodeRepository");
   }
 
-  private static final Logger logger = Logger
-      .getLogger(ObjectNodeRepository.class);
-
   /**
-   * Create new node
+   * Create new node object
    * 
    * @param id
    *          ID of the node
    * @param object
-   *          The object attribute
-   * @return the new NodeAttribute object
+   *          The object Object
+   * @return the new NodeObject object
    * @throws Exception
-   *           if the attribute already exists
+   *           if the object already exists
    */
   @Override
   public ObjectNode createNode(CompleteBoardState object) throws Exception
@@ -52,15 +55,16 @@ public class ObjectNodeRepository extends
     // to guard against duplications we use the lock grabbed on ref node
     // when
     // creating a relationship and are optimistic about person not existing
-    logger.debug("Open transaction for attribute creation");
+    logger.debug("Opening transaction for object node creation");
     Transaction tx = graphDb.beginTx();
     try
       {
 
-        logger.debug("Node creation");
+        logger.debug("Node creation with " + ID_FIELD + " = " + object.getId());
         Node newNode = graphDb.createNode();
-        newNode.setProperty("id", object.getId());
+        newNode.setProperty(ID_FIELD, object.getId());
 
+        logger.debug("Serializing object");
         // / SERIALIZE TO BYTE[]
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(bos);
@@ -70,22 +74,28 @@ public class ObjectNodeRepository extends
 
         newNode.setProperty("object", bytes);
 
+        logger.debug("Creating relationship to the root node");
         refNode.createRelationshipTo(newNode, RelTypes.ATTR);
-        // lock now taken, we can check if already exist in index
-        Node alreadyExist = index.get(AttributeNode.ID, object.getId())
+
+        logger.debug("Searching for Objects with " + ObjectNode.ID_FIELD
+            + " = " + object.getId());
+        Node alreadyExist = index.get(ObjectNode.ID_FIELD, object.getId())
             .getSingle();
         if (alreadyExist != null)
           {
-            logger.warn("Transaction exited because of duplicate ID");
+            logger
+                .warn("Transaction exited because of duplicate ID for object node type");
             tx.failure();
             throw new Exception("Attribute with this ID already exists ");
           }
 
         logger.debug("Setting properties");
-        newNode.setProperty(AttributeNode.ID, object.getId());
-        index.add(newNode, AttributeNode.ID, object.getId());
+        newNode.setProperty(ObjectNode.ID_FIELD, object.getId());
+
+        logger.debug("Indexing " + ID_FIELD);
+        index.add(newNode, ObjectNode.ID_FIELD, object.getId());
         tx.success();
-        logger.debug("Ok new Attribute created");
+        logger.debug("Ok new Object created");
         return new ObjectNode(newNode);
       }
     finally
@@ -96,17 +106,17 @@ public class ObjectNodeRepository extends
   }
 
   /**
-   * Get an attribute by its id
+   * Get an object by its id
    * 
    * @param id
    *          the ID
-   * @return the attribute
+   * @return the objectNode
    */
   @Override
   public ObjectNode getNodeById(long id)
   {
-    logger.debug("Getting an attribute by ID " + id);
-    Node object = index.get(ObjectNode.ID, id).getSingle();
+    logger.debug("Getting an object by ID " + id);
+    Node object = index.get(ObjectNode.ID_FIELD, id).getSingle();
     if (object == null)
       {
         logger.warn("Object not found");
@@ -117,24 +127,28 @@ public class ObjectNodeRepository extends
   }
 
   /**
-   * Remove an attribute
+   * Remove an object
    * 
    * @param node
-   *          The attribute to remove
+   *          The object to remove
    */
   @Override
   public void deleteNode(ObjectNode node)
   {
-    logger.debug("Opening transaction to delete attribute " + node.getId());
+    logger.debug("Opening transaction to delete object " + node.getId());
     Transaction tx = graphDb.beginTx();
     try
       {
         Node nodeObject = node.getUnderlyingNode();
-        index.remove(nodeObject, ObjectNode.ID, node.getId());
-        logger.debug("Removing related objects");
-        for (AttributeNode object : node.getRelatedObjects())
+
+        logger.debug("Removing from index " + ID_FIELD + " = " + node.getId());
+        index.remove(nodeObject, ObjectNode.ID_FIELD, node.getId());
+
+        logger.debug("Removing relationships to attributes");
+        for (Relationship rel : nodeObject.getRelationships(RelTypes.RELATED,
+            Direction.INCOMING))
           {
-            node.removeRelatedObject(object);
+            rel.delete();
           }
         logger.debug("Removing main relation");
         nodeObject.getSingleRelationship(RelTypes.ATTR, Direction.INCOMING)
@@ -157,7 +171,8 @@ public class ObjectNodeRepository extends
   @Override
   public Iterable<ObjectNode> getAllNodes()
   {
-    logger.debug("Getting all the attribute nodes");
+    logger.debug("Getting all the object nodes");
+
     return new IterableWrapper<ObjectNode, Relationship>(
         refNode.getRelationships(RelTypes.ATTR))
     {

@@ -3,6 +3,7 @@
  */
 package ac.memory.persistance;
 
+import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
 import org.neo4j.graphdb.Relationship;
@@ -16,14 +17,23 @@ import org.neo4j.helpers.collection.IterableWrapper;
  */
 public class ObjectNode extends AbstractNode<ObjectNode, AttributeNode>
 {
+  private static final Logger logger = Logger.getLogger(ObjectNode.class);
+
+  static final String ID_FIELD = "id_obj";
 
   /**
    * @param attributeNode
    */
   ObjectNode(Node objectNode)
   {
-    super(objectNode);
-    ID = "id_obj";
+    super(objectNode, ID_FIELD);
+    logger.debug("Building new ObjectNode");
+  }
+
+  @Override
+  public String toString()
+  {
+    return "Object" + super.toString();
   }
 
   @Override

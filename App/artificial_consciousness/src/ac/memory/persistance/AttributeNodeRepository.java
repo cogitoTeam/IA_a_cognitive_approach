@@ -23,18 +23,21 @@ import org.neo4j.helpers.collection.IterableWrapper;
 public class AttributeNodeRepository extends
     AbstractNodeRepository<RelevantPartialBoardState, AttributeNode>
 {
+  private static final Logger logger = Logger
+      .getLogger(AttributeNodeRepository.class);
+
+  static String ID_FIELD = "id_attr";
+
   /**
    * @param graphDb
    * @param index
    */
   public AttributeNodeRepository(GraphDatabaseService graphDb, Index<Node> index)
   {
-    super(graphDb, index);
+    super(graphDb, index, ID_FIELD);
     refNode = getRootNode(graphDb);
+    logger.debug("Building new AttributeNodeRepository");
   }
-
-  private static final Logger logger = Logger
-      .getLogger(AttributeNodeRepository.class);
 
   /**
    * Create new node
@@ -54,15 +57,16 @@ public class AttributeNodeRepository extends
     // to guard against duplications we use the lock grabbed on ref node
     // when
     // creating a relationship and are optimistic about person not existing
-    logger.debug("Open transaction for attribute creation");
+    logger.debug("Opening transaction for attribute node creation");
     Transaction tx = graphDb.beginTx();
     try
       {
 
-        logger.debug("Node creation");
+        logger.debug("Node creation with " + ID_FIELD + " = " + object.getId());
         Node newNodeAttribute = graphDb.createNode();
-        newNodeAttribute.setProperty("id", object.getId());
+        newNodeAttribute.setProperty(ID_FIELD, object.getId());
 
+        logger.debug("Serializing object");
         // / SERIALIZE TO BYTE[]
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(bos);
@@ -72,20 +76,26 @@ public class AttributeNodeRepository extends
 
         newNodeAttribute.setProperty("object", bytes);
 
+        logger.debug("Creating relationship to the root node");
         refNode.createRelationshipTo(newNodeAttribute, RelTypes.ATTR);
+
         // lock now taken, we can check if already exist in index
-        Node alreadyExist = index.get(AttributeNode.ID, object.getId())
+        logger.debug("Searching for Attribute with " + AttributeNode.ID_FIELD
+            + " = " + object.getId());
+        Node alreadyExist = index.get(AttributeNode.ID_FIELD, object.getId())
             .getSingle();
         if (alreadyExist != null)
           {
-            logger.warn("Transaction exited because of duplicate ID");
+            logger.warn("Transaction exited because of duplicate ID for attribute node type");
             tx.failure();
             throw new Exception("Attribute with this ID already exists ");
           }
 
         logger.debug("Setting properties");
-        newNodeAttribute.setProperty(AttributeNode.ID, object.getId());
-        index.add(newNodeAttribute, AttributeNode.ID, object.getId());
+        newNodeAttribute.setProperty(AttributeNode.ID_FIELD, object.getId());
+
+        logger.debug("Indexing " + ID_FIELD);
+        index.add(newNodeAttribute, AttributeNode.ID_FIELD, object.getId());
         tx.success();
         logger.debug("Ok new Attribute created");
         return new AttributeNode(newNodeAttribute);
@@ -108,7 +118,7 @@ public class AttributeNodeRepository extends
   public AttributeNode getNodeById(long id)
   {
     logger.debug("Getting an attribute by ID " + id);
-    Node attribute = index.get(AttributeNode.ID, id).getSingle();
+    Node attribute = index.get(AttributeNode.ID_FIELD, id).getSingle();
     if (attribute == null)
       {
         logger.warn("Attribute not found");
@@ -133,11 +143,16 @@ public class AttributeNodeRepository extends
     try
       {
         Node nodeAttribute = attribute.getUnderlyingNode();
-        index.remove(nodeAttribute, AttributeNode.ID, attribute.getId());
-        logger.debug("Removing related objects");
-        for (ObjectNode object : attribute.getRelatedObjects())
+
+        logger.debug("Removing from index " + ID_FIELD + " = "
+            + attribute.getId());
+        index.remove(nodeAttribute, AttributeNode.ID_FIELD, attribute.getId());
+
+        logger.debug("Removing relationships to objects");
+        for (Relationship rel : nodeAttribute.getRelationships(
+            RelTypes.RELATED, Direction.INCOMING))
           {
-            attribute.removeRelatedObject(object);
+            rel.delete();
           }
         logger.debug("Removing main relation");
         nodeAttribute.getSingleRelationship(RelTypes.ATTR, Direction.INCOMING)

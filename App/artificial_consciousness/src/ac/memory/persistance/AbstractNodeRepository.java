@@ -1,7 +1,6 @@
 package ac.memory.persistance;
 
 import ac.memory.persistance.RelTypes;
-import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
@@ -20,12 +19,11 @@ import org.neo4j.graphdb.index.Index;
  */
 abstract public class AbstractNodeRepository<ObjectType, NodeType>
 {
-  private static final Logger logger = Logger
-      .getLogger(AbstractNodeRepository.class);
 
   protected GraphDatabaseService graphDb;
   protected Index<Node> index;
   protected Node refNode;
+  protected String ID_FIELD;
 
   /**
    * Default constructor
@@ -33,13 +31,16 @@ abstract public class AbstractNodeRepository<ObjectType, NodeType>
    * @param graphDb
    *          the database
    * @param index
+   *          index id
+   * @param id_field
+   *          field identifier
    */
-  public AbstractNodeRepository(GraphDatabaseService graphDb, Index<Node> index)
+  public AbstractNodeRepository(GraphDatabaseService graphDb,
+      Index<Node> index, String id_field)
   {
-    logger.debug("Building new NodeRepository");
-
     this.graphDb = graphDb;
     this.index = index;
+    this.ID_FIELD = id_field;
   }
 
   /**
@@ -53,8 +54,7 @@ abstract public class AbstractNodeRepository<ObjectType, NodeType>
    * @throws Exception
    *           if the attribute already exists
    */
-  public abstract NodeType createNode(ObjectType object)
-      throws Exception;
+  public abstract NodeType createNode(ObjectType object) throws Exception;
 
   /**
    * Get an attribute by its id
