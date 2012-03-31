@@ -12,18 +12,31 @@ To ensure data persistence, this module incorporates an embedded version of Neo4
 
 * **MAIN NODE**
   * ---- REF_ATTRIBUTE ----> **MAIN ATTRIBUTE NODE**
+
         ---- ATTR ----> **ATTRIBUTE 1**
+
         ---- ATTR ----> **ATTRIBUTE 2**
+
         ---- ATTR ----> **ATTRIBUTE 3**
+
         ---- ATTR ----> **ATTRIBUTE 4**
+
         ---- ATTR ----> ***ATTRIBUTE 5**
+
         ...
+
   * ---- REF_OBJECT ----> **MAIN OBJECT NODE**
+
         ---- OBJ ----> **OBJECT 1**
+
         ---- OBJ ----> **OBJECT 2**
+
         ---- OBJ ----> **OBJECT 3**
+
         ---- OBJ ----> **OBJECT 4**
+
         ---- OBJ ----> **OBJECT 5**
+
         ...
 
 Relationship between an object and an attribute :
