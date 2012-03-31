@@ -93,6 +93,9 @@ public abstract class Agent
         // reaction vary depending on the type of stimulus
         switch(percept.getType())
         {
+            case OPPONENT_TURN:
+                think();
+                return;
             case CHOICES:
                 action = choices_reaction((Percept.Choices)percept);
                 break;

@@ -8,6 +8,7 @@ package agent;
 
 import game.BoardMatrix;
 import game.BoardMatrix.Position;
+import game.Game;
 import game.Game.Player;
 import game.Rules;
 import java.util.List;
@@ -22,6 +23,7 @@ class Sensor extends XMLClient
     private final Rules rules;
     // the most recently seen board is stored in a kind of sensory memory
     private BoardMatrix board;
+    private Player current_player;
     
     /* METHODS */
     
@@ -32,6 +34,7 @@ class Sensor extends XMLClient
         
         rules = _rules;
         board = _board;
+        current_player = _rules.getFirstPlayer();
     }
     
     // query
@@ -45,9 +48,17 @@ class Sensor extends XMLClient
         if(doc.getDocumentElement().getAttribute("state").equals("NO_CHANGE"))
             return false;
         
+        // parse the current player
+        Node player_node = 
+            doc.getDocumentElement().getElementsByTagName("current_player")
+                .item(0);
+        current_player = 
+            Game.parsePlayer(player_node.getAttributes().getNamedItem("colour")
+                .getNodeValue());
+        
         // parse the current board
         Node board_node = 
-                doc.getDocumentElement().getElementsByTagName("board").item(0);
+        doc.getDocumentElement().getElementsByTagName("board").item(0);
         board.parseCells(board_node);
         
         // success
@@ -56,7 +67,11 @@ class Sensor extends XMLClient
 
     public Percept perceiveBoard(Player player)
     {
-        // create the percept
+        // check first that it's our move
+        if(player != current_player)
+            return new Percept.OpponentTurn(board.copy());
+        
+        // create a 'choices' percept
         Percept.Choices percept = new Percept.Choices(board.copy());
         
         // get legal moves

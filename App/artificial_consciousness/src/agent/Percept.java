@@ -16,6 +16,7 @@ public abstract class Percept
     
     public static enum Type
     {
+        OPPONENT_TURN,
         CHOICES,
         VICTORY,
         DEFEAT,
@@ -47,6 +48,17 @@ public abstract class Percept
     public Type getType()
     {
         return type;
+    }
+    
+    /* IT'S NOT OUR TURN TO PLAY */
+    
+    public static class OpponentTurn extends Percept
+    {
+        // creation
+        public OpponentTurn(BoardMatrix _current_board)
+        {
+            super(Type.OPPONENT_TURN, _current_board);
+        }
     }
     
     
