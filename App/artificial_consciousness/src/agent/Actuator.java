@@ -23,14 +23,25 @@ class Actuator extends XMLClient
     }
     
     // command
-    boolean tryMove(int game_id, Player player, Position move)
+    public boolean tryMove(int game_id, Player player, Position move)
     {
         // prepare the query to send to the server
         String s_query = "&game_id=" + game_id + "&row=" + move.row + "&col=" 
                         + move.col + "&player=" + player;
         
-        // return true if the move succeed, false otherwise
+        // return true if the move succeeds, false otherwise
         return parseResult(getXML(s_query).getDocumentElement());
+    }
+    
+    
+    public boolean tryRestart(int game_id, Player player) 
+    {
+        // prepare the query to send to the server
+        String s_query = "&game_id=" + game_id + "&restart";
+        
+        // return true if the restart succeeds
+        getXML(s_query).getDocumentElement();
+        return true;    /// FIXME -- always true
     }
     
     
@@ -45,4 +56,5 @@ class Actuator extends XMLClient
         // parse the state to discover whether the move attempt was a success
         return (s_state != null && s_state.equals("MOVE_SUCCESS"));
     }
+
 }

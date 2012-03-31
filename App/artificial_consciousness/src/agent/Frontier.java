@@ -7,7 +7,6 @@
 package agent;
 
 import game.Game.Player;
-import agent.Action.Type;
 
 
 class Frontier 
@@ -50,6 +49,8 @@ class Frontier
             case MOVE:
                 Action.Move move = (Action.Move)action;
                 return actuator.tryMove(game_id, player, move.getPosition());
+            case RESTART:
+                return actuator.tryRestart(game_id, player);
             default:
                 return false;
 
