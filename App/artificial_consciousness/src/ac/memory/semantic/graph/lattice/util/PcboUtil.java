@@ -50,7 +50,7 @@ public class PcboUtil
   {
     String ret = "";
 
-    logger.debug("Génération du FIMI");
+    if (logger.isDebugEnabled()) logger.debug("Génération du FIMI");
     boolean hasattribute;
     for (CompleteBoardState object : context.getObjects().values())
       {
@@ -66,7 +66,7 @@ public class PcboUtil
         if (hasattribute)
           ret += "\n";
       }
-    logger.debug("Génération du FIMI terminée");
+    if (logger.isDebugEnabled()) logger.debug("Génération du FIMI terminée");
     return ret;
   }
 
@@ -80,9 +80,9 @@ public class PcboUtil
    */
   public static String executeBinary(String fimi, Arch arch) throws IOException
   {
-    logger.debug("Generation d'une commande d'execution FCBO");
+    if (logger.isDebugEnabled()) logger.debug("Generation d'une commande d'execution FCBO");
 
-    logger.debug("Determination du shell");
+    if (logger.isDebugEnabled()) logger.debug("Determination du shell");
     String shell = "/bin/sh";
     String arg = "-c";
     if (arch.equals(Arch.windows_i686))
@@ -101,12 +101,12 @@ public class PcboUtil
         + arch.toString().toLowerCase() + " -V1 "
         + System.getProperty("user.dir") + "/fimi.tmp.dat "
         + System.getProperty("user.dir") + "/concepts.tmp.dat";
-    logger.debug("Shell : " + shell);
-    logger.debug("arg : " + arg);
-    logger.debug("Commande : " + cmd);
+    if (logger.isDebugEnabled()) logger.debug("Shell : " + shell);
+    if (logger.isDebugEnabled()) logger.debug("arg : " + arg);
+    if (logger.isDebugEnabled()) logger.debug("Commande : " + cmd);
     String[] args = { shell, arg, cmd };
 
-    logger.debug("Execution de la commande");
+    if (logger.isDebugEnabled()) logger.debug("Execution de la commande");
     Process process = null;
     try
       {
@@ -145,7 +145,7 @@ public class PcboUtil
         ioe.printStackTrace();
       }
 
-    logger.debug("Execution de la commande terminée");
+    if (logger.isDebugEnabled()) logger.debug("Execution de la commande terminée");
 
     return retour;
   }

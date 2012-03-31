@@ -71,7 +71,7 @@ public class Game
    */
   public Game()
   {
-    logger.debug("Creating new Game");
+    if (logger.isDebugEnabled()) logger.debug("Creating new Game");
     this.last_move = null;
     this.final_status = Memory.FinalGameStatus.UNDEFINED;
     this.score = 0;
@@ -87,7 +87,7 @@ public class Game
    */
   public void addMove(Move move)
   {
-    logger.debug("Adding move " + move + " to the game");
+    if (logger.isDebugEnabled()) logger.debug("Adding move " + move + " to the game");
     Move last = this.last_move;
     move.setPrev_move(last);
     this.last_move = move;

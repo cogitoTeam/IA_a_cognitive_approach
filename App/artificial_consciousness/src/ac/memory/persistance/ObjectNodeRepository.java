@@ -35,7 +35,7 @@ public class ObjectNodeRepository extends
   {
     super(graphDb, index, ID_FIELD);
     refNode = getRootNode(graphDb);
-    logger.debug("Building new ObjectNodeRepository");
+    if (logger.isDebugEnabled()) logger.debug("Building new ObjectNodeRepository");
   }
 
   /**
@@ -55,16 +55,16 @@ public class ObjectNodeRepository extends
     // to guard against duplications we use the lock grabbed on ref node
     // when
     // creating a relationship and are optimistic about person not existing
-    logger.debug("Opening transaction for object node creation");
+    if (logger.isDebugEnabled()) logger.debug("Opening transaction for object node creation");
     Transaction tx = graphDb.beginTx();
     try
       {
 
-        logger.debug("Node creation with " + ID_FIELD + " = " + object.getId());
+        if (logger.isDebugEnabled()) logger.debug("Node creation with " + ID_FIELD + " = " + object.getId());
         Node newNode = graphDb.createNode();
         newNode.setProperty(ID_FIELD, object.getId());
 
-        logger.debug("Serializing object");
+        if (logger.isDebugEnabled()) logger.debug("Serializing object");
         // / SERIALIZE TO BYTE[]
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(bos);
@@ -74,10 +74,10 @@ public class ObjectNodeRepository extends
 
         newNode.setProperty("object", bytes);
 
-        logger.debug("Creating relationship to the root node");
+        if (logger.isDebugEnabled()) logger.debug("Creating relationship to the root node");
         refNode.createRelationshipTo(newNode, RelTypes.ATTR);
 
-        logger.debug("Searching for Objects with " + ObjectNode.ID_FIELD
+        if (logger.isDebugEnabled()) logger.debug("Searching for Objects with " + ObjectNode.ID_FIELD
             + " = " + object.getId());
         Node alreadyExist = index.get(ObjectNode.ID_FIELD, object.getId())
             .getSingle();
@@ -89,18 +89,18 @@ public class ObjectNodeRepository extends
             throw new Exception("Attribute with this ID already exists ");
           }
 
-        logger.debug("Setting properties");
+        if (logger.isDebugEnabled()) logger.debug("Setting properties");
         newNode.setProperty(ObjectNode.ID_FIELD, object.getId());
 
-        logger.debug("Indexing " + ID_FIELD);
+        if (logger.isDebugEnabled()) logger.debug("Indexing " + ID_FIELD);
         index.add(newNode, ObjectNode.ID_FIELD, object.getId());
         tx.success();
-        logger.debug("Ok new Object created");
+        if (logger.isDebugEnabled()) logger.debug("Ok new Object created");
         return new ObjectNode(newNode);
       }
     finally
       {
-        logger.debug("Finish transaction");
+        if (logger.isDebugEnabled()) logger.debug("Finish transaction");
         tx.finish();
       }
   }
@@ -115,14 +115,14 @@ public class ObjectNodeRepository extends
   @Override
   public ObjectNode getNodeById(long id)
   {
-    logger.debug("Getting an object by ID " + id);
+    if (logger.isDebugEnabled()) logger.debug("Getting an object by ID " + id);
     Node object = index.get(ObjectNode.ID_FIELD, id).getSingle();
     if (object == null)
       {
         logger.warn("Object not found");
         throw new IllegalArgumentException("[" + id + "] not found");
       }
-    logger.debug("Object found");
+    if (logger.isDebugEnabled()) logger.debug("Object found");
     return new ObjectNode(object);
   }
 
@@ -135,32 +135,32 @@ public class ObjectNodeRepository extends
   @Override
   public void deleteNode(ObjectNode node)
   {
-    logger.debug("Opening transaction to delete object " + node.getId());
+    if (logger.isDebugEnabled()) logger.debug("Opening transaction to delete object " + node.getId());
     Transaction tx = graphDb.beginTx();
     try
       {
         Node nodeObject = node.getUnderlyingNode();
 
-        logger.debug("Removing from index " + ID_FIELD + " = " + node.getId());
+        if (logger.isDebugEnabled()) logger.debug("Removing from index " + ID_FIELD + " = " + node.getId());
         index.remove(nodeObject, ObjectNode.ID_FIELD, node.getId());
 
-        logger.debug("Removing relationships to attributes");
+        if (logger.isDebugEnabled()) logger.debug("Removing relationships to attributes");
         for (Relationship rel : nodeObject.getRelationships(RelTypes.RELATED,
             Direction.INCOMING))
           {
             rel.delete();
           }
-        logger.debug("Removing main relation");
+        if (logger.isDebugEnabled()) logger.debug("Removing main relation");
         nodeObject.getSingleRelationship(RelTypes.ATTR, Direction.INCOMING)
             .delete();
 
-        logger.debug("Removing object node");
+        if (logger.isDebugEnabled()) logger.debug("Removing object node");
         nodeObject.delete();
         tx.success();
       }
     finally
       {
-        logger.debug("Finish transaction");
+        if (logger.isDebugEnabled()) logger.debug("Finish transaction");
         tx.finish();
       }
   }
@@ -171,7 +171,7 @@ public class ObjectNodeRepository extends
   @Override
   public Iterable<ObjectNode> getAllNodes()
   {
-    logger.debug("Getting all the object nodes");
+    if (logger.isDebugEnabled()) logger.debug("Getting all the object nodes");
 
     return new IterableWrapper<ObjectNode, Relationship>(
         refNode.getRelationships(RelTypes.ATTR))

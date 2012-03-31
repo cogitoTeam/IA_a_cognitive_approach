@@ -27,7 +27,7 @@ public class ObjectNode extends AbstractNode<ObjectNode, AttributeNode>
   ObjectNode(Node objectNode)
   {
     super(objectNode, ID_FIELD);
-    logger.debug("Building new ObjectNode");
+    if (logger.isDebugEnabled()) logger.debug("Building new ObjectNode");
   }
 
   @Override

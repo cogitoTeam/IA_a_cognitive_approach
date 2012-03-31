@@ -65,8 +65,8 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   @SuppressWarnings("unchecked")
   public ObjectType getObject() throws IOException, ClassNotFoundException
   {
-    logger.debug("Getting the object");
-    logger.debug("Un-serialize field");
+    if (logger.isDebugEnabled()) logger.debug("Getting the object");
+    if (logger.isDebugEnabled()) logger.debug("Un-serialize field");
     // / UNSERIALIZE
     ByteArrayInputStream bis = new ByteArrayInputStream(
         (byte[]) underlyingNode.getProperty(OBJECT));
@@ -79,7 +79,7 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
    */
   public Iterable<RelatedObjectType> getRelatedObjects()
   {
-    logger.debug("Getting the related objects");
+    if (logger.isDebugEnabled()) logger.debug("Getting the related objects");
     @SuppressWarnings("deprecation")
     TraversalDescription travDesc = Traversal.description().breadthFirst()
         .relationships(RelTypes.RELATED).uniqueness(Uniqueness.NODE_GLOBAL)
@@ -97,8 +97,8 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   @SuppressWarnings("unchecked")
   public void addRelatedObject(RelatedObjectType object)
   {
-    logger.debug("Relate new object to the node");
-    logger.debug("Opening transaction");
+    if (logger.isDebugEnabled()) logger.debug("Relate new object to the node");
+    if (logger.isDebugEnabled()) logger.debug("Opening transaction");
     Transaction tx = underlyingNode.getGraphDatabase().beginTx();
     try
       {
@@ -116,7 +116,7 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
       }
     finally
       {
-        logger.debug("Transaction finished");
+        if (logger.isDebugEnabled()) logger.debug("Transaction finished");
         tx.finish();
       }
   }
@@ -129,8 +129,8 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
    */
   public void removeRelatedObject(RelatedObjectType object)
   {
-    logger.debug("Removing relation between tow nodes");
-    logger.debug("Opening transaction");
+    if (logger.isDebugEnabled()) logger.debug("Removing relation between tow nodes");
+    if (logger.isDebugEnabled()) logger.debug("Opening transaction");
     Transaction tx = underlyingNode.getGraphDatabase().beginTx();
     try
       {
@@ -147,7 +147,7 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
     finally
       {
         tx.finish();
-        logger.debug("Transaction finished");
+        if (logger.isDebugEnabled()) logger.debug("Transaction finished");
       }
   }
 
