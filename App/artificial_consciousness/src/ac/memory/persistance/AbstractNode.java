@@ -23,8 +23,10 @@ import org.neo4j.kernel.Uniqueness;
  *          Object type to store
  * @param <RelatedObjectType>
  *          Related object type
+ * @param <StoredObjectType>
+ *          Type of object stored in object field
  */
-abstract public class AbstractNode<ObjectType, RelatedObjectType>
+abstract public class AbstractNode<ObjectType, RelatedObjectType, StoredObjectType>
 {
   private static final Logger logger = Logger.getLogger(AbstractNode.class);
 
@@ -54,7 +56,7 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   }
 
   /**
-   * Return the RelevantPartialBoardState unserialized
+   * Return the object unserialized
    * 
    * @return the object of the node
    * @throws IOException
@@ -63,15 +65,18 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
    *           Error when unserialize
    */
   @SuppressWarnings("unchecked")
-  public ObjectType getObject() throws IOException, ClassNotFoundException
+  public StoredObjectType getObject() throws IOException,
+      ClassNotFoundException
   {
-    logger.debug("Getting the object");
-    logger.debug("Un-serialize field");
+    if (logger.isDebugEnabled())
+      logger.debug("Getting the object");
+    if (logger.isDebugEnabled())
+      logger.debug("Un-serialize field");
     // / UNSERIALIZE
     ByteArrayInputStream bis = new ByteArrayInputStream(
         (byte[]) underlyingNode.getProperty(OBJECT));
     ObjectInput in = new ObjectInputStream(bis);
-    return (ObjectType) in.readObject();
+    return (StoredObjectType) in.readObject();
   }
 
   /**
@@ -79,11 +84,13 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
    */
   public Iterable<RelatedObjectType> getRelatedObjects()
   {
-    logger.debug("Getting the related objects");
-    @SuppressWarnings("deprecation")
-    TraversalDescription travDesc = Traversal.description().breadthFirst()
-        .relationships(RelTypes.RELATED).uniqueness(Uniqueness.NODE_GLOBAL)
-        .depthFirst().filter(Traversal.returnAll());
+    if (logger.isDebugEnabled())
+      logger.debug("Getting the related objects");
+
+    TraversalDescription travDesc = Traversal.description()
+        .relationships(RelTypes.RELATED).breadthFirst()
+        .uniqueness(Uniqueness.NODE_GLOBAL)
+        .evaluator(EvaluatorUtil.lengthOfOne());
 
     return createObjectsFromPath(travDesc.traverse(underlyingNode));
   }
@@ -97,8 +104,10 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   @SuppressWarnings("unchecked")
   public void addRelatedObject(RelatedObjectType object)
   {
-    logger.debug("Relate new object to the node");
-    logger.debug("Opening transaction");
+    if (logger.isDebugEnabled())
+      logger.debug("Relate new object to the node");
+    if (logger.isDebugEnabled())
+      logger.debug("Opening transaction");
     Transaction tx = underlyingNode.getGraphDatabase().beginTx();
     try
       {
@@ -107,16 +116,22 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
             Relationship related = getRelationshipTo(object);
             if (related == null)
               {
-                underlyingNode.createRelationshipTo(
-                    ((AbstractNode<ObjectType, RelatedObjectType>) object)
-                        .getUnderlyingNode(), RelTypes.RELATED);
+                underlyingNode
+                    .createRelationshipTo(
+                        ((AbstractNode<ObjectType, RelatedObjectType, StoredObjectType>) object)
+                            .getUnderlyingNode(), RelTypes.RELATED);
+              }
+            else
+              {
+                logger.warn("Relationship already exists");
               }
             tx.success();
           }
       }
     finally
       {
-        logger.debug("Transaction finished");
+        if (logger.isDebugEnabled())
+          logger.debug("Transaction finished");
         tx.finish();
       }
   }
@@ -129,8 +144,10 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
    */
   public void removeRelatedObject(RelatedObjectType object)
   {
-    logger.debug("Removing relation between tow nodes");
-    logger.debug("Opening transaction");
+    if (logger.isDebugEnabled())
+      logger.debug("Removing relation between tow nodes");
+    if (logger.isDebugEnabled())
+      logger.debug("Opening transaction");
     Transaction tx = underlyingNode.getGraphDatabase().beginTx();
     try
       {
@@ -147,7 +164,8 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
     finally
       {
         tx.finish();
-        logger.debug("Transaction finished");
+        if (logger.isDebugEnabled())
+          logger.debug("Transaction finished");
       }
   }
 
@@ -162,7 +180,7 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType>
   public boolean equals(Object o)
   {
     return underlyingNode
-        .equals(((AbstractNode<ObjectType, RelatedObjectType>) o)
+        .equals(((AbstractNode<ObjectType, RelatedObjectType, StoredObjectType>) o)
             .getUnderlyingNode());
   }
 

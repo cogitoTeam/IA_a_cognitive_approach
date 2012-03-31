@@ -37,7 +37,7 @@ public class Neo4jService
   {
     if (database == null)
       {
-        logger.debug("First call for Neo4jService, database initialization");
+        if (logger.isDebugEnabled()) logger.debug("First call for Neo4jService, database initialization");
         database = new EmbeddedGraphDatabase(DB_PATH);
         registerShutdownHook(database);
       }
@@ -77,9 +77,9 @@ public class Neo4jService
       @Override
       public void run()
       {
-        logger.debug("Thread down : shutdown the database");
+        if (logger.isDebugEnabled()) logger.debug("Thread down : shutdown the database");
         graphDb.shutdown();
-        logger.debug("Thread down : OK !");
+        if (logger.isDebugEnabled()) logger.debug("Thread down : OK !");
       }
     });
   }
