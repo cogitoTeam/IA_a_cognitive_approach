@@ -196,6 +196,7 @@ function Game()
         
         // get the game identifier (for future queries)
         id = Number(data[0].getAttribute('id'));
+        debug.innerHTML = 'Game id: ' + id;
         
         /* Parse new board state */
         // create the board if it doesn't already exist

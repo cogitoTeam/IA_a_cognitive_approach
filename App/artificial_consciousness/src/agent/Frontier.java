@@ -33,10 +33,12 @@ class Frontier
     {
         // boot up the interface
         BootstrapClient bootstrap = new BootstrapClient(DEFAULT_S_SERVER_URL);
-        game_id = bootstrap.getId();
+        // initialise attributes from boot
         sensor = bootstrap.getSensor();
         actuator = bootstrap.getActuator();
+        game_id = bootstrap.getId();
         player = bootstrap.getPlayer();
+        System.out.println("playing " + game_id + "as " + player);
     }
     
     // query
