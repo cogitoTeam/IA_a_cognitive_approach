@@ -65,7 +65,6 @@ function ajax_request_move(id, row, col, player)
 
 function ajax_request_refresh(id)
 {
-    console.log("asking for update");
     msg.url = WEBSERVICE + "?game_id=" + id;
     $.ajax(msg);
 }

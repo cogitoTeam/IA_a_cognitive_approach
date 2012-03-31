@@ -58,12 +58,17 @@ function Game()
         {
             // first player to join plays first
             case "GAME_START":
-                is_local[i_colour] = true;
-                is_local[i_other] = false;
+                // only the host sees the game start
+                if(waiting_for_player)
+                {
+                    is_local[i_colour] = true;
+                    is_local[i_other] = false;
+                }
                 return i_colour;
                 
             case "PLAYER_JOINED":
-                if(!is_local[i_colour] && !is_local[i_other])
+                // if I'm not the host then I must be the client
+                if(!is_local[i_colour])
                 {
                     is_local[i_colour] = false;
                     is_local[i_other] = true;
@@ -170,16 +175,25 @@ function Game()
     obj.update_from_xml = function(data)
     {
         /* Parse new game state */
-        var previous_turn = current_turn;
+        var previous_turn = current_turn; 
         current_turn = xml_parse_state(data[0].getAttribute('state'),
                                 data[0].childNodes[1].getAttribute('colour'));
-        
+                         
         // redraw indicators to reflect changed game state
         redraw_ui();
-                                
-        // if no change is detected don't bother continuing
+        
+        // no point contuining if nothing has changed
         if(previous_turn == current_turn)
             return;
+        
+        // clear the board upon restart
+        if(previous_turn >= n_players)
+        {
+            board.clear();
+            board.redraw();
+            return;
+        }
+        
         // get the game identifier (for future queries)
         id = Number(data[0].getAttribute('id'));
         
@@ -200,8 +214,6 @@ function Game()
         if(current_turn >= n_players)
         {
             ajax_request_restart(id);
-            board.clear();
-            redraw();
             return;	// consume the event
         }
         
