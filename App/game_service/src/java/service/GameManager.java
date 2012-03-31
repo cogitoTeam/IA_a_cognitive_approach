@@ -11,7 +11,6 @@ import game.Rules;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class GameManager 
@@ -32,7 +31,7 @@ public class GameManager
     
     private Rules rules;
     private Map<Integer, Game> games;
-    private Queue<Game> waiting;
+    private Game waiting;
     
     /* METHODS */
     
@@ -41,7 +40,7 @@ public class GameManager
     {
         rules = MorpionRules.getInstance();
         games = new HashMap<Integer, Game>();
-        waiting = new LinkedBlockingQueue<Game>();
+        waiting = null;
     }
     
     // query
@@ -59,7 +58,7 @@ public class GameManager
     public synchronized Game findGame()
     {
         // always join a game if possible
-        if(waiting.isEmpty())
+        if(waiting == null)
             return newGame();
         else
             return openGame();
@@ -77,7 +76,7 @@ public class GameManager
         next_id++;
         
         // add the game to the waiting queue
-        waiting.add(game);
+        waiting = game;
         
         // return the game we created
         return game;
@@ -86,7 +85,8 @@ public class GameManager
     private synchronized Game openGame()
     {
         // join the game at the head of the queue
-        Game open_game = waiting.poll();
+        Game open_game = waiting;
+        waiting = null;
         open_game.join();
         return open_game;
     }

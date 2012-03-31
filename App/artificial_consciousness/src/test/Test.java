@@ -16,7 +16,7 @@ public class Test
     public static void main(String[] args)
     {
         // create agent(s)
-        Agent agent = new MTurkAgent();
+        Agent agent = new RandomAgent();
         
         // main loop
         boolean stop = false;
@@ -29,5 +29,7 @@ public class Test
             if(agent.getState() != Agent.State.NORMAL)
                 stop = true;
         }
+        
+        System.out.println("stopped");
     }
 }

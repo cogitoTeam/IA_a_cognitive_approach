@@ -56,6 +56,7 @@ public class RandomAgent extends Agent
     protected void action_failed(Action action) 
     {
         // no fault tolerance implemented for this Agent
+        System.out.println("Action failed " + action);
         state = State.ERROR;
     }
 
