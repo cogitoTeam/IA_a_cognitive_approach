@@ -4,18 +4,22 @@
 package ac.memory.persistance;
 
 import org.apache.log4j.Logger;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.traversal.Traverser;
 import org.neo4j.helpers.collection.IterableWrapper;
 
+import ac.shared.structure.CompleteBoardState;
+
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 30 mars 2012
  * @version 0.1
  */
-public class ObjectNode extends AbstractNode<ObjectNode, AttributeNode>
+public class ObjectNode extends
+    AbstractNode<ObjectNode, AttributeNode, CompleteBoardState>
 {
   private static final Logger logger = Logger.getLogger(ObjectNode.class);
 
@@ -27,7 +31,8 @@ public class ObjectNode extends AbstractNode<ObjectNode, AttributeNode>
   ObjectNode(Node objectNode)
   {
     super(objectNode, ID_FIELD);
-    if (logger.isDebugEnabled()) logger.debug("Building new ObjectNode");
+    if (logger.isDebugEnabled())
+      logger.debug("Building new ObjectNode");
   }
 
   @Override
@@ -55,7 +60,8 @@ public class ObjectNode extends AbstractNode<ObjectNode, AttributeNode>
   {
     Node node = object.getUnderlyingNode();
 
-    for (Relationship rel : underlyingNode.getRelationships(RelTypes.RELATED))
+    for (Relationship rel : underlyingNode.getRelationships(RelTypes.RELATED,
+        Direction.BOTH))
       {
         if (rel.getOtherNode(underlyingNode).equals(node))
           {
