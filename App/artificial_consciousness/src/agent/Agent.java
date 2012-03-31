@@ -53,9 +53,9 @@ public abstract class Agent
     
     // modification
     
-    public void sleep(int time)
+    public void sleep(int n_seconds)
     {
-        sleep_time = time;
+        sleep_time = n_seconds;
     }
     
     public void act()

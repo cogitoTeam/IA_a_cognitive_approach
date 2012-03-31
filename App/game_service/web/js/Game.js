@@ -59,7 +59,7 @@ function Game()
             // first player to join plays first
             case "GAME_START":
                 // only the host sees the game start
-                if(waiting_for_player)
+                if(!is_local[i_colour] && !is_local[i_other])
                 {
                     is_local[i_colour] = true;
                     is_local[i_other] = false;
@@ -68,8 +68,9 @@ function Game()
                 
             case "PLAYER_JOINED":
                 // if I'm not the host then I must be the client
-                if(!is_local[i_colour])
+                if(!is_local[i_colour] && !is_local[i_other])
                 {
+                    console.log("I am player " + i_other)
                     is_local[i_colour] = false;
                     is_local[i_other] = true;
                 }

@@ -57,7 +57,7 @@ public class RandomAgent extends Agent
     {
         // no fault tolerance implemented for this Agent
         System.out.println("Action failed " + action);
-        sleep(100);
+        sleep(2);
     }
 
 }

@@ -13,7 +13,7 @@ public class Test
 {
     /* MAIN */
     
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
     {
         // create agent(s)
         Agent agent = new RandomAgent();
@@ -28,6 +28,9 @@ public class Test
             // stop if the agent breaks down or requests euthanasia 
             if(agent.getState() != Agent.State.NORMAL)
                 stop = true;
+            
+            // let other processes execute
+            Thread.sleep(1000);
         }
         
         System.out.println("Stopped");
