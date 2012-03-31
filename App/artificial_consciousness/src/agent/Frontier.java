@@ -38,7 +38,7 @@ class Frontier
         actuator = bootstrap.getActuator();
         game_id = bootstrap.getId();
         player = bootstrap.getPlayer();
-        System.out.println("playing " + game_id + "as " + player);
+        System.out.println("Playing game number " + game_id + " as " + player);
     }
     
     // query
@@ -59,15 +59,7 @@ class Frontier
     public Percept newPercept()
     {
         // to receive information via the external interface
-        if(sensor.renewXML(game_id))
-            return sensor.perceiveBoard(player);
-        else
-            return null;
-    }
-    
-    public Percept oldPercept()
-    {
-        return sensor.perceiveBoard(player);
+        return sensor.perceive(game_id, player);
     }
 
 }

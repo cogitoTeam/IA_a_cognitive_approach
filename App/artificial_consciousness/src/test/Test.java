@@ -30,6 +30,6 @@ public class Test
                 stop = true;
         }
         
-        System.out.println("stopped");
+        System.out.println("Stopped");
     }
 }

@@ -6,12 +6,8 @@
 
 package agent;
 
-import game.BoardMatrix;
-import game.Game;
 import game.Game.Player;
-import game.MorpionRules;
-import game.ReversiRules;
-import game.Rules;
+import game.*;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
