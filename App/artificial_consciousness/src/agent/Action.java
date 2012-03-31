@@ -55,6 +55,12 @@ public abstract class Action
         return type;
     }
     
+    @Override
+    public String toString()
+    {
+        return "Action (" + type + ")";
+    }
+    
     
     
     /* WE'LL PLACE A PIECE AT THIS POSITION */
@@ -71,6 +77,11 @@ public abstract class Action
         }
         // query
         public BoardMatrix.Position getPosition() { return position; }
+        @Override
+        public String toString()
+        {
+            return super.toString()+":"+position;
+        }
     }
     
     /* WE'LL SKIP OUR TURN */

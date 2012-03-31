@@ -13,7 +13,6 @@ public abstract class Agent
     
     public static enum State
     {
-        ASLEEP,
         NORMAL,
         ERROR
         // ... etc
@@ -23,7 +22,9 @@ public abstract class Agent
     /* ATTRIBUTES */
     
     private Frontier frontier;
+    private int sleep_time;
     protected State state;
+    
     
     
 
@@ -46,15 +47,22 @@ public abstract class Agent
     protected Agent()
     {
         frontier = new Frontier();
-        state = State.ASLEEP;
+        sleep_time = 0;
+        state = State.NORMAL;
+    }
+    
+    // modification
+    
+    public void sleep(int n_seconds)
+    {
+        sleep_time = n_seconds;
     }
     
     public void act()
     {
-        // we can't act if state is abnormal
-        if(state == State.ASLEEP)
+        if(sleep_time > 0)
         {
-            awaken();
+            sleep_time--;
             return;
         }
         
@@ -79,13 +87,6 @@ public abstract class Agent
     
     /* SUBROUTINES */
     
-    private void awaken()
-    {
-        // always act upon waking up
-        react(frontier.oldPercept());
-        state = State.NORMAL;
-    }
-    
     private void react(Percept percept)
     {
         // choose a reaction to the stimulus
@@ -93,6 +94,9 @@ public abstract class Agent
         // reaction vary depending on the type of stimulus
         switch(percept.getType())
         {
+            case OPPONENT_TURN:
+                think();
+                return;
             case CHOICES:
                 action = choices_reaction((Percept.Choices)percept);
                 break;

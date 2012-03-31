@@ -8,6 +8,7 @@ package agent;
 
 import game.BoardMatrix;
 import game.BoardMatrix.Position;
+import game.Game;
 import game.Game.Player;
 import game.Rules;
 import java.util.List;
@@ -36,27 +37,67 @@ class Sensor extends XMLClient
     
     // query
     
-    public boolean renewXML(int game_id)
+    public Percept perceive(int game_id, Player player)
     {
         // get an XML document from the server
         Document doc = getXML("game_id="+game_id);
         
-        // if no changes have occured, report nothing
-        if(doc.getDocumentElement().getAttribute("state").equals("NO_CHANGE"))
-            return false;
+        // parse the current state
+        Game.State current_state = 
+            Game.State.valueOf(doc.getDocumentElement().getAttribute("state"));
+        // optimisation: don't bother parsing everything if nothing's changed
+        if(current_state == Game.State.NO_CHANGE)
+            return null;
+        
+        // parse the current player
+        Node player_node = 
+            doc.getDocumentElement().getElementsByTagName("current_player")
+                .item(0);
+        Player current_player = 
+            Game.parsePlayer(player_node.getAttributes().getNamedItem("colour")
+                .getNodeValue());
         
         // parse the current board
         Node board_node = 
-                doc.getDocumentElement().getElementsByTagName("board").item(0);
+            doc.getDocumentElement().getElementsByTagName("board").item(0);
         board.parseCells(board_node);
+        int board_value = rules.getValue(board, player);
         
-        // success
-        return true;
+        // otherwise reason based on perceived state
+        switch(current_state)
+        {
+            case VICTORY:
+                // 'victory' and 'defeat' percepts
+                return (player == current_player)
+                    ? new Percept.Victory(board.copy(), board_value)
+                    : new Percept.Victory(board.copy(), board_value);
+                
+            case DRAW:
+                // 'draw' percept
+                return new Percept.Draw(board.copy(), board_value);
+                
+            case GAME_START:
+            case PLAYER_JOINED:
+            case MOVE_FAILURE:
+            case MOVE_SUCCESS:
+                // 'choices' percept
+                return (player == current_player) 
+                    ? perceiveChoices(player)
+                    : new Percept.OpponentTurn(board.copy());
+                
+            
+            case NO_CHANGE:
+            default:
+                // we should never arrive at this case
+                return null;
+        }
     }
+    
+    
+    /* SUBROUTINES */
 
-    public Percept perceiveBoard(Player player)
+    private Percept.Choices perceiveChoices(Player player)
     {
-        // create the percept
         Percept.Choices percept = new Percept.Choices(board.copy());
         
         // get legal moves

@@ -19,7 +19,7 @@ public class MTurkAgent extends Agent
 {
     /* ATTRIBUTES */
     
-    Console console = System.console();
+    private Console console = System.console();
     
     
     /* IMPLEMENTATIONS */
@@ -37,8 +37,10 @@ public class MTurkAgent extends Agent
         System.out.println("It's your turn to make a move!");
 
         // get strings
-        String row = console.readLine("Row: ");
-        String col = console.readLine("Collumn: ");
+        console = System.console();
+        System.out.println("console = " + console);
+        /*String row = console.readLine("Row: ");
+        String col = console.readLine("Collumn: ");*/
 
         // TODO -- finish
         return null;

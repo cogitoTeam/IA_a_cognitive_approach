@@ -25,6 +25,7 @@ var canvas = document.getElementById('game_canvas');
 var canvas_info = document.getElementById('info_canvas');
 var context = canvas.getContext('2d');
 var context_info  = canvas_info.getContext('2d');
+var debug = document.getElementById('debug');
 
 // the main application holder
 var game;

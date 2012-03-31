@@ -7,11 +7,11 @@
 package test;
 
 import agent.Action;
+import agent.Agent;
 import agent.Percept.Choices;
 import agent.Percept.Defeat;
 import agent.Percept.Draw;
 import agent.Percept.Victory;
-import agent.Agent;
 
 
 public class RandomAgent extends Agent
@@ -56,7 +56,8 @@ public class RandomAgent extends Agent
     protected void action_failed(Action action) 
     {
         // no fault tolerance implemented for this Agent
-        state = State.ERROR;
+        System.out.println("Action failed " + action);
+        sleep(2);
     }
 
 }
