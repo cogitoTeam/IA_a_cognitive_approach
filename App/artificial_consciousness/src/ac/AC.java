@@ -1,10 +1,10 @@
 package ac;
 
 import ac.analysis.Analysis;
-import frontier.Frontier;
+import agent.Frontier;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
-import main.Agent;
+import agent.Agent;
 
 /**
  * 

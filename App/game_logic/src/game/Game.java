@@ -6,7 +6,6 @@
 
 package game;
 
-import ai.AI;
 import game.BoardMatrix.Position;
 import java.util.List;
 
@@ -30,11 +29,6 @@ public class Game
         VICTORY,
         DRAW;
     }
-
-
-    /* CONSTANTS */
-    
-    public static final Player AI_PLAYER = Player.BLACK;
     
     
     /* CLASS NAMESPACE FUNCTIONS */
@@ -57,7 +51,6 @@ public class Game
     private final int id;
     private final Rules rules;
     private final BoardMatrix board;
-    private final AI ai;
     private State current_state;
     private Player current_player;
         
@@ -66,16 +59,9 @@ public class Game
     // creation
     public Game(int _id, Rules _rules)
     {
-        this(_id, _rules, null);
-        restart();
-    }
-
-    public Game(int _id, Rules _rules, AI _ai)
-    {
         id = _id;
         rules = _rules;
         board = _rules.createBoard();
-        ai = _ai;
         restart();
     }
     
@@ -104,13 +90,6 @@ public class Game
         {
             // switch the current player
             switchCurrentPlayer();
-
-            // if playing against an AI, respond to the move
-            if(ai != null && current_player == AI_PLAYER)
-            {
-                Position ai_move = ai.chooseMove(rules, board, AI_PLAYER);
-                current_state = rules.performMove(ai_move, board, AI_PLAYER);
-            }
         }
     }
     

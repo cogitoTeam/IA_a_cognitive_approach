@@ -5,15 +5,15 @@
 
 package test;
 
-import frontier.Action;
-import frontier.Percept.Choices;
-import frontier.Percept.Defeat;
-import frontier.Percept.Draw;
-import frontier.Percept.Victory;
+import agent.Action;
+import agent.Percept.Choices;
+import agent.Percept.Defeat;
+import agent.Percept.Draw;
+import agent.Percept.Victory;
 import game.BoardMatrix;
 import game.Game.Player;
 import game.Rules;
-import main.Agent;
+import agent.Agent;
 
 public class MiniMaxAgent extends Agent
 {

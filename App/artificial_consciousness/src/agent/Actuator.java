@@ -4,7 +4,7 @@
  *****************/
 
 
-package frontier;
+package agent;
 
 import game.BoardMatrix.Position;
 import game.Game.Player;

@@ -4,12 +4,12 @@
  *****************/
 
 
-package frontier;
+package agent;
 
 import game.Game.Player;
 
 
-public class Frontier 
+class Frontier 
 { 
     /* CONSTANTS */
     protected static final String DEFAULT_S_SERVER_URL = 
