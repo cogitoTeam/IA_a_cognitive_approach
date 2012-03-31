@@ -60,14 +60,14 @@ public class GameManager
     {
         // always join a game if possible
         if(waiting.isEmpty())
-            return startGame();
+            return newGame();
         else
-            return joinGame();
+            return openGame();
     }
     
     /* SUBROUTINES */
     
-    private synchronized Game startGame()
+    private synchronized Game newGame()
     {
         // create and save the new game
         Game game = new Game(next_id, rules);
@@ -83,10 +83,12 @@ public class GameManager
         return game;
     }
     
-    private synchronized Game joinGame()
+    private synchronized Game openGame()
     {
         // join the game at the head of the queue
-        return waiting.poll();
+        Game open_game = waiting.poll();
+        open_game.join();
+        return open_game;
     }
     
 }
