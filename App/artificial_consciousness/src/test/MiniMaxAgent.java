@@ -6,6 +6,7 @@
 package test;
 
 import agent.Action;
+import agent.Agent;
 import agent.Percept.Choices;
 import agent.Percept.Defeat;
 import agent.Percept.Draw;
@@ -13,18 +14,9 @@ import agent.Percept.Victory;
 import game.BoardMatrix;
 import game.Game.Player;
 import game.Rules;
-import agent.Agent;
 
 public class MiniMaxAgent extends Agent
 {
-    /* CONSTANTS */
-    /*private static final Player PMIN = Player.BLACK;
-    private static final Player PMAX = Player.WHITE;
-    * 
-    */
-
-
-    
     /* IMPLEMENTATIONS */
 
     @Override
@@ -34,32 +26,57 @@ public class MiniMaxAgent extends Agent
     }
 
     @Override
-    protected Action choices_reaction(Choices percept) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    protected Action victory_reaction(Victory percept) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    protected Action defeat_reaction(Defeat percept) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    protected Action draw_reaction(Draw percept) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
-    @Override
-    protected void action_failed(Action action) 
+    protected Action choices_reaction(Choices percept) 
     {
-        // no fault tolerance implemented for this Agent
-        state = State.ERROR;
+        // find the option with the highest utility
+        int max_utility = Integer.MIN_VALUE;
+        int max_i = -1;
+        for(int i = 0; i < percept.getOptions().size(); i++)
+        {
+            int i_utility = 
+                evaluate(getRules(), percept.getCurrentBoard(), getPlayer());
+            System.out.println("option " + i + " has utility " + i_utility);
+            if(i_utility > max_utility)
+            {
+                max_i = i;
+                max_utility = i_utility;
+            }
+        }
+        
+        // perform this action
+        return percept.getOptions().get(max_i).getAction();
+    }
+
+    @Override
+    protected Action victory_reaction(Victory percept) 
+    {
+        // restart the game
+        return new Action.Restart();
+    }
+
+    @Override
+    protected Action defeat_reaction(Defeat percept) 
+    {
+        // restart the game
+        return new Action.Restart();
+    }
+
+    @Override
+    protected Action draw_reaction(Draw percept) 
+    {
+        // restart the game
+        return new Action.Restart();
     }
     
+    @Override
+    protected void action_result(boolean success, Action action) 
+    {
+        if(!success)
+        {
+            System.out.println(action + " failed!");
+            sleep(2);
+        }
+    }
     
     
     /* SUBROUTINES */

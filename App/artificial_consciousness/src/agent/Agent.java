@@ -6,6 +6,9 @@
 
 package agent;
 
+import game.Game;
+import game.Rules;
+
 
 public abstract class Agent 
 {
@@ -79,6 +82,7 @@ public abstract class Agent
     }
     
     // query
+    
     public State getState()
     {
         return state;
@@ -86,6 +90,17 @@ public abstract class Agent
     
     
     /* SUBROUTINES */
+    
+    // query
+    protected Game.Player getPlayer()
+    {
+        return frontier.getPlayer();
+    }
+    
+    protected Rules getRules()
+    {
+        return frontier.getRules();
+    }
     
     private void react(Percept percept)
     {

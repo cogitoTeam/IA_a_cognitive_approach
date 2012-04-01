@@ -6,7 +6,9 @@
 
 package agent;
 
+import game.Game;
 import game.Game.Player;
+import game.Rules;
 
 
 class Frontier 
@@ -41,6 +43,16 @@ class Frontier
     }
     
     // query
+    
+    public Player getPlayer()
+    {
+        return player;
+    }
+    
+    public Rules getRules()
+    {
+        return sensor.getRules();
+    }
     
     public boolean tryAction(Action action)
     {

@@ -37,6 +37,12 @@ class Sensor extends XMLClient
     
     // query
     
+    
+    Rules getRules() 
+    {
+        return rules;
+    }
+    
     public Percept perceive(int game_id, Player player)
     {
         // get an XML document from the server
