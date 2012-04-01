@@ -42,17 +42,28 @@ public class MTurkAgent extends Agent
         System.out.println(percept.getCurrentBoard().toConsole());
         
         // get order strings from console
-        System.out.print("Choose a row: ");
-        String row = console.nextLine();
-        System.out.print("Choose a collumn: ");
-        String col = console.nextLine();
-        
-        // parse order
-        Position position 
-            = new Position(Integer.parseInt(row), Integer.parseInt(col));
-        
+        Position p = new Position(-1, -1);
+        while(p.row == -1 || p.col == -1)
+        {
+            try
+            {
+                // got row
+                System.out.print("Choose a row: ");
+                String row = console.nextLine();
+                p.row = Integer.parseInt(row);
+                // get collumn
+                System.out.print("Choose a collumn: ");
+                String col = console.nextLine();
+                p.col = Integer.parseInt(col);
+            }
+            catch(NumberFormatException ex)
+            {
+                System.out.println("That's not a number!");
+                p.row = p.col = -1;
+            }
+        }
         // send order
-        return new Action.Move(position);
+        return new Action.Move(p);
     }
 
     @Override
