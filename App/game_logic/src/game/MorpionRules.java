@@ -43,7 +43,9 @@ public class MorpionRules extends Rules
     public boolean isDraw(BoardMatrix board) 
     {
         // return true if every cell is occupied
-        return (board.get_n_pieces() == board.get_n_cells());
+        return (board.get_n_pieces() == board.get_n_cells()
+                && !hasWon(board, Player.WHITE)
+                && !hasWon(board, Player.BLACK));
     }
 
     @Override
