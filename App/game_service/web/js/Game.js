@@ -58,7 +58,6 @@ function Game()
         {
             // first player to join plays first
             case "WAITING_FOR_PLAYER":
-                console.log("TRALALALALA");
                 // only the host sees the game start
                 if(!is_local[i_colour] && !is_local[i_other])
                 {

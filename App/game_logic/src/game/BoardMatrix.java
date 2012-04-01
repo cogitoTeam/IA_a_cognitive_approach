@@ -281,4 +281,34 @@ public class BoardMatrix
         // finished
         return result+"</board>";
     }
+    
+    public String toConsole()
+    {
+        String result = "";
+        Position p = new Position(0, 0);
+        for(p.row = 0; p.row < size.n_rows; p.row++)
+        {
+            for(p.col = 0; p.col < size.n_cols; p.col++)
+            {
+                switch(getCell(p))
+                {
+                    case PIECE_WHITE:
+                        result += '*';
+                        break;
+                    case PIECE_BLACK:
+                        result += '@';
+                        break;
+                    case OUT_OF_BOUNDS:
+                    case EMPTY:
+                    default:
+                        result += '-';
+                        break;
+                }
+            }
+            if(p.row != size.n_rows)
+                result += "\n";
+        }
+        
+        return result;
+    }
 }

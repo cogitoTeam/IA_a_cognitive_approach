@@ -12,7 +12,6 @@ import agent.Percept.Choices;
 import agent.Percept.Defeat;
 import agent.Percept.Draw;
 import agent.Percept.Victory;
-import agent.Percept.WaitingForPlayer;
 import game.BoardMatrix.Position;
 import java.util.Scanner;
 
@@ -39,6 +38,9 @@ public class MTurkAgent extends Agent
         // ask user to make a choice
         System.out.println("It's your turn to make a move!");
 
+        // display the board
+        System.out.println(percept.getCurrentBoard().toConsole());
+        
         // get order strings from console
         System.out.print("Choose a row: ");
         String row = console.nextLine();
@@ -85,6 +87,8 @@ public class MTurkAgent extends Agent
     
     private Action gameend_reaction(Percept.GameEnd percept)
     {
+        // show the final board
+        System.out.println(percept.getCurrentBoard().toConsole());
         // tell the user their score
         System.out.println("Your score: " + percept.getScore());
         
