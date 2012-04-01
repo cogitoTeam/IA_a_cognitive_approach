@@ -12,7 +12,6 @@ import agent.Percept.Defeat;
 import agent.Percept.Draw;
 import agent.Percept.Victory;
 import game.BoardMatrix;
-import game.BoardMatrix.Position;
 import game.Game;
 import game.Game.Player;
 import game.Rules;
@@ -31,14 +30,15 @@ public class MiniMaxAgent extends Agent
     @Override
     protected Action choices_reaction(Choices percept) 
     {
+        // local variables
+        Player me = getPlayer();
         // find the option with the highest utility
         int max_utility = Integer.MIN_VALUE;
         int max_i = -1;
         for(int i = 0; i < percept.getOptions().size(); i++)
         {
             int i_utility = 
-                evaluate(getRules(), percept.getCurrentBoard(), getPlayer());
-            System.out.println("option " + i + " has utility " + i_utility);
+                evaluate(getRules(), percept.getOptions().get(i).getResult(),me);
             if(i_utility > max_utility)
             {
                 max_i = i;
@@ -91,11 +91,15 @@ public class MiniMaxAgent extends Agent
         boolean max = (current == me);
         
         // Is leaf node ?
+        if(rules.hasWon(board, me))
+            return 1;
+        else if(rules.hasWon(board, other))
+            return -1;
+        else if(rules.isDraw(board))
+            return 0;
+        
+        // Otherwise there should be possible moves to play...
         List<BoardMatrix> children = rules.getChildBoards(board, current);
-        if(children.isEmpty())
-            return (rules.hasWon(board, me)) ? 1 
-                    : (rules.isDraw(board) ? 0 : -1);
-
 
         // Is max node ?
         if(max)
