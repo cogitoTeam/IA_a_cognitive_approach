@@ -76,7 +76,10 @@ class Sensor extends XMLClient
                 // 'draw' percept
                 return new Percept.Draw(board.copy(), board_value);
                 
-            case GAME_START:
+            case WAITING_FOR_PLAYER:
+                // 'waiting for player' percept
+                return new Percept.WaitingForPlayer(board);
+                
             case PLAYER_JOINED:
             case MOVE_FAILURE:
             case MOVE_SUCCESS:

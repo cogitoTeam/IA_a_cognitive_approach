@@ -37,7 +37,7 @@ public abstract class Agent
     protected abstract Action defeat_reaction(Percept.Defeat percept);
     protected abstract Action draw_reaction(Percept.Draw percept);
     
-    protected abstract void action_failed(Action action);
+    protected abstract void action_result(boolean success, Action action);
     
     
     
@@ -94,6 +94,7 @@ public abstract class Agent
         // reaction vary depending on the type of stimulus
         switch(percept.getType())
         {
+            case WAITING_FOR_PLAYER:
             case OPPONENT_TURN:
                 think();
                 return;
@@ -117,8 +118,7 @@ public abstract class Agent
         }
         
         // the agent receives feedback based on the success of their action
-        if(!frontier.tryAction(action))
-            action_failed(action);
+        action_result(frontier.tryAction(action), action);
     }
     
 }

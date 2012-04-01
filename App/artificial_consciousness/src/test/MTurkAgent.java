@@ -6,20 +6,23 @@
 package test;
 
 import agent.Action;
+import agent.Agent;
 import agent.Percept;
 import agent.Percept.Choices;
 import agent.Percept.Defeat;
 import agent.Percept.Draw;
 import agent.Percept.Victory;
-import java.io.Console;
-import agent.Agent;
+import agent.Percept.WaitingForPlayer;
+import game.BoardMatrix.Position;
+import java.util.Scanner;
 
 
 public class MTurkAgent extends Agent
 {
     /* ATTRIBUTES */
     
-    private Console console = System.console();
+    private Scanner console = new Scanner(System.in);
+
     
     
     /* IMPLEMENTATIONS */
@@ -27,7 +30,7 @@ public class MTurkAgent extends Agent
     @Override
     protected void think() 
     {
-        System.out.println("Waiting for other player to make a move...");
+        System.out.println("Waiting for other player...");
     }
 
     @Override
@@ -36,14 +39,18 @@ public class MTurkAgent extends Agent
         // ask user to make a choice
         System.out.println("It's your turn to make a move!");
 
-        // get strings
-        console = System.console();
-        System.out.println("console = " + console);
-        /*String row = console.readLine("Row: ");
-        String col = console.readLine("Collumn: ");*/
-
-        // TODO -- finish
-        return null;
+        // get order strings from console
+        System.out.print("Choose a row: ");
+        String row = console.nextLine();
+        System.out.print("Choose a collumn: ");
+        String col = console.nextLine();
+        
+        // parse order
+        Position position 
+            = new Position(Integer.parseInt(row), Integer.parseInt(col));
+        
+        // send order
+        return new Action.Move(position);
     }
 
     @Override
@@ -68,11 +75,9 @@ public class MTurkAgent extends Agent
     }
 
     @Override
-    protected void action_failed(Action action) 
+    protected void action_result(boolean success, Action action) 
     {
-        System.out.println("Invalid move!");
-        // no fault tolerance implemented for this Agent
-        state = State.ERROR;
+        System.out.println(action + ((success) ? " successful!"  : " failed!"));
     }
     
     
@@ -84,7 +89,8 @@ public class MTurkAgent extends Agent
         System.out.println("Your score: " + percept.getScore());
         
         // start a new game when the player is ready
-        console.readLine("Press enter to restart...");
+        System.out.println("Press enter to restart");
+        console.nextLine();
         return new Action.Restart();
     }
 

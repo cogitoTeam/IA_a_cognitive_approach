@@ -22,7 +22,7 @@ public class Game
     
     public static enum State
     {
-        GAME_START,
+        WAITING_FOR_PLAYER,
         PLAYER_JOINED,
         MOVE_SUCCESS,
         MOVE_FAILURE,
@@ -60,10 +60,15 @@ public class Game
     // creation
     public Game(int _id, Rules _rules)
     {
+        // save attributes
         id = _id;
         rules = _rules;
+        // create the required structures
         board = _rules.createBoard();
-        restart();
+        rules.reset(board);
+        // start the game
+        current_player = rules.getFirstPlayer();
+        current_state = State.WAITING_FOR_PLAYER;
     }
     
     // modification
@@ -149,7 +154,7 @@ public class Game
     {
         rules.reset(board);
         current_player = rules.getFirstPlayer();
-        current_state = State.GAME_START;
+        current_state = State.MOVE_SUCCESS;
     }
     
 }

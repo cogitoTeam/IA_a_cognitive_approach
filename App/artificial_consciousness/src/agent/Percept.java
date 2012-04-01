@@ -16,6 +16,7 @@ public abstract class Percept
     
     public static enum Type
     {
+        WAITING_FOR_PLAYER,
         OPPONENT_TURN,
         CHOICES,
         VICTORY,
@@ -48,6 +49,17 @@ public abstract class Percept
     public Type getType()
     {
         return type;
+    }
+    
+    /* THE OTHER PLAYER HASN'T YET JOINED THE GAME */
+    
+    public static class WaitingForPlayer extends Percept
+    {
+        // creation
+        public WaitingForPlayer(BoardMatrix _current_board)
+        {
+            super(Type.WAITING_FOR_PLAYER, _current_board);
+        }
     }
     
     /* IT'S NOT OUR TURN TO PLAY */

@@ -57,7 +57,8 @@ function Game()
         switch(s_state)
         {
             // first player to join plays first
-            case "GAME_START":
+            case "WAITING_FOR_PLAYER":
+                console.log("TRALALALALA");
                 // only the host sees the game start
                 if(!is_local[i_colour] && !is_local[i_other])
                 {
@@ -91,7 +92,7 @@ function Game()
                 return Game.DRAW;
                 
             default:
-                console.log("Unknown game state");
+                console.log("Unknown game state"+s_state);
                 return -1;
         }
     }

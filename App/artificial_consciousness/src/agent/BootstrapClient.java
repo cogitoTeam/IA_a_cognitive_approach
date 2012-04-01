@@ -55,8 +55,10 @@ class BootstrapClient extends XMLClient
           new BoardMatrix(game_element.getElementsByTagName("board").item(0));
         
         // find out whether we're hosting or joining
-        boolean is_host = attributes.getNamedItem("state").getNodeValue()
-                            .equals("GAME_START");
+        Game.State state = 
+            Game.State.valueOf(attributes.getNamedItem("state").getNodeValue());
+        boolean is_host = (state == Game.State.WAITING_FOR_PLAYER);
+        
         // parse the current player
         attributes = game_element.getElementsByTagName("current_player")
                         .item(0).getAttributes();

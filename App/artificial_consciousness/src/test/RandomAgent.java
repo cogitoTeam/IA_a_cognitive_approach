@@ -53,11 +53,13 @@ public class RandomAgent extends Agent
     }
     
     @Override
-    protected void action_failed(Action action) 
+    protected void action_result(boolean success, Action action) 
     {
-        // no fault tolerance implemented for this Agent
-        System.out.println("Action failed " + action);
-        sleep(2);
+        if(!success)
+        {
+            System.out.println(action + " failed!");
+            sleep(2);
+        }
     }
 
 }

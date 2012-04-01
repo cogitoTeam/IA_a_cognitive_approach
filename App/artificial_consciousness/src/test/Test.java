@@ -16,7 +16,7 @@ public class Test
     public static void main(String[] args) throws InterruptedException
     {
         // create agent(s)
-        Agent agent = new RandomAgent();
+        Agent agent = new MTurkAgent();
         
         // main loop
         boolean stop = false;
