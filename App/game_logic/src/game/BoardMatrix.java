@@ -305,8 +305,7 @@ public class BoardMatrix
                         break;
                 }
             }
-            if(p.row != size.n_rows)
-                result += "\n";
+            result += "\n";
         }
         
         return result;

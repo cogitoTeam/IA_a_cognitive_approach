@@ -58,21 +58,21 @@ public class MTurkAgent extends Agent
     @Override
     protected Action victory_reaction(Victory percept)
     {
-        System.out.println("You win!");
+        System.out.print("You win!");
         return gameend_reaction(percept);
     }
 
     @Override
     protected Action defeat_reaction(Defeat percept) 
     {
-        System.out.println("You lose!");
+        System.out.print("You lose!");
         return gameend_reaction(percept);
     }
 
     @Override
     protected Action draw_reaction(Draw percept)
     {
-        System.out.println("It's a draw...");
+        System.out.print("It's a draw...");
         return gameend_reaction(percept);
     }
 
@@ -87,10 +87,10 @@ public class MTurkAgent extends Agent
     
     private Action gameend_reaction(Percept.GameEnd percept)
     {
-        // show the final board
-        System.out.println(percept.getCurrentBoard().toConsole());
         // tell the user their score
         System.out.println("Your score: " + percept.getScore());
+        // show the final board
+        System.out.println(percept.getCurrentBoard().toConsole());
         
         // start a new game when the player is ready
         System.out.println("Press enter to restart");
