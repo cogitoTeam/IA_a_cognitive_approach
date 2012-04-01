@@ -33,6 +33,11 @@ public class Game
     
     
     /* CLASS NAMESPACE FUNCTIONS */
+    
+    public static Player otherPlayer(Player p)
+    {
+        return (p == Player.WHITE) ? Player.BLACK : Player.WHITE;
+    }
 
     public static Player parsePlayer(String s)
     {

@@ -12,8 +12,11 @@ import agent.Percept.Defeat;
 import agent.Percept.Draw;
 import agent.Percept.Victory;
 import game.BoardMatrix;
+import game.BoardMatrix.Position;
+import game.Game;
 import game.Game.Player;
 import game.Rules;
+import java.util.List;
 
 public class MiniMaxAgent extends Agent
 {
@@ -80,31 +83,44 @@ public class MiniMaxAgent extends Agent
     
     
     /* SUBROUTINES */
-
-    private int evaluate(Rules rules, BoardMatrix board, Player player)
+    
+    private int evaluate(Rules rules, BoardMatrix board, Player current)
     {
-        return 0;
-        /*List<Position> options = rules.getLegalMoves(board, player);
-
+        // maximise my own gain, not the other player's
+        Player me = getPlayer(), other = Game.otherPlayer(current);
+        boolean max = (current == me);
+        
         // Is leaf node ?
-        if(options.isEmpty())
-            return (rules.hasWon(board, PMAX)) ? 1 
-                    : ((rules.hasWon(board, PMIN)) ? -1 : 0);
+        List<BoardMatrix> children = rules.getChildBoards(board, current);
+        if(children.isEmpty())
+            return (rules.hasWon(board, me)) ? 1 
+                    : (rules.isDraw(board) ? 0 : -1);
 
 
-        // Is min node ?
-        if(player == PMIN)
+        // Is max node ?
+        if(max)
         {
             int beta = Integer.MAX_VALUE;
-            for(Position option : options)
+            for(BoardMatrix child : children)
             {
-                
+                int beta_prime = evaluate(rules, child, other);
+                if(beta_prime < beta)
+                    beta = beta_prime;
             }
+            return beta;
         }
-        else // player == PMAX
+        
+        // Is min node ?
+        else
         {
             int alpha = Integer.MIN_VALUE;
-        }*/
-
+            for(BoardMatrix child : children)
+            {
+                int alpha_prime = evaluate(rules, child, other);
+                if(alpha_prime > alpha)
+                    alpha = alpha_prime;
+            }
+            return alpha;
+        }
     }
 }
