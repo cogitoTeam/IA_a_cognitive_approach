@@ -58,21 +58,21 @@ public class MTurkAgent extends Agent
     @Override
     protected Action victory_reaction(Victory percept)
     {
-        System.out.print("You win!");
+        System.out.println("You win!");
         return gameend_reaction(percept);
     }
 
     @Override
     protected Action defeat_reaction(Defeat percept) 
     {
-        System.out.print("You lose!");
+        System.out.println("You lose!");
         return gameend_reaction(percept);
     }
 
     @Override
     protected Action draw_reaction(Draw percept)
     {
-        System.out.print("It's a draw...");
+        System.out.println("It's a draw...");
         return gameend_reaction(percept);
     }
 

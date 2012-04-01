@@ -7,6 +7,7 @@
 package agent;
 
 import game.BoardMatrix.Position;
+import game.Game;
 import game.Game.Player;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -54,7 +55,7 @@ class Actuator extends XMLClient
         String s_state = attributes.getNamedItem("state").getNodeValue();
         
         // parse the state to discover whether the move attempt was a success
-        return (s_state != null && s_state.equals("MOVE_SUCCESS"));
+        return (Game.State.valueOf(s_state) != Game.State.MOVE_FAILURE);
     }
 
 }

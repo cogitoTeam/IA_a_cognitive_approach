@@ -70,7 +70,7 @@ class Sensor extends XMLClient
                 // 'victory' and 'defeat' percepts
                 return (player == current_player)
                     ? new Percept.Victory(board.copy(), board_value)
-                    : new Percept.Victory(board.copy(), board_value);
+                    : new Percept.Defeat(board.copy(), board_value);
                 
             case DRAW:
                 // 'draw' percept
