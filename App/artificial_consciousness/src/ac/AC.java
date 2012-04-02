@@ -5,6 +5,7 @@ import agent.Action;
 import agent.Percept.Choices;
 import agent.Percept.Defeat;
 import agent.Percept.Draw;
+import agent.Percept.GameEnd;
 import agent.Percept.Victory;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
@@ -37,44 +38,29 @@ public class AC extends Agent
     this._memory = new ActiveMemory();
     this._reasoning = new Reasoning(this._memory);
     this._analysis = new Analysis(this._memory, this._reasoning);
-    
+
   }
-  
+
   /* **************************************************************************
    * METHODS
    * ************************************************************************ */
 
-  
   @Override
   protected void think()
   {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
-  protected Action choices_reaction(Choices percept)
+  protected Action choicesReaction(Choices percept)
   {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  protected Action victory_reaction(Victory percept)
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  protected Action defeat_reaction(Defeat percept)
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  protected Action draw_reaction(Draw percept)
+  protected Action gameEndReaction(GameEnd percept)
   {
     // TODO Auto-generated method stub
     return null;
@@ -84,7 +70,7 @@ public class AC extends Agent
   protected void action_result(boolean success, Action action)
   {
     // TODO Auto-generated method stub
-    
+
   }
 
   /* **************************************************************************

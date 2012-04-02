@@ -27,20 +27,16 @@ public abstract class Agent
     private Frontier frontier;
     private int sleep_time;
     protected State state;
-    
-    
-    
+
 
     /* INTERFACE */
     
     protected abstract void think();
     
-    protected abstract Action choices_reaction(Percept.Choices percept);
-    protected abstract Action victory_reaction(Percept.Victory percept);
-    protected abstract Action defeat_reaction(Percept.Defeat percept);
-    protected abstract Action draw_reaction(Percept.Draw percept);
+    protected abstract Action choicesReaction(Percept.Choices percept);
+    protected abstract Action gameEndReaction(Percept.GameEnd percept);
     
-    protected abstract void action_result(boolean success, Action action);
+    protected abstract void actionResult(boolean success, Action action);
     
     
     
@@ -114,17 +110,11 @@ public abstract class Agent
                 think();
                 return;
             case CHOICES:
-                action = choices_reaction((Percept.Choices)percept);
+                action = choicesReaction((Percept.Choices)percept);
                 break;
-            case VICTORY:
-                action = victory_reaction((Percept.Victory)percept);
+            case GAME_END:
+                action = gameEndReaction((Percept.GameEnd)percept);
                 break;    
-            case DEFEAT:
-                action = defeat_reaction((Percept.Defeat)percept);
-                break;
-            case DRAW:
-                action = draw_reaction((Percept.Draw)percept);
-                break;
             default:
                 System.out.println("Unknown Percept type " + percept.getType());
                 action = null;
@@ -133,7 +123,7 @@ public abstract class Agent
         }
         
         // the agent receives feedback based on the success of their action
-        action_result(frontier.tryAction(action), action);
+        actionResult(frontier.tryAction(action), action);
     }
     
 }

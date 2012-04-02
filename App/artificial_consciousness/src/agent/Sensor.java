@@ -15,6 +15,8 @@ import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import ac.shared.GameEndStatus;
+
 
 class Sensor extends XMLClient
 {
@@ -75,12 +77,12 @@ class Sensor extends XMLClient
             case VICTORY:
                 // 'victory' and 'defeat' percepts
                 return (player == current_player)
-                    ? new Percept.Victory(board.copy(), board_value)
-                    : new Percept.Defeat(board.copy(), board_value);
+                    ? new Percept.GameEnd(GameEndStatus.VICTORY, board.copy(), board_value)
+                    : new Percept.GameEnd(GameEndStatus.DEFEAT, board.copy(), board_value);
                 
             case DRAW:
                 // 'draw' percept
-                return new Percept.Draw(board.copy(), board_value);
+                return new Percept.GameEnd(GameEndStatus.DRAW, board.copy(), board_value);
                 
             case WAITING_FOR_PLAYER:
                 // 'waiting for player' percept
