@@ -2,7 +2,6 @@ package ac.reasoning;
 
 import org.apache.log4j.Logger;
 
-import agent.Frontier;
 import ac.memory.ActiveMemory;
 
 /**
@@ -21,7 +20,6 @@ public class Reasoning
    * ATTRIBUTS
    * ************************************************************************ */
 
-  private Frontier _frontier;
   private ActiveMemory _memory;
 
   private ChoiceEngine _choice_engine;
@@ -35,10 +33,9 @@ public class Reasoning
    * @param memory
    *          an instance of ActiveMemory
    */
-  public Reasoning(ActiveMemory memory, Frontier frontier)
+  public Reasoning(ActiveMemory memory)
   {
     this._memory = memory;
-    this._frontier = frontier;
     this._choice_engine = new ChoiceEngine(this._memory);
     this._introspection_engine = new IntrospectionEngine(this._memory);
   }
