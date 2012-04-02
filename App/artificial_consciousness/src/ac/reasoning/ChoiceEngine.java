@@ -8,7 +8,7 @@ import book.Pair;
 
 import ac.memory.ActiveMemory;
 import ac.memory.MemoryException;
-import ac.shared.structure.CompleteBoardState;
+import ac.shared.CompleteBoardState;
 import agent.Action;
 import game.BoardMatrix.Position;
 

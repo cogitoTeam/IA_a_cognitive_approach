@@ -3,10 +3,7 @@ package ac;
 import ac.analysis.Analysis;
 import agent.Action;
 import agent.Percept.Choices;
-import agent.Percept.Defeat;
-import agent.Percept.Draw;
 import agent.Percept.GameEnd;
-import agent.Percept.Victory;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
 import agent.Agent;
@@ -67,10 +64,10 @@ public class AC extends Agent
   }
 
   @Override
-  protected void action_result(boolean success, Action action)
+  protected void actionResult(boolean success, Action action)
   {
     // TODO Auto-generated method stub
-
+    
   }
 
   /* **************************************************************************
@@ -86,5 +83,6 @@ public class AC extends Agent
   {
     return _reasoning;
   }
+
 
 }
