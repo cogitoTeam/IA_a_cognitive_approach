@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.shared.structure;
+package ac.shared;
 
 import java.io.Serializable;
 

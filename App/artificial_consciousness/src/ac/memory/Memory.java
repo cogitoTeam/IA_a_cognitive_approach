@@ -7,8 +7,8 @@ import java.util.List;
 
 import book.Pair;
 
-import ac.shared.structure.CompleteBoardState;
-import ac.shared.structure.RelevantPartialBoardState;
+import ac.shared.CompleteBoardState;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * Interface for class Memory, which declar methods uses by other modules to

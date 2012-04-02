@@ -11,7 +11,7 @@ import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.traversal.Traverser;
 import org.neo4j.helpers.collection.IterableWrapper;
 
-import ac.shared.structure.CompleteBoardState;
+import ac.shared.CompleteBoardState;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>

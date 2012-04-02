@@ -8,8 +8,8 @@ import java.util.Map;
 
 import book.Pair;
 
-import ac.shared.structure.CompleteBoardState;
-import ac.shared.structure.RelevantPartialBoardState;
+import ac.shared.CompleteBoardState;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * Interface for a Lattice Context

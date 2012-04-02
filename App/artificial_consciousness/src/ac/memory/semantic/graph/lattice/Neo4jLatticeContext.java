@@ -17,8 +17,8 @@ import ac.memory.persistence.AttributeNodeRepository;
 import ac.memory.persistence.Neo4jService;
 import ac.memory.persistence.ObjectNode;
 import ac.memory.persistence.ObjectNodeRepository;
-import ac.shared.structure.CompleteBoardState;
-import ac.shared.structure.RelevantPartialBoardState;
+import ac.shared.CompleteBoardState;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>

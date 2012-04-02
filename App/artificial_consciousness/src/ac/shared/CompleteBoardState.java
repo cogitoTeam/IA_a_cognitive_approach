@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.shared.structure;
+package ac.shared;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>

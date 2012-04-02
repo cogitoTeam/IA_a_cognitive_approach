@@ -1,8 +1,9 @@
 package ac.memory.semantic.graph.lattice;
 
 import java.util.HashMap;
-import ac.shared.structure.CompleteBoardState;
-import ac.shared.structure.RelevantPartialBoardState;
+
+import ac.shared.CompleteBoardState;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * Concept generated in the lattice (node of a lattice)

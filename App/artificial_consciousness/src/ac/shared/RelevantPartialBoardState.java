@@ -1,4 +1,4 @@
-package ac.shared.structure;
+package ac.shared;
 
 /**
  * Class which represents a Relevant structure (attribute of the lattice)

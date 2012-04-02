@@ -5,7 +5,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import ac.memory.persistence.RelTypes;
-import ac.shared.structure.CompleteBoardState;
+import ac.shared.CompleteBoardState;
+
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;

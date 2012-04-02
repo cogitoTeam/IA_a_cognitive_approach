@@ -16,8 +16,8 @@ import book.Pair;
 
 import ac.memory.semantic.graph.lattice.LatticeContext;
 import ac.memory.semantic.graph.lattice.LatticeContextException;
-import ac.shared.structure.CompleteBoardState;
-import ac.shared.structure.RelevantPartialBoardState;
+import ac.shared.CompleteBoardState;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * Tool to use Pcbo

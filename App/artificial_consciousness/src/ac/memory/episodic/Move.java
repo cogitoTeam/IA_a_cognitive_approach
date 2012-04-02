@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import ac.shared.structure.CompleteBoardState;
+import ac.shared.CompleteBoardState;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>

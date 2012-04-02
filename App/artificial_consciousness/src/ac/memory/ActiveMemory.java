@@ -4,8 +4,8 @@ import java.util.List;
 
 import book.Pair;
 
-import ac.shared.structure.CompleteBoardState;
-import ac.shared.structure.RelevantPartialBoardState;
+import ac.shared.CompleteBoardState;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * The class Active Memory is in French the "Mémoire primaire". It acts as a
