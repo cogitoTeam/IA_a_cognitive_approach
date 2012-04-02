@@ -1,22 +1,22 @@
-package structure;
+package ac.analysis.structure;
 
 import java.util.*;
 
 /**
- * Modélise une base de faits : elle possède une liste d'atomes (faits) 
+ * Modï¿½lise une base de faits : elle possï¿½de une liste d'atomes (faits) 
  * et l'ensemble de termes apparaissant dans ces atomes. 
- * On note que les atomes étant des faits, ces termes sont forcément des constantes.
+ * On note que les atomes ï¿½tant des faits, ces termes sont forcï¿½ment des constantes.
  *
  */
 public class BaseFaits
 {
 	protected ArrayList<Atome> listeAtomes;//l'ensemble des faits (atomes)
-	private ArrayList<Terme> ensembleTermes;//l'ensemble des termes présents
+	private ArrayList<Terme> ensembleTermes;//l'ensemble des termes prï¿½sents
 	
 //Les constructeurs de la classe 
 	/**
 	 * Constructeur de la classe 'BaseFaits'
-	 * crée une base de faits vide
+	 * crï¿½e une base de faits vide
 	 */
 	public BaseFaits()
 	{
@@ -35,7 +35,7 @@ public class BaseFaits
 	
 	/**
 	 * Constructeur de la classe 'BaseFaits'
-	 * @param baseFaits les faits, passés sous la forme "atom1;...;atomk"
+	 * @param baseFaits les faits, passï¿½s sous la forme "atom1;...;atomk"
 	 */
 	public BaseFaits(String baseFaits)
 	{
@@ -62,18 +62,18 @@ public class BaseFaits
 	}
 
 	
-//Les méthodes qui définissent les fonctionnalitées de la classe
+//Les mï¿½thodes qui dï¿½finissent les fonctionnalitï¿½es de la classe
 
 	private void creerBaseFaits(String baseFaits)
-	//Prérequis : le format de la base de faits est supposé correct
+	//Prï¿½requis : le format de la base de faits est supposï¿½ correct
    	{
 		Terme t;
    		StringTokenizer st = new StringTokenizer(baseFaits,";");
    		while(st.hasMoreTokens())
    		{
-   			String s = st.nextToken(); // s représente un atome
+   			String s = st.nextToken(); // s reprï¿½sente un atome
    			Atome a = new Atome(s);
-   			ajouterAtome(a);//On ajoute un atome à la liste des atomes
+   			ajouterAtome(a);//On ajoute un atome ï¿½ la liste des atomes
    			ArrayList<Terme> termes = a.getListeTermes();
    			for (int i = 0; i < termes.size(); i ++)
    			{
@@ -84,66 +84,66 @@ public class BaseFaits
    	}
 	
 	/**
-	 * Ajoute des faits à la base de faits s'ils n'apparaissaient pas déjà
-	 * @param faits les faits à ajouter (seuls ceux n'apparaissant pas dans la base seront ajoutés)
+	 * Ajoute des faits ï¿½ la base de faits s'ils n'apparaissaient pas dï¿½jï¿½
+	 * @param faits les faits ï¿½ ajouter (seuls ceux n'apparaissant pas dans la base seront ajoutï¿½s)
 	 */
 	public void ajouterNouveauxFaits(ArrayList<Atome> faits)
-	// Spec Interne : la liste des termes apparaissant dans la base est également
-	// mise à jour
+	// Spec Interne : la liste des termes apparaissant dans la base est ï¿½galement
+	// mise ï¿½ jour
 	{
 		for(int i=0;i<faits.size();i++)
 			ajouterNouveauFait(faits.get(i));
 	}
 	
 	/**
-	 * Ajoute un fait à la base de faits s'il n'apparait pas déjà
-	 * @param fait le fait à ajouter (ne sera ajouté que s'il n'apparait pas déjà)
+	 * Ajoute un fait ï¿½ la base de faits s'il n'apparait pas dï¿½jï¿½
+	 * @param fait le fait ï¿½ ajouter (ne sera ajoutï¿½ que s'il n'apparait pas dï¿½jï¿½)
 	 */
 	public void ajouterNouveauFait(Atome fait)
-	// Spec Interne : la liste des termes apparaissant dans la base est également
-	// mise à jour
+	// Spec Interne : la liste des termes apparaissant dans la base est ï¿½galement
+	// mise ï¿½ jour
 	{
 			if(!atomeExiste(fait))
 			{
 				listeAtomes.add(fait);
 				for(int j=0;j<fait.getListeTermes().size();j++)
 				{
-					Terme t = new Terme(fait.getListeTermes().get(j).getLabel(),fait.getListeTermes().get(j).isConstante());//On crée un nouveau terme
-					t = ajouterTerme(t); // ceci ajoute le terme dans la liste des termes de la base de faits s'il n'existait pas déjà
+					Terme t = new Terme(fait.getListeTermes().get(j).getLabel(),fait.getListeTermes().get(j).isConstante());//On crï¿½e un nouveau terme
+					t = ajouterTerme(t); // ceci ajoute le terme dans la liste des termes de la base de faits s'il n'existait pas dï¿½jï¿½
 					listeAtomes.get(listeAtomes.size()-1).getListeTermes().set(j,t);
 				}
 			}
 	}
 
 	/**
-	 * Ajoute un terme à la liste des termes s'il n'existe pas déjà.
-	 * @param t le terme à potentiellement ajouter
-	 * @return un sommet terme, soit t s'il a été inséré, soit le sommet terme qui existait déjà dans la liste des sommets termes
+	 * Ajoute un terme ï¿½ la liste des termes s'il n'existe pas dï¿½jï¿½.
+	 * @param t le terme ï¿½ potentiellement ajouter
+	 * @return un sommet terme, soit t s'il a ï¿½tï¿½ insï¿½rï¿½, soit le sommet terme qui existait dï¿½jï¿½ dans la liste des sommets termes
 	 */
 	public Terme ajouterTerme(Terme t)
-	//SI : dans le cas où le terme t n'existe pas déjà dans la liste des sommets termes, on l'ajoute à la bonne place
-	//et on lui donne comme voisin l'atome se trouvant à l'index "index" dans la liste des atomes
-	//Sinon, on ajoute l'atome se trouvant à l'index "index" dans la liste des atomes au sommet terme déjà existant dans la liste des sommets termes
+	//SI : dans le cas oï¿½ le terme t n'existe pas dï¿½jï¿½ dans la liste des sommets termes, on l'ajoute ï¿½ la bonne place
+	//et on lui donne comme voisin l'atome se trouvant ï¿½ l'index "index" dans la liste des atomes
+	//Sinon, on ajoute l'atome se trouvant ï¿½ l'index "index" dans la liste des atomes au sommet terme dï¿½jï¿½ existant dans la liste des sommets termes
 	{
 		int[] retour;
 		
-		retour = positionDichoTerme(t);//on recherche la position où ajouter t
-		if(retour[0]!= -1) ensembleTermes.add(retour[1],t);//Si t n'apparaissait pas auparavant, on l'ajoute à la liste des termes
-		return ensembleTermes.get(retour[1]);//On retourne le terme, soit t s'il a été inséré, soit le terme qui existait déjà dans la liste des termes
+		retour = positionDichoTerme(t);//on recherche la position oï¿½ ajouter t
+		if(retour[0]!= -1) ensembleTermes.add(retour[1],t);//Si t n'apparaissait pas auparavant, on l'ajoute ï¿½ la liste des termes
+		return ensembleTermes.get(retour[1]);//On retourne le terme, soit t s'il a ï¿½tï¿½ insï¿½rï¿½, soit le terme qui existait dï¿½jï¿½ dans la liste des termes
 	} 
 	
 	/**
-	 * Cherche la position où insérer le sommet terme 't'
-	 * @param t le sommet terme à insérer 
-	 * @return la position où doit être ajoutée le sommet terme
+	 * Cherche la position oï¿½ insï¿½rer le sommet terme 't'
+	 * @param t le sommet terme ï¿½ insï¿½rer 
+	 * @return la position oï¿½ doit ï¿½tre ajoutï¿½e le sommet terme
 	 */
 	private int[] positionDichoTerme(Terme t)
 	//SE : si t se trouve dans la liste des termes, retourne son indice.
-	//sinon retourne l'indice où il devrait être inséré
-	//SI : appelle la méthode positionDichoRecursif en indiquant comme paramètre de recherche les
-	//indices de début et de fin de la liste des termes (à savoir : 0 et ensembleTermes.size()-1)
-	//tableauRéponses : la première cellule est à -1 si le terme apparaît déjà
-	//					la seconde à la place où doit être inséré le terme
+	//sinon retourne l'indice oï¿½ il devrait ï¿½tre insï¿½rï¿½
+	//SI : appelle la mï¿½thode positionDichoRecursif en indiquant comme paramï¿½tre de recherche les
+	//indices de dï¿½but et de fin de la liste des termes (ï¿½ savoir : 0 et ensembleTermes.size()-1)
+	//tableauRï¿½ponses : la premiï¿½re cellule est ï¿½ -1 si le terme apparaï¿½t dï¿½jï¿½
+	//					la seconde ï¿½ la place oï¿½ doit ï¿½tre insï¿½rï¿½ le terme
 	{
 		int[] tableauReponses = new int[2];
 		if(ensembleTermes.size()>0) return positionDichoRecursifTerme(t.getLabel(),0,ensembleTermes.size()-1,tableauReponses);
@@ -155,35 +155,35 @@ public class BaseFaits
 		}
 	}
 	
-	private int[] positionDichoRecursifTerme(String nom, int début, int fin, int[] tabReponses)
-	//SE : recherche le nom, de façon récursive, entre les indices début et fin de la liste des termes. début et fin 
-	//doivent obligatoirement être positifs et inférieurs à la taille de la liste des termes.
-	//tabReponses : la première cellule est à -1 si le terme apparaît déjà
-	//				la seconde à la place où doit être inséré le terme
+	private int[] positionDichoRecursifTerme(String nom, int debut, int fin, int[] tabReponses)
+	//SE : recherche le nom, de faï¿½on rï¿½cursive, entre les indices dï¿½but et fin de la liste des termes. dï¿½but et fin 
+	//doivent obligatoirement ï¿½tre positifs et infï¿½rieurs ï¿½ la taille de la liste des termes.
+	//tabReponses : la premiï¿½re cellule est ï¿½ -1 si le terme apparaï¿½t dï¿½jï¿½
+	//				la seconde ï¿½ la place oï¿½ doit ï¿½tre insï¿½rï¿½ le terme
 	{
-	  if (début>fin)
+	  if (debut>fin)
 	  {
-		  tabReponses[0] = début;
-		  tabReponses[1] = début;
+		  tabReponses[0] = debut;
+		  tabReponses[1] = debut;
 		  return tabReponses; // et on sort
 	  }
-	  int milieu = (début+fin)/2;
+	  int milieu = (debut+fin)/2;
 	  int compare = ensembleTermes.get(milieu).getLabel().compareTo(nom) ;
-	  if (compare == 0)//Si le terme de nom "nom" existe déjà
+	  if (compare == 0)//Si le terme de nom "nom" existe dï¿½jï¿½
 	  {
 		  tabReponses[0] = -1;
 		  tabReponses[1] = milieu;
 		  return tabReponses; // et on sort 
 	  }
-	  if (compare > 0) return positionDichoRecursifTerme(nom,début,milieu-1,tabReponses);
+	  if (compare > 0) return positionDichoRecursifTerme(nom,debut,milieu-1,tabReponses);
 	  return positionDichoRecursifTerme(nom,milieu+1,fin,tabReponses);
 	}
 	
 	/**
-	 * Ajoute un atome à la base de faits sans autre vérification
-	 * tous les termes de l'atome doivent déjà exister dans la base
-	 * @param a l'atome à ajouter
-	 * @return la position où l'atome 'a' a été ajouté (s'il existait déjà il est ajouté en double)
+	 * Ajoute un atome ï¿½ la base de faits sans autre vï¿½rification
+	 * tous les termes de l'atome doivent dï¿½jï¿½ exister dans la base
+	 * @param a l'atome ï¿½ ajouter
+	 * @return la position oï¿½ l'atome 'a' a ï¿½tï¿½ ajoutï¿½ (s'il existait dï¿½jï¿½ il est ajoutï¿½ en double)
 	 */
 	private int ajouterAtome(Atome a)
 	{
@@ -194,7 +194,7 @@ public class BaseFaits
 	/**
 	 * Teste l'existence d'un atome dans la base
 	 * @param a l'atome dont on teste l'existence
-	 * @return vrai si l'atome existe déjà, faux sinon
+	 * @return vrai si l'atome existe dï¿½jï¿½, faux sinon
 	 */
 	public boolean atomeExiste(Atome a)
 	{
@@ -218,7 +218,7 @@ public class BaseFaits
 	/**
 	 * Teste l'existence d'un terme dans la base
 	 * @param t le terme dont on teste l'existence
-	 * @return vrai si le terme existe déjà, faux sinon
+	 * @return vrai si le terme existe dï¿½jï¿½, faux sinon
 	 */
 	public boolean termeExiste(Terme t)
 	{
@@ -234,7 +234,7 @@ public class BaseFaits
 	{	
 		System.out.println(this); //this.toString()
 	}
-//La méthode toString de la classe	
+//La mï¿½thode toString de la classe	
 	/**
 	 * retourne une description de la base de faits
 	 * @return description de la base de faits

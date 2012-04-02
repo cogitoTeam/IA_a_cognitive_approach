@@ -1,16 +1,16 @@
-package structure;
+package ac.analysis.structure;
 
 import java.util.ArrayList;
 
 /**
- * Modélise un atome. Elle possède un label indiquant le nom de son prédicat 
+ * Modï¿½lise un atome. Elle possï¿½de un label indiquant le nom de son prï¿½dicat 
  * et une liste de termes qui sont soit constantes, soit variables.
  *
  */
 
 public class Atome
 {
-	private String label; //le prédicat de l'atome
+	private String label; //le prï¿½dicat de l'atome
 	private ArrayList<Terme> listeTermes; //la liste de termes de cet atome
 
 //Les constructeurs de la classe	
@@ -24,9 +24,9 @@ public class Atome
 	}
 	/**
 	 * Constructeur de la classe Atome
-	 * Crée un atome, avec ou sans termes
-	 * @param n l'atome, soit réduit à un nom de prédicat, soit de la forme
-	 * prédicat(liste de termes), où les termes sont séparés par des points virgules
+	 * Crï¿½e un atome, avec ou sans termes
+	 * @param n l'atome, soit rï¿½duit ï¿½ un nom de prï¿½dicat, soit de la forme
+	 * prï¿½dicat(liste de termes), oï¿½ les termes sont sï¿½parï¿½s par des points virgules
 	 */
 	public Atome (String s)
 	{
@@ -43,16 +43,16 @@ public class Atome
    		
    		while(s.charAt(cpt) != ')')
    		{
-   			while(s.charAt(cpt) != '(')//On récupère le label de l'atome
+   			while(s.charAt(cpt) != '(')//On rï¿½cupï¿½re le label de l'atome
    			{
    				nomAtome += s.charAt(cpt);
    				cpt++;
    			}
    			label = nomAtome;
    			cpt++;//Pour sauter le '('
-   			while(s.charAt(cpt) != ')')//On va désormais s'intéresser aux termes de l'atome
+   			while(s.charAt(cpt) != ')')//On va dï¿½sormais s'intï¿½resser aux termes de l'atome
    			{
-				while(s.charAt(cpt) != ',' && s.charAt(cpt) != ')')//On récupère le label du terme
+				while(s.charAt(cpt) != ',' && s.charAt(cpt) != ')')//On rï¿½cupï¿½re le label du terme
 				{
 					nomTerme += s.charAt(cpt);
 					cpt++;					
@@ -63,8 +63,8 @@ public class Atome
 					nomTerme = nomTerme.substring(1,nomTerme.length()-1);//Si c'est une constante alors on supprime les "'"
 				}
 				else constanteTerme = false;
-				Terme t = new Terme(nomTerme,constanteTerme);//On crée un nouveau terme
-				listeTermes.add(t);//On ajoute le terme créé s'il n'existait pas déjà
+				Terme t = new Terme(nomTerme,constanteTerme);//On crï¿½e un nouveau terme
+				listeTermes.add(t);//On ajoute le terme crï¿½ï¿½ s'il n'existait pas dï¿½jï¿½
 				nomTerme = "";
 				if(s.charAt(cpt) == ',') cpt++;//Pour sauter le ','
    			}
@@ -95,21 +95,21 @@ public class Atome
 		return label;
 	}
 		
-// Les méthodes qui caractérisent les fonctionnalitées de la classe	
+// Les mï¿½thodes qui caractï¿½risent les fonctionnalitï¿½es de la classe	
 
 	/**
-	 * Ajoute le terme 't' à la liste de termes de l'atome, sans autre vérification
-	 * @param t le terme à ajouter
+	 * Ajoute le terme 't' ï¿½ la liste de termes de l'atome, sans autre vï¿½rification
+	 * @param t le terme ï¿½ ajouter
 	 */
 	public void ajoutTerme(Terme t)
 	{
 		listeTermes.add(t);
 	}
 	/**
-	 * Teste l'egalité des prédicats de deux atomes avec le label et l'arité
+	 * Teste l'egalitï¿½ des prï¿½dicats de deux atomes avec le label et l'aritï¿½
 	 * de l'atome
-	 * @param r l'atome à tester par rapport à l'atome courant
-	 * @return vrai si les deux atomes ont même prédicat, faux sinon
+	 * @param r l'atome ï¿½ tester par rapport ï¿½ l'atome courant
+	 * @return vrai si les deux atomes ont mï¿½me prï¿½dicat, faux sinon
 	 */
 	public boolean equalsP(Atome r)
 	{
@@ -117,9 +117,9 @@ public class Atome
 	}
 
 /**
-	 * Teste l'egalité de deux atomes (même label et même liste de termes)
-	 * @param r l'atome à tester par rapport à l'atome courant
-	 * @return vrai si les deux atomes sont égaux, faux sinon
+	 * Teste l'egalitï¿½ de deux atomes (mï¿½me label et mï¿½me liste de termes)
+	 * @param r l'atome ï¿½ tester par rapport ï¿½ l'atome courant
+	 * @return vrai si les deux atomes sont ï¿½gaux, faux sinon
 	 */
 	public boolean equalsA(Atome r)
 	{
@@ -134,8 +134,8 @@ public class Atome
 	}
 
 	/**
-	 * Méthode qui teste si deux atomes sont unifiables
-	 * @param a,b les atomes à tester 
+	 * Mï¿½thode qui teste si deux atomes sont unifiables
+	 * @param a,b les atomes ï¿½ tester 
 	 * @return vrai si les deux atomes sont unifiables, faux sinon
 	 */
 	public boolean unifiableA(Atome r)
@@ -144,7 +144,7 @@ public class Atome
 		if (a.getListeTermes().size() != b.getListeTermes().size()||!b.equalsP(a)) return false;
 		a = rendDisjoints(b); //rend l'ensemble de variables de l'atome courant et de l'atome b disjoints
 		
-		int indicator = 0; //cet indicateur sert à compter le nombre de termes égaux des atomes testés
+		int indicator = 0; //cet indicateur sert ï¿½ compter le nombre de termes ï¿½gaux des atomes testï¿½s
 		
 		//Pour chaque terme t de l'atome a,
 		for (int i = 0; i < a.getListeTermes().size(); i++)
@@ -164,7 +164,7 @@ public class Atome
 					replace(b.getListeTermes().get(i), a.getListeTermes().get(i), b.getListeTermes());
 				}
 		}
-		//teste l'égalité des termes de a et de b après toutes les substitutions en incrémentant indicator
+		//teste l'ï¿½galitï¿½ des termes de a et de b aprï¿½s toutes les substitutions en incrï¿½mentant indicator
 		for (int i = 0; i < a.getListeTermes().size(); i++)
 		{
 				if (a.getListeTermes().get(i).equalsT(b.getListeTermes().get(i)))
@@ -178,9 +178,9 @@ public class Atome
 	}
 	
 	/**
-	 * Méthode qui remplace toutes les occurences d'un terme par un terme donné
+	 * Mï¿½thode qui remplace toutes les occurences d'un terme par un terme donnï¿½
 	 * @param inList Liste dans laquelle on cherche
-	 * @param from Terme qui sera remplacé
+	 * @param from Terme qui sera remplacï¿½
 	 * @param to Terme de substitution
 	 */
 	public void replace (Terme from, Terme to, ArrayList<Terme> inList)
@@ -193,9 +193,9 @@ public class Atome
 	}
 	
 	/**
-	 * Méthode qui applique une substitution à l'atome courant:
-	 * @param s La substitution à appliquer
-	 * @return aSubstituer L'atome substitué
+	 * Mï¿½thode qui applique une substitution ï¿½ l'atome courant:
+	 * @param s La substitution ï¿½ appliquer
+	 * @return aSubstituer L'atome substituï¿½
 	 */
 	public Atome appliquerSubstitution (Substitution s)
 	{
@@ -206,7 +206,7 @@ public class Atome
 	}
 	
 	/**
-	 * Méthode qui rend l'ensemble des variables de deux atomes disjoints
+	 * Mï¿½thode qui rend l'ensemble des variables de deux atomes disjoints
 	 * @param a Atome a
 	 * @param b Atome b
 	 */
@@ -231,11 +231,11 @@ public class Atome
 		System.out.println(this); // appel de toString
 	}
 
-// La méthode toString de la classe	
+// La mï¿½thode toString de la classe	
 	
 	/**
-	 * Retourne la chaîne de caractères de cet atome
-	 * @return la chaîne décrivant l'atome (suivant l'écriture logique habituelle)
+	 * Retourne la chaï¿½ne de caractï¿½res de cet atome
+	 * @return la chaï¿½ne dï¿½crivant l'atome (suivant l'ï¿½criture logique habituelle)
 	 */
 	public String toString()
 	{
@@ -249,7 +249,7 @@ public class Atome
 	return s;
 	}
 	
-// juste pour une démo de la classe
+// juste pour une dï¿½mo de la classe
 	public static void main(String[] args)
 	{
 		Atome a = new Atome("r(x,y,z)");

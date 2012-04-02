@@ -1,8 +1,8 @@
-package structure;
+package ac.analysis.structure;
 
 /**
- * Modélise un terme : une variable ou une constante. Elle possède un attribut booléen qui
- * determine si ce terme est constante ou pas, et une méthode qui determine l'egalité entre 
+ * Modï¿½lise un terme : une variable ou une constante. Elle possï¿½de un attribut boolï¿½en qui
+ * determine si ce terme est constante ou pas, et une mï¿½thode qui determine l'egalitï¿½ entre 
  * deux termes.
  *
  */
@@ -23,8 +23,8 @@ public class Terme
 		constante = c;	}
 	
 	/**
-	 * Constructeur de la classe Terme pour créer une variable
-	 * @param n le label du terme (qui doit être une variable)
+	 * Constructeur de la classe Terme pour crï¿½er une variable
+	 * @param n le label du terme (qui doit ï¿½tre une variable)
 	 */
 	public Terme(String n)
 	{
@@ -61,12 +61,12 @@ public class Terme
 		return label;
 	}
 
-// Les méthodes qui caractérisent les fonctionnalitées de la classe	
+// Les mï¿½thodes qui caractï¿½risent les fonctionnalitï¿½es de la classe	
 	
 	/**
-	 * Teste l'égalite du terme 't' et du terme courant (constante, label)
-	 * @param t le terme à tester
-	 * @return vrai si 't' et le terme courant sont égaux, faux sinon
+	 * Teste l'ï¿½galite du terme 't' et du terme courant (constante, label)
+	 * @param t le terme ï¿½ tester
+	 * @return vrai si 't' et le terme courant sont ï¿½gaux, faux sinon
 	 */
 	public boolean equalsT(Terme t)
 	{
@@ -81,10 +81,10 @@ public class Terme
 		System.out.print(this); // appel de toString
 	}
 	
-//Méthode toString de la classe		
+//Mï¿½thode toString de la classe		
 	/**
-	 * Retourne la chaîne de caractères de ce terme
-	 * @return la chaîne décrivant le terme 
+	 * Retourne la chaï¿½ne de caractï¿½res de ce terme
+	 * @return la chaï¿½ne dï¿½crivant le terme 
 	 */
 	public String toString()
 	{

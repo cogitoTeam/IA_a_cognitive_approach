@@ -1,21 +1,17 @@
-package moteurDeRecherche;
-
-
+package ac.analysis.moteurDeRecherche;
 
 import java.util.*;
 import java.io.*;
 
-import structure.Atome;
-import structure.BaseFaits;
-import structure.Regle;
-import structure.Substitution;
-import structure.Terme;
+import ac.analysis.structure.*;
+
+
 /**
- * Cette classe est constituée d'une base de règles et d'une base de faits. À l'aide
- * de ses méthodes de saturation, elle agit comme un moteur d'inférence qui sert de :
- * 1)calculer l'ensemble de tous les faits déductibles par chaînage avant
- * 2)calculer les réponses à une requête de la forme "trouver tous les x1...xn qui vérifient P", où
- * P est une conjonction d'atomes, et où x1...xn sont les variables apparaissant dans P.
+ * Cette classe est constituï¿½e d'une base de rï¿½gles et d'une base de faits. ï¿½ l'aide
+ * de ses mï¿½thodes de saturation, elle agit comme un moteur d'infï¿½rence qui sert de :
+ * 1)calculer l'ensemble de tous les faits dï¿½ductibles par chaï¿½nage avant
+ * 2)calculer les rï¿½ponses ï¿½ une requï¿½te de la forme "trouver tous les x1...xn qui vï¿½rifient P", oï¿½
+ * P est une conjonction d'atomes, et oï¿½ x1...xn sont les variables apparaissant dans P.
  */
 /**
  * @author namrata10
@@ -24,7 +20,7 @@ import structure.Terme;
 public class BaseConnaissances {
 
 	private BaseFaits BF;// base de faits
-	private ArrayList<Regle> BR;// base de règles
+	private ArrayList<Regle> BR;// base de rï¿½gles
 	private String nomFichierSource;
 	private boolean saturee = false;
 
@@ -51,7 +47,7 @@ public class BaseConnaissances {
 	}
 
 	/**
-	 * Constructeur à paramètres :
+	 * Constructeur ï¿½ paramï¿½tres :
 	 * 
 	 * @param BF
 	 *            une instance de BaseFaits
@@ -62,15 +58,15 @@ public class BaseConnaissances {
 		super();
 		this.BF = BF;
 		this.BR = BR;
-		nomFichierSource = null;// on se sert de ça pour créer la base
-								// propositionnalisée
+		nomFichierSource = null;// on se sert de ï¿½a pour crï¿½er la base
+								// propositionnalisï¿½e
 	}
 
 	/**
-	 * Constructeur à paramètre :
+	 * Constructeur ï¿½ paramï¿½tre :
 	 * 
 	 * @param nomFichier
-	 *            le nom d'un fichier texte à partir duquel la base sera créée
+	 *            le nom d'un fichier texte ï¿½ partir duquel la base sera crï¿½ï¿½e
 	 * @throws IOException
 	 */
 	public BaseConnaissances(String nomFichier) throws IOException {
@@ -78,27 +74,27 @@ public class BaseConnaissances {
 		BufferedReader lectureFichier = new BufferedReader(new FileReader(
 				nomFichier));
 		System.out
-				.println("CHARGEMENT D'UNE BASE DE CONNAISSANCES à partir du fichier : "
+				.println("CHARGEMENT D'UNE BASE DE CONNAISSANCES ï¿½ partir du fichier : "
 						+ nomFichier);
 
-		// création de la base de faits (utilise les méthodes de la classe
+		// crï¿½ation de la base de faits (utilise les mï¿½thodes de la classe
 		// BaseFaits)
 		String t = lectureFichier.readLine(); // 1e ligne du fichier contient
 												// les faits
 		BF = new BaseFaits(t);
 
-		// détermination de la taille de BR
+		// dï¿½termination de la taille de BR
 		t = lectureFichier.readLine(); // 2e ligne du fichier indique le nombre
-										// de règles
+										// de rï¿½gles
 		int n = Integer.parseInt(t);
 
-		// création de la base de règles (utilise les méthodes de la classe
+		// crï¿½ation de la base de rï¿½gles (utilise les mï¿½thodes de la classe
 		// Regle)
 		BR = new ArrayList<Regle>(n);
 		for (int i = 0; i < n; i++) {
 			t = lectureFichier.readLine(); // les lignes suivantes du fichier
-											// sont les règles
-			BR.add(new Regle(t, "Règle " + (i + 1)));
+											// sont les rï¿½gles
+			BR.add(new Regle(t, "Rï¿½gle " + (i + 1)));
 		}
 		lectureFichier.close();
 	}
@@ -120,75 +116,75 @@ public class BaseConnaissances {
 		return saturee;
 	}
 
-// Les méthodes qui caractérisent les fonctionnalitées de la classe		
+// Les mï¿½thodes qui caractï¿½risent les fonctionnalitï¿½es de la classe		
 	/**
-	 * Méthode qui permet de vider la base de faits de la base de connaissances courante
-	 * On note qu'elle indique que la base n'est plus saturée
+	 * Mï¿½thode qui permet de vider la base de faits de la base de connaissances courante
+	 * On note qu'elle indique que la base n'est plus saturï¿½e
 	 */
 	public void viderBaseFaits() {
 		BF = new BaseFaits();
 		saturee = false;
 	}
 	/**
-	 * Méthode qui permet d'ajouter un nouveau fait à la base de faits 
+	 * Mï¿½thode qui permet d'ajouter un nouveau fait ï¿½ la base de faits 
 	 * de la base de connaissances courante.
-	 * On note qu'elle indique que la base n'est plus saturée
-	 * @param fait le fait (un atome) à ajouter 
+	 * On note qu'elle indique que la base n'est plus saturï¿½e
+	 * @param fait le fait (un atome) ï¿½ ajouter 
 	 */
 	public void ajouterNouveauFait(Atome fait) {
 		BF.ajouterNouveauFait(fait);
 		saturee = false;
 	}
-//La méthode toString de la classe
+//La mï¿½thode toString de la classe
 	public String toString() {
-		String BRs = "Nombre de règles : " + BR.size()
-				+ "\nListe des règles : \n";
+		String BRs = "Nombre de rï¿½gles : " + BR.size()
+				+ "\nListe des rï¿½gles : \n";
 		for (int i = 0; i < BR.size(); i++) {
 			BRs += "\t" + BR.get(i) + "\n";
 		}
-		return "\n  Base de faits\n" + BF + "\n  Base de règles\n" + BRs;
+		return "\n  Base de faits\n" + BF + "\n  Base de rï¿½gles\n" + BRs;
 	}
 
 	
 
-// Les méthodes pour se ramener à la logique des propositions
+// Les mï¿½thodes pour se ramener ï¿½ la logique des propositions
 		
 	/**
-	 * Propositionnalise la base de connaissances : 1) génère l'ensemble de
-	 * substitutions des variables de chaque règle 2) crée des nouvelles règles
-	 * à partir de ces substitutions 3) retourne la nouvelle base de
+	 * Propositionnalise la base de connaissances : 1) gï¿½nï¿½re l'ensemble de
+	 * substitutions des variables de chaque rï¿½gle 2) crï¿½e des nouvelles rï¿½gles
+	 * ï¿½ partir de ces substitutions 3) retourne la nouvelle base de
 	 * connaissances
 	 */
 	private BaseConnaissances propositionnalisation() throws IOException {
-		// déclaration et initialisation des variables de la méthode
+		// dï¿½claration et initialisation des variables de la mï¿½thode
 		BaseConnaissances ordre0 = new BaseConnaissances();
 		Regle regleCourante;
 		Substitutions substitutions;
 		Substitution s = new Substitution();
 	
-		// les nouvelles règles sont crées en traitant les entrées du fichier
+		// les nouvelles rï¿½gles sont crï¿½es en traitant les entrï¿½es du fichier
 		// texte :
 	
 		BufferedReader lectureFichier = new BufferedReader(new FileReader(
 				nomFichierSource));
 		String t = lectureFichier.readLine(); // lecture de la base de faits
-		ordre0.BF = new BaseFaits(t); // la base de faits reste la même
+		ordre0.BF = new BaseFaits(t); // la base de faits reste la mï¿½me
 	
-		t = lectureFichier.readLine(); // ne fait rien : on veut passer à la
+		t = lectureFichier.readLine(); // ne fait rien : on veut passer ï¿½ la
 										// ligne suivante
 	
-		// boucle qui génère l'ensemble de règles complètement instanciées pour
-		// chaque règle
-		for (int i = 0; i < BR.size(); i++) // i = nombre de règles
+		// boucle qui gï¿½nï¿½re l'ensemble de rï¿½gles complï¿½tement instanciï¿½es pour
+		// chaque rï¿½gle
+		for (int i = 0; i < BR.size(); i++) // i = nombre de rï¿½gles
 		{
 			regleCourante = BR.get(i);
 			ArrayList<Terme> termesVariables = new ArrayList<Terme>();
 			ArrayList<Terme> termesConstantes = new ArrayList<Terme>(
 					ordre0.BF.getEnsembleTermes());// on va ajouter les
-													// constantes de BR à ça
+													// constantes de BR ï¿½ ï¿½a
 	
-			// création de la liste de variables et de constantes (y compris
-			// celles de la base de règles)
+			// crï¿½ation de la liste de variables et de constantes (y compris
+			// celles de la base de rï¿½gles)
 			for (int index = 0; index < regleCourante.getEnsembleTermes()
 					.size(); index++) {
 				Terme termeCourant = regleCourante.getEnsembleTermes().get(
@@ -201,19 +197,19 @@ public class BaseConnaissances {
 			}
 	
 			/*
-			 * initialise l'ensemble des substitutions des variables de la règle
+			 * initialise l'ensemble des substitutions des variables de la rï¿½gle
 			 * courante par les constantes de la base de faits
 			 */
 			substitutions = new Substitutions(termesVariables, termesConstantes);
-			// la méthode de la classe Substitutions qui génère l'ensemble des
+			// la mï¿½thode de la classe Substitutions qui gï¿½nï¿½re l'ensemble des
 			// substitutions
 			substitutions.getSubstitutions(s);
-			t = lectureFichier.readLine(); // lecture de la règle courante
+			t = lectureFichier.readLine(); // lecture de la rï¿½gle courante
 	
 			/*
-			 * boucle qui ajoute les règles complètement instanciées à la
+			 * boucle qui ajoute les rï¿½gles complï¿½tement instanciï¿½es ï¿½ la
 			 * nouvelle base de connaissances en traitant la String t selon la
-			 * substitution générée par la méthode replace de la classe
+			 * substitution gï¿½nï¿½rï¿½e par la mï¿½thode replace de la classe
 			 * Substitution
 			 */
 			for (int j = 0; j < substitutions.S.size(); j++) {
@@ -222,18 +218,18 @@ public class BaseConnaissances {
 				ordre0.BR.add(temp);
 			}
 		}
-		System.out.println("AFFICHAGE DE LA BASE PROPOSITIONNALISÉE :" + ordre0);
+		System.out.println("AFFICHAGE DE LA BASE PROPOSITIONNALISï¿½E :" + ordre0);
 		return ordre0;
 	}
 
 	/**
-	 * Méthode de saturation de la base propositionnalisée par le chaînage avant
+	 * Mï¿½thode de saturation de la base propositionnalisï¿½e par le chaï¿½nage avant
 	 * 
-	 * @return k la base de connaissances saturée
+	 * @return k la base de connaissances saturï¿½e
 	 * @throws IOException
 	 */
 	private BaseConnaissances saturationPropositionnelle() throws IOException {
-		// déclaration et initialisation des variables
+		// dï¿½claration et initialisation des variables
 		BaseConnaissances k = new BaseConnaissances(propositionnalisation());
 		ArrayList<Atome> aTraiter = new ArrayList<Atome>(k.BF.getListeAtomes());// copie
 																				// la
@@ -244,50 +240,50 @@ public class BaseConnaissances {
 		Regle regleCourante;
 		Atome atomeCourant;
 	
-		// création du tableau qui stocke la taille de l'hypothèse de chaque
-		// règle
+		// crï¿½ation du tableau qui stocke la taille de l'hypothï¿½se de chaque
+		// rï¿½gle
 		ArrayList<Integer> compteurR = new ArrayList<Integer>();// stocke la
 																// taille de
-																// l'hypothèse
+																// l'hypothï¿½se
 																// de chaque
-																// règle
+																// rï¿½gle
 		for (int n = 0; n < k.BR.size(); n++)
 			compteurR.add(k.BR.get(n).getHypothese().size());
 	
-		// Debut de l'algorithme de chaînage avant
+		// Debut de l'algorithme de chaï¿½nage avant
 		while (aTraiter.size() != 0) {
 	
 			atomeCourant = aTraiter.remove(0);
 	
 			/*
-			 * Pour toute règle de BR, 1)compare l'atome courant avec les atomes
-			 * de son hypothèse 2) si chaque atome de l'hypothèse est incluse
-			 * dans la base de faits, ajoute la conclusion à la base de faits
+			 * Pour toute rï¿½gle de BR, 1)compare l'atome courant avec les atomes
+			 * de son hypothï¿½se 2) si chaque atome de l'hypothï¿½se est incluse
+			 * dans la base de faits, ajoute la conclusion ï¿½ la base de faits
 			 */
 			for (int i = 0; i < k.BR.size(); i++) {
 				regleCourante = k.BR.get(i);
 				for (int j = 0; j < regleCourante.getHypothese().size(); j++)
 					if (regleCourante.getHypothese().get(j)
 							.equalsA(atomeCourant))
-						compteurR.set(i, compteurR.get(i) - 1);// décrémente
+						compteurR.set(i, compteurR.get(i) - 1);// dï¿½crï¿½mente
 																// compteurR
 																// correspondant
-																// à
+																// ï¿½
 																// regleCourante
 				if (compteurR.get(i) == 0)
 					if (!k.BF.atomeExiste(regleCourante.getConclusion())) {
 						aTraiter.add(regleCourante.getConclusion());// ajout de
 																	// la
 																	// conclusion
-																	// à la
+																	// ï¿½ la
 																	// liste
 																	// d'atomes
-																	// à traiter
+																	// ï¿½ traiter
 						k.BF.ajouterNouveauFait(regleCourante.getConclusion());// ajout
 																				// de
 																				// la
 																				// conclusion
-																				// à
+																				// ï¿½
 																				// la
 																				// base
 																				// de
@@ -304,43 +300,43 @@ public class BaseConnaissances {
 	}
 
 	
-// Les méthodes pour se ramener à la logique des propositions
+// Les mï¿½thodes pour se ramener ï¿½ la logique des propositions
 	
 	/**
-	 * Méthode de saturation << premier ordre >> de la base de faits
-	 * par le chaînage avant
+	 * Mï¿½thode de saturation << premier ordre >> de la base de faits
+	 * par le chaï¿½nage avant
 	 * 
-	 * @return k la base de connaissances saturée
+	 * @return k la base de connaissances saturï¿½e
 	 * @throws IOException
 	 */
 	public BaseConnaissances saturationOrdre1() throws IOException {
 		if (saturee)
-			return this; // evite le calcul de saturation au cas où la base est
-							// déjà saturée
+			return this; // evite le calcul de saturation au cas oï¿½ la base est
+							// dï¿½jï¿½ saturï¿½e
 		
-		// déclaration et initialisation des variables
+		// dï¿½claration et initialisation des variables
 		BaseConnaissances k = new BaseConnaissances(this);
 		ArrayList<Atome> nouveaux; //liste qui stocke les nouveaux faits
 		Homomorphismes s;
-		boolean fin = false; //indique fin de l'algorithme de chaînage avant
+		boolean fin = false; //indique fin de l'algorithme de chaï¿½nage avant
 		Atome temp;
 	
-		// Debut de l'algorithme de chaînage avant
+		// Debut de l'algorithme de chaï¿½nage avant
 		while (!fin) {
 			nouveaux = new ArrayList<Atome>(); //initialisement vide
 	
 			for (Regle r : k.BR) {
-				//initialise les homomorphismes de l'hypothèse de r dans la base de faits
+				//initialise les homomorphismes de l'hypothï¿½se de r dans la base de faits
 				s = new Homomorphismes(r.getHypothese(), k.BF);
 				if (s.existeHomomorphisme()) {
-					//calcule les homomorphismes de l'hypothèse de r dans la base de faits
+					//calcule les homomorphismes de l'hypothï¿½se de r dans la base de faits
 					for (Substitution hom : s.getHomomorphismes()) {
-						//pour chaque homomorphisme hom, considère la
+						//pour chaque homomorphisme hom, considï¿½re la
 						//substitution de la conclusion de r
 						temp = r.getConclusion().appliquerSubstitution(hom);
 						if (!k.BF.atomeExiste(temp) && !nouveaux.contains(temp))
 							nouveaux.add(temp);//si cette substitution est un nouveau fait,
-											   //ajoute ce fait à la liste de nouveaux faits	
+											   //ajoute ce fait ï¿½ la liste de nouveaux faits	
 					}
 				}
 			}
@@ -350,84 +346,84 @@ public class BaseConnaissances {
 				k.BF.ajouterNouveauxFaits(nouveaux); //sinon on continue avec la nouvelle 
 													 //base de faits	
 		}
-		k.saturee = true; //indique que la base est saturée (pour éviter de recalculer
-						  //au cas où la base reste la même
+		k.saturee = true; //indique que la base est saturï¿½e (pour ï¿½viter de recalculer
+						  //au cas oï¿½ la base reste la mï¿½me
 		return k;
 	}
 
 	
 	/**
-	 * Méthode de saturation << premier ordre >> de la base de faits
-	 * par le chaînage avant en exploitant le graphe de dépendances des règles 
+	 * Mï¿½thode de saturation << premier ordre >> de la base de faits
+	 * par le chaï¿½nage avant en exploitant le graphe de dï¿½pendances des rï¿½gles 
 	 * (et des faits)
 	 * 
-	 * @return k la base de connaissances saturée
+	 * @return k la base de connaissances saturï¿½e
 	 * @throws IOException
 	 */
 	public BaseConnaissances saturationOrdre1Exploite() throws IOException {
 		if (saturee)
-			return this; // evite le calcul de saturation au cas où la base est
-							// déjà saturée
+			return this; // evite le calcul de saturation au cas oï¿½ la base est
+							// dï¿½jï¿½ saturï¿½e
 		
-		// déclaration et initialisation des variables
+		// dï¿½claration et initialisation des variables
 		BaseConnaissances k = new BaseConnaissances(this);
 		GDR gdr = new GDR(k); 
-		gdr.calculeGDR(); //calcule le graphe de dépendances des règles 
+		gdr.calculeGDR(); //calcule le graphe de dï¿½pendances des rï¿½gles 
 		  				  //(et des faits)
 		
-		//algorithme de saturation avec affichage des éléments qui illustrent
-		//l'exploitation du graphe de dépendances des règles (et des faits)
+		//algorithme de saturation avec affichage des ï¿½lï¿½ments qui illustrent
+		//l'exploitation du graphe de dï¿½pendances des rï¿½gles (et des faits)
 		System.out.println(gdr); 
-		System.out.println("--> Début de l'algorithme de chaînage avant");
+		System.out.println("--> Dï¿½but de l'algorithme de chaï¿½nage avant");
 		for (int i = 0; i < BF.getListeAtomes().size(); i++) {
-			System.out.print("\n  Fait considéré : "
+			System.out.print("\n  Fait considï¿½rï¿½ : "
 					+ BF.getListeAtomes().get(i));
-			//appel à la fonction récursive qui calcule des nouveaux faits  
-			//en appliquant les successeurs des faits (puis règles) considérés
+			//appel ï¿½ la fonction rï¿½cursive qui calcule des nouveaux faits  
+			//en appliquant les successeurs des faits (puis rï¿½gles) considï¿½rï¿½s
 			calculeNouveauxFaitsRec(gdr.getGraphe().get(i), k.BF); 
 													 
 														
 		}
-		System.out.println("\n--> Fin de l'algorithme de chaînage avant");
-		k.saturee = true; //indique que la base est saturée
+		System.out.println("\n--> Fin de l'algorithme de chaï¿½nage avant");
+		k.saturee = true; //indique que la base est saturï¿½e
 		return k;
 	}
 
 	/**
-	 * Méthode récursive qui calcule les nouveaux faits générés par des successeurs
-	 * (de faits ou de règles selon le cas) passés en paramètre 
-	 * @param successeurs La liste de successeurs à considérer
-	 * @param faits La base de faits courante (les nouveux faits y seront ajoutés)
+	 * Mï¿½thode rï¿½cursive qui calcule les nouveaux faits gï¿½nï¿½rï¿½s par des successeurs
+	 * (de faits ou de rï¿½gles selon le cas) passï¿½s en paramï¿½tre 
+	 * @param successeurs La liste de successeurs ï¿½ considï¿½rer
+	 * @param faits La base de faits courante (les nouveux faits y seront ajoutï¿½s)
 	 */
 	private void calculeNouveauxFaitsRec(ArrayList<Regle> successeurs, BaseFaits faits) {
 		ArrayList<Regle> successeursNew;
 		// Debut de l'algorithme qui exploite le graphe de
-		// dépendance des règles
+		// dï¿½pendance des rï¿½gles
 		for (Regle r : successeurs) {
-			//Affiche l'ordre dans lequel les règles sont considérée
-			System.out.print("\n\tRègle considérée : " + r);
+			//Affiche l'ordre dans lequel les rï¿½gles sont considï¿½rï¿½e
+			System.out.print("\n\tRï¿½gle considï¿½rï¿½e : " + r);
 			Homomorphismes s = new Homomorphismes(r.getHypothese(), faits);
 			if (s.existeHomomorphisme())
 				for (Substitution hom : s.getHomomorphismes()) {
 					Atome temp = r.getConclusion().appliquerSubstitution(hom);
 					if (!faits.atomeExiste(temp)) {
 						faits.ajouterNouveauFait(temp);
-						System.out.print("\n\tNouveau fait ajouté : " + temp
-								+ "\n  Étape suivante : successeurs de "
+						System.out.print("\n\tNouveau fait ajoutï¿½ : " + temp
+								+ "\n  ï¿½tape suivante : successeurs de "
 								+ r.getNom());
 						successeursNew = new ArrayList<Regle>(
 								calculeSuccesseurs(r));
-						//appel récursive qui parcourt le graphe en profondeur
+						//appel rï¿½cursive qui parcourt le graphe en profondeur
 						calculeNouveauxFaitsRec(successeursNew, faits); 
 					}
 				}
 		}
-		System.out.print("\n  Retour à l'étape précédente");
+		System.out.print("\n  Retour ï¿½ l'ï¿½tape prï¿½cï¿½dente");
 	}
 
 	/**
-	 * Méthode qui calcule les successeurs d'une règle passée en paramètre
-	 * @param r La règle dont on veut calculer les successeurs
+	 * Mï¿½thode qui calcule les successeurs d'une rï¿½gle passï¿½e en paramï¿½tre
+	 * @param r La rï¿½gle dont on veut calculer les successeurs
 	 * @return La liste de successeurs de r
 	 */
 	private ArrayList<Regle> calculeSuccesseurs(Regle r) {
@@ -451,7 +447,7 @@ public class BaseConnaissances {
 		System.out.println(kSaturee);
 
 		kSaturee = k.saturationOrdre1Exploite();
-		System.out.println("\n\nBase de Faits saturée par homomorphismes:\n\n"
+		System.out.println("\n\nBase de Faits saturï¿½e par homomorphismes:\n\n"
 				+ kSaturee.BF);
 
 	}

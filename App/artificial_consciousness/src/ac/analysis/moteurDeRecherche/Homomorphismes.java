@@ -1,17 +1,13 @@
 /**
  * 
  */
-package moteurDeRecherche;
+package ac.analysis.moteurDeRecherche;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import structure.Atome;
-import structure.BaseFaits;
-import structure.CoupleTermes;
-import structure.Requete;
-import structure.Substitution;
-import structure.Terme;
+import ac.analysis.structure.*;
+
 
 
 /**
@@ -29,8 +25,8 @@ public class Homomorphismes {
 
 	/**
 	 * Constructeur de la classe Homomorphismes
-	 * @param  ensembleVariables l'ensemble d'atomes à termes variables 
-	 * @param ensembleValeurs l'ensemble d'atomes à termes constantes 
+	 * @param  ensembleVariables l'ensemble d'atomes ï¿½ termes variables 
+	 * @param ensembleValeurs l'ensemble d'atomes ï¿½ termes constantes 
 	 */
 	public Homomorphismes (ArrayList<Atome> ensembleVariables, ArrayList<Atome> ensembleValeurs) 
 	{
@@ -56,7 +52,7 @@ public class Homomorphismes {
 	}
 
 	/**
-	 * Méthode qui retourne les termes de A2
+	 * Mï¿½thode qui retourne les termes de A2
 	 */
 	private ArrayList<Terme> getDomaine()
 	{
@@ -79,7 +75,7 @@ public class Homomorphismes {
 	}
 	
 	/**
-	 * Méthode qui retourne les variables de A1
+	 * Mï¿½thode qui retourne les variables de A1
 	 */
 	private ArrayList<Terme> getVariables()
 	{
@@ -106,7 +102,7 @@ public class Homomorphismes {
 	}
 	
 	/**
-	 * Méthode (BacktrackToutesSolutions) qui génère l'ensemble de homomorphismes de A1 dans A2 et le stocke dans S
+	 * Mï¿½thode (BacktrackToutesSolutions) qui gï¿½nï¿½re l'ensemble de homomorphismes de A1 dans A2 et le stocke dans S
 	 */
 	public ArrayList<Substitution> getHomomorphismes() 
 	{
@@ -116,7 +112,7 @@ public class Homomorphismes {
 	}
 	
 	/**
-	 * Méthode (Backtrack) qui recherche l'existence d'un homomorphisme de A1 dans A2
+	 * Mï¿½thode (Backtrack) qui recherche l'existence d'un homomorphisme de A1 dans A2
 	 */
 	public boolean existeHomomorphisme ()
 	{
@@ -125,7 +121,7 @@ public class Homomorphismes {
 	}
 	
 	/**
-	 * Méthode BacktrackRec le sous-algorithme de existeHomomorphisme
+	 * Mï¿½thode BacktrackRec le sous-algorithme de existeHomomorphisme
 	 */
 	private boolean backtrackRec(Substitution sol)
 	{
@@ -151,8 +147,8 @@ public class Homomorphismes {
 	}
 	
 	/**
-	 * Méthode qui teste si une substitution est un homomorphisme partiel
-	 * @param solPrime la substitution à considérer
+	 * Mï¿½thode qui teste si une substitution est un homomorphisme partiel
+	 * @param solPrime la substitution ï¿½ considï¿½rer
 	 */
 	private boolean estHomomorphismePartiel(Substitution sol) 
 	{
@@ -171,16 +167,16 @@ public class Homomorphismes {
 	}
 
 	/**
-	 * Méthode de prétraitement des variables de A1 qui calcule un ordre total sur ces variables
+	 * Mï¿½thode de prï¿½traitement des variables de A1 qui calcule un ordre total sur ces variables
 	 */
 	private void pretraitement()
 	{
-		//ordonne variables de A1 (donne rang à chacun), ordonne atomes de A1 selon rang		
+		//ordonne variables de A1 (donne rang ï¿½ chacun), ordonne atomes de A1 selon rang		
 		variablesOrdonnees = getVariables();
 	}
 	
 	/**
-	 * Méthode qui retourne l'ensemble d'images possibles pour la variable donnée en paramètre
+	 * Mï¿½thode qui retourne l'ensemble d'images possibles pour la variable donnï¿½e en paramï¿½tre
 	 * @param x une variable de A1
 	 * @return images l'ensemble de termes (constantes) qui sont les images possibles de x
 	 */
@@ -190,7 +186,7 @@ public class Homomorphismes {
 	}
 	
 	/**
-	 * Méthode qui retourne la prochaine variable non affectée de A1
+	 * Mï¿½thode qui retourne la prochaine variable non affectï¿½e de A1
 	 * 
 	 */
 	private Terme choisirVariableNonAffectee(Substitution sol)
@@ -199,7 +195,7 @@ public class Homomorphismes {
 	}
 	
 	/**
-	 * Méthode BacktrackAllRec le sous-algorithme de getHomomorphismes
+	 * Mï¿½thode BacktrackAllRec le sous-algorithme de getHomomorphismes
 	 */
 	private void backtrackAllRec(Substitution sol)
 	{
@@ -235,7 +231,7 @@ public class Homomorphismes {
 		if(h.existeHomomorphisme())
 		{
 			System.out.println(" Oui");
-			System.out.println("La liste de réponses est :");
+			System.out.println("La liste de rï¿½ponses est :");
 			System.out.println(h.getHomomorphismes());
 		}
 		else

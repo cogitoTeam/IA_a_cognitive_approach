@@ -1,15 +1,15 @@
-package structure;
+package ac.analysis.structure;
 
 import java.util.ArrayList;
 
 
 /**
- * Modélise une substitution. Elle constiste d'une liste de CoupleTermes 
- * et permet , par exemple , de définir la substitution des variables d'une règle
- * par des constantes : chaque variable correspond à un CoupleTerme 
- * qui définit sa substitution par une constante.
+ * Modï¿½lise une substitution. Elle constiste d'une liste de CoupleTermes 
+ * et permet , par exemple , de dï¿½finir la substitution des variables d'une rï¿½gle
+ * par des constantes : chaque variable correspond ï¿½ un CoupleTerme 
+ * qui dï¿½finit sa substitution par une constante.
  * 
- * Elle possède en particulier une méthode qui détermine si cette substitution 
+ * Elle possï¿½de en particulier une mï¿½thode qui dï¿½termine si cette substitution 
  * est un homomorphisme
  * 
  */
@@ -38,8 +38,8 @@ public class Substitution
 
 	/**
 	 * Constructeur par copie de substitution
-	 * @param from la substitution à copier
-	 * @return to la substitution copiée
+	 * @param from la substitution ï¿½ copier
+	 * @return to la substitution copiï¿½e
 	 */
 	public Substitution (Substitution from)
 	{
@@ -52,9 +52,9 @@ public class Substitution
 		return listeCouples;
 	}
 
-// Les méthodes qui caractérisent les fonctionnalitées de la classe	
+// Les mï¿½thodes qui caractï¿½risent les fonctionnalitï¿½es de la classe	
 	/**
-	 * @return variables La liste des variables présents dans la substitution
+	 * @return variables La liste des variables prï¿½sents dans la substitution
 	 */
 	public ArrayList<Terme> getVariables ()
 	{
@@ -65,7 +65,7 @@ public class Substitution
 	}
 
 	/**
-	 * Ajoute un couple de termes à la substitution
+	 * Ajoute un couple de termes ï¿½ la substitution
 	 * @param couple un couple de termes : (variable,constante)
 	 */
 	public void addCouple (CoupleTermes couple)
@@ -83,9 +83,9 @@ public class Substitution
 
 	
 	/**
-	 * Méthode qui remplace les termes d'une string selon la substitution définie
-	 * @param s string dans laquelle on désire faire le remplacement
-	 * @return t nouvelle string avec les termes remplacées
+	 * Mï¿½thode qui remplace les termes d'une string selon la substitution dï¿½finie
+	 * @param s string dans laquelle on dï¿½sire faire le remplacement
+	 * @return t nouvelle string avec les termes remplacï¿½es
 	 */
 	public String replace (String s)
 	{
@@ -97,8 +97,8 @@ public class Substitution
 	}
 	
 	/**
-	 * Méthode qui détermine si cette substitution est un homomorphisme 
-	 * entre deux ensembles d'atomes (donnés en paramètre)
+	 * Mï¿½thode qui dï¿½termine si cette substitution est un homomorphisme 
+	 * entre deux ensembles d'atomes (donnï¿½s en paramï¿½tre)
 	 * @param a1 L'ensemble des variables
 	 * @param a2 L'ensemble des valeurs
 	 */
@@ -116,7 +116,7 @@ public class Substitution
 		return (counter == a1.size());//en particulier, si a1 = null, alors retourne vrai
 	}
 	
-//Méthode toString de la classe	
+//Mï¿½thode toString de la classe	
 	public String toString()
 	{
 		String s = "{";

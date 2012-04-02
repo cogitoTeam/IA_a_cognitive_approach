@@ -1,27 +1,26 @@
 /**
  * 
  */
-package moteurDeRecherche;
+package ac.analysis.moteurDeRecherche;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import structure.Atome;
-import structure.BaseFaits;
-import structure.Regle;
+import ac.analysis.structure.*;
+
 
 
 /**
- * La classe qui modélise un graphe de dépendances de règles (et de faits et de la requête)
- * Elle possède les méthodes qui calculent ce graphe pour une base de connaissances donnée
+ * La classe qui modï¿½lise un graphe de dï¿½pendances de rï¿½gles (et de faits et de la requï¿½te)
+ * Elle possï¿½de les mï¿½thodes qui calculent ce graphe pour une base de connaissances donnï¿½e
  *
  */
 public class GDR 
 {
 
-	private BaseConnaissances BC; //la base de connaissances référencée
-	private ArrayList<ArrayList<Regle>> graphe; //tableau des listes de successeurs de chaque règle
+	private BaseConnaissances BC; //la base de connaissances rï¿½fï¿½rencï¿½e
+	private ArrayList<ArrayList<Regle>> graphe; //tableau des listes de successeurs de chaque rï¿½gle
 
 //Les constructeurs de la classe	
 	/**
@@ -43,7 +42,7 @@ public class GDR
 	}
 	
 	/**
-	 * Constructeur à partir d'une base de connaissances
+	 * Constructeur ï¿½ partir d'une base de connaissances
 	 */
 	public GDR(BaseConnaissances bc)
 	{
@@ -60,15 +59,15 @@ public class GDR
 		return graphe;
 	}
 
-//Les méthodes qui caractérisent les fonctionnalitées de la classe	
+//Les mï¿½thodes qui caractï¿½risent les fonctionnalitï¿½es de la classe	
 	/**
-	 * Méthode de calcul du graphe de dépendances des règles
+	 * Mï¿½thode de calcul du graphe de dï¿½pendances des rï¿½gles
 	 */
 	public void calculeGDR()
 	{
 		ArrayList<Regle> listeSuccesseurs;
 		
-		//calcul de règles dépendants des faits
+		//calcul de rï¿½gles dï¿½pendants des faits
 		for (Atome fait : BC.getBF().getListeAtomes())
 		{
 			listeSuccesseurs = new ArrayList <Regle> ();
@@ -81,7 +80,7 @@ public class GDR
 			graphe.add(listeSuccesseurs);
 		}
 		
-		//calcul de règles dépendants des règles
+		//calcul de rï¿½gles dï¿½pendants des rï¿½gles
 		for (Regle r1 : BC.getBR())
 		{
 			listeSuccesseurs = new ArrayList <Regle> ();
@@ -96,9 +95,9 @@ public class GDR
 	public GDR calculeGDRAvecRequete(BaseFaits requete, BaseConnaissances k) {
 		
 		Regle q = new Regle();
-		q.setNom("Requête");
+		q.setNom("Requï¿½te");
 		q.setHypothese(requete.getListeAtomes());
-		q.setConclusion(new Atome("gagné()"));
+		q.setConclusion(new Atome("gagnï¿½()"));
 		k.getBR().add(q);
 		GDR avecRequete = new GDR(k);
 		avecRequete.calculeGDR();
@@ -106,12 +105,12 @@ public class GDR
 	}
 
 	
-//La méthode toString de la classe 
+//La mï¿½thode toString de la classe 
 	 
 	public String toString()
 	{
 		String s = new String();
-		s+="GRAPHE DE DÉPENDENCE DES FAITS ET DES RÈGLES :\n";
+		s+="GRAPHE DE Dï¿½PENDENCE DES FAITS ET DES Rï¿½GLES :\n";
 		
 		Iterator<Atome> faitsIter = BC.getBF().getListeAtomes().iterator();
 		Iterator<Regle> reglesIter = BC.getBR().iterator();

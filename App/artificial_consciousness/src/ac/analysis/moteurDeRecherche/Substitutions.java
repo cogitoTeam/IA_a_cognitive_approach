@@ -1,12 +1,11 @@
-package moteurDeRecherche;
+package ac.analysis.moteurDeRecherche;
 
  
 
 import java.util.ArrayList;
 
-import structure.CoupleTermes;
-import structure.Substitution;
-import structure.Terme;
+import ac.analysis.structure.*;
+
 /**
 * La classe qui calcule et stocke les substitutions d'un ensemble de termes variables dans un 
 * autre ensemble de termes constantes
@@ -32,20 +31,20 @@ public class Substitutions
 	}
 	
 	/**
-	 * Méthode récursive qui génère l'ensemble de substitutions de T1 dans T2 et le stocke dans S
+	 * Mï¿½thode rï¿½cursive qui gï¿½nï¿½re l'ensemble de substitutions de T1 dans T2 et le stocke dans S
 	 */
 	public void getSubstitutions(Substitution s) 
 	{
 		if (s != null && s.nombreCouples() == T1.size())
-			S.add(s); //si nombre de couples = nombre de variables, ajoute substitution à S
+			S.add(s); //si nombre de couples = nombre de variables, ajoute substitution ï¿½ S
 		else 
 			for (int i = 0; i < T2.size(); i++) //pour toutes les constantes
 			{
-				//génère le couple (prochaine variable, constante) 
+				//gï¿½nï¿½re le couple (prochaine variable, constante) 
 				CoupleTermes couple = new CoupleTermes(T1.get(s.nombreCouples()), T2.get(i));
 				Substitution temp = new Substitution(s);//copie de s
-				temp.addCouple(couple); //ajoute le couple à la substitution
-				getSubstitutions(temp); //appel récursive
+				temp.addCouple(couple); //ajoute le couple ï¿½ la substitution
+				getSubstitutions(temp); //appel rï¿½cursive
 			}			
 		return;
 	}
