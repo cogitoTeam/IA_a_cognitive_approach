@@ -4,10 +4,13 @@
 package ac.memory.semantic.graph.lattice;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+
+import book.Pair;
 
 import ac.memory.persistance.AttributeNode;
 import ac.memory.persistance.AttributeNodeRepository;
@@ -252,6 +255,49 @@ public class Neo4jLatticeContext implements LatticeContext
             ObjectNode obj = (ObjectNode) iterator.next();
             CompleteBoardState cbs = obj.getObject();
             ret.put(cbs.getId(), cbs);
+          }
+        logger.debug("End of generation");
+        return ret;
+      }
+    catch (Exception e)
+      {
+        throw new LatticeContextException(
+            "An error occured when getting all the objects", e);
+      }
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see
+   * ac.memory.semantic.graph.lattice.LatticeContext#getObjectsWithAttributes() */
+  @Override
+  public Map<Long, Pair<CompleteBoardState, HashSet<RelevantPartialBoardState>>> getObjectsWithAttributes()
+      throws LatticeContextException
+  {
+    try
+      {
+        logger.debug("Generation of the HashMap");
+        HashMap<Long, Pair<CompleteBoardState, HashSet<RelevantPartialBoardState>>> ret = new HashMap<Long, Pair<CompleteBoardState, HashSet<RelevantPartialBoardState>>>();
+        for (Iterator<ObjectNode> iterator = obj_repo.getAllNodes().iterator(); iterator
+            .hasNext();)
+          {
+            ObjectNode obj = (ObjectNode) iterator.next();
+            CompleteBoardState cbs = obj.getObject();
+
+            HashSet<RelevantPartialBoardState> attr = new HashSet<RelevantPartialBoardState>();
+
+            for (Iterator<AttributeNode> iterator2 = obj.getRelatedObjects()
+                .iterator(); iterator2.hasNext();)
+              {
+                AttributeNode a = (AttributeNode) iterator2.next();
+                attr.add(a.getObject());
+              }
+
+            ret.put(
+                cbs.getId(),
+                new Pair<CompleteBoardState, HashSet<RelevantPartialBoardState>>(
+                    cbs, attr));
+
           }
         logger.debug("End of generation");
         return ret;

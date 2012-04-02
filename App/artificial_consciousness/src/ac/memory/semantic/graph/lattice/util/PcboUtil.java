@@ -8,8 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.Iterator;
 import org.apache.log4j.Logger;
+
+import book.Pair;
 
 import ac.memory.semantic.graph.lattice.LatticeContext;
 import ac.memory.semantic.graph.lattice.LatticeContextException;
@@ -54,11 +57,13 @@ public class PcboUtil
 
     if (logger.isDebugEnabled()) logger.debug("Génération du FIMI");
     boolean hasattribute;
-    for (CompleteBoardState object : context.getObjects().values())
+    
+    
+    for (Pair<CompleteBoardState, HashSet<RelevantPartialBoardState>> pair : context.getObjectsWithAttributes().values())
       {
         hasattribute = false;
-        for (Iterator<RelevantPartialBoardState> iterator = context
-            .getAttributesByObject(object).values().iterator(); iterator
+        
+        for (Iterator<RelevantPartialBoardState> iterator = pair.second.iterator(); iterator
             .hasNext();)
           {
             ret += ((RelevantPartialBoardState) iterator.next()).getId() + " ";
