@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.*;
@@ -167,6 +168,24 @@ abstract public class AbstractNode<ObjectType, RelatedObjectType, StoredObjectTy
         if (logger.isDebugEnabled())
           logger.debug("Transaction finished");
       }
+  }
+
+  /**
+   * @param id
+   *          id of the related object
+   * @return true if current object is related with id, false otherwise
+   */
+  public boolean isRelatedWith(Long id)
+  {
+    for (Iterator<Relationship> iterator = this.underlyingNode
+        .getRelationships(Direction.BOTH, RelTypes.RELATED).iterator(); iterator
+        .hasNext();)
+      {
+        Relationship type = (Relationship) iterator.next();
+        if (id == type.getEndNode().getProperty(ID_FIELD))
+          return true;
+      }
+    return false;
   }
 
   @Override

@@ -12,6 +12,7 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 import ac.memory.semantic.graph.lattice.LatticeContext;
+import ac.memory.semantic.graph.lattice.LatticeContextException;
 import ac.shared.structure.CompleteBoardState;
 import ac.shared.structure.RelevantPartialBoardState;
 
@@ -45,8 +46,9 @@ public class PcboUtil
    * @param context
    *          the context
    * @return the FIMI String sequence
+   * @throws LatticeContextException 
    */
-  public static String toFimi(LatticeContext context)
+  public static String toFimi(LatticeContext context) throws LatticeContextException
   {
     String ret = "";
 
