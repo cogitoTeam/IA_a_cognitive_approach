@@ -37,7 +37,6 @@ public class AttributeNodeRepository
   public AttributeNodeRepository(GraphDatabaseService graphDb, Index<Node> index)
   {
     super(graphDb, index, ID_FIELD);
-    refNode = getRootNode(graphDb);
     if (logger.isDebugEnabled())
       logger.debug("Building new AttributeNodeRepository");
   }
@@ -206,7 +205,7 @@ public class AttributeNodeRepository
    * @return all NodeAttributes in the database
    */
   @Override
-  public Iterable<AttributeNode> getAllNodes()
+  public Iterable<AttributeNode> getAllNodesWithoutLast()
   {
     if (logger.isDebugEnabled())
       logger.debug("Getting all the attribute nodes");
@@ -221,7 +220,8 @@ public class AttributeNodeRepository
     };
   }
 
-  private Node getRootNode(GraphDatabaseService graphDb)
+  @Override
+  protected Node getRootNode(GraphDatabaseService graphDb)
   {
     return getRootNode(graphDb, RelTypes.REF_ATTRIBUTES);
   }

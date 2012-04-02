@@ -31,12 +31,13 @@ abstract public class AbstractNodeRepository<NodeType>
   public AbstractNodeRepository(GraphDatabaseService graphDb)
   {
     this.graphDb = graphDb;
+    refNode = getRootNode(graphDb);
   }
 
   /**
    * @return all NodeAttributes in the database
    */
-  public abstract Iterable<NodeType> getAllNodes();
+  public abstract Iterable<NodeType> getAllNodesWithoutLast();
 
   protected Node getRootNode(GraphDatabaseService graphDb, RelTypes rel_type)
   {
@@ -64,4 +65,6 @@ abstract public class AbstractNodeRepository<NodeType>
           }
       }
   }
+
+  protected abstract Node getRootNode(GraphDatabaseService graphDb);
 }

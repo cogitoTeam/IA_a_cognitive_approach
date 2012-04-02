@@ -37,8 +37,8 @@ abstract public class AbstractEpisodicNodeRepository<NodeType> extends
   public abstract NodeType getLast() throws NodeRepositoryException;
 
   /**
-   * @return all NodeTypes in the database
+   * @return all NodeTypes in the database without last
    */
   @Override
-  public abstract Iterable<NodeType> getAllNodes();
+  public abstract Iterable<NodeType> getAllNodesWithoutLast();
 }

@@ -63,22 +63,55 @@ public class GameNodeRepository extends
         if (logger.isDebugEnabled())
           logger.debug("Game node creation at date = " + date);
         newGameNode.setProperty(DATE_FIELD, date);
-        newGameNode.setProperty(STATUS_FIELD, status);
-
-        if (logger.isDebugEnabled())
-          logger.debug("Creating relationship to the root node");
-        refNode.createRelationshipTo(newGameNode, RelTypes.GAME);
+        newGameNode.setProperty(STATUS_FIELD, status.toString());
 
         if (logger.isDebugEnabled())
           logger.debug("Moving LAST_GAME relationship to this new game");
-        refNode.getSingleRelationship(RelTypes.LAST_GAME, Direction.BOTH)
-            .delete();
+        Relationship last_rel = refNode.getSingleRelationship(
+            RelTypes.LAST_GAME, Direction.BOTH);
+
+        if (last_rel != null)
+          {
+            Node old_last_game = last_rel.getEndNode();
+            refNode.createRelationshipTo(old_last_game, RelTypes.GAME);
+            last_rel.delete();
+          }
+        else
+          logger
+              .warn("No LAST_GAME relationship found. This is maybe due to a first game creation");
+
         refNode.createRelationshipTo(newGameNode, RelTypes.LAST_GAME);
 
         tx.success();
         if (logger.isDebugEnabled())
           logger.debug("New Game added successfuly");
         return new GameNode(newGameNode);
+      }
+    finally
+      {
+        if (logger.isDebugEnabled())
+          logger.debug("Finish transaction");
+        tx.finish();
+      }
+  }
+
+  /**
+   * Update a game status
+   * 
+   * @param game
+   *          the game
+   * @param status
+   *          the status to set
+   */
+  public void setStatus(GameNode game, Memory.FinalGameStatus status)
+  {
+    if (logger.isDebugEnabled())
+      logger.debug("Opening transaction for game status update");
+    Transaction tx = graphDb.beginTx();
+    try
+      {
+        game.underlyingNode.setProperty(STATUS_FIELD, status.toString());
+        tx.success();
       }
     finally
       {
@@ -119,7 +152,7 @@ public class GameNodeRepository extends
    * 
    * @see ac.memory.persistance.AbstractEpisodicNodeRepository#getAllNodes() */
   @Override
-  public Iterable<GameNode> getAllNodes()
+  public Iterable<GameNode> getAllNodesWithoutLast()
   {
     if (logger.isDebugEnabled())
       logger.debug("Getting all the games nodes");
@@ -132,6 +165,12 @@ public class GameNodeRepository extends
         return new GameNode(gameRel.getEndNode());
       }
     };
+  }
+
+  @Override
+  protected Node getRootNode(GraphDatabaseService graphDb)
+  {
+    return getRootNode(graphDb, RelTypes.REF_GAME);
   }
 
 }

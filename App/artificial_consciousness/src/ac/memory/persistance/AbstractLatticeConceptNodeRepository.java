@@ -72,5 +72,5 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
    * @return all NodeAttributes in the database
    */
   @Override
-  public abstract Iterable<NodeType> getAllNodes();
+  public abstract Iterable<NodeType> getAllNodesWithoutLast();
 }

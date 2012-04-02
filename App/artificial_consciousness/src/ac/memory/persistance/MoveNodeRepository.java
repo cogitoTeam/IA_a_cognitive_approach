@@ -118,7 +118,7 @@ public class MoveNodeRepository extends
    * 
    * @see ac.memory.persistance.AbstractEpisodicNodeRepository#getAllNodes() */
   @Override
-  public Iterable<MoveNode> getAllNodes()
+  public Iterable<MoveNode> getAllNodesWithoutLast()
   {
     if (logger.isDebugEnabled())
       logger.debug("Getting all the games nodes");
@@ -133,4 +133,9 @@ public class MoveNodeRepository extends
     };
   }
 
+  @Override
+  protected Node getRootNode(GraphDatabaseService graphDb)
+  {
+    return getRootNode(graphDb, RelTypes.REF_MOVE);
+  }
 }

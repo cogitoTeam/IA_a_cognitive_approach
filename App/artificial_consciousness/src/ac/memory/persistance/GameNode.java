@@ -3,10 +3,15 @@
  */
 package ac.memory.persistance;
 
+import java.lang.management.MemoryType;
+
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
+import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.Transaction;
+import org.neo4j.kernel.EmbeddedGraphDatabase;
 
 import ac.memory.Memory;
 import ac.memory.Memory.FinalGameStatus;
@@ -33,18 +38,15 @@ public class GameNode extends AbstractEpisodicNode<GameNode>
    */
   public Memory.FinalGameStatus getStatus()
   {
-    return (FinalGameStatus) underlyingNode.getProperty("status");
-  }
-
-  /**
-   * Set the status of the game
-   * 
-   * @param status
-   *          the status
-   */
-  public void setStatus(Memory.FinalGameStatus status)
-  {
-    underlyingNode.setProperty("status", status);
+    try
+      {
+        return Memory.FinalGameStatus.valueOf((String) underlyingNode
+            .getProperty("status"));
+      }
+    catch (Exception e)
+      {
+        return Memory.FinalGameStatus.UNRECOGNIZED;
+      }
   }
 
   /* (non-Javadoc)

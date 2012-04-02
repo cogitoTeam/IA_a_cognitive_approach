@@ -34,7 +34,6 @@ public class ObjectNodeRepository extends
   public ObjectNodeRepository(GraphDatabaseService graphDb, Index<Node> index)
   {
     super(graphDb, index, ID_FIELD);
-    refNode = getRootNode(graphDb);
     if (logger.isDebugEnabled())
       logger.debug("Building new ObjectNodeRepository");
   }
@@ -53,9 +52,6 @@ public class ObjectNodeRepository extends
   @Override
   public ObjectNode createNode(CompleteBoardState object) throws Exception
   {
-    // to guard against duplications we use the lock grabbed on ref node
-    // when
-    // creating a relationship and are optimistic about person not existing
     if (logger.isDebugEnabled())
       logger.debug("Opening transaction for object node creation");
     Transaction tx = graphDb.beginTx();
@@ -189,7 +185,7 @@ public class ObjectNodeRepository extends
    * @return all NodeAttributes in the database
    */
   @Override
-  public Iterable<ObjectNode> getAllNodes()
+  public Iterable<ObjectNode> getAllNodesWithoutLast()
   {
     if (logger.isDebugEnabled())
       logger.debug("Getting all the object nodes");
@@ -205,7 +201,8 @@ public class ObjectNodeRepository extends
     };
   }
 
-  private Node getRootNode(GraphDatabaseService graphDb)
+  @Override
+  protected Node getRootNode(GraphDatabaseService graphDb)
   {
     return getRootNode(graphDb, RelTypes.REF_OBJECTS);
   }

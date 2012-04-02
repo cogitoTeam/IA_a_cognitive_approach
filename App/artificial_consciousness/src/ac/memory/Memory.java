@@ -30,7 +30,11 @@ public interface Memory
    */
   enum FinalGameStatus
   {
-    WON, LOST, INTERRUPTED, UNDEFINED;
+    WON, LOST, INTERRUPTED, UNDEFINED,
+    /**
+     * When the valueOf failed, return this status :)
+     */
+    UNRECOGNIZED;
   }
 
   /**
