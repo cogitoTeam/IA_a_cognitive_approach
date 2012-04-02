@@ -19,7 +19,7 @@ import ac.shared.structure.CompleteBoardState;
  * @version 0.1
  */
 public class ObjectNode extends
-    AbstractNode<ObjectNode, AttributeNode, CompleteBoardState>
+    AbstractLatticeContextNode<ObjectNode, AttributeNode, CompleteBoardState>
 {
   private static final Logger logger = Logger.getLogger(ObjectNode.class);
 

@@ -19,7 +19,7 @@ import ac.shared.structure.RelevantPartialBoardState;
  * @version 0.1
  */
 public class AttributeNode extends
-    AbstractNode<AttributeNode, ObjectNode, RelevantPartialBoardState>
+    AbstractLatticeContextNode<AttributeNode, ObjectNode, RelevantPartialBoardState>
 {
   private static final Logger logger = Logger.getLogger(AttributeNode.class);
 

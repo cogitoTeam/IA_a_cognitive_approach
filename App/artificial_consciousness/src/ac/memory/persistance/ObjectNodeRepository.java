@@ -20,7 +20,7 @@ import org.neo4j.helpers.collection.IterableWrapper;
  * @version 0.1
  */
 public class ObjectNodeRepository extends
-    AbstractNodeRepository<CompleteBoardState, ObjectNode>
+    AbstractLatticeConceptNodeRepository<CompleteBoardState, ObjectNode>
 {
   private static final Logger logger = Logger
       .getLogger(ObjectNodeRepository.class);
