@@ -1,9 +1,10 @@
-package ac.memory.persistance;
+package ac.memory.persistence;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import ac.memory.persistance.RelTypes;
+
+import ac.memory.persistence.RelTypes;
 import ac.shared.structure.CompleteBoardState;
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;

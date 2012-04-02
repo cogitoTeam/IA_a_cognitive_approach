@@ -12,11 +12,11 @@ import org.apache.log4j.Logger;
 
 import book.Pair;
 
-import ac.memory.persistance.AttributeNode;
-import ac.memory.persistance.AttributeNodeRepository;
-import ac.memory.persistance.Neo4jService;
-import ac.memory.persistance.ObjectNode;
-import ac.memory.persistance.ObjectNodeRepository;
+import ac.memory.persistence.AttributeNode;
+import ac.memory.persistence.AttributeNodeRepository;
+import ac.memory.persistence.Neo4jService;
+import ac.memory.persistence.ObjectNode;
+import ac.memory.persistence.ObjectNodeRepository;
 import ac.shared.structure.CompleteBoardState;
 import ac.shared.structure.RelevantPartialBoardState;
 

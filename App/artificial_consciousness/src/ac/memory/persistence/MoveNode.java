@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.memory.persistance;
+package ac.memory.persistence;
 
 import java.util.Collection;
 import org.apache.log4j.Logger;

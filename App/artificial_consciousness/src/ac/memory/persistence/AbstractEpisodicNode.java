@@ -1,4 +1,4 @@
-package ac.memory.persistance;
+package ac.memory.persistence;
 
 import java.util.Date;
 

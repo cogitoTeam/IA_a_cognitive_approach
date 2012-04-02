@@ -1,4 +1,4 @@
-package ac.memory.persistance;
+package ac.memory.persistence;
 
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;

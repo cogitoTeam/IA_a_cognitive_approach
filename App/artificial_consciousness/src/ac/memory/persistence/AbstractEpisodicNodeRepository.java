@@ -1,4 +1,4 @@
-package ac.memory.persistance;
+package ac.memory.persistence;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 
