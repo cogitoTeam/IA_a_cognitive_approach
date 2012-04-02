@@ -3,6 +3,7 @@ package ac.reasoning;
 import org.apache.log4j.Logger;
 
 import ac.memory.ActiveMemory;
+import agent.Action;
 
 /**
  * Cette classe représente le module de raisonnement.
@@ -46,13 +47,15 @@ public class Reasoning
 
   /**
    * Active the ChoiceEngine
+   * @return an Action
    */
-  public void stimulate()
+  public Action stimulate()
   {
     logger.debug("stimulate");
     _introspection_engine.stop();
     _choice_engine.start();
     _introspection_engine.start();
+    return null;
   }
 
 }

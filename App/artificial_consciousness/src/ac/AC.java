@@ -45,15 +45,13 @@ public class AC extends Agent
   @Override
   protected void think()
   {
-    // TODO Auto-generated method stub
-
+    //nothings to do
   }
 
   @Override
   protected Action choicesReaction(Choices percept)
   {
-    // TODO Auto-generated method stub
-    return null;
+    return this._analysis.analyse(percept);
   }
 
   @Override
