@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
-import ac.memory.Memory;
+import ac.shared.GameStatus;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -29,16 +29,16 @@ public class GameNode extends AbstractEpisodicNode<GameNode>
   /**
    * @return status of the game
    */
-  public Memory.FinalGameStatus getStatus()
+  public GameStatus getStatus()
   {
     try
       {
-        return Memory.FinalGameStatus.valueOf((String) underlyingNode
-            .getProperty("status"));
+        return GameStatus
+            .valueOf((String) underlyingNode.getProperty("status"));
       }
     catch (Exception e)
       {
-        return Memory.FinalGameStatus.UNRECOGNIZED;
+        return GameStatus.UNRECOGNIZED;
       }
   }
 

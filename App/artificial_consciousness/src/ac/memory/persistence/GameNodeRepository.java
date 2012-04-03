@@ -13,7 +13,7 @@ import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.helpers.collection.IterableWrapper;
 
-import ac.memory.Memory;
+import ac.shared.GameStatus;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -44,7 +44,7 @@ public class GameNodeRepository extends
    *          status of the game
    * @return the new GameNode
    */
-  public GameNode createGame(Memory.FinalGameStatus status)
+  public GameNode createGame(GameStatus status)
   {
     // to guard against duplications we use the lock grabbed on ref node
     // when
@@ -104,7 +104,7 @@ public class GameNodeRepository extends
    * @param status
    *          the status to set
    */
-  public void setStatus(GameNode game, Memory.FinalGameStatus status)
+  public void setStatus(GameNode game, GameStatus status)
   {
     if (logger.isDebugEnabled())
       logger.debug("Opening transaction for game status update");

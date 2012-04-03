@@ -8,6 +8,7 @@ import java.util.List;
 import book.Pair;
 
 import ac.shared.CompleteBoardState;
+import ac.shared.GameStatus;
 import ac.shared.RelevantPartialBoardState;
 
 /**
@@ -20,22 +21,6 @@ import ac.shared.RelevantPartialBoardState;
  */
 public interface Memory
 {
-
-  /**
-   * Final status of a game
-   * 
-   * @author Thibaut Marmin <marminthibaut@gmail.com>
-   * @date 28 mars 2012
-   * @version 0.1
-   */
-  enum FinalGameStatus
-  {
-    WON, LOST, INTERRUPTED, UNDEFINED,
-    /**
-     * When the valueOf failed, return this status :)
-     */
-    UNRECOGNIZED;
-  }
 
   /**
    * USED BY ANALYSIS Method needed by analysis module to get all the
@@ -97,6 +82,6 @@ public interface Memory
    * @throws MemoryException
    *           When no game started
    */
-  void EndOfGame(FinalGameStatus status, float score) throws MemoryException;
+  void EndOfGame(GameStatus status, float score) throws MemoryException;
 
 }

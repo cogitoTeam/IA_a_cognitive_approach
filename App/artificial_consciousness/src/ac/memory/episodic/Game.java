@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import ac.memory.Memory;
+import ac.shared.GameStatus;
 
 /**
  * Reprensents a game in the episodic memory
@@ -21,7 +21,7 @@ public class Game
   private static final Logger logger = Logger.getLogger(Game.class);
 
   private Move last_move;
-  private Memory.FinalGameStatus final_status;
+  private GameStatus final_status;
   private float score;
   private Date date;
   private int quantity;
@@ -37,7 +37,7 @@ public class Game
   /**
    * @return the final_status
    */
-  public Memory.FinalGameStatus getFinal_status()
+  public GameStatus getFinal_status()
   {
     return final_status;
   }
@@ -71,9 +71,10 @@ public class Game
    */
   public Game()
   {
-    if (logger.isDebugEnabled()) logger.debug("Creating new Game");
+    if (logger.isDebugEnabled())
+      logger.debug("Creating new Game");
     this.last_move = null;
-    this.final_status = Memory.FinalGameStatus.UNDEFINED;
+    this.final_status = GameStatus.UNDEFINED;
     this.score = 0;
     this.date = new Date();
     this.quantity = 0;
@@ -87,7 +88,8 @@ public class Game
    */
   public void addMove(Move move)
   {
-    if (logger.isDebugEnabled()) logger.debug("Adding move " + move + " to the game");
+    if (logger.isDebugEnabled())
+      logger.debug("Adding move " + move + " to the game");
     Move last = this.last_move;
     move.setPrev_move(last);
     this.last_move = move;

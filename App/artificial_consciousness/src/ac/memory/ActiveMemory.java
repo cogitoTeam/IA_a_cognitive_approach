@@ -5,6 +5,7 @@ import java.util.List;
 import book.Pair;
 
 import ac.shared.CompleteBoardState;
+import ac.shared.GameStatus;
 import ac.shared.RelevantPartialBoardState;
 
 /**
@@ -79,8 +80,7 @@ public class ActiveMemory implements Memory
    * 
    * @see ac.memory.Memory#EndOfGame(ac.memory.Memory.FinalGameStatus, float) */
   @Override
-  public void EndOfGame(FinalGameStatus status, float score)
-      throws MemoryException
+  public void EndOfGame(GameStatus status, float score) throws MemoryException
   {
     // TODO Auto-generated method stub
 
