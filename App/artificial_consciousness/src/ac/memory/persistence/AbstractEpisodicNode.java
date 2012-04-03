@@ -48,14 +48,14 @@ abstract public class AbstractEpisodicNode<ObjectType> extends
    * @throws NodeException
    *           when the current game has no precedent game
    */
-  public abstract ObjectType getPrevious() throws NodeException;
+  public abstract ObjectType getPrevious();
 
   /**
    * @return Next Node of this Node
    * @throws NodeException
    *           when the current game has no next game
    */
-  public abstract ObjectType getNext() throws NodeException;
+  public abstract ObjectType getNext();
 
   @Override
   public int hashCode()

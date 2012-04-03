@@ -39,12 +39,12 @@ public class ListEpisodicMemoryTest
     assertEquals(0, e.getQuantity());
 
     Game g1 = new Game();
-    e.addGame(g1);
+    e.newGame(g1);
     assertEquals(g1, e.getLastGame());
     assertEquals(1, e.getQuantity());
 
     Game g2 = new Game();
-    e.addGame(g2);
+    e.newGame(g2);
     assertEquals(g2, e.getLastGame());
     assertEquals(2, e.getQuantity());
   }
@@ -69,22 +69,22 @@ public class ListEpisodicMemoryTest
     assertEquals(0, e.getQuantity());
 
     Game g1 = new Game();
-    e.addGame(g1);
+    e.newGame(g1);
     assertEquals(g1, e.getLastGame());
     assertEquals(1, e.getQuantity());
 
     Game g2 = new Game();
-    e.addGame(g2);
+    e.newGame(g2);
     assertEquals(g2, e.getLastGame());
     assertEquals(2, e.getQuantity());
 
     Game g3 = new Game();
-    e.addGame(g3);
+    e.newGame(g3);
     assertEquals(g3, e.getLastGame());
     assertEquals(3, e.getQuantity());
 
     Game g4 = new Game();
-    e.addGame(g4);
+    e.newGame(g4);
     assertEquals(g4, e.getLastGame());
     assertEquals(4, e.getQuantity());
 

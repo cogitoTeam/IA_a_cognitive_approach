@@ -2,6 +2,9 @@ package ac.memory.episodic;
 
 import java.util.List;
 
+import ac.shared.CompleteBoardState;
+import ac.shared.GameStatus;
+
 /**
  * Interface for an episodic memory
  * 
@@ -13,6 +16,7 @@ public interface EpisodicMemory
 {
   /**
    * @return the more recent game
+   * @throws EpisodicMemoryException
    */
   Game getLastGame();
 
@@ -28,5 +32,22 @@ public interface EpisodicMemory
    * 
    * @param game
    */
-  void addGame(Game game);
+  void newGame();
+
+  /**
+   * Add a move in the memory (added for the last game not finished)
+   * 
+   * @param board_state
+   *          the completeBoardState related to this move
+   * @throws EpisodicMemoryException 
+   */
+  void newMove(CompleteBoardState board_state) throws EpisodicMemoryException;
+  
+  /**
+   * @param status status set to the last game
+   */
+  void finishGame(GameStatus status);
+
+  String toString();
+
 }

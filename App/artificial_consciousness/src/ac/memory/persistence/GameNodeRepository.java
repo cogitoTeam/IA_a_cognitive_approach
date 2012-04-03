@@ -97,32 +97,6 @@ public class GameNodeRepository extends
   }
 
   /**
-   * Update a game status
-   * 
-   * @param game
-   *          the game
-   * @param status
-   *          the status to set
-   */
-  public void setStatus(GameNode game, GameStatus status)
-  {
-    if (logger.isDebugEnabled())
-      logger.debug("Opening transaction for game status update");
-    Transaction tx = graphDb.beginTx();
-    try
-      {
-        game.underlyingNode.setProperty(STATUS_FIELD, status.toString());
-        tx.success();
-      }
-    finally
-      {
-        if (logger.isDebugEnabled())
-          logger.debug("Finish transaction");
-        tx.finish();
-      }
-  }
-
-  /**
    * Remove oldest games
    * 
    * @param nb

@@ -37,9 +37,11 @@ public class MoveNodeRepository extends
 
   /**
    * @param game
+   * @param board_state
+   *          the related board state (an object of the lattice)
    * @return the new MoveNode
    */
-  public MoveNode addMove(GameNode game)
+  public MoveNode addMove(GameNode game, ObjectNode board_state)
   {
     // to guard against duplications we use the lock grabbed on ref node
     // when
@@ -81,6 +83,7 @@ public class MoveNodeRepository extends
                   .debug("Insering new move at the first place of the game move sequence");
 
             newMoveNode.createRelationshipTo(gameLastMove, RelTypes.PREV_MOVE);
+
           }
         else
           {
@@ -89,6 +92,12 @@ public class MoveNodeRepository extends
           }
         game.underlyingNode.createRelationshipTo(newMoveNode,
             RelTypes.LAST_MOVE);
+
+        if (logger.isDebugEnabled())
+          logger
+              .debug("Creation of the BOARD_STATE RELATION between the new move node and its related board state");
+        newMoveNode.createRelationshipTo(board_state.underlyingNode,
+            RelTypes.BOARD_STATE);
 
         tx.success();
         if (logger.isDebugEnabled())

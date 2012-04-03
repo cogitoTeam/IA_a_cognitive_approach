@@ -14,6 +14,8 @@ import org.neo4j.helpers.collection.IterableWrapper;
 import org.neo4j.kernel.Traversal;
 import org.neo4j.kernel.Uniqueness;
 
+import ac.memory.semantic.graph.lattice.LatticeContextException;
+
 /**
  * Wrapping class for lattice context node
  * 
@@ -46,7 +48,7 @@ abstract public class AbstractLatticeContextNode<ObjectType, RelatedObjectType, 
     super(node);
     this.ID_FIELD = id_field;
   }
-  
+
   /**
    * @return the id of the node
    */
@@ -59,14 +61,11 @@ abstract public class AbstractLatticeContextNode<ObjectType, RelatedObjectType, 
    * Return the object unserialized
    * 
    * @return the object of the node
-   * @throws IOException
-   *           Should never happen
-   * @throws ClassNotFoundException
-   *           Error when unserialize
+   * @throws LatticeContextException
+   *           error when unserialize object
    */
   @SuppressWarnings("unchecked")
-  public StoredObjectType getObject() throws IOException,
-      ClassNotFoundException
+  public StoredObjectType getObject() throws LatticeContextException
   {
     if (logger.isDebugEnabled())
       logger.debug("Getting the object");
@@ -75,8 +74,18 @@ abstract public class AbstractLatticeContextNode<ObjectType, RelatedObjectType, 
     // / UNSERIALIZE
     ByteArrayInputStream bis = new ByteArrayInputStream(
         (byte[]) underlyingNode.getProperty(OBJECT));
-    ObjectInput in = new ObjectInputStream(bis);
-    return (StoredObjectType) in.readObject();
+    ObjectInput in;
+    try
+      {
+        in = new ObjectInputStream(bis);
+        return (StoredObjectType) in.readObject();
+      }
+    catch (IOException | ClassNotFoundException e)
+      {
+        logger.warn("An error occured while un-serialise object", e);
+        throw new LatticeContextException(
+            "An error occured while un-zerialize object", e);
+      }
   }
 
   /**
@@ -201,7 +210,7 @@ abstract public class AbstractLatticeContextNode<ObjectType, RelatedObjectType, 
         .equals(((AbstractLatticeContextNode<ObjectType, RelatedObjectType, StoredObjectType>) o)
             .getUnderlyingNode());
   }
-  
+
   @Override
   public String toString()
   {

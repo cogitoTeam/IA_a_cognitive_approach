@@ -33,7 +33,7 @@ public class MoveNode extends AbstractEpisodicNode<MoveNode>
    * 
    * @see ac.memory.persistance.AbstractEpisodicNode#getPrevious() */
   @Override
-  public MoveNode getPrevious() throws NodeException
+  public MoveNode getPrevious()
   {
     return getMove(EpisodicDirection.PREVIOUS);
   }
@@ -42,7 +42,7 @@ public class MoveNode extends AbstractEpisodicNode<MoveNode>
    * 
    * @see ac.memory.persistance.AbstractEpisodicNode#getNext() */
   @Override
-  public MoveNode getNext() throws NodeException
+  public MoveNode getNext()
   {
     return getMove(EpisodicDirection.NEXT);
   }
@@ -71,7 +71,31 @@ public class MoveNode extends AbstractEpisodicNode<MoveNode>
       }
   }
 
-  private MoveNode getMove(EpisodicDirection direction) throws NodeException
+  /**
+   * @return the related board stage of the move
+   * @throws NodeException
+   *           if the relationship not exists (That should never happen !)
+   */
+  public ObjectNode getObject() throws NodeException
+  {
+    Relationship rel = underlyingNode.getSingleRelationship(
+        RelTypes.BOARD_STATE, Direction.OUTGOING);
+
+    if (rel != null)
+      {
+        return new ObjectNode(rel.getEndNode());
+      }
+    else
+      {
+        logger.error("Error when getting the related board stage of move "
+            + getDate() + ", No relationship BOARD_STATE found");
+        throw new NodeException(
+            "Error when getting the related board stage of move " + getDate()
+                + ", No relationship BOARD_STATE found");
+      }
+  }
+
+  private MoveNode getMove(EpisodicDirection direction)
   {
     Direction dir = Direction.OUTGOING;
     String s_debug = "previous";
@@ -88,14 +112,16 @@ public class MoveNode extends AbstractEpisodicNode<MoveNode>
 
     if (rel != null)
       {
-        return new MoveNode(rel.getStartNode());
+        if (direction.equals(EpisodicDirection.PREVIOUS))
+          return new MoveNode(rel.getEndNode());
+        else
+          return new MoveNode(rel.getStartNode());
       }
     else
       {
         logger.warn("Move " + getDate() + " is the move game and has no "
             + s_debug + " move");
-        throw new NodeException("Move " + getDate()
-            + " is the last move and has no " + s_debug + " move");
+        return null;
       }
   }
 

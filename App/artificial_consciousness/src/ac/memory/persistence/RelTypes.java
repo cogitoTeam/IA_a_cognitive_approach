@@ -72,5 +72,10 @@ public enum RelTypes implements RelationshipType
   /**
    * Relationship between a move node and his previous move node
    */
-  PREV_MOVE;
+  PREV_MOVE,
+  /**
+   * Relationship between a move node ans hid related board state (should be
+   * unique)
+   */
+  BOARD_STATE;
 }
