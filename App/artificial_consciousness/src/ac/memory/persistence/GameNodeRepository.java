@@ -73,6 +73,7 @@ public class GameNodeRepository extends
         if (last_rel != null)
           {
             Node old_last_game = last_rel.getEndNode();
+            newGameNode.createRelationshipTo(old_last_game, RelTypes.PREV_GAME);
             refNode.createRelationshipTo(old_last_game, RelTypes.GAME);
             last_rel.delete();
           }
