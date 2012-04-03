@@ -55,17 +55,23 @@ For the AC application, attributes store RelevantPartialBoardState and objects s
         -- LAST_GAME --> **GAME 1 (the last)**
 
         ---- GAME ----> **GAME 2**  --
+        
                                       |
                                    PREV_GAME
                                       |
+                                      
         ---- GAME ----> **GAME 3** <--|
+        
                                       |
                                    PREV_GAME
                                       |
+                                      
         ---- GAME ----> **GAME 4** <--|
+        
                                       |
                                    PREV_GAME
                                       |
+                                      
         ---- GAME ----> ***GAME 5** <--
 
         ...
