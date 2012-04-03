@@ -9,7 +9,7 @@ import game.BoardMatrix;
 import java.util.LinkedList;
 import java.util.List;
 
-import ac.shared.GameEndStatus;
+import ac.shared.GameStatus;
 
 public abstract class Percept
 {
@@ -96,7 +96,7 @@ public abstract class Percept
     private final int score;
 
     // creation
-    protected GameEnd(GameEndStatus _game_end_status,
+    protected GameEnd(GameStatus _game_end_status,
         BoardMatrix _current_board, int _score)
     {
       super(Type.GAME_END, _current_board);

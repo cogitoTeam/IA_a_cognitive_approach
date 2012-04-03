@@ -7,7 +7,7 @@ package ac.shared;
  * @date 3 avr. 2012
  * @version 0.1
  */
-public enum GameEndStatus
+public enum GameStatus
 {
 
   /**
