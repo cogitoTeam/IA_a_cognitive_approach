@@ -53,6 +53,11 @@ For the AC application, attributes store RelevantPartialBoardState and objects s
   * ---- REF_GAME ----> **MAIN GAME NODE**
 
         -- LAST_GAME --> **GAME 1 (the last)**
+        
+                   |
+                PREV_GAME
+                   |
+                   ▼ 
 
         ---- GAME ----> **GAME 2**
         
@@ -78,3 +83,42 @@ For the AC application, attributes store RelevantPartialBoardState and objects s
         ---- GAME ----> ***GAME 5**
 
         ...
+        
+Each game has a "LAST_MOVE" relationship to a move node (the last move of the game).
+        
+* **MAIN NODE**
+  * ---- REF_MOVE ----> **MAIN MOVE NODE**
+
+        -- LAST_MOVE --> **MOVE 1 (the last)**
+        
+                   |
+                PREV_MOVE
+                   |
+                   ▼ 
+
+        ---- MOVE ----> **MOVE 2**
+        
+                   |
+                PREV_MOVE
+                   |
+                   ▼ 
+                                      
+        ---- MOVE ----> **MOVE 3**
+        
+                   |
+                PREV_MOVE
+                   |
+                   ▼ 
+                                      
+        ---- MOVE ----> **MOVE 4**
+        
+                   |
+                PREV_MOVE
+                   |
+                   ▼ 
+                                      
+        ---- MOVE ----> ***MOVE 5**
+
+        ...
+
+Each Move has a "BOARD_STATE" realtionship to an Object node (object of the lattice context).
