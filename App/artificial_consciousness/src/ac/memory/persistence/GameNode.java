@@ -3,18 +3,11 @@
  */
 package ac.memory.persistence;
 
-import java.lang.management.MemoryType;
-
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.Transaction;
-import org.neo4j.kernel.EmbeddedGraphDatabase;
-
 import ac.memory.Memory;
-import ac.memory.Memory.FinalGameStatus;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
