@@ -8,7 +8,7 @@ To ensure data persistence, this module incorporates an embedded version of Neo4
 * The repositories : for ObjectNodes and AttributeNodes. It provide access to the nodes, allows to get node by id, etc.,
 * The nodes : ObjectNode and Attribute node. These classes wrap generic node classes.
 
-## Graph schema is as following :
+## Graph schema is as following for Lattice Context Storing:
 
 * **MAIN NODE**
   * ---- REF_ATTRIBUTE ----> **MAIN ATTRIBUTE NODE**
@@ -45,4 +45,27 @@ Relationship between an object and an attribute :
 
 *Note: these relationships can be crossed in both directions.*
 
-For the AC application, attributes store RelevantPartialBoardState and objects store CompleteBoardState/
+For the AC application, attributes store RelevantPartialBoardState and objects store CompleteBoardState.
+
+## Graph schema is as following for Episodic Memory Storing:
+
+* **MAIN NODE**
+  * ---- REF_GAME ----> **MAIN GAME NODE**
+
+        -- LAST_GAME --> **GAME 1 (the last)**
+
+        ---- GAME ----> **GAME 2**  --
+                                      |
+                                   PREV_GAME
+                                      |
+        ---- GAME ----> **GAME 3** <--|
+                                      |
+                                   PREV_GAME
+                                      |
+        ---- GAME ----> **GAME 4** <--|
+                                      |
+                                   PREV_GAME
+                                      |
+        ---- GAME ----> ***GAME 5** <--
+
+        ...
