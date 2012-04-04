@@ -2,8 +2,7 @@ package ac;
 
 import ac.analysis.Analysis;
 import agent.Action;
-import agent.Percept.Choices;
-import agent.Percept.GameEnd;
+import agent.Percept;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
 import agent.Agent;
@@ -35,27 +34,22 @@ public class AC extends Agent
     this._memory = new ActiveMemory();
     this._reasoning = new Reasoning(this._memory);
     this._analysis = new Analysis(this._memory, this._reasoning);
-
+    
   }
-
+  
   /* **************************************************************************
    * METHODS
    * ************************************************************************ */
 
+  
   @Override
   protected void think()
   {
-    //nothings to do
+    //nothing to do
   }
 
   @Override
-  protected Action choicesReaction(Choices percept)
-  {
-    return this._analysis.analyse(percept);
-  }
-
-  @Override
-  protected Action gameEndReaction(GameEnd percept)
+  protected Action perceptReaction(Percept percept)
   {
     // TODO Auto-generated method stub
     return null;
