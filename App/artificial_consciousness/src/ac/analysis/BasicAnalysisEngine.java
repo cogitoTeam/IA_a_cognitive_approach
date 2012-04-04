@@ -2,7 +2,7 @@ package ac.analysis;
 
 import ac.analysis.structure.*;
 import ac.shared.*;
-import agent.Percept;
+import agent.Percept.*;
 
 /**
  * This class implements the basic conceptual analyzer : It converts a board
@@ -12,15 +12,15 @@ import agent.Percept;
  * 
  */
 public class BasicAnalysisEngine {
-	private Percept input;
+	private Choices input;
 
 	/**
 	 * Default constructor for the basic conceptual analyzer
 	 * 
 	 * @param input
-	 *            a Percept
+	 *            a list of available choices
 	 */
-	public BasicAnalysisEngine(Percept input) {
+	public BasicAnalysisEngine(Choices input) {
 		super();
 		this.setInput(input);
 	}
@@ -30,7 +30,7 @@ public class BasicAnalysisEngine {
 	 * 
 	 * @return input the Percept
 	 */
-	public Percept getInput() {
+	public Choices getInput() {
 		return input;
 	}
 
@@ -40,7 +40,7 @@ public class BasicAnalysisEngine {
 	 * @param input
 	 *            a Percept
 	 */
-	public void setInput(Percept input) {
+	public void setInput(Choices input) {
 		this.input = input;
 	}
 
