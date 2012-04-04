@@ -34,24 +34,21 @@ public interface Memory
       throws MemoryException;
 
   /**
-   * USED BY ANALYSIS Put a couple of CompleteBoardState and list of
-   * RelevantPartialBoardState witch are matching in the memory
+   * USED BY ANALYSIS Put an option in the memory
    * 
-   * @param cbs
-   * @param matching
+   * @param option 
    * @throws MemoryException
    */
-  void putCompleteBoardState(CompleteBoardState cbs,
-      List<RelevantPartialBoardState> matching) throws MemoryException;
+  void putOption(Option option> matching) throws MemoryException;
 
   /**
-   * USED BY REASONING This method transmit the list of CompleteBoardState
+   * USED BY REASONING This method transmit the list of Options
    * stored in the active memory with a grade for each one
    * 
    * @return the list of the CompleteBoardState in the ActiveMemory
    * @throws MemoryException
    */
-  List<Pair<CompleteBoardState, Double>> getGradedCompleteBoardState()
+  List<Pair<Option, Double>> getGradedOptions()
       throws MemoryException;
 
   /**
@@ -83,5 +80,7 @@ public interface Memory
    *           When no game started
    */
   void EndOfGame(GameStatus status, float score) throws MemoryException;
+  
+  
 
 }
