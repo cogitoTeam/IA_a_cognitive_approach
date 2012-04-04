@@ -15,6 +15,16 @@ public class RelevantPartialBoardState extends AbstractBoardState implements
   /**
    * @param id
    */
+  public RelevantPartialBoardState()
+  {
+    super();
+  }
+
+  /**
+   * /!\ This constructor will be removed later
+   * 
+   * @param id
+   */
   public RelevantPartialBoardState(long id)
   {
     super(id);
@@ -47,23 +57,6 @@ public class RelevantPartialBoardState extends AbstractBoardState implements
   public void setWeight(double weight)
   {
     this.weight = weight;
-  }
-
-  /**
-   * @return the id
-   */
-  public long getId()
-  {
-    return id;
-  }
-
-  /**
-   * @param id
-   *          the id to set
-   */
-  public void setId(long id)
-  {
-    this.id = id;
   }
 
 }
