@@ -41,22 +41,34 @@ public class ReversiRules extends Rules
     }
     
     @Override
+    public boolean canMove(BoardMatrix board, Player player)
+    {
+        return !getLegalMoves(board, player).isEmpty();
+    }
+    
+    @Override
     public boolean isDraw(BoardMatrix board) 
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (!canMove(board, Player.WHITE) 
+                && !canMove(board, Player.BLACK)
+                && getValue(board, Player.WHITE) 
+                    == getValue(board, Player.BLACK));
     }
 
     @Override
     public boolean hasWon(BoardMatrix board, Player player) 
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (!canMove(board, Player.WHITE) 
+                && !canMove(board, Player.BLACK)
+                && getValue(board, player) 
+                        > getValue(board, Game.otherPlayer(player)));
     }
     
     
     @Override
     public int getValue(BoardMatrix board, Player player) 
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return board.count_player_pieces(player);
     }
 
     @Override

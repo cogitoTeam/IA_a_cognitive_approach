@@ -69,6 +69,8 @@ public abstract class Rules
     // query
     public abstract Game.Player getFirstPlayer();
     
+    public abstract boolean canMove(BoardMatrix board, Player player);
+    
     public abstract boolean isDraw(BoardMatrix board);
     
     public abstract boolean hasWon(BoardMatrix board, Player player);
