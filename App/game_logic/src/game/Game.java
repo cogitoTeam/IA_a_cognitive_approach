@@ -99,7 +99,7 @@ public class Game
         }
         
         // if it's the right player's turn try to perform the move
-        current_state = rules.performMove(move, board, player);
+        current_state = rules.tryMove(move, board, player);
         
         // check if the move end the game
         if(current_state == State.MOVE_SUCCESS)

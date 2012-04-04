@@ -26,7 +26,7 @@ public abstract class Rules
         BoardMatrix child = parent.copy();
         // provided of course that the move is legal
         if(isLegalMove(move, parent, player))
-            performMove(move, child, player);
+            tryMove(move, child, player);
 
         // perform the move on a copy of the parent
         return child;
@@ -46,7 +46,6 @@ public abstract class Rules
         return children;
     }
 
-    // query
     public List<Position> getLegalMoves(BoardMatrix board, Player player)
     {
         // local variables
@@ -64,6 +63,31 @@ public abstract class Rules
         return positions;
     }
 
+    // modification
+    public Game.State tryMove(Position p, BoardMatrix board,
+                                        Player player)
+    {
+        // check if the move is legal
+        if(!isLegalMove(p, board, player))
+            return Game.State.MOVE_FAILURE;
+        
+        // perform the move itself, if it is legal
+        performMove(p, board, player);
+
+        // check if success has occured
+        if(hasWon(board, player))
+            return Game.State.VICTORY;
+        
+        // check if draw has occured
+        else if(isDraw(board))
+            return Game.State.DRAW;
+        
+        // otherwise report next player to move (cycle between the two)
+        else
+            return Game.State.MOVE_SUCCESS;
+    }
+    
+    
     /* PUBLIC INTERFACE */
  
     // query
@@ -83,13 +107,17 @@ public abstract class Rules
     public abstract BoardMatrix createBoard();
     
     // modification
-    public abstract Game.State performMove(Position p, BoardMatrix board,
-                                            Player player);
 
     public abstract void reset(BoardMatrix board);
     
     // override
     @Override
     public abstract String toString();
+    
+    /* PROTECTED INTERFACE */
+    
+    // modification
+    public abstract void performMove(Position p, BoardMatrix board, 
+            Player player);
 
 }

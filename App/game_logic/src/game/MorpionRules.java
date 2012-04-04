@@ -140,26 +140,10 @@ public class MorpionRules extends Rules
 
     // modification
     @Override
-    public Game.State performMove(Position p, BoardMatrix board, Player player) 
-    {
-        // check if the move is legal
-        if(!isLegalMove(p, board, player))
-            return State.MOVE_FAILURE;
-        
+    public void performMove(Position p, BoardMatrix board, Player player) 
+    {    
         // set the cell to the new colour
         board.setCellOwner(p, player);
-
-        // check if success has occured
-        if(hasWon(board, player))
-            return State.VICTORY;
-        
-        // check if draw has occured
-        else if(isDraw(board))
-            return State.DRAW;
-        
-        // otherwise report next player to move (cycle between the two)
-        else
-            return State.MOVE_SUCCESS;
     }
     
     @Override

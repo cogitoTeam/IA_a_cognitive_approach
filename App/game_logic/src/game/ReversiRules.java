@@ -72,16 +72,18 @@ public class ReversiRules extends Rules
     }
 
     @Override
-    public boolean isLegalMove(BoardMatrix.Position p, BoardMatrix board, Game.Player player) 
+    public boolean isLegalMove(BoardMatrix.Position p, BoardMatrix board, 
+        Game.Player player) 
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // modification
     @Override
-    public Game.State performMove(BoardMatrix.Position p, BoardMatrix board, Game.Player player) 
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void performMove(Position p, BoardMatrix board, Player player) 
+    {    
+        // set the cell to the new colour
+        board.setCellOwner(p, player);
     }
 
     @Override
