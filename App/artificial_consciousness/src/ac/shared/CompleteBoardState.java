@@ -28,6 +28,6 @@ public class CompleteBoardState extends AbstractBoardState
   public CompleteBoardState(long id)
   {
     super(id);
-  }
+	}
 
 }
