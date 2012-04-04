@@ -125,4 +125,22 @@ public class MoveNode extends AbstractEpisodicNode<MoveNode>
       }
   }
 
+  /**
+   * @return the related object node
+   * @throws NodeException
+   *           if relationship doesn't exists
+   */
+  public ObjectNode getRelatedObject() throws NodeException
+  {
+    Relationship rel = underlyingNode.getSingleRelationship(
+        RelTypes.BOARD_STATE, Direction.OUTGOING);
+    if (rel != null)
+      {
+        return new ObjectNode(rel.getEndNode());
+      }
+    else
+      throw new NodeException("The MoveNode " + getDate()
+          + " doesn't have related object");
+  }
+
 }
