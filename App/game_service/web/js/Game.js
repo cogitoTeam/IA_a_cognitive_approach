@@ -43,8 +43,9 @@ function Game()
     var current_turn;
     var n_players = 2;
     var id = null;
-    var is_local = [false, false];
-    var waiting_for_player = true;
+    /// FIXME!!!!
+    var is_local = [true, true]; //[false, false];
+    var waiting_for_player = false; //true;
 
     /* SUBROUTINES */
     var xml_parse_state = function(s_state, s_colour)
@@ -207,6 +208,7 @@ function Game()
         board.update_from_xml(data[0].childNodes[0]);
         
         /* Update the view to take changes into account */
+        console.log("redrawing");
         board.redraw();
     }
 

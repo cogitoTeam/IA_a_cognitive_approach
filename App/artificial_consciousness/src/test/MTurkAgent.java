@@ -6,7 +6,6 @@
 package test;
 
 import agent.Action;
-import agent.Agent;
 import agent.Percept;
 import agent.Percept.Choices;
 import agent.Percept.Defeat;
@@ -16,7 +15,7 @@ import game.BoardMatrix.Position;
 import java.util.Scanner;
 
 
-public class MTurkAgent extends Agent
+public class MTurkAgent extends SwitchAgent
 {
     /* ATTRIBUTES */
     
@@ -31,9 +30,15 @@ public class MTurkAgent extends Agent
     {
         System.out.println("Waiting for other player...");
     }
-
+    
     @Override
-    protected Action choices_reaction(Choices percept) 
+    protected void actionResult(boolean success, Action action) 
+    {
+        System.out.println(action + ((success) ? " successful!"  : " failed!"));
+    }
+    
+    @Override
+    protected Action choicesReaction(Choices percept) 
     {
         // ask user to make a choice
         System.out.println("It's your turn to make a move!");
@@ -67,36 +72,31 @@ public class MTurkAgent extends Agent
     }
 
     @Override
-    protected Action victory_reaction(Victory percept)
+    protected Action victoryReaction(Victory percept)
     {
         System.out.print("You win!");
-        return gameend_reaction(percept);
+        return gameEndReaction(percept);
     }
 
     @Override
-    protected Action defeat_reaction(Defeat percept) 
+    protected Action defeatReaction(Defeat percept) 
     {
         System.out.print("You lose!");
-        return gameend_reaction(percept);
+        return gameEndReaction(percept);
     }
 
     @Override
-    protected Action draw_reaction(Draw percept)
+    protected Action drawReaction(Draw percept)
     {
         System.out.print("It's a draw...");
-        return gameend_reaction(percept);
+        return gameEndReaction(percept);
     }
 
-    @Override
-    protected void action_result(boolean success, Action action) 
-    {
-        System.out.println(action + ((success) ? " successful!"  : " failed!"));
-    }
     
     
-    /* SUBROUTIES */
+    /* SUBROUTINES */
     
-    private Action gameend_reaction(Percept.GameEnd percept)
+    private Action gameEndReaction(Percept.GameEnd percept)
     {
         // tell the user their score
         System.out.println("Your score: " + percept.getScore());

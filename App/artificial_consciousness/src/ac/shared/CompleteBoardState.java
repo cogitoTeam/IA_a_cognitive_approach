@@ -15,6 +15,16 @@ public class CompleteBoardState extends AbstractBoardState
   /**
    * @param id
    */
+  public CompleteBoardState()
+  {
+    super();
+  }
+
+  /**
+   * /!\ This constructor will be removed later !
+   * 
+   * @param id
+   */
   public CompleteBoardState(long id)
   {
     super(id);

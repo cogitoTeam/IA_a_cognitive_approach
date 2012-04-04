@@ -27,6 +27,16 @@ public abstract class AbstractBoardState implements Serializable
    * @param id
    *          the id's advanced boardstate
    */
+  public AbstractBoardState()
+  {
+    // DEFAULT CONSTRUCTOR
+  }
+
+  /**
+   * /!\ This constructor will be removed later
+   * 
+   * @param id
+   */
   public AbstractBoardState(long id)
   {
     this.id = id;

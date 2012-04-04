@@ -7,16 +7,17 @@
 package test;
 
 import agent.Action;
-import agent.Agent;
 import agent.Percept.Choices;
 import agent.Percept.Defeat;
 import agent.Percept.Draw;
 import agent.Percept.Victory;
 
 
-public class RandomAgent extends Agent
+public class RandomAgent extends SwitchAgent
 {
 
+    /* IMPLEMENTATIONS */
+    
     @Override
     protected void think() 
     {
@@ -24,7 +25,7 @@ public class RandomAgent extends Agent
     }
 
     @Override
-    protected Action choices_reaction(Choices percept) 
+    protected Action choicesReaction(Choices percept) 
     {
         // choose random action from amongst options
         int rand_i = (int)(Math.random()*percept.getOptions().size());
@@ -32,28 +33,28 @@ public class RandomAgent extends Agent
     }
 
     @Override
-    protected Action victory_reaction(Victory percept) 
+    protected Action victoryReaction(Victory percept) 
     {
         // restart the game
         return new Action.Restart();
     }
 
     @Override
-    protected Action defeat_reaction(Defeat percept) 
+    protected Action defeatReaction(Defeat percept) 
     {
         // restart the game
         return new Action.Restart();
     }
 
     @Override
-    protected Action draw_reaction(Draw percept) 
+    protected Action drawReaction(Draw percept) 
     {
         // restart the game
         return new Action.Restart();
     }
     
     @Override
-    protected void action_result(boolean success, Action action) 
+    protected void actionResult(boolean success, Action action) 
     {
         if(!success)
         {

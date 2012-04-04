@@ -46,6 +46,16 @@ public class BoardMatrix
             row = _row;
             col = _col;
         }
+        public void add(Direction delta)
+        {
+            row += delta.row;
+            col += delta.col;
+        }
+        public boolean within(Size size)
+        {
+            return (row >= 0 && row < size.n_rows 
+                    && col >= 0 && col < size.n_cols);
+        }
         @Override
         public String toString()
         {
@@ -53,9 +63,37 @@ public class BoardMatrix
         }
     }
     
-    /* CONTANTS */
+    public static class Direction extends Position
+    {
+        public Direction(int _row, int _col)
+        {
+            super(_row, _col);
+        }
+    }
+            
+            
+            
     
+    /* CLASS NAMEPSACE FUNCTIONS */
+    public static Player pieceToPlayer(Cell c)
+    {
+        
+        switch(c)
+        {
+            case PIECE_WHITE:
+                return Player.WHITE;
+            case PIECE_BLACK:
+                return Player.BLACK;
+            default:
+                return null;
+        }
+    }
 
+    public static Cell playerToPiece(Player p)
+    {
+        return (p == Player.WHITE) ? Cell.PIECE_WHITE : Cell.PIECE_BLACK;  
+    }
+    
     /* ATTRIBUTES */
             
     private final Size size;
@@ -182,20 +220,26 @@ public class BoardMatrix
         return size.n_rows * size.n_cols;
     }
     
-    public int get_n_pieces()
+    public int count_player_pieces(Player player)
     {
         // local variables
+        Cell piece = (player == null) ? Cell.EMPTY : playerToPiece(player);
         Position p = new Position(0, 0);
         int count = 0;
         
         // count number of non-empty cells
         for(p.row = 0; p.row < size.n_rows; p.row++)
             for(p.col = 0; p.col < size.n_cols; p.col++)
-                if(getCell(p) != BoardMatrix.Cell.EMPTY)
+                if(getCell(p) == piece)
                     count++;
-        
         // finished
         return count;
+    }
+    
+    public int count_pieces()
+    {
+        // total number of pieces = empty cells - total cells
+        return count_player_pieces(null) - get_n_cells();
     }
 
     public Cell getCell(Position p)
@@ -263,7 +307,7 @@ public class BoardMatrix
     {
         // local variables
         String result = 
-                "<board " + size + " n_pieces=\"" + get_n_pieces() + "\">";
+                "<board " + size + " n_pieces=\"" + count_pieces() + "\">";
         Position p = new Position(0, 0);
         
         // read the board positions

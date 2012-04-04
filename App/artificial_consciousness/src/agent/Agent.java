@@ -27,15 +27,9 @@ public abstract class Agent
     private Frontier frontier;
     private int sleep_time;
     protected State state;
-
-
-    /* INTERFACE */
     
     protected abstract void think();
-    
-    protected abstract Action choicesReaction(Percept.Choices percept);
-    protected abstract Action gameEndReaction(Percept.GameEnd percept);
-    
+    protected abstract Action perceptReaction(Percept percept);
     protected abstract void actionResult(boolean success, Action action);
     
     
@@ -101,27 +95,7 @@ public abstract class Agent
     private void react(Percept percept)
     {
         // choose a reaction to the stimulus
-        Action action;
-        // reaction vary depending on the type of stimulus
-        switch(percept.getType())
-        {
-            case WAITING_FOR_PLAYER:
-            case OPPONENT_TURN:
-                think();
-                return;
-            case CHOICES:
-                action = choicesReaction((Percept.Choices)percept);
-                break;
-            case GAME_END:
-                action = gameEndReaction((Percept.GameEnd)percept);
-                break;    
-            default:
-                System.out.println("Unknown Percept type " + percept.getType());
-                action = null;
-                break;
-                
-        }
-        
+        Action action = perceptReaction(percept);
         // the agent receives feedback based on the success of their action
         actionResult(frontier.tryAction(action), action);
     }

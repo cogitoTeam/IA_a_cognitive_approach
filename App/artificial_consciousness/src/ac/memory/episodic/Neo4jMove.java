@@ -4,11 +4,16 @@
 package ac.memory.episodic;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
+import ac.memory.persistence.AttributeNode;
 import ac.memory.persistence.MoveNode;
 import ac.memory.persistence.NodeException;
 import ac.memory.semantic.graph.lattice.LatticeContextException;
 import ac.shared.CompleteBoardState;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -103,5 +108,37 @@ public class Neo4jMove implements Move
   {
     String ret = "Move[" + getDate() + "]";
     return ret;
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.episodic.Move#getRelevantPartialBoardStates() */
+  @Override
+  public List<RelevantPartialBoardState> getRelevantPartialBoardStates()
+  {
+    LinkedList<RelevantPartialBoardState> list = new LinkedList<RelevantPartialBoardState>();
+
+    try
+      {
+        for (Iterator<AttributeNode> iterator = move.getRelatedObject()
+            .getRelatedObjects().iterator(); iterator.hasNext();)
+          {
+            AttributeNode att_node = (AttributeNode) iterator.next();
+            try
+              {
+                list.add(att_node.getObject());
+              }
+            catch (LatticeContextException e)
+              {
+                // TODO WARNING
+              }
+
+          }
+      }
+    catch (Exception e)
+      {
+        // TODO: WARNING
+      }
+    return list;
   }
 }
