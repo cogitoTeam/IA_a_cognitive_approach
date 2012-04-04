@@ -47,15 +47,16 @@ public class Reasoning
 
   /**
    * Active the ChoiceEngine
+   * 
    * @return an Action
    */
   public Action stimulate()
   {
     logger.debug("stimulate");
     _introspection_engine.stop();
-    _choice_engine.start();
+    Action action = _choice_engine.start();
     _introspection_engine.start();
-    return null;
+    return action;
   }
 
 }
