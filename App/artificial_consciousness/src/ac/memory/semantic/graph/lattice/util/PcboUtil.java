@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import org.apache.log4j.Logger;
 
-import book.Pair;
+import ac.util.Pair;
 
 import ac.memory.semantic.graph.lattice.LatticeContext;
 import ac.memory.semantic.graph.lattice.LatticeContextException;
