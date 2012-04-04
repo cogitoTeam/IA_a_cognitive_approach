@@ -18,7 +18,7 @@ public class Reasoning
   private static final Logger logger = Logger.getLogger(Reasoning.class);
 
   /* **************************************************************************
-   * ATTRIBUTS
+   * ATTRIBUTES
    * ************************************************************************ */
 
   private ActiveMemory _memory;
