@@ -4,8 +4,10 @@
 package ac.memory.episodic;
 
 import java.util.Date;
+import java.util.List;
 
 import ac.shared.CompleteBoardState;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -24,6 +26,12 @@ public interface Move
    * @throws EpisodicMemoryException
    */
   CompleteBoardState getCompleteBoardState() throws EpisodicMemoryException;
+
+  /**
+   * @return a list of RelevantPartialBoardState related to the
+   *         CompleteBoardState of this Move
+   */
+  List<RelevantPartialBoardState> getRelevantPartialBoardStates();
 
   /**
    * @return the related game
