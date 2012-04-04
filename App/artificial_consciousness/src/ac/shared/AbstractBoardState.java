@@ -5,6 +5,8 @@ package ac.shared;
 
 import java.io.Serializable;
 
+import ac.analysis.structure.BaseFaits;
+
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 28 mars 2012
@@ -15,6 +17,7 @@ public abstract class AbstractBoardState implements Serializable
   private static final long serialVersionUID = 6794929662400698592L;
 
   protected long id;
+  protected BaseFaits boardStateFacts;
 
   // TODO list of defining facts
 
