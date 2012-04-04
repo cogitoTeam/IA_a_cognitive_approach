@@ -46,12 +46,33 @@ public class BoardMatrix
             row = _row;
             col = _col;
         }
+        public void add(Direction delta)
+        {
+            row += delta.row;
+            col += delta.col;
+        }
+        public boolean within(Size size)
+        {
+            return (row >= 0 && row < size.n_rows 
+                    && col >= 0 && col < size.n_cols);
+        }
         @Override
         public String toString()
         {
             return "row=\"" + row + "\" col=\"" + col + "\"";
         }
     }
+    
+    public static class Direction extends Position
+    {
+        public Direction(int _row, int _col)
+        {
+            super(_row, _col);
+        }
+    }
+            
+            
+            
     
     /* CLASS NAMEPSACE FUNCTIONS */
     public static Player pieceToPlayer(Cell c)

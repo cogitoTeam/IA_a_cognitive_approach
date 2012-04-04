@@ -6,9 +6,11 @@
 
 package game;
 
+import game.BoardMatrix.Direction;
 import game.BoardMatrix.Position;
 import game.BoardMatrix.Size;
 import game.Game.Player;
+import java.util.Stack;
 
 
 public class ReversiRules extends Rules
@@ -81,9 +83,27 @@ public class ReversiRules extends Rules
     // modification
     @Override
     public void performMove(Position p, BoardMatrix board, Player player) 
-    {    
-        // set the cell to the new colour
+    {   
+        // place piece in selected position
         board.setCellOwner(p, player);
+        
+        /* Flip enemy pieces along the 8 directions */
+        // right
+        flipLine(p, new Direction(0, 1), board, player);
+        // left
+        flipLine(p, new Direction(0, -1), board, player);
+        // down
+        flipLine(p, new Direction(1, 0), board, player);
+        // up
+        flipLine(p, new Direction(-1, 0), board, player);
+        // down-right
+        flipLine(p, new Direction(1, 1), board, player);
+        // up-right
+        flipLine(p, new Direction(-1, 1), board, player);
+        // down-left
+        flipLine(p, new Direction(-1, 1), board, player);
+        // down-right
+        flipLine(p, new Direction(-1, -1), board, player);
     }
 
     @Override
@@ -111,4 +131,35 @@ public class ReversiRules extends Rules
         return new BoardMatrix(BOARD_SIZE);
     }
 
+    
+    /* SUBROUTINES */
+    
+    
+    private void flipLine(Position start, Direction delta, BoardMatrix board, 
+                            Player player)
+    {
+        // local variables
+        Position iter = new Position(start.row, start.col);
+        Player other = Game.otherPlayer(player);
+        Stack<Position> potential = new Stack<Position>();
+        
+        // iterate along the line defined by the given direction
+        for(iter.add(delta); iter.within(board.getSize()); iter.add(delta))
+        {
+            // enemies tokens will potentially be flipped, if surrounded
+            if(board.getCellOwner(iter) == other)
+                potential.push(new Position(iter.row, iter.col));
+            else
+            {
+                // flip all the enemy tokens between two friendly tokens
+                for(Position flipme : potential)
+                    board.setCellOwner(flipme, player);
+                // stop at the first friendly token
+                break;
+            }
+        }
+        // if we reached the end without encountering a friendly piece then
+        // the 'potential' pieces are not flipped.
+        potential.clear();
+    }
 }
