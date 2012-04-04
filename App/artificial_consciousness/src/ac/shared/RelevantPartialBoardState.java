@@ -29,16 +29,30 @@ public class RelevantPartialBoardState implements Serializable
   // CONSTRUCTOR
   // ***************************************************************************
 
+  /**
+   * Constructor with id and rule in parameter
+   * 
+   * @param id
+   *          the id
+   * @param rule
+   *          the rule
+   */
   public RelevantPartialBoardState(long id, String rule)
   {
     this.init(id, rule);
   }
-  
+
+  /**
+   * Constructor with rule in parameter
+   * 
+   * @param rule
+   *          the rule
+   */
   public RelevantPartialBoardState(String rule)
   {
     this.init(0, rule);
   }
-  
+
   private void init(long id, String rule)
   {
     this._id = id;
@@ -74,15 +88,13 @@ public class RelevantPartialBoardState implements Serializable
   // ***************************************************************************
 
   /**
-   * @param id the id to set
+   * @param id
+   *          the id to set
    */
   public void setId(long id)
   {
     this._id = id;
-    this._rule.getConclusion().setLabel(PREFIX_LABEL+id);
+    this._rule.getConclusion().setLabel(PREFIX_LABEL + id);
   }
-
-
-
 
 }

@@ -4,7 +4,9 @@ import java.util.List;
 
 import ac.util.Pair;
 
+import ac.memory.episodic.EpisodicMemory;
 import ac.memory.episodic.Game;
+import ac.memory.semantic.SemanticMemory;
 import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
 import ac.shared.RelevantPartialBoardState;
@@ -17,8 +19,13 @@ import ac.shared.FOLObjects.Option;
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 26 mars 2012
  * @version 0.1
+ * @param <EpisodicType>
+ *          Episodic memory type
+ * @param <SemanticType>
+ *          Semantic memory type
  */
-public class ActiveMemory implements Memory
+public class ActiveMemory<EpisodicType extends EpisodicMemory, SemanticType extends SemanticMemory>
+    implements Memory
 {
 
   /* (non-Javadoc)

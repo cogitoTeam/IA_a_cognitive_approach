@@ -95,6 +95,7 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
   {
     try
       {
+        obj_repo.getNodeById(board_state.getId());
         move_repo.addMove(game_repo.getLast(),
             obj_repo.getNodeById(board_state.getId()));
       }
