@@ -7,6 +7,7 @@ import java.util.List;
 
 import book.Pair;
 
+import ac.memory.episodic.Game;
 import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
 import ac.shared.RelevantPartialBoardState;
@@ -21,6 +22,10 @@ import ac.shared.RelevantPartialBoardState;
  */
 public interface Memory
 {
+  
+  /*
+   * ANALYSIS
+   */
 
   /**
    * USED BY ANALYSIS Method needed by analysis module to get all the
@@ -40,6 +45,10 @@ public interface Memory
    * @throws MemoryException
    */
   void putOption(Option option> matching) throws MemoryException;
+  
+  /*
+   * REASONING
+   */
 
   /**
    * USED BY REASONING This method transmit the list of Options
@@ -54,12 +63,12 @@ public interface Memory
   /**
    * USED BY REASONING Choice done by the reasonning module
    * 
-   * @param cbs
-   *          The CompleteBoardState chosen
+   * @param option
+   *          The Option chosen
    * @throws MemoryException
-   *           When the CBS is not present in the active memory
+   *           When the Option is not present in the active memory
    */
-  void CompleteBoardStateChosen(CompleteBoardState cbs) throws MemoryException;
+  void OptionChosen(Option option) throws MemoryException;
 
   /**
    * USED BY REASONING Indicates to the memory that new game begin
@@ -81,6 +90,37 @@ public interface Memory
    */
   void EndOfGame(GameStatus status, float score) throws MemoryException;
   
+  /*
+   * INTROSPECTION
+   */
   
+  /**
+   * USED BY REASONING (INTROSPECTION) Give n last won games
+   * 
+   * @param n number of games
+   * @return the list of won games
+   */
+  List<Game> getWonGames(int n);
+  
+  /**
+   * USED BY REASONING (INTROSPECTION) Give n last lost games
+   * 
+   * @param n number of games
+   * @return the list of won games
+   */
+  List<Game> getLostGames(int n);
+  
+  /**
+   * USED BY REASONING (INTROSPECTION) Give n most active board state
+   * 
+   * @param n number of board states returned
+   * @return the list of board states
+   */
+  List<CompleteBoardState> getMostActiveBoardStates(int n);
+  
+  /**
+   * USED BY REASONING (INTROSPECTION) Add new RelevantStructure in the memory
+   */
+  void putRelevantStructure();
 
 }
