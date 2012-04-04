@@ -28,6 +28,14 @@ public class Option
   // CONSTRUCTOR
   // ***************************************************************************
 
+  /**
+   * Constructor with move and result in parameter
+   * 
+   * @param move
+   *          the move
+   * @param result
+   *          the result of the move
+   */
   public Option(Action move, CompleteBoardState result)
   {
     this._move = move;
@@ -70,7 +78,9 @@ public class Option
 
   /**
    * Add a relevant partial board state to this option
-   * @param partial_state the relevant partial board state to add
+   * 
+   * @param partial_state
+   *          the relevant partial board state to add
    */
   public void addPartialStates(RelevantPartialBoardState partial_state)
   {
