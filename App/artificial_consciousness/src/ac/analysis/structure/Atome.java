@@ -94,6 +94,14 @@ public class Atome
 	{
 		return label;
 	}
+	
+	/**
+	 * @param label The label to set
+	 */
+	public void setLabel(String label)
+	{
+	  this.label = label;
+	}
 		
 // Les m�thodes qui caract�risent les fonctionnalit�es de la classe	
 

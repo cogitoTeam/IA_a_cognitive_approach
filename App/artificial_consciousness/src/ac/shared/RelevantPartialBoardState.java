@@ -1,62 +1,88 @@
 package ac.shared;
 
+import java.io.Serializable;
+
+import ac.analysis.structure.Regle;
+
 /**
  * Class which represents a Relevant structure (attribute of the lattice)
  * 
  * @author Thibaut Marmin <marminthibaut@gmail.com>
+ * @author Clément Sipieter <csipieter@gmail.com>
  * @date 26 mars 2012
- * @version 0.1
+ * @version 0.2
  */
-public class RelevantPartialBoardState extends AbstractBoardState implements
-    Comparable<RelevantPartialBoardState>
+public class RelevantPartialBoardState implements Serializable
 {
+
+  // ***************************************************************************
+  // ATTRIBUTES
+  // ***************************************************************************
+
   private static final long serialVersionUID = -8844815904283187121L;
+  private static final String PREFIX_LABEL = "_rpbs";
+
+  private long _id;
+  private Regle _rule;
+
+  // ***************************************************************************
+  // CONSTRUCTOR
+  // ***************************************************************************
+
+  public RelevantPartialBoardState(long id, String rule)
+  {
+    this.init(id, rule);
+  }
+  
+  public RelevantPartialBoardState(String rule)
+  {
+    this.init(0, rule);
+  }
+  
+  private void init(long id, String rule)
+  {
+    this._id = id;
+    this._rule = new Regle(rule, "");
+  }
+
+  // ***************************************************************************
+  // METHODS
+  // ***************************************************************************
+
+  // ***************************************************************************
+  // GETTERS
+  // ***************************************************************************
 
   /**
-   * @param id
+   * @return the _id
    */
-  public RelevantPartialBoardState()
+  public long getId()
   {
-    super();
+    return _id;
   }
 
   /**
-   * /!\ This constructor will be removed later
-   * 
-   * @param id
+   * @return the _rule
    */
-  public RelevantPartialBoardState(long id)
+  public Regle getRule()
   {
-    super(id);
+    return _rule;
   }
 
-  private double weight;
-
-  public int compareTo(RelevantPartialBoardState rs)
-  {
-    if (getWeight() < rs.getWeight())
-      return -1;
-    else if (getWeight() > rs.getWeight())
-      return 1;
-    else
-      return 0;
-  }
+  // ***************************************************************************
+  // SETTERS
+  // ***************************************************************************
 
   /**
-   * @return the weight
+   * @param id the id to set
    */
-  public double getWeight()
+  public void setId(long id)
   {
-    return weight;
+    this._id = id;
+    this._rule.getConclusion().setLabel(PREFIX_LABEL+id);
   }
 
-  /**
-   * @param weight
-   *          the weight to set
-   */
-  public void setWeight(double weight)
-  {
-    this.weight = weight;
-  }
+
+
 
 }
