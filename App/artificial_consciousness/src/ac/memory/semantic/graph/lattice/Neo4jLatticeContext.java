@@ -10,7 +10,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import book.Pair;
+import ac.util.Pair;
 
 import ac.memory.persistence.AttributeNode;
 import ac.memory.persistence.AttributeNodeRepository;
