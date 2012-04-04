@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import book.Pair;
-
+import ac.util.Pair;
 import ac.memory.Memory;
 import ac.memory.MemoryException;
 import ac.shared.FOLObjects.Option;
@@ -21,7 +20,6 @@ import agent.Action;
 class ChoiceEngine
 {
 
-  @SuppressWarnings("unused")
   private static final Logger LOGGER = Logger.getLogger(ChoiceEngine.class);
 
   // **************************************************************************
@@ -75,7 +73,7 @@ class ChoiceEngine
           better_option = pair.getFirst();
           max_grade = pair.getSecond();
         }
-    
+
     return better_option;
   }
 
