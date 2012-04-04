@@ -4,6 +4,8 @@ import ac.analysis.Analysis;
 import agent.Action;
 import agent.Percept;
 import ac.memory.ActiveMemory;
+import ac.memory.episodic.Neo4jEpisodicMemory;
+import ac.memory.semantic.Neo4jSemanticMemory;
 import ac.reasoning.Reasoning;
 import agent.Agent;
 
@@ -22,30 +24,32 @@ public class AC extends Agent
    * ************************************************************************ */
 
   private Analysis _analysis;
-  private ActiveMemory _memory;
+  private ActiveMemory<Neo4jEpisodicMemory, Neo4jSemanticMemory> _memory;
   private Reasoning _reasoning;
 
   /* **************************************************************************
    * CONSTRUCTOR
    * ************************************************************************ */
 
+  /**
+   * Default constructor
+   */
   public AC()
   {
-    this._memory = new ActiveMemory();
+    this._memory = new ActiveMemory<Neo4jEpisodicMemory, Neo4jSemanticMemory>();
     this._reasoning = new Reasoning(this._memory);
     this._analysis = new Analysis(this._memory, this._reasoning);
-    
+
   }
-  
+
   /* **************************************************************************
    * METHODS
    * ************************************************************************ */
 
-  
   @Override
   protected void think()
   {
-    //nothing to do
+    // nothing to do
   }
 
   @Override
@@ -59,22 +63,35 @@ public class AC extends Agent
   protected void actionResult(boolean success, Action action)
   {
     // TODO Auto-generated method stub
-    
+
   }
 
   /* **************************************************************************
    * GETTERS
    * ************************************************************************ */
 
-  public ActiveMemory getMemory()
+  /**
+   * @return the memory module
+   */
+  public ActiveMemory<Neo4jEpisodicMemory, Neo4jSemanticMemory> getMemory()
   {
     return _memory;
   }
 
+  /**
+   * @return the reasoning module
+   */
   public Reasoning getReasoning()
   {
     return _reasoning;
   }
 
+  /**
+   * @return the analysis module
+   */
+  public Analysis getAnalysis()
+  {
+    return _analysis;
+  }
 
 }
