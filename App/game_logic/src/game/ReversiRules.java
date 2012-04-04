@@ -77,7 +77,38 @@ public class ReversiRules extends Rules
     public boolean isLegalMove(BoardMatrix.Position p, BoardMatrix board, 
         Game.Player player) 
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // the cell must be empty
+        if(board.getCell(p) != BoardMatrix.Cell.EMPTY)
+            return false;
+        
+        /* At least one of the 8 directions must be flippable */
+        // right
+        if(canFlipLine(p, new Direction(0, 1), board, player))
+            return true;
+        // left
+        if(canFlipLine(p, new Direction(0, -1), board, player))
+            return true;
+        // down
+        if(canFlipLine(p, new Direction(1, 0), board, player))
+            return true;
+        // up
+        if(canFlipLine(p, new Direction(-1, 0), board, player))
+            return true;
+        // down-right
+        if(canFlipLine(p, new Direction(1, 1), board, player))
+            return true;
+        // up-right
+        if(canFlipLine(p, new Direction(-1, 1), board, player))
+            return true;
+        // down-left
+        if(canFlipLine(p, new Direction(-1, 1), board, player))
+            return true;
+        // down-right
+        if(canFlipLine(p, new Direction(-1, -1), board, player))
+            return true;
+        
+        /* If none of these possibilities are open the move cannot be performed */
+        return false;
     }
 
     // modification
@@ -161,5 +192,30 @@ public class ReversiRules extends Rules
         // if we reached the end without encountering a friendly piece then
         // the 'potential' pieces are not flipped.
         potential.clear();
+    }
+
+    private boolean canFlipLine(Position start, Direction delta, 
+            BoardMatrix board, Player player) 
+    {
+        // local variables
+        Position iter = new Position(start.row, start.col);
+        Player other = Game.otherPlayer(player);
+        
+        // check that the immediately adjascent cell is of a different colour
+        iter.add(delta);
+        if(board.getCellOwner(iter) != other)
+            return false;
+        
+        // iterate along the line defined by the given direction
+        for(iter.add(delta); iter.within(board.getSize()); iter.add(delta))
+        {
+            // enemies tokens will potentially be flipped, if surrounded
+            if(board.getCellOwner(iter) != other)
+                return true;
+        }
+        
+        // if we reached the end without encountering a friendly piece then
+        // the line is not flippable
+        return false;
     }
 }
