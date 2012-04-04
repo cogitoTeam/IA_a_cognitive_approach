@@ -11,7 +11,7 @@ package ac.shared;
 public class CompleteBoardState extends AbstractBoardState
 {
   private static final long serialVersionUID = -600890485679051029L;
-
+  
   /**
    * @param id
    */

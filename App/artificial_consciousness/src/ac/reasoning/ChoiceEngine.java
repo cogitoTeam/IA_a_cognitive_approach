@@ -27,7 +27,7 @@ class ChoiceEngine
   private static final Logger logger = Logger.getLogger(ChoiceEngine.class);
 
   /* **************************************************************************
-   * ATTRIBUTS
+   * ATTRIBUTES
    * ************************************************************************ */
 
   private ActiveMemory _memory;

@@ -19,7 +19,7 @@ class IntrospectionEngine
                                          .getLogger(IntrospectionEngine.class);
 
   /* **************************************************************************
-   * ATTRIBUTS
+   * ATTRIBUTES
    * ************************************************************************ */
 
   @SuppressWarnings("unused")
