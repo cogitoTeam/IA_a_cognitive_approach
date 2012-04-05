@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.memory.persistence;
+package ac.memory.persistence.neo4j;
 
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
@@ -11,52 +11,52 @@ import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.traversal.Traverser;
 import org.neo4j.helpers.collection.IterableWrapper;
 
-import ac.shared.CompleteBoardState;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 30 mars 2012
  * @version 0.1
  */
-public class ObjectNode extends
-    AbstractLatticeContextNode<ObjectNode, AttributeNode, CompleteBoardState>
+public class AttributeNode extends
+    AbstractLatticeContextNode<AttributeNode, ObjectNode, RelevantPartialBoardState>
 {
-  private static final Logger logger = Logger.getLogger(ObjectNode.class);
+  private static final Logger logger = Logger.getLogger(AttributeNode.class);
 
-  static final String ID_FIELD = "id_obj";
+  static final String ID_FIELD = "id_attr";
 
   /**
    * @param attributeNode
    */
-  ObjectNode(Node objectNode)
+  AttributeNode(Node attributeNode)
   {
-    super(objectNode, ID_FIELD);
+    super(attributeNode, ID_FIELD);
     if (logger.isDebugEnabled())
-      logger.debug("Building new ObjectNode");
+      logger.debug("Building new AttributeNode");
   }
 
   @Override
   public String toString()
   {
-    return "Object" + super.toString();
+    return "Attribute" + super.toString();
   }
 
   @Override
-  protected IterableWrapper<AttributeNode, Path> createObjectsFromPath(
+  protected IterableWrapper<ObjectNode, Path> createObjectsFromPath(
       Traverser iterableToWrap)
   {
-    return new IterableWrapper<AttributeNode, Path>(iterableToWrap)
+    return new IterableWrapper<ObjectNode, Path>(iterableToWrap)
     {
       @Override
-      protected AttributeNode underlyingObjectToObject(Path path)
+      protected ObjectNode underlyingObjectToObject(Path path)
       {
-        return new AttributeNode(path.endNode());
+        return new ObjectNode(path.endNode());
       }
     };
   }
 
   @Override
-  protected Relationship getRelationshipTo(AttributeNode object)
+  protected Relationship getRelationshipTo(ObjectNode object)
   {
     Node node = object.getUnderlyingNode();
 

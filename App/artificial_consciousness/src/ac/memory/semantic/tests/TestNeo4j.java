@@ -5,11 +5,11 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;
 
-import ac.memory.persistence.AttributeNode;
-import ac.memory.persistence.AttributeNodeRepository;
-import ac.memory.persistence.Neo4jService;
-import ac.memory.persistence.ObjectNode;
-import ac.memory.persistence.ObjectNodeRepository;
+import ac.memory.persistence.neo4j.AttributeNode;
+import ac.memory.persistence.neo4j.AttributeNodeRepository;
+import ac.memory.persistence.neo4j.Neo4jService;
+import ac.memory.persistence.neo4j.ObjectNode;
+import ac.memory.persistence.neo4j.ObjectNodeRepository;
 import ac.shared.CompleteBoardState;
 import ac.shared.RelevantPartialBoardState;
 

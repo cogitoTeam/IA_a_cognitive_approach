@@ -8,9 +8,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import ac.memory.persistence.AttributeNode;
-import ac.memory.persistence.MoveNode;
-import ac.memory.persistence.NodeException;
+import ac.memory.persistence.neo4j.AttributeNode;
+import ac.memory.persistence.neo4j.MoveNode;
+import ac.memory.persistence.neo4j.NodeException;
 import ac.memory.semantic.lattice.LatticeContextException;
 import ac.shared.CompleteBoardState;
 import ac.shared.RelevantPartialBoardState;

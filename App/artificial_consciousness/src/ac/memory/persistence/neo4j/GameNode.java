@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.memory.persistence;
+package ac.memory.persistence.neo4j;
 
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;

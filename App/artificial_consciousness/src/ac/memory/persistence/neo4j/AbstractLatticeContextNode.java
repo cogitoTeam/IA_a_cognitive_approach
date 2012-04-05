@@ -1,4 +1,4 @@
-package ac.memory.persistence;
+package ac.memory.persistence.neo4j;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

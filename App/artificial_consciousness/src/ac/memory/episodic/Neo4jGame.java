@@ -5,8 +5,8 @@ package ac.memory.episodic;
 
 import java.util.Date;
 
-import ac.memory.persistence.GameNode;
-import ac.memory.persistence.MoveNode;
+import ac.memory.persistence.neo4j.GameNode;
+import ac.memory.persistence.neo4j.MoveNode;
 import ac.shared.GameStatus;
 
 /**

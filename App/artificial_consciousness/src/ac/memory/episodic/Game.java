@@ -5,7 +5,7 @@ package ac.memory.episodic;
 
 import java.util.Date;
 
-import ac.memory.persistence.NodeException;
+import ac.memory.persistence.neo4j.NodeException;
 import ac.shared.GameStatus;
 
 /**

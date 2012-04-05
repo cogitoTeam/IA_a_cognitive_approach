@@ -5,12 +5,12 @@ package ac.memory.episodic;
 
 import java.util.List;
 
-import ac.memory.persistence.GameNode;
-import ac.memory.persistence.GameNodeRepository;
-import ac.memory.persistence.MoveNodeRepository;
-import ac.memory.persistence.Neo4jService;
-import ac.memory.persistence.NodeRepositoryException;
-import ac.memory.persistence.ObjectNodeRepository;
+import ac.memory.persistence.neo4j.GameNode;
+import ac.memory.persistence.neo4j.GameNodeRepository;
+import ac.memory.persistence.neo4j.MoveNodeRepository;
+import ac.memory.persistence.neo4j.Neo4jService;
+import ac.memory.persistence.neo4j.NodeRepositoryException;
+import ac.memory.persistence.neo4j.ObjectNodeRepository;
 import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
 

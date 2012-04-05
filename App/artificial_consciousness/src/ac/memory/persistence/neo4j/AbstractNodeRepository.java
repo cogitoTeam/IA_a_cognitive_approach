@@ -1,6 +1,6 @@
-package ac.memory.persistence;
+package ac.memory.persistence.neo4j;
 
-import ac.memory.persistence.RelTypes;
+import ac.memory.persistence.neo4j.RelTypes;
 
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;

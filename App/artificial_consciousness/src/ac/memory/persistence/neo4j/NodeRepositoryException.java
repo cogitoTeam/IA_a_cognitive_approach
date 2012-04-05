@@ -1,21 +1,21 @@
 /**
  * 
  */
-package ac.memory.persistence;
+package ac.memory.persistence.neo4j;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 2 avr. 2012
  * @version 0.1
  */
-public class NodeException extends Exception
+public class NodeRepositoryException extends Exception
 {
-  private static final long serialVersionUID = 6070763635287460532L;
+  private static final long serialVersionUID = 246884640069099797L;
 
   /**
    * Minimal constructor
    */
-  public NodeException()
+  public NodeRepositoryException()
   {
     super();
   }
@@ -26,7 +26,7 @@ public class NodeException extends Exception
    * @param m
    *          the message
    */
-  public NodeException(String m)
+  public NodeRepositoryException(String m)
   {
     super(m);
   }
@@ -37,11 +37,10 @@ public class NodeException extends Exception
    * @param m
    *          the message
    * @param e
-   *          the previous execption
+   *          the previous exception
    */
-  public NodeException(String m, Exception e)
+  public NodeRepositoryException(String m, Exception e)
   {
     super(m, e);
   }
-
 }

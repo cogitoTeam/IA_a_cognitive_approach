@@ -1,11 +1,11 @@
-package ac.memory.persistence;
+package ac.memory.persistence.neo4j;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import ac.memory.persistence.RelTypes;
+import ac.memory.persistence.neo4j.RelTypes;
 import ac.shared.RelevantPartialBoardState;
 
 import org.apache.log4j.Logger;
