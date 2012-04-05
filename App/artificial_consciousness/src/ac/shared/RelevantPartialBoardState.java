@@ -2,6 +2,8 @@ package ac.shared;
 
 import java.io.Serializable;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import ac.analysis.structure.Rule;
 
 /**
@@ -63,6 +65,25 @@ public class RelevantPartialBoardState implements Serializable
   // METHODS
   // ***************************************************************************
 
+  @Override
+  public boolean equals(Object o)
+  {
+    if(o instanceof RelevantPartialBoardState) 
+      {
+        RelevantPartialBoardState rpbs = (RelevantPartialBoardState)o;
+        
+        if(this._id != 0 && rpbs._id != 0)
+          return (this._id == rpbs._id);
+        else
+          {
+            //@todo test avec une comparaison logique
+            return false;
+          }
+      }
+    else
+      return false;
+  }
+  
   // ***************************************************************************
   // GETTERS
   // ***************************************************************************
