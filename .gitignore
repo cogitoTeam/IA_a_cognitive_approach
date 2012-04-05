@@ -49,10 +49,6 @@ local.properties
 *~
 
 #useless files
-*.dot
-*.neato
-*.png
-*.svg
 *.tmp.dat
 
 #log files

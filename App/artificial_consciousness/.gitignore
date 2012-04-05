@@ -43,3 +43,8 @@ manifest.mf
 
 #log files
 *.log
+
+*.dot
+*.neato
+*.png
+*.svg
