@@ -21,11 +21,11 @@ public class Query extends FactBase {
 // La m�thode toString de la classe	
 	public String toString()
 	{
-		String s = "Nombre d'atomes : "+listeAtomes.size()+ "\n";
+		String s = "Nombre d'atomes : "+atomList.size()+ "\n";
 		s+="Liste des atomes : \n";
-		for(int i=0;i<listeAtomes.size();i++)
+		for(int i=0;i<atomList.size();i++)
 		{
-			s += "\tAtome " + (i+1) + " : " + listeAtomes.get(i) + "\n";			
+			s += "\tAtome " + (i+1) + " : " + atomList.get(i) + "\n";			
 		}
 	 return s;
 	}

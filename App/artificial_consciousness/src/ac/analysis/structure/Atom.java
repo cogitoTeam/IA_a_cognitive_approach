@@ -37,7 +37,7 @@ public class Atom
   }
 
   /**
-   * Default Constructor :
+   * Constructor :
    * <p>
    * Creates an {@link Atom} from a well-formatted string
    * 
@@ -225,7 +225,7 @@ public class Atom
   /**
    * Checks if this {@code Atom} and the one specified are "unifiable"
    * 
-   * @param a
+   * @param r
    *          the atom to check this {@code Atom} against
    * @return {@code True} if the two atoms are identical by unification,
    *         {@code False} otherwise

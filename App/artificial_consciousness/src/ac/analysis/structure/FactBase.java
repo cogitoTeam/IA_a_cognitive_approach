@@ -3,14 +3,12 @@ package ac.analysis.structure;
 import java.util.*;
 
 /**
- * Mod�lise une base de faits : elle poss�de une liste d'atomes (faits) 
- * et l'ensemble de termes apparaissant dans ces atomes. 
- * On note que les atomes �tant des faits, ces termes sont forc�ment des constantes.
+ * The {@code FactBase} class represents a fact base : a list of assertions. <p> It constists of : <p>  the type {@link Atom}
  *
  */
 public class FactBase
 {
-	protected ArrayList<Atom> listeAtomes;//l'ensemble des faits (atomes)
+	protected ArrayList<Atom> atomList;//l'ensemble des faits (atomes)
 	private ArrayList<Term> ensembleTermes;//l'ensemble des termes pr�sents
 	
 //Les constructeurs de la classe 
@@ -20,7 +18,7 @@ public class FactBase
 	 */
 	public FactBase()
 	{
-		listeAtomes = new ArrayList<Atom>();
+		atomList = new ArrayList<Atom>();
 		ensembleTermes = new ArrayList<Term>();
 	}
 	
@@ -29,7 +27,7 @@ public class FactBase
 	 */
 	public FactBase(FactBase BF)
 	{
-		listeAtomes = new ArrayList<Atom>(BF.getListeAtomes());
+		atomList = new ArrayList<Atom>(BF.getListeAtomes());
 		ensembleTermes = new ArrayList<Term>(BF.getEnsembleTermes());
 	}
 	
@@ -39,18 +37,18 @@ public class FactBase
 	 */
 	public FactBase(String baseFaits)
 	{
-		listeAtomes = new ArrayList<Atom>();
+		atomList = new ArrayList<Atom>();
 		ensembleTermes = new ArrayList<Term>();
 		creerBaseFaits(baseFaits);	
 	}
 	
 //Les getters et setters de la classe	
 	public ArrayList<Atom> getListeAtomes() {
-		return listeAtomes;
+		return atomList;
 	}
 
 	public void setListeAtomes(ArrayList<Atom> listeAtomes) {
-		this.listeAtomes = listeAtomes;
+		this.atomList = listeAtomes;
 	}
 
 	public ArrayList<Term> getEnsembleTermes() {
@@ -74,11 +72,11 @@ public class FactBase
    			String s = st.nextToken(); // s repr�sente un atome
    			Atom a = new Atom(s);
    			ajouterAtome(a);//On ajoute un atome � la liste des atomes
-   			ArrayList<Term> terms = a.getListeTermes();
+   			ArrayList<Term> terms = a.getTerms();
    			for (int i = 0; i < terms.size(); i ++)
    			{
    				t = ajouterTerme(terms.get(i));
-   				a.getListeTermes().set(i,t);
+   				a.getTerms().set(i,t);
    			}
    		}
    	}
@@ -105,12 +103,12 @@ public class FactBase
 	{
 			if(!atomeExiste(fait))
 			{
-				listeAtomes.add(fait);
-				for(int j=0;j<fait.getListeTermes().size();j++)
+				atomList.add(fait);
+				for(int j=0;j<fait.getTerms().size();j++)
 				{
-					Term t = new Term(fait.getListeTermes().get(j).getLabel(),fait.getListeTermes().get(j).isConstante());//On cr�e un nouveau terme
+					Term t = new Term(fait.getTerms().get(j).getLabel(),fait.getTerms().get(j).isConstante());//On cr�e un nouveau terme
 					t = ajouterTerme(t); // ceci ajoute le terme dans la liste des termes de la base de faits s'il n'existait pas d�j�
-					listeAtomes.get(listeAtomes.size()-1).getListeTermes().set(j,t);
+					atomList.get(atomList.size()-1).getTerms().set(j,t);
 				}
 			}
 	}
@@ -187,8 +185,8 @@ public class FactBase
 	 */
 	private int ajouterAtome(Atom a)
 	{
-		listeAtomes.add(a);
-		return listeAtomes.size()-1;
+		atomList.add(a);
+		return atomList.size()-1;
 	}
 	
 	/**
@@ -198,17 +196,17 @@ public class FactBase
 	 */
 	public boolean atomeExiste(Atom a)
 	{
-		for(int i=0;i<listeAtomes.size();i++)
+		for(int i=0;i<atomList.size();i++)
 		{
-			if(listeAtomes.get(i).equalsP(a))
+			if(atomList.get(i).equalsP(a))
 			{
 				int j=0;
-				for(j=0;j<a.getListeTermes().size();j++)
+				for(j=0;j<a.getTerms().size();j++)
 				{
-					if(!a.getListeTermes().get(j).equalsT(listeAtomes.get(i).getListeTermes().get(j)))
+					if(!a.getTerms().get(j).equalsT(atomList.get(i).getTerms().get(j)))
 						break;
 				}
-				if(j==a.getListeTermes().size())
+				if(j==a.getTerms().size())
 					return true;
 			}
 		}
@@ -242,11 +240,11 @@ public class FactBase
 	 */
 	public String toString()
 	{
-		String s = "Nombre de faits : "+listeAtomes.size()+ "\n";
+		String s = "Nombre de faits : "+atomList.size()+ "\n";
 		s+="Liste des faits : \n";
-		for(int i=0;i<listeAtomes.size();i++)
+		for(int i=0;i<atomList.size();i++)
 		{
-			s += "\tFait " + (i+1) + " : " + listeAtomes.get(i) + "\n";			
+			s += "\tFait " + (i+1) + " : " + atomList.get(i) + "\n";			
 		}
 	
 		s+="Liste des termes : ";

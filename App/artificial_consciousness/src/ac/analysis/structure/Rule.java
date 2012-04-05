@@ -51,11 +51,11 @@ public class Rule
    			String s = st.nextToken(); // s repr�sente un atome
    			Atom a = new Atom(s);
    			hypothese.add(a);//ajout de a � la liste des atomes de l'hypoth�se (pour l'instant)
-   			ArrayList<Term> terms = a.getListeTermes();
+   			ArrayList<Term> terms = a.getTerms();
    			for (int i = 0; i < terms.size(); i ++)
    			{
    				t = ajouterTerme(terms.get(i)); // ajout � la liste des termes
-   				a.getListeTermes().set(i,t);
+   				a.getTerms().set(i,t);
    				
    			}
    		}

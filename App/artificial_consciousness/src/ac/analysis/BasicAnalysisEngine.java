@@ -61,6 +61,7 @@ public class BasicAnalysisEngine {
 	 * @return
 	 */
 	public CompleteBoardState generateCBS() {
+    return null;
 
 	}
 }
