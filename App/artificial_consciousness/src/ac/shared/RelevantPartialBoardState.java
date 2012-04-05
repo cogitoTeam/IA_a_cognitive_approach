@@ -2,7 +2,7 @@ package ac.shared;
 
 import java.io.Serializable;
 
-import ac.analysis.structure.Regle;
+import ac.analysis.structure.Rule;
 
 /**
  * Class which represents a Relevant structure (attribute of the lattice)
@@ -23,7 +23,7 @@ public class RelevantPartialBoardState implements Serializable
   private static final String PREFIX_LABEL = "_rpbs";
 
   private long _id;
-  private Regle _rule;
+  private Rule _rule;
 
   // ***************************************************************************
   // CONSTRUCTOR
@@ -56,7 +56,7 @@ public class RelevantPartialBoardState implements Serializable
   private void init(long id, String rule)
   {
     this._id = id;
-    this._rule = new Regle(rule, "");
+    this._rule = new Rule(rule, "");
   }
 
   // ***************************************************************************
@@ -78,7 +78,7 @@ public class RelevantPartialBoardState implements Serializable
   /**
    * @return the _rule
    */
-  public Regle getRule()
+  public Rule getRule()
   {
     return _rule;
   }

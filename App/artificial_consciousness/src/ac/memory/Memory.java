@@ -125,4 +125,12 @@ public interface Memory
    */
   long putRelevantStructure(RelevantPartialBoardState rpbs);
 
+  /**
+   * Add new relationship between a cbs and a rpbs
+   * 
+   * @param cbs
+   * @param rpbs
+   */
+  void addAssociation(CompleteBoardState cbs, RelevantPartialBoardState rpbs);
+
 }
