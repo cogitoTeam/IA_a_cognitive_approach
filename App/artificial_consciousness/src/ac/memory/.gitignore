@@ -1,2 +1,2 @@
-episodic/tests/*
-semantic/tests/*
+episodic/tests/**
+semantic/tests/**
