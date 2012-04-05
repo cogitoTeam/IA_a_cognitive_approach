@@ -19,14 +19,29 @@ import ac.shared.FOLObjects.Option;
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 26 mars 2012
  * @version 0.1
- * @param <EpisodicType>
- *          Episodic memory type
- * @param <SemanticType>
- *          Semantic memory type
  */
-public class ActiveMemory<EpisodicType extends EpisodicMemory, SemanticType extends SemanticMemory>
-    implements Memory
+
+public class ActiveMemory implements Memory
 {
+
+  EpisodicMemory episodic;
+  SemanticMemory semantic;
+
+  List<Pair<Option, Double>> option_buffer;
+
+  /**
+   * Default constructor for the active memory
+   * 
+   * @param episodic
+   *          the episodic memory
+   * @param semantic
+   *          the semantic memory
+   */
+  public ActiveMemory(EpisodicMemory episodic, SemanticMemory semantic)
+  {
+    this.episodic = episodic;
+    this.semantic = semantic;
+  }
 
   /* (non-Javadoc)
    * 
@@ -35,7 +50,7 @@ public class ActiveMemory<EpisodicType extends EpisodicMemory, SemanticType exte
   public List<RelevantPartialBoardState> getRelevantPartialBoardStates()
       throws MemoryException
   {
-    // TODO Auto-generated method stub
+    // TODO !!
     return null;
   }
 

@@ -24,7 +24,7 @@ public class AC extends Agent
    * ************************************************************************ */
 
   private Analysis _analysis;
-  private ActiveMemory<Neo4jEpisodicMemory, Neo4jSemanticMemory> _memory;
+  private ActiveMemory _memory;
   private Reasoning _reasoning;
 
   /* **************************************************************************
@@ -36,7 +36,8 @@ public class AC extends Agent
    */
   public AC()
   {
-    this._memory = new ActiveMemory<Neo4jEpisodicMemory, Neo4jSemanticMemory>();
+    this._memory = new ActiveMemory(new Neo4jEpisodicMemory(),
+        new Neo4jSemanticMemory());
     this._reasoning = new Reasoning(this._memory);
     this._analysis = new Analysis(this._memory, this._reasoning);
 
@@ -73,7 +74,7 @@ public class AC extends Agent
   /**
    * @return the memory module
    */
-  public ActiveMemory<Neo4jEpisodicMemory, Neo4jSemanticMemory> getMemory()
+  public ActiveMemory getMemory()
   {
     return _memory;
   }
