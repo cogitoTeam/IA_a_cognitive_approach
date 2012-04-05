@@ -5,7 +5,7 @@ package ac.shared;
 
 import java.io.Serializable;
 
-import ac.analysis.structure.BaseFaits;
+import ac.analysis.structure.FactBase;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -17,7 +17,7 @@ public abstract class AbstractBoardState implements Serializable
   private static final long serialVersionUID = 6794929662400698592L;
 
   protected long id;
-  protected BaseFaits boardStateFacts;
+  protected FactBase boardStateFacts;
 
   // TODO list of defining facts
 
@@ -30,6 +30,7 @@ public abstract class AbstractBoardState implements Serializable
   public AbstractBoardState()
   {
     // DEFAULT CONSTRUCTOR
+    
   }
 
   /**

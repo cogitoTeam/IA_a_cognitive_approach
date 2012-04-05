@@ -6,7 +6,7 @@ package ac.analysis.structure;
  * deux termes.
  *
  */
-public class Terme
+public class Term
 {
 	private String label;//le nom du terme (par exemple : x, 'toto')
 	private boolean constante;//vrai si le terme courant est une constante, faux sinon (c'est une variable)
@@ -17,7 +17,7 @@ public class Terme
 	 * @param n le label du terme
 	 * @param c boolean qui indique si le terme est une constante ou pas (et alors c'est une variable)
 	 */
-	public Terme(String n, boolean c)
+	public Term(String n, boolean c)
 	{
 		label = n;
 		constante = c;	}
@@ -26,7 +26,7 @@ public class Terme
 	 * Constructeur de la classe Terme pour cr�er une variable
 	 * @param n le label du terme (qui doit �tre une variable)
 	 */
-	public Terme(String n)
+	public Term(String n)
 	{
 		label = n;
 		constante=false;
@@ -68,7 +68,7 @@ public class Terme
 	 * @param t le terme � tester
 	 * @return vrai si 't' et le terme courant sont �gaux, faux sinon
 	 */
-	public boolean equalsT(Terme t)
+	public boolean equalsT(Term t)
 	{
 		return(t.constante==constante && t.label.equals(this.label));
 	}

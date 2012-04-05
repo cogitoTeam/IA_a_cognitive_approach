@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.analysis.moteurDeRecherche;
+package ac.analysis.searchEngine;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,46 +16,46 @@ import ac.analysis.structure.*;
  * Elle poss�de les m�thodes qui calculent ce graphe pour une base de connaissances donn�e
  *
  */
-public class GDR 
+public class RuleDependencyGraph 
 {
 
-	private BaseConnaissances BC; //la base de connaissances r�f�renc�e
-	private ArrayList<ArrayList<Regle>> graphe; //tableau des listes de successeurs de chaque r�gle
+	private KnowledgeBase BC; //la base de connaissances r�f�renc�e
+	private ArrayList<ArrayList<Rule>> graphe; //tableau des listes de successeurs de chaque r�gle
 
 //Les constructeurs de la classe	
 	/**
 	 * Constructeur vide
 	 */
-	public GDR() 
+	public RuleDependencyGraph() 
 	{
-		BC = new BaseConnaissances();
-		graphe = new ArrayList <ArrayList<Regle>>();
+		BC = new KnowledgeBase();
+		graphe = new ArrayList <ArrayList<Rule>>();
 	}
 	
 	/**
 	 * Constructeur par copie
 	 */
-	public GDR(GDR copy)
+	public RuleDependencyGraph(RuleDependencyGraph copy)
 	{
-		BC = new BaseConnaissances(copy.BC);
-		graphe = new ArrayList <ArrayList <Regle>> (copy.graphe);
+		BC = new KnowledgeBase(copy.BC);
+		graphe = new ArrayList <ArrayList <Rule>> (copy.graphe);
 	}
 	
 	/**
 	 * Constructeur � partir d'une base de connaissances
 	 */
-	public GDR(BaseConnaissances bc)
+	public RuleDependencyGraph(KnowledgeBase bc)
 	{
 		BC = bc;
-		graphe = new ArrayList <ArrayList<Regle>>();
+		graphe = new ArrayList <ArrayList<Rule>>();
 	}
 	
 //Les getters de la classe	
-	public BaseConnaissances getBC() {
+	public KnowledgeBase getBC() {
 		return BC;
 	}
 
-	public ArrayList<ArrayList<Regle>> getGraphe() {
+	public ArrayList<ArrayList<Rule>> getGraphe() {
 		return graphe;
 	}
 
@@ -65,14 +65,14 @@ public class GDR
 	 */
 	public void calculeGDR()
 	{
-		ArrayList<Regle> listeSuccesseurs;
+		ArrayList<Rule> listeSuccesseurs;
 		
 		//calcul de r�gles d�pendants des faits
-		for (Atome fait : BC.getBF().getListeAtomes())
+		for (Atom fait : BC.getBF().getListeAtomes())
 		{
-			listeSuccesseurs = new ArrayList <Regle> ();
-			for (Regle r : BC.getBR()) {
-				for (Atome a : r.getHypothese()) {
+			listeSuccesseurs = new ArrayList <Rule> ();
+			for (Rule r : BC.getBR()) {
+				for (Atom a : r.getHypothese()) {
 					if (fait.unifiableA(a))
 						listeSuccesseurs.add(r);
 				}
@@ -81,25 +81,25 @@ public class GDR
 		}
 		
 		//calcul de r�gles d�pendants des r�gles
-		for (Regle r1 : BC.getBR())
+		for (Rule r1 : BC.getBR())
 		{
-			listeSuccesseurs = new ArrayList <Regle> ();
-			for (Regle r2 : BC.getBR())
-				for (Atome a : r2.getHypothese())
+			listeSuccesseurs = new ArrayList <Rule> ();
+			for (Rule r2 : BC.getBR())
+				for (Atom a : r2.getHypothese())
 					if (a.unifiableA(r1.getConclusion()))
 						listeSuccesseurs.add(r2);
 			graphe.add(listeSuccesseurs);			
 		}
 	}
 	
-	public GDR calculeGDRAvecRequete(BaseFaits requete, BaseConnaissances k) {
+	public RuleDependencyGraph calculeGDRAvecRequete(FactBase requete, KnowledgeBase k) {
 		
-		Regle q = new Regle();
+		Rule q = new Rule();
 		q.setNom("Requ�te");
 		q.setHypothese(requete.getListeAtomes());
-		q.setConclusion(new Atome("gagn�()"));
+		q.setConclusion(new Atom("gagn�()"));
 		k.getBR().add(q);
-		GDR avecRequete = new GDR(k);
+		RuleDependencyGraph avecRequete = new RuleDependencyGraph(k);
 		avecRequete.calculeGDR();
 		return avecRequete;
 	}
@@ -112,10 +112,10 @@ public class GDR
 		String s = new String();
 		s+="GRAPHE DE D�PENDENCE DES FAITS ET DES R�GLES :\n";
 		
-		Iterator<Atome> faitsIter = BC.getBF().getListeAtomes().iterator();
-		Iterator<Regle> reglesIter = BC.getBR().iterator();
-		Iterator<ArrayList<Regle>> listeSuccesseursIter = graphe.iterator();
-		Iterator<Regle> successeursIter;
+		Iterator<Atom> faitsIter = BC.getBF().getListeAtomes().iterator();
+		Iterator<Rule> reglesIter = BC.getBR().iterator();
+		Iterator<ArrayList<Rule>> listeSuccesseursIter = graphe.iterator();
+		Iterator<Rule> successeursIter;
 
 		while (faitsIter.hasNext())	
 		{
@@ -137,10 +137,10 @@ public class GDR
 //Test de la classe	
 	public static void main(String[] args) throws IOException 
 	{
-		BaseConnaissances bc = new BaseConnaissances("ex1.txt");
-		GDR gdr = new GDR(bc);
-		gdr.calculeGDR();
-		System.out.println(bc + "\n" + gdr);
+		KnowledgeBase bc = new KnowledgeBase("ex1.txt");
+		RuleDependencyGraph ruleDependencyGraph = new RuleDependencyGraph(bc);
+		ruleDependencyGraph.calculeGDR();
+		System.out.println(bc + "\n" + ruleDependencyGraph);
 	}
 
 }

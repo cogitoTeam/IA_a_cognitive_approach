@@ -1,5 +1,6 @@
 package ac.analysis;
 
+import game.BoardMatrix;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
 import agent.Action;
@@ -24,6 +25,13 @@ public class Analysis
    */
   public Action analyse(Choices percept)
   {
+    BoardMatrix board = percept.getCurrentBoard();
+    BoardMatrix.Position p = new Position(0, 0);
+    for(p.row = 0; p.row < board.getSize().n_rows; p.row++)
+      for(p.col = 0; p.col < board.getSize().n_cols; p.col++)
+        board.getCell(p);
+    
+    percept.getOptions().get(0).getResult().
     // TODO Auto-generated method stub
 
     // your code

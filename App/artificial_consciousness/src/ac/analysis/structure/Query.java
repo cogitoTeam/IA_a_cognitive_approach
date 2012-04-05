@@ -6,16 +6,16 @@ package ac.analysis.structure;
  * cette classe en est une sp�cialisation : notamment, elle ne modifie que la m�thode toString
  *
  */
-public class Requete extends BaseFaits {
+public class Query extends FactBase {
 //Les constructeurs 
-	public Requete() {
+	public Query() {
 	}
 
-	public Requete(BaseFaits BF) {
+	public Query(FactBase BF) {
 		super(BF);
 	}
 
-	public Requete(String baseFaits) {
+	public Query(String baseFaits) {
 		super(baseFaits);
 	}
 // La m�thode toString de la classe	

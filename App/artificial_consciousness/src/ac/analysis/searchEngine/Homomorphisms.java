@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.analysis.moteurDeRecherche;
+package ac.analysis.searchEngine;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,11 +15,11 @@ import ac.analysis.structure.*;
  * autre ensemble d'atomes
  *
  */
-public class Homomorphismes {
-	private ArrayList<Atome> A1;
-	private ArrayList<Atome> A2;
+public class Homomorphisms {
+	private ArrayList<Atom> A1;
+	private ArrayList<Atom> A2;
 	
-	private ArrayList<Terme> variablesOrdonnees;
+	private ArrayList<Term> variablesOrdonnees;
 	
 	private ArrayList<Substitution> S;
 
@@ -28,67 +28,67 @@ public class Homomorphismes {
 	 * @param  ensembleVariables l'ensemble d'atomes � termes variables 
 	 * @param ensembleValeurs l'ensemble d'atomes � termes constantes 
 	 */
-	public Homomorphismes (ArrayList<Atome> ensembleVariables, ArrayList<Atome> ensembleValeurs) 
+	public Homomorphisms (ArrayList<Atom> ensembleVariables, ArrayList<Atom> ensembleValeurs) 
 	{
 		A1 = ensembleVariables; //l'ensemble de termes (variables)
 		A2 = ensembleValeurs; //l'ensemble de termes (constantes)
-		variablesOrdonnees = new ArrayList<Terme>();
+		variablesOrdonnees = new ArrayList<Term>();
 		S = new ArrayList<Substitution>(); //l'ensemble de homomorphismes initialement vide	
 	}
 	
-	public Homomorphismes(ArrayList<Atome> requete, BaseFaits bf) 
+	public Homomorphisms(ArrayList<Atom> requete, FactBase bf) 
 	{
 		A1 = requete; //l'ensemble de termes (variables)
 		A2 = bf.getListeAtomes(); //l'ensemble de termes (constantes)
-		variablesOrdonnees = new ArrayList<Terme>();
+		variablesOrdonnees = new ArrayList<Term>();
 		S = new ArrayList<Substitution>();
 	}
 
-	public Homomorphismes(Requete requete, BaseFaits bf) {
-		A1 = requete.getListeAtomes();
+	public Homomorphisms(Query query, FactBase bf) {
+		A1 = query.getListeAtomes();
 		A2 = bf.getListeAtomes();
-		variablesOrdonnees = new ArrayList<Terme>();
+		variablesOrdonnees = new ArrayList<Term>();
 		S = new ArrayList<Substitution>();
 	}
 
 	/**
 	 * M�thode qui retourne les termes de A2
 	 */
-	private ArrayList<Terme> getDomaine()
+	private ArrayList<Term> getDomaine()
 	{
-		ArrayList<Terme> termes = new ArrayList<Terme>();
+		ArrayList<Term> terms = new ArrayList<Term>();
 		boolean contient;
-		for (Atome a: A2)
+		for (Atom a: A2)
 		{
-			for (Terme t:a.getListeTermes())
+			for (Term t:a.getListeTermes())
 			{
 				contient = false;
-				for (Terme i:termes) {
+				for (Term i:terms) {
 					if(t.equalsT(i))
 						contient = true;
 				}
 				if(!contient)
-					termes.add(t);
+					terms.add(t);
 			}
 		}
-		return termes;
+		return terms;
 	}
 	
 	/**
 	 * M�thode qui retourne les variables de A1
 	 */
-	private ArrayList<Terme> getVariables()
+	private ArrayList<Term> getVariables()
 	{
-		ArrayList<Terme> variables = new ArrayList<Terme>();
+		ArrayList<Term> variables = new ArrayList<Term>();
 		
-		for (Atome a: A1)
+		for (Atom a: A1)
 		{
-			for (Terme t:a.getListeTermes())
+			for (Term t:a.getListeTermes())
 			{
 				boolean contient=false;
 				if (t.isVariable()) 
 				{
-					for (Terme i : variables) 
+					for (Term i : variables) 
 					{
 						if (t.equalsT(i))
 							contient = true;
@@ -125,8 +125,8 @@ public class Homomorphismes {
 	 */
 	private boolean backtrackRec(Substitution sol)
 	{
-		Terme x;
-		ArrayList<Terme> candidats;
+		Term x;
+		ArrayList<Term> candidats;
 		Substitution solPrime;
 		if (sol.nombreCouples() == variablesOrdonnees.size())
 			return true;
@@ -134,10 +134,10 @@ public class Homomorphismes {
 		{
 			x = choisirVariableNonAffectee(sol);
 			candidats = calculerCandidats(x);
-			for (Terme c: candidats)
+			for (Term c: candidats)
 			{
 				solPrime = new Substitution (sol);
-				solPrime.addCouple(new CoupleTermes(x,c));
+				solPrime.addCouple(new TermPair(x,c));
 				if (estHomomorphismePartiel(solPrime))
 					if(backtrackRec(solPrime))
 						return true;
@@ -152,12 +152,12 @@ public class Homomorphismes {
 	 */
 	private boolean estHomomorphismePartiel(Substitution sol) 
 	{
-		ArrayList<Atome> A1Prime = new ArrayList<Atome>();
-		for (Atome a : A1)
+		ArrayList<Atom> A1Prime = new ArrayList<Atom>();
+		for (Atom a : A1)
 		{
 			int counter = 0;
-			for (Terme t1 : a.getListeTermes())
-				for (Terme t2 : sol.getVariables())
+			for (Term t1 : a.getListeTermes())
+				for (Term t2 : sol.getVariables())
 					if (t1.equalsT(t2)||t1.isConstante())
 						counter++;
 			if (counter >= a.getListeTermes().size())
@@ -180,7 +180,7 @@ public class Homomorphismes {
 	 * @param x une variable de A1
 	 * @return images l'ensemble de termes (constantes) qui sont les images possibles de x
 	 */
-	private ArrayList<Terme> calculerCandidats(Terme x)
+	private ArrayList<Term> calculerCandidats(Term x)
 	{
 		return getDomaine();
 	}
@@ -189,7 +189,7 @@ public class Homomorphismes {
 	 * M�thode qui retourne la prochaine variable non affect�e de A1
 	 * 
 	 */
-	private Terme choisirVariableNonAffectee(Substitution sol)
+	private Term choisirVariableNonAffectee(Substitution sol)
 	{
 			return variablesOrdonnees.get(sol.nombreCouples());
 	}
@@ -199,8 +199,8 @@ public class Homomorphismes {
 	 */
 	private void backtrackAllRec(Substitution sol)
 	{
-		Terme x;
-		ArrayList<Terme> candidats;
+		Term x;
+		ArrayList<Term> candidats;
 		Substitution solPrime;
 		if (sol.nombreCouples() == variablesOrdonnees.size())
 		{
@@ -211,10 +211,10 @@ public class Homomorphismes {
 		{
 			x = choisirVariableNonAffectee(sol);
 			candidats = calculerCandidats(x);
-			for (Terme c: candidats)
+			for (Term c: candidats)
 			{
 				solPrime = new Substitution (sol);
-				solPrime.addCouple(new CoupleTermes(x,c));
+				solPrime.addCouple(new TermPair(x,c));
 				if (estHomomorphismePartiel(solPrime))
 					backtrackAllRec(solPrime);
 			}		
@@ -223,11 +223,11 @@ public class Homomorphismes {
 
 	public static void main(String[] args) throws IOException
 	{
-		BaseConnaissances k = new BaseConnaissances("ex2.txt");
+		KnowledgeBase k = new KnowledgeBase("ex2.txt");
 		k = k.saturationOrdre1Exploite();
-		Requete requete = new Requete("p('A',y);r(x,y,z)");
-		Homomorphismes h = new Homomorphismes (requete,k.getBF());
-		System.out.println("A1 = " + requete + "\nA2 = " + k.getBF() + "\n\nExistent-ils d'homomorphismes de A1 dans A2 ?");
+		Query query = new Query("p('A',y);r(x,y,z)");
+		Homomorphisms h = new Homomorphisms (query,k.getBF());
+		System.out.println("A1 = " + query + "\nA2 = " + k.getBF() + "\n\nExistent-ils d'homomorphismes de A1 dans A2 ?");
 		if(h.existeHomomorphisme())
 		{
 			System.out.println(" Oui");

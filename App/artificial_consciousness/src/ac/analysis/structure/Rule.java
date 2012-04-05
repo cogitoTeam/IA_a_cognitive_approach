@@ -11,24 +11,24 @@ import java.util.StringTokenizer;
  * apparaissant dans ses atomes pour pr�ciser que chaque terme n'y appara�t qu'une seule fois
  *
  */
-public class Regle
+public class Rule
 {
 	private String nom;
-	private ArrayList<Atome> hypothese;//la liste des atomes hypoth�ses
-	private Atome conclusion;//la conclusion de la r�gle
-	private ArrayList<Terme> ensembleTermes;//l'ensemble des termes pr�sents dans la r�gle
+	private ArrayList<Atom> hypothese;//la liste des atomes hypoth�ses
+	private Atom conclusion;//la conclusion de la r�gle
+	private ArrayList<Term> ensembleTermes;//l'ensemble des termes pr�sents dans la r�gle
 
 //// Les constructeurs de la classe	
 	
 	/**
 	 * Constructeur vide
 	 */
-	public Regle() {
+	public Rule() {
 		super();
 		this.nom = "";
-		this.hypothese = new ArrayList<Atome>();
-		this.conclusion = new Atome();
-		this.ensembleTermes = new ArrayList<Terme>();
+		this.hypothese = new ArrayList<Atom>();
+		this.conclusion = new Atom();
+		this.ensembleTermes = new ArrayList<Term>();
 	}
 
 
@@ -38,23 +38,23 @@ public class Regle
 	 * "atome1;atome2;...atomek", o� les (k-1) premiers atomes forment l'hypoth�se,
 	 * et le dernier forme la conclusion
 	 */
-	public Regle(String regle, String nomRegle)
+	public Rule(String regle, String nomRegle)
 	{
-		Terme t;
+		Term t;
 		nom = nomRegle;
-		hypothese = new ArrayList<Atome>();
-		ensembleTermes = new ArrayList<Terme>();
+		hypothese = new ArrayList<Atom>();
+		ensembleTermes = new ArrayList<Term>();
 		
 		StringTokenizer st = new StringTokenizer(regle,";");
    		while(st.hasMoreTokens())
    		{
    			String s = st.nextToken(); // s repr�sente un atome
-   			Atome a = new Atome(s);
+   			Atom a = new Atom(s);
    			hypothese.add(a);//ajout de a � la liste des atomes de l'hypoth�se (pour l'instant)
-   			ArrayList<Terme> termes = a.getListeTermes();
-   			for (int i = 0; i < termes.size(); i ++)
+   			ArrayList<Term> terms = a.getListeTermes();
+   			for (int i = 0; i < terms.size(); i ++)
    			{
-   				t = ajouterTerme(termes.get(i)); // ajout � la liste des termes
+   				t = ajouterTerme(terms.get(i)); // ajout � la liste des termes
    				a.getListeTermes().set(i,t);
    				
    			}
@@ -78,7 +78,7 @@ public class Regle
 	 * Accesseur en lecture
 	 * @return l'hypoth�se de la r�gle
 	 */
-	public ArrayList<Atome> getHypothese() {
+	public ArrayList<Atom> getHypothese() {
 		return hypothese;
 	}
 	
@@ -86,7 +86,7 @@ public class Regle
 	 * Accesseur en lecture
 	 * @return la conclusion de la r�gle
 	 */
-	public Atome getConclusion()
+	public Atom getConclusion()
 	{
 		return conclusion;
 	}
@@ -96,12 +96,12 @@ public class Regle
 	}
 
 
-	public void setHypothese(ArrayList<Atome> hypothese) {
+	public void setHypothese(ArrayList<Atom> hypothese) {
 		this.hypothese = hypothese;
 	}
 
 
-	public void setConclusion(Atome conclusion) {
+	public void setConclusion(Atom conclusion) {
 		this.conclusion = conclusion;
 	}
 
@@ -110,7 +110,7 @@ public class Regle
 	 * Accesseur en lecture
 	 * @return l'ensemble de termes de la r�gle
 	 */
-	public ArrayList<Terme> getEnsembleTermes() {
+	public ArrayList<Term> getEnsembleTermes() {
 		return ensembleTermes;
 	}
 
@@ -121,7 +121,7 @@ public class Regle
 	 * @param t le terme � potentiellement ajouter
 	 * @return un sommet terme, soit t s'il a �t� ins�r�, soit le sommet terme qui existait d�j� dans la liste des sommets termes
 	 */
-	private Terme ajouterTerme(Terme t)
+	private Term ajouterTerme(Term t)
 	//SI : dans le cas o� le terme t n'existe pas d�j� dans la liste des sommets termes, on l'ajoute � la bonne place
 	//et on lui donne comme voisin le sommet relation se trouvant � l'index "index" dans la liste des sommets relations
 	//Sinon, on ajoute le sommet relation se trouvant � l'index "index" dans la liste des sommets relations au sommet terme d�j� existant dans la liste des sommets termes
@@ -139,7 +139,7 @@ public class Regle
 	 * @param t le sommet terme � ins�rer 
 	 * @return la position o� doit �tre ajout�e le sommet terme
 	 */
-	private int[] positionDichoTerme(Terme t)
+	private int[] positionDichoTerme(Term t)
 	//SE : si t se trouve dans la liste des termes, retourne son indice.
 	//sinon retourne l'indice o� il devrait �tre ins�r�
 	//SI : appelle la m�thode positionDichoRecursif en indiquant comme param�tre de recherche les
@@ -209,14 +209,14 @@ public class Regle
 //Test de la classe	
 	public static void main(String[] args)
 	{
-		Atome a = new Atome("mange(x,'Loup')");
+		Atom a = new Atom("mange(x,'Loup')");
 		System.out.println(a); // appel a.toString()
-		Atome b = new Atome("mange(x,y)");
+		Atom b = new Atom("mange(x,y)");
 		System.out.println(b); // appel b.toString()
-		Atome c = new Atome("animal"); // on donne juste le nom du pr�dicat
-		c.ajoutTerme(new Terme("x")); //puis on ajoute un terme
+		Atom c = new Atom("animal"); // on donne juste le nom du pr�dicat
+		c.addTerm(new Term("x")); //puis on ajoute un terme
 		System.out.println(c); // appel c.toString()
-		Regle r = new Regle("carnivore(x);mange(x,'Viande')","R�gle 1");
+		Rule r = new Rule("carnivore(x);mange(x,'Viande')","R�gle 1");
 		System.out.println(r);
 	}
 

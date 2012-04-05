@@ -1,4 +1,4 @@
-package ac.analysis.moteurDeRecherche;
+package ac.analysis.searchEngine;
 
 import java.util.*;
 import java.io.*;
@@ -17,10 +17,10 @@ import ac.analysis.structure.*;
  * @author namrata10
  *
  */
-public class BaseConnaissances {
+public class KnowledgeBase {
 
-	private BaseFaits BF;// base de faits
-	private ArrayList<Regle> BR;// base de r�gles
+	private FactBase BF;// base de faits
+	private ArrayList<Rule> BR;// base de r�gles
 	private String nomFichierSource;
 	private boolean saturee = false;
 
@@ -28,21 +28,21 @@ public class BaseConnaissances {
 	/**
 	 * Constructeur vide
 	 */
-	public BaseConnaissances() {
+	public KnowledgeBase() {
 		super();
-		BF = new BaseFaits();
+		BF = new FactBase();
 		;
-		BR = new ArrayList<Regle>();
+		BR = new ArrayList<Rule>();
 		nomFichierSource = null;
 	}
 
 	/**
 	 * Constructeur par copie
 	 */
-	public BaseConnaissances(BaseConnaissances k) {
+	public KnowledgeBase(KnowledgeBase k) {
 		super();
-		BF = new BaseFaits(k.getBF());
-		BR = new ArrayList<Regle>(k.getBR());
+		BF = new FactBase(k.getBF());
+		BR = new ArrayList<Rule>(k.getBR());
 		nomFichierSource = k.nomFichierSource;
 	}
 
@@ -54,7 +54,7 @@ public class BaseConnaissances {
 	 * @param BR
 	 *            une ArrayList d'instances de Regle
 	 */
-	public BaseConnaissances(BaseFaits BF, ArrayList<Regle> BR) {
+	public KnowledgeBase(FactBase BF, ArrayList<Rule> BR) {
 		super();
 		this.BF = BF;
 		this.BR = BR;
@@ -69,7 +69,7 @@ public class BaseConnaissances {
 	 *            le nom d'un fichier texte � partir duquel la base sera cr��e
 	 * @throws IOException
 	 */
-	public BaseConnaissances(String nomFichier) throws IOException {
+	public KnowledgeBase(String nomFichier) throws IOException {
 		nomFichierSource = nomFichier;
 		BufferedReader lectureFichier = new BufferedReader(new FileReader(
 				nomFichier));
@@ -81,7 +81,7 @@ public class BaseConnaissances {
 		// BaseFaits)
 		String t = lectureFichier.readLine(); // 1e ligne du fichier contient
 												// les faits
-		BF = new BaseFaits(t);
+		BF = new FactBase(t);
 
 		// d�termination de la taille de BR
 		t = lectureFichier.readLine(); // 2e ligne du fichier indique le nombre
@@ -90,21 +90,21 @@ public class BaseConnaissances {
 
 		// cr�ation de la base de r�gles (utilise les m�thodes de la classe
 		// Regle)
-		BR = new ArrayList<Regle>(n);
+		BR = new ArrayList<Rule>(n);
 		for (int i = 0; i < n; i++) {
 			t = lectureFichier.readLine(); // les lignes suivantes du fichier
 											// sont les r�gles
-			BR.add(new Regle(t, "R�gle " + (i + 1)));
+			BR.add(new Rule(t, "R�gle " + (i + 1)));
 		}
 		lectureFichier.close();
 	}
 
 //Les getters de la classe	
-	public BaseFaits getBF() {
+	public FactBase getBF() {
 		return BF;
 	}
 
-	public ArrayList<Regle> getBR() {
+	public ArrayList<Rule> getBR() {
 		return BR;
 	}
 
@@ -122,7 +122,7 @@ public class BaseConnaissances {
 	 * On note qu'elle indique que la base n'est plus satur�e
 	 */
 	public void viderBaseFaits() {
-		BF = new BaseFaits();
+		BF = new FactBase();
 		saturee = false;
 	}
 	/**
@@ -131,7 +131,7 @@ public class BaseConnaissances {
 	 * On note qu'elle indique que la base n'est plus satur�e
 	 * @param fait le fait (un atome) � ajouter 
 	 */
-	public void ajouterNouveauFait(Atome fait) {
+	public void ajouterNouveauFait(Atom fait) {
 		BF.ajouterNouveauFait(fait);
 		saturee = false;
 	}
@@ -155,10 +155,10 @@ public class BaseConnaissances {
 	 * � partir de ces substitutions 3) retourne la nouvelle base de
 	 * connaissances
 	 */
-	private BaseConnaissances propositionnalisation() throws IOException {
+	private KnowledgeBase propositionnalisation() throws IOException {
 		// d�claration et initialisation des variables de la m�thode
-		BaseConnaissances ordre0 = new BaseConnaissances();
-		Regle regleCourante;
+		KnowledgeBase ordre0 = new KnowledgeBase();
+		Rule regleCourante;
 		Substitutions substitutions;
 		Substitution s = new Substitution();
 	
@@ -168,7 +168,7 @@ public class BaseConnaissances {
 		BufferedReader lectureFichier = new BufferedReader(new FileReader(
 				nomFichierSource));
 		String t = lectureFichier.readLine(); // lecture de la base de faits
-		ordre0.BF = new BaseFaits(t); // la base de faits reste la m�me
+		ordre0.BF = new FactBase(t); // la base de faits reste la m�me
 	
 		t = lectureFichier.readLine(); // ne fait rien : on veut passer � la
 										// ligne suivante
@@ -178,8 +178,8 @@ public class BaseConnaissances {
 		for (int i = 0; i < BR.size(); i++) // i = nombre de r�gles
 		{
 			regleCourante = BR.get(i);
-			ArrayList<Terme> termesVariables = new ArrayList<Terme>();
-			ArrayList<Terme> termesConstantes = new ArrayList<Terme>(
+			ArrayList<Term> termesVariables = new ArrayList<Term>();
+			ArrayList<Term> termesConstantes = new ArrayList<Term>(
 					ordre0.BF.getEnsembleTermes());// on va ajouter les
 													// constantes de BR � �a
 	
@@ -187,7 +187,7 @@ public class BaseConnaissances {
 			// celles de la base de r�gles)
 			for (int index = 0; index < regleCourante.getEnsembleTermes()
 					.size(); index++) {
-				Terme termeCourant = regleCourante.getEnsembleTermes().get(
+				Term termeCourant = regleCourante.getEnsembleTermes().get(
 						index);
 				if (termeCourant.isConstante()) {
 					if (!ordre0.BF.termeExiste(termeCourant))
@@ -213,7 +213,7 @@ public class BaseConnaissances {
 			 * Substitution
 			 */
 			for (int j = 0; j < substitutions.S.size(); j++) {
-				Regle temp = new Regle(substitutions.S.get(j).replace(t),
+				Rule temp = new Rule(substitutions.S.get(j).replace(t),
 						regleCourante.getNom() + "." + (j + 1));
 				ordre0.BR.add(temp);
 			}
@@ -228,17 +228,17 @@ public class BaseConnaissances {
 	 * @return k la base de connaissances satur�e
 	 * @throws IOException
 	 */
-	private BaseConnaissances saturationPropositionnelle() throws IOException {
+	private KnowledgeBase saturationPropositionnelle() throws IOException {
 		// d�claration et initialisation des variables
-		BaseConnaissances k = new BaseConnaissances(propositionnalisation());
-		ArrayList<Atome> aTraiter = new ArrayList<Atome>(k.BF.getListeAtomes());// copie
+		KnowledgeBase k = new KnowledgeBase(propositionnalisation());
+		ArrayList<Atom> aTraiter = new ArrayList<Atom>(k.BF.getListeAtomes());// copie
 																				// la
 																				// base
 																				// de
 																				// faits
 	
-		Regle regleCourante;
-		Atome atomeCourant;
+		Rule regleCourante;
+		Atom atomeCourant;
 	
 		// cr�ation du tableau qui stocke la taille de l'hypoth�se de chaque
 		// r�gle
@@ -294,8 +294,8 @@ public class BaseConnaissances {
 		return k;
 	}
 
-	public BaseConnaissances saturationOrdre0() throws IOException {
-		BaseConnaissances saturee = saturationPropositionnelle();
+	public KnowledgeBase saturationOrdre0() throws IOException {
+		KnowledgeBase saturee = saturationPropositionnelle();
 		return saturee;
 	}
 
@@ -309,31 +309,31 @@ public class BaseConnaissances {
 	 * @return k la base de connaissances satur�e
 	 * @throws IOException
 	 */
-	public BaseConnaissances saturationOrdre1() throws IOException {
+	public KnowledgeBase saturationOrdre1() throws IOException {
 		if (saturee)
 			return this; // evite le calcul de saturation au cas o� la base est
 							// d�j� satur�e
 		
 		// d�claration et initialisation des variables
-		BaseConnaissances k = new BaseConnaissances(this);
-		ArrayList<Atome> nouveaux; //liste qui stocke les nouveaux faits
-		Homomorphismes s;
+		KnowledgeBase k = new KnowledgeBase(this);
+		ArrayList<Atom> nouveaux; //liste qui stocke les nouveaux faits
+		Homomorphisms s;
 		boolean fin = false; //indique fin de l'algorithme de cha�nage avant
-		Atome temp;
+		Atom temp;
 	
 		// Debut de l'algorithme de cha�nage avant
 		while (!fin) {
-			nouveaux = new ArrayList<Atome>(); //initialisement vide
+			nouveaux = new ArrayList<Atom>(); //initialisement vide
 	
-			for (Regle r : k.BR) {
+			for (Rule r : k.BR) {
 				//initialise les homomorphismes de l'hypoth�se de r dans la base de faits
-				s = new Homomorphismes(r.getHypothese(), k.BF);
+				s = new Homomorphisms(r.getHypothese(), k.BF);
 				if (s.existeHomomorphisme()) {
 					//calcule les homomorphismes de l'hypoth�se de r dans la base de faits
 					for (Substitution hom : s.getHomomorphismes()) {
 						//pour chaque homomorphisme hom, consid�re la
 						//substitution de la conclusion de r
-						temp = r.getConclusion().appliquerSubstitution(hom);
+						temp = r.getConclusion().applySubtitution(hom);
 						if (!k.BF.atomeExiste(temp) && !nouveaux.contains(temp))
 							nouveaux.add(temp);//si cette substitution est un nouveau fait,
 											   //ajoute ce fait � la liste de nouveaux faits	
@@ -360,27 +360,27 @@ public class BaseConnaissances {
 	 * @return k la base de connaissances satur�e
 	 * @throws IOException
 	 */
-	public BaseConnaissances saturationOrdre1Exploite() throws IOException {
+	public KnowledgeBase saturationOrdre1Exploite() throws IOException {
 		if (saturee)
 			return this; // evite le calcul de saturation au cas o� la base est
 							// d�j� satur�e
 		
 		// d�claration et initialisation des variables
-		BaseConnaissances k = new BaseConnaissances(this);
-		GDR gdr = new GDR(k); 
-		gdr.calculeGDR(); //calcule le graphe de d�pendances des r�gles 
+		KnowledgeBase k = new KnowledgeBase(this);
+		RuleDependencyGraph ruleDependencyGraph = new RuleDependencyGraph(k); 
+		ruleDependencyGraph.calculeGDR(); //calcule le graphe de d�pendances des r�gles 
 		  				  //(et des faits)
 		
 		//algorithme de saturation avec affichage des �l�ments qui illustrent
 		//l'exploitation du graphe de d�pendances des r�gles (et des faits)
-		System.out.println(gdr); 
+		System.out.println(ruleDependencyGraph); 
 		System.out.println("--> D�but de l'algorithme de cha�nage avant");
 		for (int i = 0; i < BF.getListeAtomes().size(); i++) {
 			System.out.print("\n  Fait consid�r� : "
 					+ BF.getListeAtomes().get(i));
 			//appel � la fonction r�cursive qui calcule des nouveaux faits  
 			//en appliquant les successeurs des faits (puis r�gles) consid�r�s
-			calculeNouveauxFaitsRec(gdr.getGraphe().get(i), k.BF); 
+			calculeNouveauxFaitsRec(ruleDependencyGraph.getGraphe().get(i), k.BF); 
 													 
 														
 		}
@@ -395,23 +395,23 @@ public class BaseConnaissances {
 	 * @param successeurs La liste de successeurs � consid�rer
 	 * @param faits La base de faits courante (les nouveux faits y seront ajout�s)
 	 */
-	private void calculeNouveauxFaitsRec(ArrayList<Regle> successeurs, BaseFaits faits) {
-		ArrayList<Regle> successeursNew;
+	private void calculeNouveauxFaitsRec(ArrayList<Rule> successeurs, FactBase faits) {
+		ArrayList<Rule> successeursNew;
 		// Debut de l'algorithme qui exploite le graphe de
 		// d�pendance des r�gles
-		for (Regle r : successeurs) {
+		for (Rule r : successeurs) {
 			//Affiche l'ordre dans lequel les r�gles sont consid�r�e
 			System.out.print("\n\tR�gle consid�r�e : " + r);
-			Homomorphismes s = new Homomorphismes(r.getHypothese(), faits);
+			Homomorphisms s = new Homomorphisms(r.getHypothese(), faits);
 			if (s.existeHomomorphisme())
 				for (Substitution hom : s.getHomomorphismes()) {
-					Atome temp = r.getConclusion().appliquerSubstitution(hom);
+					Atom temp = r.getConclusion().applySubtitution(hom);
 					if (!faits.atomeExiste(temp)) {
 						faits.ajouterNouveauFait(temp);
 						System.out.print("\n\tNouveau fait ajout� : " + temp
 								+ "\n  �tape suivante : successeurs de "
 								+ r.getNom());
-						successeursNew = new ArrayList<Regle>(
+						successeursNew = new ArrayList<Rule>(
 								calculeSuccesseurs(r));
 						//appel r�cursive qui parcourt le graphe en profondeur
 						calculeNouveauxFaitsRec(successeursNew, faits); 
@@ -426,8 +426,8 @@ public class BaseConnaissances {
 	 * @param r La r�gle dont on veut calculer les successeurs
 	 * @return La liste de successeurs de r
 	 */
-	private ArrayList<Regle> calculeSuccesseurs(Regle r) {
-		GDR g = new GDR(this);
+	private ArrayList<Rule> calculeSuccesseurs(Rule r) {
+		RuleDependencyGraph g = new RuleDependencyGraph(this);
 		int n = Integer.parseInt(r.getNom().substring(6))
 				+ BF.getListeAtomes().size() - 1;
 
@@ -441,9 +441,9 @@ public class BaseConnaissances {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		BaseConnaissances k = new BaseConnaissances("ex2.txt");
+		KnowledgeBase k = new KnowledgeBase("ex2.txt");
 		System.out.println(k);
-		BaseConnaissances kSaturee = k.saturationOrdre0();
+		KnowledgeBase kSaturee = k.saturationOrdre0();
 		System.out.println(kSaturee);
 
 		kSaturee = k.saturationOrdre1Exploite();

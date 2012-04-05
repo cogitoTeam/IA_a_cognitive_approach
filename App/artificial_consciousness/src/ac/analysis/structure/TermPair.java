@@ -4,30 +4,30 @@ package ac.analysis.structure;
  * Le couple de termes qui d�finit la substitution d'une variable par une constante.
  * C'est l'�l�ment de base pour la classe Substitution.
  */
-public class CoupleTermes 
+public class TermPair 
 {
 	
-	private Terme x; //1e terme du couple (variable)
-	private Terme y; //2e terme du couple (constante)
+	private Term x; //1e terme du couple (variable)
+	private Term y; //2e terme du couple (constante)
 
 	/**
 	 * Constructeur de la classe CoupleTermes
 	 * @param a premier terme du couple
 	 * @param b deuxi�me terme du couple
 	 */
-	public CoupleTermes(Terme a, Terme b) 
+	public TermPair(Term a, Term b) 
 	{
 		x = a;
 		y = b;
 	}
 	
 //Les getters de la classe
-	public Terme getX()
+	public Term getX()
 	{
 		return x;
 	}
 	
-	public Terme getY()
+	public Term getY()
 	{
 		return y;
 	}

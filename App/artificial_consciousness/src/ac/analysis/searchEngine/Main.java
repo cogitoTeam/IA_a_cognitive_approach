@@ -1,4 +1,4 @@
-package ac.analysis.moteurDeRecherche;
+package ac.analysis.searchEngine;
 
 import java.io.*;
 
@@ -40,7 +40,7 @@ public class Main {
 		if(input.equals("q"))
 			return; 
 		
-		BaseConnaissances bc = new BaseConnaissances(input);
+		KnowledgeBase bc = new KnowledgeBase(input);
 		System.out.println("AFFICHAGE DE LA BASE DE CONNAISSANCES:" + bc);
 	//	System.out.println("AFFICHAGE DE LA BASE DE FAITS SATUR�E PAR LA SATURATION PROPOSITIONNELLE :\n" + bc.saturationOrdre0().getBF());
 	//	System.out.println("AFFICHAGE DE LA BASE DE FAITS SATUR�E PAR LA SATURATION << PREMIER ORDRE >> :\n" + bc.saturationOrdre1().getBF());
@@ -69,14 +69,14 @@ public class Main {
 			input = lectureInput.readLine();
 			if(input.equals("q"))
 				return;
-			Requete requete = new Requete(input);
+			Query query = new Query(input);
 			
 		//	System.out.println("\nAVEC LA REQU�TE : " + new GDR().calculeGDRAvecRequete(requete,new BaseConnaissances(bc)));
 			
 	//		System.out.print("AFFICHAGE DURANT LA SATURATION << PREMIER ORDRE >> \nDES �L�MENTS ILLUSTRANT L'EXPLOITATION DU ");
 			bc = bc.saturationOrdre1Exploite();
-			BaseFaits bf = bc.getBF();
-			Homomorphismes reponses = new Homomorphismes(requete, bf);
+			FactBase bf = bc.getBF();
+			Homomorphisms reponses = new Homomorphisms(query, bf);
 			System.out.println("\n\nEst-ce que la requ�te est satisfaite?");
 			if (reponses.existeHomomorphisme()) {
 				System.out.println("R�PONSE : Oui");

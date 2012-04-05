@@ -1,4 +1,4 @@
-package ac.analysis.moteurDeRecherche;
+package ac.analysis.searchEngine;
 
  
 
@@ -13,8 +13,8 @@ import ac.analysis.structure.*;
 public class Substitutions 
 {
 
-	private ArrayList<Terme> T1;
-	private ArrayList<Terme> T2;
+	private ArrayList<Term> T1;
+	private ArrayList<Term> T2;
 	
 	public ArrayList<Substitution> S;
 
@@ -23,7 +23,7 @@ public class Substitutions
 	 * @param variables les termes variables 
 	 * @param constantes les termes constantes 
 	 */
-	public Substitutions (ArrayList<Terme> variables, ArrayList<Terme> constantes) 
+	public Substitutions (ArrayList<Term> variables, ArrayList<Term> constantes) 
 	{
 		T1 = variables; //l'ensemble de termes (variables)
 		T2 = constantes; //l'ensemble de termes (constantes)
@@ -41,7 +41,7 @@ public class Substitutions
 			for (int i = 0; i < T2.size(); i++) //pour toutes les constantes
 			{
 				//g�n�re le couple (prochaine variable, constante) 
-				CoupleTermes couple = new CoupleTermes(T1.get(s.nombreCouples()), T2.get(i));
+				TermPair couple = new TermPair(T1.get(s.nombreCouples()), T2.get(i));
 				Substitution temp = new Substitution(s);//copie de s
 				temp.addCouple(couple); //ajoute le couple � la substitution
 				getSubstitutions(temp); //appel r�cursive

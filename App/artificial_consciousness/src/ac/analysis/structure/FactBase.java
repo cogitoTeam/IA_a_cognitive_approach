@@ -8,56 +8,56 @@ import java.util.*;
  * On note que les atomes �tant des faits, ces termes sont forc�ment des constantes.
  *
  */
-public class BaseFaits
+public class FactBase
 {
-	protected ArrayList<Atome> listeAtomes;//l'ensemble des faits (atomes)
-	private ArrayList<Terme> ensembleTermes;//l'ensemble des termes pr�sents
+	protected ArrayList<Atom> listeAtomes;//l'ensemble des faits (atomes)
+	private ArrayList<Term> ensembleTermes;//l'ensemble des termes pr�sents
 	
 //Les constructeurs de la classe 
 	/**
 	 * Constructeur de la classe 'BaseFaits'
 	 * cr�e une base de faits vide
 	 */
-	public BaseFaits()
+	public FactBase()
 	{
-		listeAtomes = new ArrayList<Atome>();
-		ensembleTermes = new ArrayList<Terme>();
+		listeAtomes = new ArrayList<Atom>();
+		ensembleTermes = new ArrayList<Term>();
 	}
 	
 	/**
 	 * Constructeur par copie de la classe 'BaseFaits'
 	 */
-	public BaseFaits(BaseFaits BF)
+	public FactBase(FactBase BF)
 	{
-		listeAtomes = new ArrayList<Atome>(BF.getListeAtomes());
-		ensembleTermes = new ArrayList<Terme>(BF.getEnsembleTermes());
+		listeAtomes = new ArrayList<Atom>(BF.getListeAtomes());
+		ensembleTermes = new ArrayList<Term>(BF.getEnsembleTermes());
 	}
 	
 	/**
 	 * Constructeur de la classe 'BaseFaits'
 	 * @param baseFaits les faits, pass�s sous la forme "atom1;...;atomk"
 	 */
-	public BaseFaits(String baseFaits)
+	public FactBase(String baseFaits)
 	{
-		listeAtomes = new ArrayList<Atome>();
-		ensembleTermes = new ArrayList<Terme>();
+		listeAtomes = new ArrayList<Atom>();
+		ensembleTermes = new ArrayList<Term>();
 		creerBaseFaits(baseFaits);	
 	}
 	
 //Les getters et setters de la classe	
-	public ArrayList<Atome> getListeAtomes() {
+	public ArrayList<Atom> getListeAtomes() {
 		return listeAtomes;
 	}
 
-	public void setListeAtomes(ArrayList<Atome> listeAtomes) {
+	public void setListeAtomes(ArrayList<Atom> listeAtomes) {
 		this.listeAtomes = listeAtomes;
 	}
 
-	public ArrayList<Terme> getEnsembleTermes() {
+	public ArrayList<Term> getEnsembleTermes() {
 		return ensembleTermes;
 	}
 
-	public void setEnsembleTermes(ArrayList<Terme> ensembleTermes) {
+	public void setEnsembleTermes(ArrayList<Term> ensembleTermes) {
 		this.ensembleTermes = ensembleTermes;
 	}
 
@@ -67,17 +67,17 @@ public class BaseFaits
 	private void creerBaseFaits(String baseFaits)
 	//Pr�requis : le format de la base de faits est suppos� correct
    	{
-		Terme t;
+		Term t;
    		StringTokenizer st = new StringTokenizer(baseFaits,";");
    		while(st.hasMoreTokens())
    		{
    			String s = st.nextToken(); // s repr�sente un atome
-   			Atome a = new Atome(s);
+   			Atom a = new Atom(s);
    			ajouterAtome(a);//On ajoute un atome � la liste des atomes
-   			ArrayList<Terme> termes = a.getListeTermes();
-   			for (int i = 0; i < termes.size(); i ++)
+   			ArrayList<Term> terms = a.getListeTermes();
+   			for (int i = 0; i < terms.size(); i ++)
    			{
-   				t = ajouterTerme(termes.get(i));
+   				t = ajouterTerme(terms.get(i));
    				a.getListeTermes().set(i,t);
    			}
    		}
@@ -87,7 +87,7 @@ public class BaseFaits
 	 * Ajoute des faits � la base de faits s'ils n'apparaissaient pas d�j�
 	 * @param faits les faits � ajouter (seuls ceux n'apparaissant pas dans la base seront ajout�s)
 	 */
-	public void ajouterNouveauxFaits(ArrayList<Atome> faits)
+	public void ajouterNouveauxFaits(ArrayList<Atom> faits)
 	// Spec Interne : la liste des termes apparaissant dans la base est �galement
 	// mise � jour
 	{
@@ -99,7 +99,7 @@ public class BaseFaits
 	 * Ajoute un fait � la base de faits s'il n'apparait pas d�j�
 	 * @param fait le fait � ajouter (ne sera ajout� que s'il n'apparait pas d�j�)
 	 */
-	public void ajouterNouveauFait(Atome fait)
+	public void ajouterNouveauFait(Atom fait)
 	// Spec Interne : la liste des termes apparaissant dans la base est �galement
 	// mise � jour
 	{
@@ -108,7 +108,7 @@ public class BaseFaits
 				listeAtomes.add(fait);
 				for(int j=0;j<fait.getListeTermes().size();j++)
 				{
-					Terme t = new Terme(fait.getListeTermes().get(j).getLabel(),fait.getListeTermes().get(j).isConstante());//On cr�e un nouveau terme
+					Term t = new Term(fait.getListeTermes().get(j).getLabel(),fait.getListeTermes().get(j).isConstante());//On cr�e un nouveau terme
 					t = ajouterTerme(t); // ceci ajoute le terme dans la liste des termes de la base de faits s'il n'existait pas d�j�
 					listeAtomes.get(listeAtomes.size()-1).getListeTermes().set(j,t);
 				}
@@ -120,7 +120,7 @@ public class BaseFaits
 	 * @param t le terme � potentiellement ajouter
 	 * @return un sommet terme, soit t s'il a �t� ins�r�, soit le sommet terme qui existait d�j� dans la liste des sommets termes
 	 */
-	public Terme ajouterTerme(Terme t)
+	public Term ajouterTerme(Term t)
 	//SI : dans le cas o� le terme t n'existe pas d�j� dans la liste des sommets termes, on l'ajoute � la bonne place
 	//et on lui donne comme voisin l'atome se trouvant � l'index "index" dans la liste des atomes
 	//Sinon, on ajoute l'atome se trouvant � l'index "index" dans la liste des atomes au sommet terme d�j� existant dans la liste des sommets termes
@@ -137,7 +137,7 @@ public class BaseFaits
 	 * @param t le sommet terme � ins�rer 
 	 * @return la position o� doit �tre ajout�e le sommet terme
 	 */
-	private int[] positionDichoTerme(Terme t)
+	private int[] positionDichoTerme(Term t)
 	//SE : si t se trouve dans la liste des termes, retourne son indice.
 	//sinon retourne l'indice o� il devrait �tre ins�r�
 	//SI : appelle la m�thode positionDichoRecursif en indiquant comme param�tre de recherche les
@@ -185,7 +185,7 @@ public class BaseFaits
 	 * @param a l'atome � ajouter
 	 * @return la position o� l'atome 'a' a �t� ajout� (s'il existait d�j� il est ajout� en double)
 	 */
-	private int ajouterAtome(Atome a)
+	private int ajouterAtome(Atom a)
 	{
 		listeAtomes.add(a);
 		return listeAtomes.size()-1;
@@ -196,7 +196,7 @@ public class BaseFaits
 	 * @param a l'atome dont on teste l'existence
 	 * @return vrai si l'atome existe d�j�, faux sinon
 	 */
-	public boolean atomeExiste(Atome a)
+	public boolean atomeExiste(Atom a)
 	{
 		for(int i=0;i<listeAtomes.size();i++)
 		{
@@ -220,7 +220,7 @@ public class BaseFaits
 	 * @param t le terme dont on teste l'existence
 	 * @return vrai si le terme existe d�j�, faux sinon
 	 */
-	public boolean termeExiste(Terme t)
+	public boolean termeExiste(Term t)
 	{
 		for(int i=0;i<ensembleTermes.size();i++)
 			if(ensembleTermes.get(i).equalsT(t)) return true;
