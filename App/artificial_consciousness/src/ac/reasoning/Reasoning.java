@@ -15,7 +15,7 @@ import agent.Action;
 public class Reasoning
 {
 
-  private static final Logger logger = Logger.getLogger(Reasoning.class);
+  private static final Logger LOGGER = Logger.getLogger(Reasoning.class);
 
   /* **************************************************************************
    * ATTRIBUTES
@@ -47,15 +47,18 @@ public class Reasoning
 
   /**
    * Active the ChoiceEngine
+   * 
    * @return an Action
    */
   public Action stimulate()
   {
-    logger.debug("stimulate");
-    _introspection_engine.stop();
-    _choice_engine.start();
+    LOGGER.debug("stimulate");
+    _introspection_engine.interrupt();
+    Action action = _choice_engine.start();
+    // @todo restart introspection only after game end or after x minutes of
+    // inactivity
     _introspection_engine.start();
-    return null;
+    return action;
   }
 
 }

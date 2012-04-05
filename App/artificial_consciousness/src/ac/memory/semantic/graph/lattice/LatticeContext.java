@@ -6,7 +6,7 @@ package ac.memory.semantic.graph.lattice;
 import java.util.HashSet;
 import java.util.Map;
 
-import book.Pair;
+import ac.util.Pair;
 
 import ac.shared.CompleteBoardState;
 import ac.shared.RelevantPartialBoardState;

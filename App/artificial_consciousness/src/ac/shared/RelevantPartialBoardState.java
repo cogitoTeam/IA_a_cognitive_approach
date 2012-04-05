@@ -1,62 +1,100 @@
 package ac.shared;
 
+import java.io.Serializable;
+
+import ac.analysis.structure.Regle;
+
 /**
  * Class which represents a Relevant structure (attribute of the lattice)
  * 
  * @author Thibaut Marmin <marminthibaut@gmail.com>
+ * @author Clément Sipieter <csipieter@gmail.com>
  * @date 26 mars 2012
- * @version 0.1
+ * @version 0.2
  */
-public class RelevantPartialBoardState extends AbstractBoardState implements
-    Comparable<RelevantPartialBoardState>
+public class RelevantPartialBoardState implements Serializable
 {
+
+  // ***************************************************************************
+  // ATTRIBUTES
+  // ***************************************************************************
+
   private static final long serialVersionUID = -8844815904283187121L;
+  private static final String PREFIX_LABEL = "_rpbs";
+
+  private long _id;
+  private Regle _rule;
+
+  // ***************************************************************************
+  // CONSTRUCTOR
+  // ***************************************************************************
 
   /**
-   * @param id
-   */
-  public RelevantPartialBoardState()
-  {
-    super();
-  }
-
-  /**
-   * /!\ This constructor will be removed later
+   * Constructor with id and rule in parameter
    * 
    * @param id
+   *          the id
+   * @param rule
+   *          the rule
    */
-  public RelevantPartialBoardState(long id)
+  public RelevantPartialBoardState(long id, String rule)
   {
-    super(id);
-  }
-
-  private double weight;
-
-  public int compareTo(RelevantPartialBoardState rs)
-  {
-    if (getWeight() < rs.getWeight())
-      return -1;
-    else if (getWeight() > rs.getWeight())
-      return 1;
-    else
-      return 0;
+    this.init(id, rule);
   }
 
   /**
-   * @return the weight
+   * Constructor with rule in parameter
+   * 
+   * @param rule
+   *          the rule
    */
-  public double getWeight()
+  public RelevantPartialBoardState(String rule)
   {
-    return weight;
+    this.init(0, rule);
+  }
+
+  private void init(long id, String rule)
+  {
+    this._id = id;
+    this._rule = new Regle(rule, "");
+  }
+
+  // ***************************************************************************
+  // METHODS
+  // ***************************************************************************
+
+  // ***************************************************************************
+  // GETTERS
+  // ***************************************************************************
+
+  /**
+   * @return the _id
+   */
+  public long getId()
+  {
+    return _id;
   }
 
   /**
-   * @param weight
-   *          the weight to set
+   * @return the _rule
    */
-  public void setWeight(double weight)
+  public Regle getRule()
   {
-    this.weight = weight;
+    return _rule;
+  }
+
+  // ***************************************************************************
+  // SETTERS
+  // ***************************************************************************
+
+  /**
+   * @param id
+   *          the id to set
+   */
+  public void setId(long id)
+  {
+    this._id = id;
+    this._rule.getConclusion().setLabel(PREFIX_LABEL + id);
   }
 
 }

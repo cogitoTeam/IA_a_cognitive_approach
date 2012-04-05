@@ -4,14 +4,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import book.Pair;
-
-import ac.memory.ActiveMemory;
+import ac.util.Pair;
+import ac.memory.Memory;
 import ac.memory.MemoryException;
-import ac.shared.CompleteBoardState;
+import ac.shared.FOLObjects.Option;
 import agent.Action;
-import game.BoardMatrix.Position;
-
 
 /**
  * Class ChoiceEngine Cette classe implémente la prise de décision
@@ -23,60 +20,61 @@ import game.BoardMatrix.Position;
 class ChoiceEngine
 {
 
-  @SuppressWarnings("unused")
-  private static final Logger logger = Logger.getLogger(ChoiceEngine.class);
+  private static final Logger LOGGER = Logger.getLogger(ChoiceEngine.class);
 
-  /* **************************************************************************
-   * ATTRIBUTES
-   * ************************************************************************ */
+  // **************************************************************************
+  // ATTRIBUTES
+  // ************************************************************************ */
 
-  private ActiveMemory _memory;
+  private Memory _memory;
 
-  /* **************************************************************************
-   * CONSTRUCTORS
-   * ************************************************************************ */
+  // **************************************************************************
+  // CONSTRUCTORS
+  // ************************************************************************ */
 
-  public ChoiceEngine(ActiveMemory memory)
+  public ChoiceEngine(Memory memory)
   {
     this._memory = memory;
   }
 
-  /* **************************************************************************
-   * FRIENDLY METHODS
-   * ************************************************************************ */
+  // **************************************************************************
+  // FRIENDLY METHODS
+  // ************************************************************************ */
 
   Action start()
   {
-    
-    List<Pair<CompleteBoardState, Double>> list_bs = null;
+    List<Pair<Option, Double>> options_list = null;
+
     try
       {
-        list_bs = this._memory
-            .getGradedCompleteBoardState();
+        options_list = this._memory.getGradedOptions();
       }
     catch (MemoryException e)
       {
-        e.printStackTrace();
+        LOGGER.error(e.getMessage());
         return new Action.Exit();
-      }  
+      }
 
-    /* ————————————————————————————————————————————————————————————————————————
-     * Search the BoardState with better grade
-     * 
-     * @TODO outsource this procedure
-     * —————————————————————————————————————————————————————————————————————— */
-    Pair<CompleteBoardState, Double> better_bs = list_bs.get(0);
-    double max_grade = better_bs.getSecond();
-
-    for (Pair<CompleteBoardState, Double> bs : list_bs)
-      if (bs.getSecond() > max_grade)
-        {
-          better_bs = bs;
-          max_grade = bs.getSecond();
-        }
-    /* —————————————————————————————————————————————————————————————————————— */
-
-    //@FIXME define the position
-    return new Action.Move(new Position(0,0));
+    return this.getBetterOption(options_list).getMove();
   }
+
+  // ***************************************************************************
+  // PRIATE METHODS
+  // ***************************************************************************
+
+  private Option getBetterOption(List<Pair<Option, Double>> options_list)
+  {
+    Option better_option = options_list.get(0).getFirst();
+    double max_grade = options_list.get(0).getSecond();
+
+    for (Pair<Option, Double> pair : options_list)
+      if (pair.getSecond() > max_grade)
+        {
+          better_option = pair.getFirst();
+          max_grade = pair.getSecond();
+        }
+
+    return better_option;
+  }
+
 }

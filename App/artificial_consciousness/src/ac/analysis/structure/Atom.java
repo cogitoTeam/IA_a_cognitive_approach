@@ -123,6 +123,15 @@ public class Atom
   {
     return label;
   }
+  
+  /**
+   * @param label The label to set
+   */
+  public void setLabel(String label)
+  {
+    this.label = label;
+  }
+  
 
   /* *****************************************************************************
    * METHODS
