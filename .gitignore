@@ -58,7 +58,7 @@ local.properties
 #log files
 *.log
 
-Docs/Diags/.DS_Store
+*.DS_Store
 
 #Tools
 Tools/*
