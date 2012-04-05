@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * It consists of:
  * <p>
  * <code>label</code> (the predicate's name) and <code>terms</code> (list of
- * elements of the class <code>Term</code>)
+ * elements of the class {@link Term})
  * 
  * @author namratapatel
  */
@@ -17,7 +17,6 @@ public class Atom
   /* **************************************************************************
    * FIELD
    * ************************************************************************* */
-
   private String label;
   private ArrayList<Term> terms;
 
@@ -29,6 +28,7 @@ public class Atom
    * Copy Constructor
    * 
    * @param copy
+   *          {@link Atom}
    */
   public Atom(Atom copy)
   {
@@ -39,7 +39,7 @@ public class Atom
   /**
    * Default Constructor :
    * <p>
-   * Creates an atom from a well-formatted string
+   * Creates an {@link Atom} from a well-formatted string
    * 
    * @param s
    *          a well-formatted string representing an atom, e.g.
@@ -97,7 +97,7 @@ public class Atom
   }
 
   /**
-   * Empty Constructor
+   * Empty Constructor for {@link Atom}
    */
   public Atom()
   {
@@ -109,36 +109,48 @@ public class Atom
    * GETTERS AND SETTERS
    * **************************************************************************** */
 
+  /**
+   * @return
+   *         {@code terms} : the list of terms in this {@code Atom}
+   * 
+   */
   public ArrayList<Term> getTerms()
   {
     return terms;
   }
 
-  public void setTerms(ArrayList<Term> listeTermes)
+  /**
+   * @param termList
+   *          The list of terms to set to this {@code Atom}
+   */
+  public void setTerms(ArrayList<Term> termList)
   {
-    this.terms = listeTermes;
+    this.terms = termList;
   }
 
+  /**
+   * @return {@code label} : this {@code Atom}'s predicate name
+   */
   public String getLabel()
   {
     return label;
   }
-  
+
   /**
-   * @param label The label to set
+   * @param label
+   *          The label to set to this {@code Atom}
    */
   public void setLabel(String label)
   {
     this.label = label;
   }
-  
 
   /* *****************************************************************************
    * METHODS
    * **************************************************************************** */
 
   /**
-   * Adds term <code>t</code> to the atom
+   * Adds {@link Term} {@code t} to this {@code Atom}
    * 
    * @param t
    *          the term to add
@@ -167,7 +179,7 @@ public class Atom
    * 
    * @param r
    *          the atom to compare this {@code Atom} against
-   * @return {@code True} if the two atoms are equivalent, {@code False}
+   * @return {@code true} if the two atoms are equivalent, {@code false}
    *         otherwise
    */
   public boolean equalsA(Atom r)
@@ -185,12 +197,38 @@ public class Atom
   }
 
   /**
+   * Makes this {@code Atom} and the one specified distinct, i.e
+   * <p>
+   * if the 2 atoms have variables, their variables are renamed so that
+   * they are distinct
+   * 
+   * @param b
+   *          the atom to make distinct with this {@code Atom} (it is modified in the method)
+   * @return a copy of this {@code Atom} after its modification (leaving this
+   *         {@code Atom} unmodified in the method)
+   */
+  public Atom makeDistinct(Atom b)
+  {
+    Atom a = new Atom(this);
+    for (int i = 0; i < a.getTerms().size(); i++)
+      {
+        if (a.getTerms().get(i).isVariable())
+          a.getTerms().set(i,
+              new Term(a.getTerms().get(i).getLabel() + "1", false));
+        if (b.getTerms().get(i).isVariable())
+          b.getTerms().set(i,
+              new Term(b.getTerms().get(i).getLabel() + "2", false));
+      }
+    return a;
+  }
+
+  /**
    * Checks if this {@code Atom} and the one specified are "unifiable"
    * 
    * @param a
    *          the atom to check this {@code Atom} against
-   * @return {@code True} if the two atoms are "unifiable", {@code False}
-   *         otherwise
+   * @return {@code True} if the two atoms are identical by unification,
+   *         {@code False} otherwise
    * 
    */
   public boolean unifiableA(Atom r)
@@ -227,14 +265,15 @@ public class Atom
   }
 
   /**
-   * M�thode qui remplace toutes les occurences d'un terme par un terme donn�
+   * Replaces all occurrences of term {@code from} by term {@code to} in the
+   * specified list of terms
    * 
    * @param inList
-   *          Liste dans laquelle on cherche
+   *          The list that contains the term to be replaced
    * @param from
-   *          Terme qui sera remplac�
+   *          the old term to be replaced
    * @param to
-   *          Terme de substitution
+   *          the new term to replace with 
    */
   public void replace(Term from, Term to, ArrayList<Term> inList)
   {
@@ -246,50 +285,21 @@ public class Atom
   }
 
   /**
-   * M�thode qui applique une substitution � l'atome courant:
+   * Applies the specified {@link Substitution} to this {@code Atom}
    * 
    * @param s
-   *          La substitution � appliquer
-   * @return aSubstituer L'atome substitu�
+   *          the substitution to apply to this {@code Atom}
+   * @return a copy of this {@code Atom} after its modification (leaving this
+   *         {@code Atom} unmodified in the method)
    */
   public Atom applySubtitution(Substitution s)
   {
-    Atom aSubstituer = new Atom(this);
+    Atom substitute = new Atom(this);
     for (TermPair c : s.getListeCouples())
-      aSubstituer.replace(c.getX(), c.getY(), aSubstituer.getTerms());
-    return aSubstituer;
+      substitute.replace(c.getX(), c.getY(), substitute.getTerms());
+    return substitute;
   }
 
-  /**
-   * M�thode qui rend l'ensemble des variables de deux atomes disjoints
-   * 
-   * @param a
-   *          Atome a
-   * @param b
-   *          Atome b
-   */
-  public Atom makeDistinct(Atom b)
-  {
-    Atom a = new Atom(this);
-    for (int i = 0; i < a.getTerms().size(); i++)
-      {
-        if (a.getTerms().get(i).isVariable())
-          a.getTerms().set(i,
-              new Term(a.getTerms().get(i).getLabel() + "1", false));
-        if (b.getTerms().get(i).isVariable())
-          b.getTerms().set(i,
-              new Term(b.getTerms().get(i).getLabel() + "2", false));
-      }
-    return a;
-  }
-
-  // La m�thode toString de la classe
-
-  /**
-   * Retourne la cha�ne de caract�res de cet atome
-   * 
-   * @return la cha�ne d�crivant l'atome (suivant l'�criture logique habituelle)
-   */
   public String toString()
   {
     String s = label + "(";
@@ -302,18 +312,25 @@ public class Atom
     s += ")";
     return s;
   }
+  
+  /* *****************************************************************************
+   * MAIN
+   * **************************************************************************** */
 
-  // juste pour une d�mo de la classe
+
+  /**
+   * Demo of class
+   * @param args
+   */
   public static void main(String[] args)
   {
     Atom a = new Atom("r(x,y,z)");
     Atom b = new Atom("r(x,y,x)");
     if (a.unifiableA(b))
-      System.out.println("a = " + a + " et b = " + b + " sont unifiables"); // appel
-                                                                            // a.toString()
+      System.out.println("a = " + a + " and b = " + b + " are unifiable"); 
     else
-      System.out.println("a = " + a + " et b = " + b
-          + " ne sont pas unifiables"); // appel b.toString()
+      System.out.println("a = " + a + " and b = " + b
+          + " are not unifiable"); 
 
   }
 }
