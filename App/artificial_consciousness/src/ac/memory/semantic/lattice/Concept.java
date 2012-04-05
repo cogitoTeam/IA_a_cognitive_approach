@@ -1,4 +1,4 @@
-package ac.memory.semantic.graph.lattice;
+package ac.memory.semantic.lattice;
 
 import java.util.HashMap;
 

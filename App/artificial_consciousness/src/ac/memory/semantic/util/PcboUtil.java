@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.memory.semantic.graph.lattice.util;
+package ac.memory.semantic.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,8 +14,8 @@ import org.apache.log4j.Logger;
 
 import ac.util.Pair;
 
-import ac.memory.semantic.graph.lattice.LatticeContext;
-import ac.memory.semantic.graph.lattice.LatticeContextException;
+import ac.memory.semantic.lattice.LatticeContext;
+import ac.memory.semantic.lattice.LatticeContextException;
 import ac.shared.CompleteBoardState;
 import ac.shared.RelevantPartialBoardState;
 

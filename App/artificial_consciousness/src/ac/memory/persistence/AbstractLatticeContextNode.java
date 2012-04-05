@@ -14,7 +14,7 @@ import org.neo4j.helpers.collection.IterableWrapper;
 import org.neo4j.kernel.Traversal;
 import org.neo4j.kernel.Uniqueness;
 
-import ac.memory.semantic.graph.lattice.LatticeContextException;
+import ac.memory.semantic.lattice.LatticeContextException;
 
 /**
  * Wrapping class for lattice context node

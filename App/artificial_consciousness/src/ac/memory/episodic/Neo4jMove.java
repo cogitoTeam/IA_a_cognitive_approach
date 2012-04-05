@@ -11,7 +11,7 @@ import java.util.List;
 import ac.memory.persistence.AttributeNode;
 import ac.memory.persistence.MoveNode;
 import ac.memory.persistence.NodeException;
-import ac.memory.semantic.graph.lattice.LatticeContextException;
+import ac.memory.semantic.lattice.LatticeContextException;
 import ac.shared.CompleteBoardState;
 import ac.shared.RelevantPartialBoardState;
 
