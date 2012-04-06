@@ -295,7 +295,7 @@ public class Atom
   public Atom applySubtitution(Substitution s)
   {
     Atom substitute = new Atom(this);
-    for (TermPair c : s.getListeCouples())
+    for (TermPair c : s.getPairList())
       substitute.replace(c.getX(), c.getY(), substitute.getTerms());
     return substitute;
   }

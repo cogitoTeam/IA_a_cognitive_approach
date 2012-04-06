@@ -74,14 +74,14 @@ public class Main {
 		//	System.out.println("\nAVEC LA REQU�TE : " + new GDR().calculeGDRAvecRequete(requete,new BaseConnaissances(bc)));
 			
 	//		System.out.print("AFFICHAGE DURANT LA SATURATION << PREMIER ORDRE >> \nDES �L�MENTS ILLUSTRANT L'EXPLOITATION DU ");
-			bc = bc.saturationOrdre1Exploite();
-			FactBase bf = bc.getBF();
+			bc = bc.optimizedSaturation_FOL();
+			FactBase bf = bc.getFB();
 			Homomorphisms reponses = new Homomorphisms(query, bf);
 			System.out.println("\n\nEst-ce que la requ�te est satisfaite?");
-			if (reponses.existeHomomorphisme()) {
+			if (reponses.existsHomomorphismTest()) {
 				System.out.println("R�PONSE : Oui");
 				System.out.println("\nAFFICHAGE DE LA LISTE DE R�PONSES :");
-				System.out.println(reponses.getHomomorphismes());
+				System.out.println(reponses.getHomomorphisms());
 			} else
 				System.out.println("R�PONSE : Non");
 		

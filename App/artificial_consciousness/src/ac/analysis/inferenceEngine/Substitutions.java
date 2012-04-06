@@ -35,15 +35,15 @@ public class Substitutions
 	 */
 	public void getSubstitutions(Substitution s) 
 	{
-		if (s != null && s.nombreCouples() == T1.size())
+		if (s != null && s.num_Pairs() == T1.size())
 			S.add(s); //si nombre de couples = nombre de variables, ajoute substitution � S
 		else 
 			for (int i = 0; i < T2.size(); i++) //pour toutes les constantes
 			{
 				//g�n�re le couple (prochaine variable, constante) 
-				TermPair couple = new TermPair(T1.get(s.nombreCouples()), T2.get(i));
+				TermPair couple = new TermPair(T1.get(s.num_Pairs()), T2.get(i));
 				Substitution temp = new Substitution(s);//copie de s
-				temp.addCouple(couple); //ajoute le couple � la substitution
+				temp.addPair(couple); //ajoute le couple � la substitution
 				getSubstitutions(temp); //appel r�cursive
 			}			
 		return;

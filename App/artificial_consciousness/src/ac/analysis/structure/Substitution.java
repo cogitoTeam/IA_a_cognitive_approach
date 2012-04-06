@@ -16,14 +16,14 @@ import java.util.ArrayList;
 public class Substitution 
 {
 
-	private ArrayList<TermPair> listeCouples = null;
+	private ArrayList<TermPair> pairList = null;
 
 	/**
 	 * Constructeur vide de la classe Substition
 	 */
 	public Substitution () 
 	{
-		listeCouples = new ArrayList<TermPair>();		
+		pairList = new ArrayList<TermPair>();		
 	}
 
 //Les constructeurs de la classe
@@ -33,7 +33,7 @@ public class Substitution
 	 */
 	public Substitution (ArrayList <TermPair> ensembleCouples) 
 	{
-		listeCouples = ensembleCouples;			
+		pairList = ensembleCouples;			
 	}
 
 	/**
@@ -43,13 +43,13 @@ public class Substitution
 	 */
 	public Substitution (Substitution from)
 	{
-		listeCouples = new ArrayList<TermPair>(from.getListeCouples());
+		pairList = new ArrayList<TermPair>(from.getPairList());
 	}
 	
 // Les getters de la classe	
-	public ArrayList<TermPair> getListeCouples ()
+	public ArrayList<TermPair> getPairList ()
 	{
-		return listeCouples;
+		return pairList;
 	}
 
 // Les m�thodes qui caract�risent les fonctionnalit�es de la classe	
@@ -59,7 +59,7 @@ public class Substitution
 	public ArrayList<Term> getVariables ()
 	{
 		ArrayList<Term> variables = new ArrayList<Term> ();
-		for (TermPair c : listeCouples)
+		for (TermPair c : pairList)
 			variables.add(c.getX());
 		return variables;
 	}
@@ -68,17 +68,17 @@ public class Substitution
 	 * Ajoute un couple de termes � la substitution
 	 * @param couple un couple de termes : (variable,constante)
 	 */
-	public void addCouple (TermPair couple)
+	public void addPair (TermPair couple)
 	{
-		listeCouples.add(couple);
+		pairList.add(couple);
 	}
 	
 	/**
 	 * Retourne le nombre de couples dans la substitution
 	 */
-	public int nombreCouples () 
+	public int num_Pairs () 
 	{
-			return listeCouples.size();
+			return pairList.size();
 	}
 
 	
@@ -89,9 +89,9 @@ public class Substitution
 	 */
 	public String replace (String s)
 	{
-		for (int i = 0; i < listeCouples.size(); i++)
+		for (int i = 0; i < pairList.size(); i++)
 		{
-			s = listeCouples.get(i).replaceXY(s); 
+			s = pairList.get(i).replaceXY(s); 
 		}
 		return s;
 	}
@@ -102,7 +102,7 @@ public class Substitution
 	 * @param a1 L'ensemble des variables
 	 * @param a2 L'ensemble des valeurs
 	 */
-	public boolean estHomomorphisme (ArrayList<Atom> a1, ArrayList<Atom> a2)
+	public boolean isHomomorphismTest (ArrayList<Atom> a1, ArrayList<Atom> a2)
 	{
 		int counter = 0;
 		Atom aSubstituer;
@@ -120,7 +120,7 @@ public class Substitution
 	public String toString()
 	{
 		String s = "{";
-		for (TermPair c: listeCouples)
+		for (TermPair c: pairList)
 		{
 			s += c;
 		}
@@ -151,7 +151,7 @@ public class Substitution
 		val.add(d);
 		val.add(e);
 		
-		if(s.estHomomorphisme(var, val))
+		if(s.isHomomorphismTest(var, val))
 			System.out.println(s + " est un homomorphisme");
 	}
 

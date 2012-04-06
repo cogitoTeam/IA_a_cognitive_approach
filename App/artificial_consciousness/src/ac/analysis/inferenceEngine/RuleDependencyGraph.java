@@ -19,7 +19,7 @@ import ac.analysis.structure.*;
 public class RuleDependencyGraph 
 {
 
-	private KnowledgeBase BC; //la base de connaissances r�f�renc�e
+	private KnowledgeBase kb; //la base de connaissances r�f�renc�e
 	private ArrayList<ArrayList<Rule>> graphe; //tableau des listes de successeurs de chaque r�gle
 
 //Les constructeurs de la classe	
@@ -28,7 +28,7 @@ public class RuleDependencyGraph
 	 */
 	public RuleDependencyGraph() 
 	{
-		BC = new KnowledgeBase();
+		kb = new KnowledgeBase();
 		graphe = new ArrayList <ArrayList<Rule>>();
 	}
 	
@@ -37,7 +37,7 @@ public class RuleDependencyGraph
 	 */
 	public RuleDependencyGraph(RuleDependencyGraph copy)
 	{
-		BC = new KnowledgeBase(copy.BC);
+		kb = new KnowledgeBase(copy.kb);
 		graphe = new ArrayList <ArrayList <Rule>> (copy.graphe);
 	}
 	
@@ -46,13 +46,13 @@ public class RuleDependencyGraph
 	 */
 	public RuleDependencyGraph(KnowledgeBase bc)
 	{
-		BC = bc;
+		kb = bc;
 		graphe = new ArrayList <ArrayList<Rule>>();
 	}
 	
 //Les getters de la classe	
-	public KnowledgeBase getBC() {
-		return BC;
+	public KnowledgeBase getKb() {
+		return kb;
 	}
 
 	public ArrayList<ArrayList<Rule>> getGraphe() {
@@ -68,11 +68,11 @@ public class RuleDependencyGraph
 		ArrayList<Rule> listeSuccesseurs;
 		
 		//calcul de r�gles d�pendants des faits
-		for (Atom fait : BC.getBF().getListeAtomes())
+		for (Atom fait : kb.getFB().getAtomList())
 		{
 			listeSuccesseurs = new ArrayList <Rule> ();
-			for (Rule r : BC.getBR()) {
-				for (Atom a : r.getHypothese()) {
+			for (Rule r : kb.getRB()) {
+				for (Atom a : r.getPremise()) {
 					if (fait.unifiableA(a))
 						listeSuccesseurs.add(r);
 				}
@@ -81,11 +81,11 @@ public class RuleDependencyGraph
 		}
 		
 		//calcul de r�gles d�pendants des r�gles
-		for (Rule r1 : BC.getBR())
+		for (Rule r1 : kb.getRB())
 		{
 			listeSuccesseurs = new ArrayList <Rule> ();
-			for (Rule r2 : BC.getBR())
-				for (Atom a : r2.getHypothese())
+			for (Rule r2 : kb.getRB())
+				for (Atom a : r2.getPremise())
 					if (a.unifiableA(r1.getConclusion()))
 						listeSuccesseurs.add(r2);
 			graphe.add(listeSuccesseurs);			
@@ -95,10 +95,10 @@ public class RuleDependencyGraph
 	public RuleDependencyGraph calculeGDRAvecRequete(FactBase requete, KnowledgeBase k) {
 		
 		Rule q = new Rule();
-		q.setNom("Requ�te");
-		q.setHypothese(requete.getListeAtomes());
+		q.setName("Requ�te");
+		q.setPremise(requete.getAtomList());
 		q.setConclusion(new Atom("gagn�()"));
-		k.getBR().add(q);
+		k.getRB().add(q);
 		RuleDependencyGraph avecRequete = new RuleDependencyGraph(k);
 		avecRequete.calculeGDR();
 		return avecRequete;
@@ -112,8 +112,8 @@ public class RuleDependencyGraph
 		String s = new String();
 		s+="GRAPHE DE D�PENDENCE DES FAITS ET DES R�GLES :\n";
 		
-		Iterator<Atom> faitsIter = BC.getBF().getListeAtomes().iterator();
-		Iterator<Rule> reglesIter = BC.getBR().iterator();
+		Iterator<Atom> faitsIter = kb.getFB().getAtomList().iterator();
+		Iterator<Rule> reglesIter = kb.getRB().iterator();
 		Iterator<ArrayList<Rule>> listeSuccesseursIter = graphe.iterator();
 		Iterator<Rule> successeursIter;
 

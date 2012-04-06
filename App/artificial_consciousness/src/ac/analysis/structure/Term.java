@@ -9,7 +9,7 @@ package ac.analysis.structure;
 public class Term
 {
 	private String label;//le nom du terme (par exemple : x, 'toto')
-	private boolean constante;//vrai si le terme courant est une constante, faux sinon (c'est une variable)
+	private boolean constant;//vrai si le terme courant est une constante, faux sinon (c'est une variable)
 
 //Les constructeurs de la classe	
 	/**
@@ -20,7 +20,7 @@ public class Term
 	public Term(String n, boolean c)
 	{
 		label = n;
-		constante = c;	}
+		constant = c;	}
 	
 	/**
 	 * Constructeur de la classe Terme pour cr�er une variable
@@ -29,7 +29,7 @@ public class Term
 	public Term(String n)
 	{
 		label = n;
-		constante=false;
+		constant=false;
 	}
 	
 //Les getters de la classe	
@@ -37,9 +37,9 @@ public class Term
 	 * Indique si le terme est une constante
 	 * @return vrai si le terme est une constante, faux sinon
 	 */
-	public boolean isConstante()
+	public boolean isConstant()
 	{
-		return constante;
+		return constant;
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public class Term
 	 */
 	public boolean isVariable()
 	{
-		return !constante;
+		return !constant;
 	}
 	
 
@@ -70,25 +70,17 @@ public class Term
 	 */
 	public boolean equalsT(Term t)
 	{
-		return(t.constante==constante && t.label.equals(this.label));
+		return(t.constant==constant && t.label.equals(this.label));
 	}
 	
-	/**
-	 * Affiche le terme
-	 */
-	public void afficher()
-	{
-		System.out.print(this); // appel de toString
-	}
-	
-//M�thode toString de la classe		
+	//M�thode toString de la classe		
 	/**
 	 * Retourne la cha�ne de caract�res de ce terme
 	 * @return la cha�ne d�crivant le terme 
 	 */
 	public String toString()
 	{
-		if(constante) return "'"+label+"'";
+		if(constant) return "'"+label+"'";
 		else return label;
 	}
 	
