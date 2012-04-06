@@ -45,9 +45,8 @@ function Game()
     var current_turn;
     var n_players = 2;
     var id = null;
-    /// FIXME!!!!
-    var is_local = [true, true]; //[false, false];
-    var waiting_for_player = false; //true;
+    var is_local = [false, false];
+    var waiting_for_player = true;
 
     /* SUBROUTINES */
     var xml_parse_state = function(s_state, s_colour)
