@@ -238,8 +238,8 @@ public class BoardMatrix
     
     public int count_pieces()
     {
-        // total number of pieces = empty cells - total cells
-        return count_player_pieces(null) - get_n_cells();
+        // total number of pieces = total cells - empty cells
+        return get_n_cells() - count_player_pieces(null);
     }
 
     public Cell getCell(Position p)

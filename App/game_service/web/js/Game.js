@@ -176,6 +176,7 @@ function Game()
     
     obj.update_from_xml = function(data)
     {
+        
         /* Parse new game state */
         var previous_turn = current_turn; 
         current_turn = xml_parse_state(data[0].getAttribute('state'),
@@ -208,7 +209,6 @@ function Game()
         board.update_from_xml(data[0].childNodes[0]);
         
         /* Update the view to take changes into account */
-        console.log("redrawing");
         board.redraw();
     }
 
