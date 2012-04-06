@@ -135,6 +135,16 @@ public class KnowledgeBase {
 		BF.addNewFact(fait);
 		isSaturated = false;
 	}
+	
+	/**
+   * M�thode qui permet d'ajouter un nouveau fait � la base de faits 
+   * de la base de connaissances courante.
+   * On note qu'elle indique que la base n'est plus satur�e
+   * @param fait le fait (un atome) � ajouter 
+   */
+  public void addNewRule(Rule newRule) {
+    BR.add(newRule);
+  }
 //La m�thode toString de la classe
 	public String toString() {
 		String BRs = "Nombre de r�gles : " + BR.size()
@@ -147,64 +157,7 @@ public class KnowledgeBase {
 
 	
 
-// Les m�thodes pour se ramener � la logique des propositions
-		
-	
-
-	
-// Les m�thodes pour se ramener � la logique des propositions
-	
-	/**
-	 * M�thode de saturation << premier ordre >> de la base de faits
-	 * par le cha�nage avant
-	 * 
-	 * @return k la base de connaissances satur�e
-	 * @throws IOException
-	 */
-	public KnowledgeBase saturation_FOL() throws IOException {
-		if (isSaturated)
-			return this; // evite le calcul de saturation au cas o� la base est
-							// d�j� satur�e
-		
-		// d�claration et initialisation des variables
-		KnowledgeBase k = new KnowledgeBase(this);
-		ArrayList<Atom> nouveaux; //liste qui stocke les nouveaux faits
-		Homomorphisms s;
-		boolean fin = false; //indique fin de l'algorithme de cha�nage avant
-		Atom temp;
-	
-		// Debut de l'algorithme de cha�nage avant
-		while (!fin) {
-			nouveaux = new ArrayList<Atom>(); //initialisement vide
-	
-			for (Rule r : k.BR) {
-				//initialise les homomorphismes de l'hypoth�se de r dans la base de faits
-				s = new Homomorphisms(r.getPremise(), k.BF);
-				if (s.existsHomomorphismTest()) {
-					//calcule les homomorphismes de l'hypoth�se de r dans la base de faits
-					for (Substitution hom : s.getHomomorphisms()) {
-						//pour chaque homomorphisme hom, consid�re la
-						//substitution de la conclusion de r
-						temp = r.getConclusion().applySubtitution(hom);
-						if (!k.BF.atomExistsTest(temp) && !nouveaux.contains(temp))
-							nouveaux.add(temp);//si cette substitution est un nouveau fait,
-											   //ajoute ce fait � la liste de nouveaux faits	
-					}
-				}
-			}
-			if (nouveaux.size() == 0)  //condition de fin d'algorithme
-				fin = true;
-			else
-				k.BF.addNewFacts(nouveaux); //sinon on continue avec la nouvelle 
-													 //base de faits	
-		}
-		k.isSaturated = true; //indique que la base est satur�e (pour �viter de recalculer
-						  //au cas o� la base reste la m�me
-		return k;
-	}
-
-	
-	/**
+/**
 	 * M�thode de saturation << premier ordre >> de la base de faits
 	 * par le cha�nage avant en exploitant le graphe de d�pendances des r�gles 
 	 * (et des faits)
