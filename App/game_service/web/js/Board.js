@@ -135,7 +135,6 @@ function Board()
 
     obj.update_from_xml = function(element)
     {
-        console.log(element);
         // read the size of the board from the element
         resize(element.getAttribute('n_rows'), element.getAttribute('n_cols'));
         

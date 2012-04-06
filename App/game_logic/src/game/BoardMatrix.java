@@ -244,7 +244,7 @@ public class BoardMatrix
 
     public Cell getCell(Position p)
     {
-        if(p.row >= size.n_rows || p.col >= size.n_cols)
+        if(p.row < 0 || p.col < 0 || p.row >= size.n_rows || p.col >= size.n_cols)
             return Cell.OUT_OF_BOUNDS;
         else
             return cells[p.row][p.col];
