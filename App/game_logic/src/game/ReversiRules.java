@@ -101,7 +101,7 @@ public class ReversiRules extends Rules
         if(canFlipLine(p, new Direction(-1, 1), board, player))
             return true;
         // down-left
-        if(canFlipLine(p, new Direction(-1, 1), board, player))
+        if(canFlipLine(p, new Direction(1, -1), board, player))
             return true;
         // down-right
         if(canFlipLine(p, new Direction(-1, -1), board, player))
@@ -132,7 +132,7 @@ public class ReversiRules extends Rules
         // up-right
         flipLine(p, new Direction(-1, 1), board, player);
         // down-left
-        flipLine(p, new Direction(-1, 1), board, player);
+        flipLine(p, new Direction(1, -1), board, player);
         // down-right
         flipLine(p, new Direction(-1, -1), board, player);
     }
@@ -144,8 +144,8 @@ public class ReversiRules extends Rules
         board.clear();
         
         // place 4 pieces, 2 white and 2 black, in the center
-        for(Position p = new Position(3,3); p.row < 4; p.row++)
-            for(p.col = 3; p.col < 4; p.col++)
+        for(Position p = new Position(3,3); p.row < 5; p.row++)
+            for(p.col = 3; p.col < 5; p.col++)
                 board.setCellOwner(p, ((p.row + p.col)%2 == 0) ? Player.WHITE 
                                                                 : Player.BLACK);
     }
@@ -173,21 +173,26 @@ public class ReversiRules extends Rules
         Position iter = new Position(start.row, start.col);
         Player other = Game.otherPlayer(player);
         Stack<Position> potential = new Stack<Position>();
+        boolean encountered_enemy = false;
         
         // iterate along the line defined by the given direction
         for(iter.add(delta); iter.within(board.getSize()); iter.add(delta))
         {
             // enemies tokens will potentially be flipped, if surrounded
-            if(board.getCellOwner(iter) == other)
-                potential.push(new Position(iter.row, iter.col));
-            else
+            if(board.getCellOwner(iter) == player && encountered_enemy)
             {
                 // flip all the enemy tokens between two friendly tokens
                 for(Position flipme : potential)
                     board.setCellOwner(flipme, player);
-                // stop at the first friendly token
-                break;
             }
+            else if(board.getCellOwner(iter) == other)
+            {
+                // enemies tokens will potentially be flipped, if surrounded
+                encountered_enemy = true;
+                potential.push(new Position(iter.row, iter.col));
+            }
+            else
+                break;
         }
         // if we reached the end without encountering a friendly piece then
         // the 'potential' pieces are not flipped.
@@ -200,18 +205,18 @@ public class ReversiRules extends Rules
         // local variables
         Position iter = new Position(start.row, start.col);
         Player other = Game.otherPlayer(player);
-        
-        // check that the immediately adjascent cell is of a different colour
-        iter.add(delta);
-        if(board.getCellOwner(iter) != other)
-            return false;
-        
+        boolean encountered_enemy = false;
+
         // iterate along the line defined by the given direction
         for(iter.add(delta); iter.within(board.getSize()); iter.add(delta))
         {
             // enemies tokens will potentially be flipped, if surrounded
-            if(board.getCellOwner(iter) != other)
-                return true;
+            if(board.getCellOwner(iter) == player)
+                return encountered_enemy;
+            else if(board.getCellOwner(iter) == other)
+                encountered_enemy = true;
+            else
+                return false;
         }
         
         // if we reached the end without encountering a friendly piece then

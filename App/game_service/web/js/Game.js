@@ -26,6 +26,8 @@ Game.DRAW = 4;
 
 Game.IMAGE_WHITE = load_image("york.png");
 Game.IMAGE_BLACK = load_image("tudor.png");
+Game.IMAGE_WHITE_ALPHA = load_image("york_alpha.png");
+Game.IMAGE_BLACK_ALPHA = load_image("tudor_alpha.png");
 
 Game.C_BACKGROUND = 'rgb(128,128,128)';
 Game.C_TEXT = 'rgb(0,0,0)';
@@ -43,9 +45,8 @@ function Game()
     var current_turn;
     var n_players = 2;
     var id = null;
-    /// FIXME!!!!
-    var is_local = [true, true]; //[false, false];
-    var waiting_for_player = false; //true;
+    var is_local = [false, false];
+    var waiting_for_player = true;
 
     /* SUBROUTINES */
     var xml_parse_state = function(s_state, s_colour)
@@ -158,13 +159,6 @@ function Game()
             context_info.fillText(text, canvas_info.width-canvas_info.height,
                                                     canvas_info.height/2);
         }
-        
-        // draw game id
-        /*
-        context_info.textAlign = "left";
-        context_info.textBaseline = "middle";
-        context_info.fillText("Client "+id, 16, canvas_info.height/2);
-        */
     }
 
     /* METHODS */
@@ -176,6 +170,7 @@ function Game()
     
     obj.update_from_xml = function(data)
     {
+        
         /* Parse new game state */
         var previous_turn = current_turn; 
         current_turn = xml_parse_state(data[0].getAttribute('state'),
@@ -208,8 +203,17 @@ function Game()
         board.update_from_xml(data[0].childNodes[0]);
         
         /* Update the view to take changes into account */
-        console.log("redrawing");
         board.redraw();
+        
+        // also draw legal moves
+        turn_options = [];
+        var nl_options = data[0].childNodes[1].childNodes;
+        for(i = 0; i < nl_options.length; i++)
+        {
+            var r = nl_options[i].getAttribute('row');
+            var c = nl_options[i].getAttribute('col');
+            board.draw_option(r, c, current_turn);
+        }
     }
 
     obj.clickEvent = function(x, y)

@@ -22,6 +22,8 @@ Board.CELL_EMPTY = 0;
 Board.CELL_BLACK = 1;
 Board.CELL_WHITE = 2;
 Board.OUT_OF_BOUNDS = 3;
+Board.CELL_POTENTIAL_WHITE = 4;
+Board.CELL_POTENTIAL_BLACK = 5;
 
 function Board()
 {
@@ -97,6 +99,12 @@ function Board()
             case typ.CELL_BLACK:
                 image = Game.IMAGE_BLACK;
                 break;
+            case typ.CELL_POTENTIAL_WHITE:
+                image = Game.IMAGE_WHITE_ALPHA;
+                break;
+            case typ.CELL_POTENTIAL_BLACK:
+                image = Game.IMAGE_BLACK_ALPHA;
+                break;
             default:
             case typ.CELL_EMPTY:
                 break;
@@ -116,6 +124,15 @@ function Board()
     /* PUBLIC METHODS */
 
     // update
+    
+    obj.draw_option = function(r, c, current_turn)
+    {
+        if(current_turn == Game.WHITE)
+            draw_cell(r, c, Board.CELL_POTENTIAL_WHITE);
+        else if(current_turn == Game.BLACK) 
+            draw_cell(r, c, Board.CELL_POTENTIAL_BLACK);
+    }
+    
     obj.redraw = function()
     {
         // redraw each individual cell

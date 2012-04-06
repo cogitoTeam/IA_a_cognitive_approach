@@ -38,8 +38,8 @@ public class GameManager
     // singleton
     private GameManager()
     {
-        rules = MorpionRules.getInstance();
-        //rules = ReversiRules.getInstance();
+        //rules = MorpionRules.getInstance();
+        rules = ReversiRules.getInstance();
         games = new HashMap<Integer, Game>();
         waiting = null;
     }
