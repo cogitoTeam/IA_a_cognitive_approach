@@ -99,6 +99,12 @@ public class MoveNodeRepository extends
         newMoveNode.createRelationshipTo(board_state.underlyingNode,
             RelTypes.BOARD_STATE);
 
+        if (logger.isDebugEnabled())
+          logger
+              .debug("Creation of the RELATED_GAME RELATION between the new move node and its related game");
+        newMoveNode.createRelationshipTo(board_state.underlyingNode,
+            RelTypes.RELATED_GAME);
+
         tx.success();
         if (logger.isDebugEnabled())
           logger.debug("New Move added successfuly");

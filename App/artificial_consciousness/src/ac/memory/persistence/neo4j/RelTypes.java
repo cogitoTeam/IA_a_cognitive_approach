@@ -70,12 +70,17 @@ public enum RelTypes implements RelationshipType
    */
   LAST_MOVE,
   /**
-   * Relationship between a move node and his previous move node
+   * Relationship between a move node and its previous move node
    */
   PREV_MOVE,
   /**
-   * Relationship between a move node ans hid related board state (should be
+   * Relationship between a move node and its related board state (should be
    * unique)
    */
-  BOARD_STATE;
+  BOARD_STATE,
+  /**
+   * Relationship between a move node and his related game (to optimize game
+   * researching)
+   */
+  RELATED_GAME;
 }

@@ -57,6 +57,15 @@ abstract public class AbstractEpisodicNode<ObjectType> extends
    */
   public abstract ObjectType getNext();
 
+  /**
+   * This methode permit to get the position of the node in the episodic memory.
+   * For example, a game at position 2 is the second last game in the entire
+   * memory, a move at position 2 is the second last move for the game
+   * 
+   * @return the position
+   */
+  public abstract int getPosition();
+
   @Override
   public int hashCode()
   {

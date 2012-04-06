@@ -51,5 +51,16 @@ public interface Move
    */
   Move getNextMove();
 
+  /**
+   * @return the distance between the end of the game : position of the last
+   *         move is 1, second last 2, etc.
+   */
+  int getPosition();
+
+  /**
+   * @return the mark of the move
+   */
+  long getMark();
+
   String toString();
 }

@@ -3,14 +3,11 @@
  */
 package ac.memory.persistence.neo4j;
 
-import java.util.Collection;
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.ReturnableEvaluator;
-import org.neo4j.graphdb.StopEvaluator;
-import org.neo4j.graphdb.Traverser.Order;
+import org.neo4j.graphdb.Transaction;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -58,12 +55,11 @@ public class MoveNode extends AbstractEpisodicNode<MoveNode>
     if (logger.isDebugEnabled())
       logger.debug("Getting the related Game");
 
-    Collection<Node> related = underlyingNode.traverse(Order.DEPTH_FIRST,
-        StopEvaluator.DEPTH_ONE, ReturnableEvaluator.ALL_BUT_START_NODE,
-        RelTypes.HAS_MOVE, Direction.INCOMING).getAllNodes();
+    Relationship rel = underlyingNode.getSingleRelationship(
+        RelTypes.RELATED_GAME, Direction.OUTGOING);
 
-    if (related.size() > 0)
-      return new GameNode(related.iterator().next());
+    if (rel != null)
+      return new GameNode(rel.getEndNode());
     else
       {
         logger.error("Move " + getDate() + " has no related game");
@@ -119,8 +115,7 @@ public class MoveNode extends AbstractEpisodicNode<MoveNode>
       }
     else
       {
-        logger.warn("Move " + getDate() + " is the move game and has no "
-            + s_debug + " move");
+        logger.warn("Move " + getDate() + " has no " + s_debug + " move");
         return null;
       }
   }
@@ -141,6 +136,63 @@ public class MoveNode extends AbstractEpisodicNode<MoveNode>
     else
       throw new NodeException("The MoveNode " + getDate()
           + " doesn't have related object");
+  }
+
+  /**
+   * set the move mark
+   * 
+   * @param mark
+   *          the mark
+   */
+  public void setMark(long mark)
+  {
+    Transaction tx = Neo4jService.getInstance().beginTx();
+    try
+      {
+        underlyingNode.setProperty("mark", mark);
+        tx.success();
+      }
+    finally
+      {
+        tx.finish();
+      }
+  }
+
+  /**
+   * @return the move mark
+   * @throws NodeException
+   *           if mark not found
+   */
+  public long getMark() throws NodeException
+  {
+    try
+      {
+        return (long) underlyingNode.getProperty("mark");
+      }
+    catch (Exception e)
+      {
+        logger.error("No mark found in the move node " + getDate(), e);
+        throw new NodeException("No mark found in the move node " + getDate(),
+            e);
+      }
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.persistence.neo4j.AbstractEpisodicNode#getPosition() */
+  @Override
+  public int getPosition()
+  {
+    int pos = 1;
+    Relationship rel = underlyingNode.getSingleRelationship(RelTypes.PREV_MOVE,
+        Direction.INCOMING);
+    while (rel != null)
+      {
+        ++pos;
+        rel = rel.getStartNode().getSingleRelationship(RelTypes.PREV_MOVE,
+            Direction.INCOMING);
+      }
+    return pos;
   }
 
 }

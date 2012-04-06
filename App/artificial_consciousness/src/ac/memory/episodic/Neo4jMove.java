@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ac.memory.persistence.neo4j.AttributeNode;
+import ac.memory.persistence.neo4j.GameNode;
 import ac.memory.persistence.neo4j.MoveNode;
 import ac.memory.persistence.neo4j.NodeException;
 import ac.memory.semantic.lattice.LatticeContextException;
@@ -106,7 +107,8 @@ public class Neo4jMove implements Move
   @Override
   public String toString()
   {
-    String ret = "Move[" + getDate() + "]";
+    String ret = "Move[" + getDate() + ", pos : " + getPosition() + ", mark : "
+        + getMark() + "]";
     return ret;
   }
 
@@ -140,5 +142,31 @@ public class Neo4jMove implements Move
         // TODO: WARNING
       }
     return list;
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.episodic.Move#getPosition() */
+  @Override
+  public int getPosition()
+  {
+    return move.getPosition();
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.episodic.Move#getMark() */
+  @Override
+  public long getMark()
+  {
+    GameNode the_game;
+    try
+      {
+        return move.getMark();
+      }
+    catch (NodeException e)
+      {
+        return 0;
+      }
   }
 }

@@ -39,14 +39,17 @@ public interface EpisodicMemory
    * 
    * @param board_state
    *          the completeBoardState related to this move
-   * @throws EpisodicMemoryException 
+   * @throws EpisodicMemoryException
    */
   void newMove(CompleteBoardState board_state) throws EpisodicMemoryException;
-  
+
   /**
-   * @param status status set to the last game
+   * @param status
+   *          status set to the last game
+   * @param score
+   *          the final score (always absolute value)
    */
-  void finishGame(GameStatus status);
+  void finishGame(GameStatus status, int score);
 
   String toString();
 

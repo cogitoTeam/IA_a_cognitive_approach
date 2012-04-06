@@ -62,6 +62,41 @@ public class GameNode extends AbstractEpisodicNode<GameNode>
       }
   }
 
+  /**
+   * @param score
+   *          the score of the game
+   */
+  public void setScore(int score)
+  {
+    Transaction tx = Neo4jService.getInstance().beginTx();
+    try
+      {
+        underlyingNode.setProperty("score", score);
+        tx.success();
+      }
+    finally
+      {
+        tx.finish();
+      }
+  }
+
+  /**
+   * @return the score
+   * @throws NodeException
+   */
+  public int getScore() throws NodeException
+  {
+    try
+      {
+        Object score = underlyingNode.getProperty("score");
+        return (int) score;
+      }
+    catch (Exception e)
+      {
+        throw new NodeException("Score not stored", e);
+      }
+  }
+
   /* (non-Javadoc)
    * 
    * @see ac.memory.persistance.AbstractEpisodicNode#getPrevious() */
@@ -134,6 +169,24 @@ public class GameNode extends AbstractEpisodicNode<GameNode>
             + s_debug + " game");
         return null;
       }
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.persistence.neo4j.AbstractEpisodicNode#getPosition() */
+  @Override
+  public int getPosition()
+  {
+    int pos = 1;
+    Relationship rel = underlyingNode.getSingleRelationship(RelTypes.PREV_GAME,
+        Direction.INCOMING);
+    while (rel != null)
+      {
+        ++pos;
+        rel = rel.getStartNode().getSingleRelationship(RelTypes.PREV_GAME,
+            Direction.INCOMING);
+      }
+    return pos;
   }
 
 }

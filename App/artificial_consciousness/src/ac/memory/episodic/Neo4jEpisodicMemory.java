@@ -5,6 +5,8 @@ package ac.memory.episodic;
 
 import java.util.List;
 
+import org.neo4j.graphdb.Relationship;
+
 import ac.memory.persistence.neo4j.GameNode;
 import ac.memory.persistence.neo4j.GameNodeRepository;
 import ac.memory.persistence.neo4j.MoveNodeRepository;
@@ -111,8 +113,9 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
    * 
    * @see ac.memory.episodic.EpisodicMemory#finishGame(ac.shared.GameStatus) */
   @Override
-  public void finishGame(GameStatus status)
+  public void finishGame(GameStatus status, int score)
   {
     getLastGame().setStatus(status);
+    getLastGame().setScore(Math.abs(score));
   }
 }

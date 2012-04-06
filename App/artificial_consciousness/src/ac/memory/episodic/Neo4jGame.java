@@ -5,6 +5,8 @@ package ac.memory.episodic;
 
 import java.util.Date;
 
+import org.neo4j.graphdb.Relationship;
+
 import ac.memory.persistence.neo4j.GameNode;
 import ac.memory.persistence.neo4j.MoveNode;
 import ac.shared.GameStatus;
@@ -80,7 +82,8 @@ public class Neo4jGame implements Game
   @Override
   public String toString()
   {
-    String ret = "      Game[";
+    String ret = "      Game[ status : " + getStatus() + "score : "
+        + getScore();
 
     Move move = getLastMove();
     while (move != null)
@@ -93,6 +96,12 @@ public class Neo4jGame implements Game
     return ret;
   }
 
+  @Override
+  public GameStatus getStatus()
+  {
+    return game.getStatus();
+  }
+
   /* (non-Javadoc)
    * 
    * @see ac.memory.episodic.Game#setStatus(ac.shared.GameStatus) */
@@ -100,5 +109,44 @@ public class Neo4jGame implements Game
   public void setStatus(GameStatus status)
   {
     game.setStatus(status);
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.episodic.Game#setScore(int) */
+  @Override
+  public void setScore(int score)
+  {
+    game.setScore(score);
+    // Setting all move score
+    MoveNode move = game.getLastMove();
+    int pos = 0;
+    while (move != null)
+      {
+        pos++;
+
+        move.setMark(EpisodicMemoryUtil.DeacreaseMoveFormula(pos, score,
+            getStatus()));
+
+        move = move.getPrevious();
+      }
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.episodic.Game#getScore() */
+  @Override
+  public int getScore()
+  {
+    int score = 0;
+    try
+      {
+        score = game.getScore();
+      }
+    catch (Exception e)
+      {
+        System.out.println("pb !! " + e.getMessage());
+      }
+    return score;
   }
 }

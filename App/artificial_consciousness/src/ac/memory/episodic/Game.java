@@ -48,5 +48,24 @@ public interface Game
    */
   void setStatus(GameStatus status);
 
+  /**
+   * Set the score of the game
+   * WARNING : the score must to be positive, even if the status is DEFEAT.
+   * 
+   * @param score
+   *          the score
+   */
+  void setScore(int score);
+
+  /**
+   * @return score of the game (0 if not defined)
+   */
+  int getScore();
+
+  /**
+   * @return the game status
+   */
+  GameStatus getStatus();
+
   String toString();
 }

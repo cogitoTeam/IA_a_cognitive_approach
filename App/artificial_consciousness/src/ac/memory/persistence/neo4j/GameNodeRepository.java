@@ -27,6 +27,7 @@ public class GameNodeRepository extends
       .getLogger(GameNodeRepository.class);
 
   private static String STATUS_FIELD = "status";
+  private static String SCORE_FIELD = "score";
 
   /**
    * Default constructor
@@ -64,6 +65,7 @@ public class GameNodeRepository extends
           logger.debug("Game node creation at date = " + date);
         newGameNode.setProperty(DATE_FIELD, date);
         newGameNode.setProperty(STATUS_FIELD, status.toString());
+        newGameNode.setProperty(SCORE_FIELD, 0);
 
         if (logger.isDebugEnabled())
           logger.debug("Moving LAST_GAME relationship to this new game");
