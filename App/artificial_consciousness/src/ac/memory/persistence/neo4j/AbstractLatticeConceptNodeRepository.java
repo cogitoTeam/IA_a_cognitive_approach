@@ -16,7 +16,8 @@ import org.neo4j.graphdb.index.Index;
 abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
     extends AbstractNodeRepository<NodeType>
 {
-  protected Index<Node> index;
+  protected Index<Node> id_index;
+  protected Index<Node> mark_index; // TODO Index data
   protected String ID_FIELD;
   protected String MARK_FIELD = "mark";
 
@@ -25,16 +26,19 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
    * 
    * @param graphDb
    *          the database
-   * @param index
+   * @param id_index
    *          index id
+   * @param mark_index
+   *          index mark
    * @param id_field
    *          field identifier
    */
   public AbstractLatticeConceptNodeRepository(GraphDatabaseService graphDb,
-      Index<Node> index, String id_field)
+      Index<Node> id_index, Index<Node> mark_index, String id_field)
   {
     super(graphDb);
-    this.index = index;
+    this.id_index = id_index;
+    this.mark_index = mark_index;
     this.ID_FIELD = id_field;
   }
 

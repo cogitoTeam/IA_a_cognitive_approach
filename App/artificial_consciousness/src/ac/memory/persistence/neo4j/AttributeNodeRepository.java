@@ -9,6 +9,8 @@ import ac.memory.persistence.neo4j.RelTypes;
 import ac.shared.RelevantPartialBoardState;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.NumericRangeQuery;
+import org.apache.lucene.search.Sort;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
@@ -16,6 +18,7 @@ import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.helpers.collection.IterableWrapper;
+import org.neo4j.index.lucene.QueryContext;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -33,11 +36,13 @@ public class AttributeNodeRepository
 
   /**
    * @param graphDb
-   * @param index
+   * @param id_index
+   * @param mark_index
    */
-  public AttributeNodeRepository(GraphDatabaseService graphDb, Index<Node> index)
+  public AttributeNodeRepository(GraphDatabaseService graphDb,
+      Index<Node> id_index, Index<Node> mark_index)
   {
-    super(graphDb, index, ID_FIELD);
+    super(graphDb, id_index, mark_index, ID_FIELD);
     if (logger.isDebugEnabled())
       logger.debug("Building new AttributeNodeRepository");
   }
@@ -102,8 +107,8 @@ public class AttributeNodeRepository
         if (logger.isDebugEnabled())
           logger.debug("Searching for Attribute with " + AttributeNode.ID_FIELD
               + " = " + object.getId());
-        Node alreadyExist = index.get(AttributeNode.ID_FIELD, object.getId())
-            .getSingle();
+        Node alreadyExist = id_index
+            .get(AttributeNode.ID_FIELD, object.getId()).getSingle();
         if (alreadyExist != null)
           {
             logger
@@ -119,7 +124,12 @@ public class AttributeNodeRepository
 
         if (logger.isDebugEnabled())
           logger.debug("Indexing " + ID_FIELD);
-        index.add(newNodeAttribute, AttributeNode.ID_FIELD, object.getId());
+        id_index.add(newNodeAttribute, AttributeNode.ID_FIELD, object.getId());
+
+        if (logger.isDebugEnabled())
+          logger.debug("Indexing " + MARK_FIELD);
+        mark_index.add(newNodeAttribute, ObjectNode.MARK_FIELD, (double) 0.5);
+
         tx.success();
         if (logger.isDebugEnabled())
           logger.debug("Ok new Attribute created");
@@ -146,7 +156,7 @@ public class AttributeNodeRepository
   {
     if (logger.isDebugEnabled())
       logger.debug("Getting an attribute by ID " + id);
-    Node attribute = index.get(AttributeNode.ID_FIELD, id).getSingle();
+    Node attribute = id_index.get(AttributeNode.ID_FIELD, id).getSingle();
     if (attribute == null)
       {
         logger.warn("Attribute not found");
@@ -176,7 +186,8 @@ public class AttributeNodeRepository
         if (logger.isDebugEnabled())
           logger.debug("Removing from index " + ID_FIELD + " = "
               + attribute.getId());
-        index.remove(nodeAttribute, AttributeNode.ID_FIELD, attribute.getId());
+        id_index.remove(nodeAttribute, AttributeNode.ID_FIELD,
+            attribute.getId());
 
         if (logger.isDebugEnabled())
           logger.debug("Removing relationships to objects");

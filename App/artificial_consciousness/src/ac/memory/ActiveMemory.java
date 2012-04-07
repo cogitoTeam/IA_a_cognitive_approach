@@ -50,7 +50,7 @@ public class ActiveMemory implements Memory
   public List<RelevantPartialBoardState> getRelevantPartialBoardStates()
       throws MemoryException
   {
-    // TODO !!
+    // TODO the method
     return null;
   }
 

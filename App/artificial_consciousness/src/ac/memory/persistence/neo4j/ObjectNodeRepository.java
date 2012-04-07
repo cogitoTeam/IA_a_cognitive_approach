@@ -31,11 +31,13 @@ public class ObjectNodeRepository extends
 
   /**
    * @param graphDb
-   * @param index
+   * @param id_index
+   * @param mark_index
    */
-  public ObjectNodeRepository(GraphDatabaseService graphDb, Index<Node> index)
+  public ObjectNodeRepository(GraphDatabaseService graphDb,
+      Index<Node> id_index, Index<Node> mark_index)
   {
-    super(graphDb, index, ID_FIELD);
+    super(graphDb, id_index, mark_index, ID_FIELD);
     if (logger.isDebugEnabled())
       logger.debug("Building new ObjectNodeRepository");
   }
@@ -85,7 +87,7 @@ public class ObjectNodeRepository extends
         if (logger.isDebugEnabled())
           logger.debug("Searching for Objects with " + ObjectNode.ID_FIELD
               + " = " + object.getId());
-        Node alreadyExist = index.get(ObjectNode.ID_FIELD, object.getId())
+        Node alreadyExist = id_index.get(ObjectNode.ID_FIELD, object.getId())
             .getSingle();
         if (alreadyExist != null)
           {
@@ -101,7 +103,12 @@ public class ObjectNodeRepository extends
 
         if (logger.isDebugEnabled())
           logger.debug("Indexing " + ID_FIELD);
-        index.add(newNode, ObjectNode.ID_FIELD, object.getId());
+        id_index.add(newNode, ObjectNode.ID_FIELD, object.getId());
+
+        if (logger.isDebugEnabled())
+          logger.debug("Indexing " + MARK_FIELD);
+        mark_index.add(newNode, ObjectNode.MARK_FIELD, (double) 0.5);
+
         tx.success();
         if (logger.isDebugEnabled())
           logger.debug("Ok new Object created");
@@ -128,7 +135,7 @@ public class ObjectNodeRepository extends
   {
     if (logger.isDebugEnabled())
       logger.debug("Getting an object by ID " + id);
-    Node object = index.get(ObjectNode.ID_FIELD, id).getSingle();
+    Node object = id_index.get(ObjectNode.ID_FIELD, id).getSingle();
     if (object == null)
       {
         logger.warn("Object not found");
@@ -158,7 +165,7 @@ public class ObjectNodeRepository extends
         if (logger.isDebugEnabled())
           logger
               .debug("Removing from index " + ID_FIELD + " = " + node.getId());
-        index.remove(nodeObject, ObjectNode.ID_FIELD, node.getId());
+        id_index.remove(nodeObject, ObjectNode.ID_FIELD, node.getId());
 
         if (logger.isDebugEnabled())
           logger.debug("Removing relationships to attributes");
