@@ -4,11 +4,17 @@
 package ac.memory.episodic;
 
 import java.util.Date;
+import java.util.HashSet;
 
-import org.neo4j.graphdb.Relationship;
+import org.apache.log4j.Logger;
 
 import ac.memory.persistence.neo4j.GameNode;
 import ac.memory.persistence.neo4j.MoveNode;
+import ac.memory.persistence.neo4j.Neo4jService;
+import ac.memory.persistence.neo4j.NodeException;
+import ac.memory.persistence.neo4j.NodeRepositoryException;
+import ac.memory.persistence.neo4j.ObjectNode;
+import ac.memory.persistence.neo4j.ObjectNodeRepository;
 import ac.shared.GameStatus;
 
 /**
@@ -18,7 +24,9 @@ import ac.shared.GameStatus;
  */
 public class Neo4jGame implements Game
 {
+  private static final Logger logger = Logger.getLogger(Neo4jGame.class);
   private final GameNode game;
+  private ObjectNodeRepository obj_repo;
 
   /**
    * Default constructor for a Neo4jGame
@@ -29,6 +37,8 @@ public class Neo4jGame implements Game
   public Neo4jGame(GameNode game)
   {
     this.game = game;
+    this.obj_repo = new ObjectNodeRepository(Neo4jService.getInstance(),
+        Neo4jService.getObjIndex());
   }
 
   /* (non-Javadoc)
@@ -111,15 +121,22 @@ public class Neo4jGame implements Game
     game.setStatus(status);
   }
 
-  /* (non-Javadoc)
-   * 
-   * @see ac.memory.episodic.Game#setScore(int) */
+  /**
+   * This method set a score to a Game. It can take many time because this
+   * method calculate mark for moves, cbs and rpbs
+   */
   @Override
   public void setScore(int score)
   {
     game.setScore(score);
+
+    HashSet<Long> impacted_obj = new HashSet<>();
+
     // Setting all move score
+    if (logger.isDebugEnabled())
+      logger.debug("Setting all move score");
     MoveNode move = game.getLastMove();
+
     int pos = 0;
     while (move != null)
       {
@@ -128,7 +145,32 @@ public class Neo4jGame implements Game
         move.setMark(EpisodicMemoryUtil.DeacreaseMoveFormula(pos, score,
             getStatus()));
 
+        try
+          {
+            impacted_obj.add(move.getObject().getId());
+          }
+        catch (NodeException e)
+          {
+          }
+
         move = move.getPrevious();
+      }
+
+    if (logger.isDebugEnabled())
+      logger.debug(impacted_obj.size() + " impacted cbs");
+
+    for (Long id : impacted_obj)
+      {
+        try
+          {
+            ObjectNode obj = obj_repo.getNodeById(id);
+            obj.performMark();
+          }
+        catch (NodeRepositoryException | NodeException e)
+          {
+            logger.warn("Error when trying to perform the mark");
+            continue;
+          }
       }
   }
 
@@ -145,7 +187,7 @@ public class Neo4jGame implements Game
       }
     catch (Exception e)
       {
-        System.out.println("pb !! " + e.getMessage());
+        logger.warn("Problem when getting game score");
       }
     return score;
   }

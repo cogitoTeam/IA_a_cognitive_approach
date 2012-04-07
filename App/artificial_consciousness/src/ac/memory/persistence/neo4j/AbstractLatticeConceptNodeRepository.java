@@ -18,6 +18,7 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
 {
   protected Index<Node> index;
   protected String ID_FIELD;
+  protected String MARK_FIELD = "mark";
 
   /**
    * Default constructor

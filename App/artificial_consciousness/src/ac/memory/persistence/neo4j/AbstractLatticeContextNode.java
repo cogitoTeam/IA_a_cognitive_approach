@@ -33,6 +33,7 @@ abstract public class AbstractLatticeContextNode<ObjectType, RelatedObjectType, 
     extends AbstractNode<ObjectType>
 {
   protected String ID_FIELD;
+  static final String MARK_FIELD = "mark";
 
   private static final Logger logger = Logger
       .getLogger(AbstractLatticeContextNode.class);
@@ -196,6 +197,29 @@ abstract public class AbstractLatticeContextNode<ObjectType, RelatedObjectType, 
     return false;
   }
 
+  /**
+   * @return mark of the node
+   * @throws NodeException
+   *           if field not exists
+   */
+  public abstract double getMark() throws NodeException;
+
+  /**
+   * Set the mark of the node
+   * 
+   * @param mark
+   *          the mark
+   * @throws NodeException
+   */
+  public abstract void setMark(double mark) throws NodeException;;
+
+  /**
+   * Proceed to the calcul of the mark
+   * 
+   * @throws NodeException
+   */
+  public abstract void performMark() throws NodeException;
+
   @Override
   public int hashCode()
   {
@@ -214,7 +238,16 @@ abstract public class AbstractLatticeContextNode<ObjectType, RelatedObjectType, 
   @Override
   public String toString()
   {
-    return "ALCNode[" + getId() + "]";
+    String mark;
+    try
+      {
+        mark = ((Double) getMark()).toString();
+      }
+    catch (NodeException e)
+      {
+        mark = "ERROR";
+      }
+    return "ALCNode[" + getId() + " mark: " + mark + "]";
   }
 
   protected abstract IterableWrapper<RelatedObjectType, Path> createObjectsFromPath(

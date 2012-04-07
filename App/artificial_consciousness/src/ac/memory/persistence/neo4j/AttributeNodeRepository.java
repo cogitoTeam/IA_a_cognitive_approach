@@ -92,6 +92,7 @@ public class AttributeNodeRepository
         // ///////////////////////
 
         newNodeAttribute.setProperty("object", bytes);
+        newNodeAttribute.setProperty(MARK_FIELD, (double) 0.5);
 
         if (logger.isDebugEnabled())
           logger.debug("Creating relationship to the root node");

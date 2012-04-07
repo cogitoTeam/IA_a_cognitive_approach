@@ -159,14 +159,13 @@ public class Neo4jMove implements Move
   @Override
   public long getMark()
   {
-    GameNode the_game;
     try
       {
         return move.getMark();
       }
     catch (NodeException e)
       {
-        return 0;
+        return (long) 0.0;
       }
   }
 }

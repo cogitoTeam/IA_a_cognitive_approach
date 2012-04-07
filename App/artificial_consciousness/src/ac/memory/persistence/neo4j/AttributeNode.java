@@ -3,6 +3,8 @@
  */
 package ac.memory.persistence.neo4j;
 
+import java.util.Iterator;
+
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
@@ -18,7 +20,8 @@ import ac.shared.RelevantPartialBoardState;
  * @date 30 mars 2012
  * @version 0.1
  */
-public class AttributeNode extends
+public class AttributeNode
+    extends
     AbstractLatticeContextNode<AttributeNode, ObjectNode, RelevantPartialBoardState>
 {
   private static final Logger logger = Logger.getLogger(AttributeNode.class);
@@ -71,4 +74,60 @@ public class AttributeNode extends
     return null;
   }
 
+  /* (non-Javadoc)
+   * 
+   * @see ac.memory.persistence.neo4j.AbstractLatticeContextNode#getMark() */
+  @Override
+  public double getMark() throws NodeException
+  {
+    // TODO Auto-generated method stub
+    return (double) 0.5;
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see
+   * ac.memory.persistence.neo4j.AbstractLatticeContextNode#setMark(double) */
+  @Override
+  public void setMark(double mark) throws NodeException
+  {
+    try
+      {
+        underlyingNode.getProperty(MARK_FIELD);
+      }
+    catch (Exception e)
+      {
+        logger.error("Attribute node " + getId() + " has no mark field.");
+        throw new NodeException("Attribute node " + getId()
+            + " has no mark field.", e);
+      }
+
+  }
+
+  @Override
+  public void performMark() throws NodeException
+  {
+    int nb = 0;
+    int total = 0;
+
+    try
+      {
+        for (Iterator<ObjectNode> iterator = getRelatedObjects().iterator(); iterator
+            .hasNext();)
+          {
+            ObjectNode object = (ObjectNode) iterator.next();
+
+            total += object.getMark();
+            nb++;
+
+          }
+        underlyingNode.setProperty(MARK_FIELD, (double) total / (double) nb);
+      }
+    catch (Exception e)
+      {
+        // TODO logger l'erreur
+        throw new NodeException("Error when trying to perfom the mark calcul",
+            e);
+      }
+  }
 }
