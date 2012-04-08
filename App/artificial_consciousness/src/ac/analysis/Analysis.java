@@ -1,7 +1,10 @@
 package ac.analysis;
 
+import java.io.IOException;
+
 import game.BoardMatrix;
 import game.BoardMatrix.Position;
+import game.BoardMatrix.Size;
 import ac.memory.ActiveMemory;
 import ac.reasoning.Reasoning;
 import agent.Action;
@@ -23,6 +26,7 @@ public class Analysis
    * This is the input method from environment in case of a choice.
    * 
    * @param percept
+   * @return
    */
   public Action analyse(Choices percept)
   {
@@ -35,4 +39,13 @@ public class Analysis
     return this._reasoning.stimulate();
   }
 
+  public static void main(String[] args) throws IOException
+  {
+    Size s = new Size(8,8);
+    BoardMatrix b = new BoardMatrix(null);
+    
+    Choices test = new Choices(b);
+    test.getCurrentBoard();
+    System.out.println(test.getCurrentBoard());
+  }
 }

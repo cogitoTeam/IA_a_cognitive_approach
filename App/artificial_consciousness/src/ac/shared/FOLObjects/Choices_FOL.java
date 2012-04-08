@@ -32,7 +32,7 @@ public class Choices_FOL
    * @param _options
    *          the options to set
    */
-  public void addOptions(Option option)
+  public void addOption(Option option)
   {
     this._options.add(option);
 

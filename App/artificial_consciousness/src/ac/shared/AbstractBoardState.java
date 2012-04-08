@@ -60,4 +60,20 @@ public abstract class AbstractBoardState implements Serializable
     this.id = id;
   }
 
+  /**
+   * @return the boardStateFacts ({@link FactBase})
+   */
+  public FactBase getBoardStateFacts()
+  {
+    return boardStateFacts;
+  }
+
+  /**
+   * @param boardStateFacts the boardStateFacts ({@link FactBase}) to set
+   */
+  public void setBoardStateFacts(FactBase boardStateFacts)
+  {
+    this.boardStateFacts = boardStateFacts;
+  }
+
 }

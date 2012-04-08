@@ -1,7 +1,7 @@
 package ac.analysis;
 
 import game.BoardMatrix;
-import game.BoardMatrix.Position;
+import game.BoardMatrix.*;
 import ac.analysis.structure.*;
 import ac.shared.CompleteBoardState;
 import ac.shared.FOLObjects.*;
@@ -15,65 +15,93 @@ import agent.Percept.*;
  * @author Namrata Patel
  * 
  */
-public class BasicAnalysisEngine {
-	private Choices input;
+public class BasicAnalysisEngine
+{
+  private Choices input;
 
-	/**
-	 * Default constructor for the basic conceptual analyzer
-	 * 
-	 * @param percept
-	 *            a list of available choices
-	 */
-	public BasicAnalysisEngine(Choices percept) {
-		super();
-		this.setInput(percept);
-	}
+  /**
+   * Default constructor for the basic conceptual analyzer
+   * 
+   * @param percept
+   *          a list of available choices
+   */
+  public BasicAnalysisEngine(Choices percept)
+  {
+    super();
+    this.setInput(percept);
+  }
 
-	/**
-	 * Gets the input
-	 * 
-	 * @return input the Percept
-	 */
-	public Choices getInput() {
-		return input;
-	}
+  /**
+   * Gets the input
+   * 
+   * @return input the Percept
+   */
+  public Choices getInput()
+  {
+    return input;
+  }
 
-	/**
-	 * Sets the input
-	 * 
-	 * @param percept
-	 *            a Percept
-	 */
-	public void setInput(Choices percept) {
-		this.input = percept;
-	}
+  /**
+   * Sets the input
+   * 
+   * @param percept
+   *          a Percept
+   */
+  public void setInput(Choices percept)
+  {
+    this.input = percept;
+  }
 
-	/**
-	 * @param matrix
-	 *            a BoardMatrix to_string
-	 * @return a string which represents the FOL fact base corresponding to a
-	 *         board matrix
-	 */
-	private CompleteBoardState convertMatrixtoCBS(BoardMatrix matrix) {
-	  BoardMatrix board = input.getCurrentBoard();
+  /**
+   * @param matrix
+   *          a BoardMatrix
+   * @return an instance of a {@link CompleteBoardState} class which represents
+   *         the converted BoardMatrix
+   */
+  private CompleteBoardState convertMatrixtoCBS(BoardMatrix matrix)
+  {
     BoardMatrix.Position p = new Position(0, 0);
-    for(p.row = 0; p.row < board.getSize().n_rows; p.row++)
-      for(p.col = 0; p.col < board.getSize().n_cols; p.col++)
-        board.getCell(p);
-    
-  //  percept.getOptions().get(0).getResult()
-    
-	  return null;
-		
-	}
+    Cell c;
+    String s;
+    Atom a;
+    CompleteBoardState cbs = new CompleteBoardState();
+    for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
+        {
+          c = matrix.getCell(p);
+          s = "is" + c + "(c_" + p.row + p.col + ")";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+        }
 
-	/**
-	 * @return
-	 */
-	public Choices_FOL generateChoices() {
-	  Choices_FOL output = new Choices_FOL();
-	  
+    // percept.getOptions().get(0).getResult()
+
+    return null;
+
+  }
+
+  /**
+   * @return the choices converted into FOL
+   */
+  public Choices_FOL generateChoices()
+  {
+    Choices_FOL output = new Choices_FOL();
+
+    BoardMatrix board = input.getCurrentBoard();
+    CompleteBoardState current_board = convertMatrixtoCBS(board);
+
+    output.setCurrent_board(current_board);
+
+    CompleteBoardState result;
+    Option tmp;
+    for (agent.Action.Option o : input.getOptions())
+      {
+        result = convertMatrixtoCBS(o.getResult());
+        tmp = new Option(o.getAction(), result);
+        output.addOption(tmp);
+      }
+
     return output;
 
-	}
+  }
 }
