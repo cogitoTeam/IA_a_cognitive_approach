@@ -19,7 +19,15 @@ import ac.analysis.structure.*;
  */
 public class KnowledgeBase {
 
-	private FactBase BF;// base de faits
+	/**
+   * @param bF the bF to set
+   */
+  public void setBF(FactBase bF)
+  {
+    BF = bF;
+  }
+
+  private FactBase BF;// base de faits
 	private ArrayList<Rule> BR;// base de r�gles
 	private String sourceFilename;
 	private boolean isSaturated = false;

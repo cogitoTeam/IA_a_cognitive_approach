@@ -5,11 +5,10 @@ import game.BoardMatrix.*;
 import ac.analysis.structure.*;
 import ac.shared.CompleteBoardState;
 import ac.shared.FOLObjects.*;
-import agent.Percept.Choices;
 import agent.Percept.*;
 
 /**
- * This class implements the basic conceptual analyzer : It converts a board
+ * This class represents the basic conceptual analyzer : It converts a board
  * matrix into a board state described in first order logic
  * 
  * @author Namrata Patel
@@ -17,24 +16,43 @@ import agent.Percept.*;
  */
 public class BasicAnalysisEngine
 {
+  /* **************************************************************************
+   * FIELD
+   * ************************************************************************* */
+
+  /**
+   * an instance of {@link Choices}
+   */
   private Choices input;
+  /**
+   * an instance of {@link Choices_FOL}
+   */
+  private Choices_FOL output;
+
+  /* **************************************************************************
+   * CONSTRUCTOR
+   * ************************************************************************* */
 
   /**
    * Default constructor for the basic conceptual analyzer
    * 
-   * @param percept
+   * @param choices
    *          a list of available choices
    */
-  public BasicAnalysisEngine(Choices percept)
+  public BasicAnalysisEngine(Choices choices)
   {
     super();
-    this.setInput(percept);
+    this.setInput(choices);
   }
 
+  /* **************************************************************************
+   * GETTERS & SETTERS
+   * ************************************************************************* */
+
   /**
-   * Gets the input
+   * Gets the input (an instance of {@link Choices})
    * 
-   * @return input the Percept
+   * @return the {@code Choices} to be converted
    */
   public Choices getInput()
   {
@@ -42,14 +60,46 @@ public class BasicAnalysisEngine
   }
 
   /**
-   * Sets the input
+   * Sets the input (an instance of {@link Choices})
    * 
-   * @param percept
-   *          a Percept
+   * @param choices
+   * 
    */
-  public void setInput(Choices percept)
+  public void setInput(Choices choices)
   {
-    this.input = percept;
+    this.input = choices;
+  }
+
+  /**
+   * @return the output (an instance of {@link Choices_FOL})
+   */
+  public Choices_FOL getOutput()
+  {
+    return output;
+  }
+
+  /* **************************************************************************
+   * METHODS
+   * ************************************************************************* */
+
+  /**
+   * the method that runs the basic analyzer
+   */
+  public void runEngine()
+  {
+    BoardMatrix board = input.getCurrentBoard();
+    CompleteBoardState current_board = convertMatrixtoCBS(board);
+
+    output.setCurrent_board(current_board);
+
+    CompleteBoardState result;
+    Option tmp;
+    for (agent.Action.Option o : input.getOptions())
+      {
+        result = convertMatrixtoCBS(o.getResult());
+        tmp = new Option(o.getAction(), result);
+        output.addOption(tmp);
+      }
   }
 
   /**
@@ -74,34 +124,7 @@ public class BasicAnalysisEngine
           cbs.getBoardStateFacts().addNewFact(a);
         }
 
-    // percept.getOptions().get(0).getResult()
-
     return null;
-
-  }
-
-  /**
-   * @return the choices converted into FOL
-   */
-  public Choices_FOL generateChoices()
-  {
-    Choices_FOL output = new Choices_FOL();
-
-    BoardMatrix board = input.getCurrentBoard();
-    CompleteBoardState current_board = convertMatrixtoCBS(board);
-
-    output.setCurrent_board(current_board);
-
-    CompleteBoardState result;
-    Option tmp;
-    for (agent.Action.Option o : input.getOptions())
-      {
-        result = convertMatrixtoCBS(o.getResult());
-        tmp = new Option(o.getAction(), result);
-        output.addOption(tmp);
-      }
-
-    return output;
 
   }
 }

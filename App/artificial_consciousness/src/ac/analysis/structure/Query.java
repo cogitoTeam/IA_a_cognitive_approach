@@ -11,6 +11,9 @@ public class Query extends FactBase {
 	public Query() {
 	}
 
+	public Query(Atom a) {
+	  super.addNewFact(a);
+	}
 	public Query(FactBase BF) {
 		super(BF);
 	}
