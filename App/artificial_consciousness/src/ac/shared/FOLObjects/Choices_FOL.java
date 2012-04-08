@@ -13,7 +13,7 @@ import ac.shared.CompleteBoardState;
  * @date 4 avr. 2012
  * @version 0.1
  */
-public class Choices
+public class Choices_FOL
 {
   // ***************************************************************************
   // ATTRIBUTES

@@ -1,7 +1,11 @@
 package ac.analysis;
 
+import game.BoardMatrix;
+import game.BoardMatrix.Position;
 import ac.analysis.structure.*;
-import ac.shared.*;
+import ac.shared.CompleteBoardState;
+import ac.shared.FOLObjects.*;
+import agent.Percept.Choices;
 import agent.Percept.*;
 
 /**
@@ -17,12 +21,12 @@ public class BasicAnalysisEngine {
 	/**
 	 * Default constructor for the basic conceptual analyzer
 	 * 
-	 * @param input
+	 * @param percept
 	 *            a list of available choices
 	 */
-	public BasicAnalysisEngine(Choices input) {
+	public BasicAnalysisEngine(Choices percept) {
 		super();
-		this.setInput(input);
+		this.setInput(percept);
 	}
 
 	/**
@@ -37,11 +41,11 @@ public class BasicAnalysisEngine {
 	/**
 	 * Sets the input
 	 * 
-	 * @param input
+	 * @param percept
 	 *            a Percept
 	 */
-	public void setInput(Choices input) {
-		this.input = input;
+	public void setInput(Choices percept) {
+		this.input = percept;
 	}
 
 	/**
@@ -50,18 +54,26 @@ public class BasicAnalysisEngine {
 	 * @return a string which represents the FOL fact base corresponding to a
 	 *         board matrix
 	 */
-	public String convertMatrixtoFOL(String matrix) {
-		// To do task as defined
-		String FOL = matrix;
-		return FOL;
-
+	private CompleteBoardState convertMatrixtoCBS(BoardMatrix matrix) {
+	  BoardMatrix board = input.getCurrentBoard();
+    BoardMatrix.Position p = new Position(0, 0);
+    for(p.row = 0; p.row < board.getSize().n_rows; p.row++)
+      for(p.col = 0; p.col < board.getSize().n_cols; p.col++)
+        board.getCell(p);
+    
+  //  percept.getOptions().get(0).getResult()
+    
+	  return null;
+		
 	}
 
 	/**
 	 * @return
 	 */
-	public CompleteBoardState generateCBS() {
-    return null;
+	public Choices_FOL generateChoices() {
+	  Choices_FOL output = new Choices_FOL();
+	  
+    return output;
 
 	}
 }
