@@ -147,6 +147,7 @@ public abstract class Rules
     // query
     
     /**
+     * Check which player is supposed to play first by these rules.
      * @return 
      * The player who, by these rules, moves first.
      */

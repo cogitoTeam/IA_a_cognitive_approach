@@ -34,11 +34,26 @@ public class Game
     
     /* CLASS NAMESPACE FUNCTIONS */
     
+    /**
+     * Returns the complementary player.
+     * @param p
+     * The player whose opponent we wish to know.
+     * @return 
+     * The specified players opponent, so BLACK for WHITE and WHITE for BLACK.
+     */
     public static Player otherPlayer(Player p)
     {
         return (p == Player.WHITE) ? Player.BLACK : Player.WHITE;
     }
 
+    /**
+     * Turn a String into a Game.Player enumeration case.
+     * @param s
+     * The String to parse.
+     * @return 
+     * The Game.Player corresponding to this String, or null if the String 
+     * doesn't correspond to any player.
+     */
     public static Player parsePlayer(String s)
     {
         if(s.equals("WHITE") || s.equals("white"))
@@ -63,6 +78,14 @@ public class Game
     /* METHODS */
     
     // creation
+    /**
+     * The standard constructor of the Game which initialises final attributes.
+     * @param _id
+     * An initialiser for the game unique identifier, used to find into inside
+     * the GameManager.
+     * @param _rules 
+     * The rules that this game uses.
+     */
     public Game(int _id, Rules _rules)
     {
         // save attributes
@@ -76,18 +99,37 @@ public class Game
         current_state = State.WAITING_FOR_PLAYER;
     }
     
+    
     // modification
     
+    
+    /**
+     * Reset the state of the Game to reflect that the most recent event is
+     * the joining of a new player.
+     */
     public void join()
     {
         current_state = State.PLAYER_JOINED;
     }
     
+    /**
+     * Reset the state of the Game to reflect the failure of the most recent
+     * move.
+     */
     public void failMove()
     {
         current_state = State.NO_CHANGE;
     }
     
+    /**
+     * Attempt to make a move at a given position in the name of the specified
+     * player: the rules are check and the Game's state is reset according to
+     * the success or failure of the move.
+     * @param move
+     * The position of the move to be played.
+     * @param player 
+     * The player to play the move.
+     */
     public void tryMove(Position move, Player player)
     {
         // check that it's the right player playing
@@ -105,32 +147,59 @@ public class Game
         if(current_state == State.MOVE_SUCCESS)
         {
             // switch the current player
-            switchCurrentPlayer();
+            current_player = otherPlayer(current_player);
         }
     }
     
+    /**
+     * Reset the board, the current player and the game state back to their
+     * original settings, based on the game rules.
+     */
+    public final void restart()
+    {
+        rules.reset(board);
+        current_player = rules.getFirstPlayer();
+        current_state = State.MOVE_SUCCESS;
+    }
+    
+    
     // query
+    
+    /**
+     * Read the Game's state, the last important event that occurred: useful
+     * for judging the success or failure of a move.
+     * @return
+     * The current State of the Game.
+     */
     public State getState()
     {
         return current_state;
     }
     
+    /**
+     * Check whose turn it is.
+     * @return 
+     * The next player to play.
+     */
     public Player getCurrentPlayer()
     {
         return current_player;
     }
     
-    
-    /* SUBROUTINES */
-    
-    private void switchCurrentPlayer()
-    {
-        current_player = (current_player == Player.WHITE) ? Player.BLACK 
-                                                        : Player.WHITE;
-    }
-    
     /* OVERRIDES */
   
+    /**
+     * Return an XML 'game' tag containing all the information about the Game,
+     * including:
+     * <li>The unique identifier</li>
+     * <li>The state</li>
+     * <li>The rules in use</li>
+     * <li>The board contents</li>
+     * <li>Whose turn it is</li>
+     * <li>A list of the current player options</li>
+     * This is used for Representational State-Transfer (REST).
+     * @return 
+     */
     @Override
     public String toString()
     {
@@ -153,13 +222,4 @@ public class Game
         // finished
         return result + "</game>";
     }
-    
-    // modification
-    public final void restart()
-    {
-        rules.reset(board);
-        current_player = rules.getFirstPlayer();
-        current_state = State.MOVE_SUCCESS;
-    }
-    
 }

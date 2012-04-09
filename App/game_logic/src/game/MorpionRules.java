@@ -9,7 +9,6 @@ package game;
 import game.BoardMatrix.Position;
 import game.BoardMatrix.Size;
 import game.Game.Player;
-import game.Game.State;
 
 
 public class MorpionRules extends Rules
