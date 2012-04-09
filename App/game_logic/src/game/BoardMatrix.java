@@ -1,5 +1,6 @@
 /*****************
- * @author william
+ * Class representing a game board in matrix form
+ * @author william <wilbefast@gmail.com>
  * @date 21-Mar-2012
  *****************/
 
@@ -75,9 +76,15 @@ public class BoardMatrix
             
     
     /* CLASS NAMEPSACE FUNCTIONS */
+    /** 
+    * @param c
+    * A BoardMatrix.Cell enumeration case (ex: Board.Cell.PIECE_WHITE).
+    * @return 
+    * The corresponding Game.Player enumeration case 
+    * (ex: Game.Player.WHITE) or null if there is no such case.
+    */
     public static Player pieceToPlayer(Cell c)
     {
-        
         switch(c)
         {
             case PIECE_WHITE:
@@ -89,9 +96,24 @@ public class BoardMatrix
         }
     }
 
+    /** 
+    * @param p
+    * A Game.Player enumeration case (ex: Game.Player.WHITE).
+    * @return 
+    * The corresponding BoardMatrix.Cell enumeration case 
+    * (ex: Board.Cell.PIECE_WHITE) or null is there is no such case.
+    */
     public static Cell playerToPiece(Player p)
     {
-        return (p == Player.WHITE) ? Cell.PIECE_WHITE : Cell.PIECE_BLACK;  
+        switch(p)
+        {
+            case WHITE:
+                return Cell.PIECE_WHITE;
+            case BLACK:
+                return Cell.PIECE_BLACK;
+            default:
+                return null;
+        }
     }
     
     /* ATTRIBUTES */
@@ -103,6 +125,12 @@ public class BoardMatrix
     /* METHODS */
     
     // creation
+    /** Create a board by manually specifying the size: use Rules.createBoard() 
+     * to create a board of the appropriate size for the rules in question.
+    * @param _size
+    * Initialiser for BoardMatrix.size attribute. This is used to allocate
+    * memory for the 2-dimensional array where representing the board state.
+    */
     protected BoardMatrix(Size _size)
     {
         size = _size;
@@ -110,6 +138,12 @@ public class BoardMatrix
         cells = new Cell[_size.n_rows][_size.n_cols];
     }
     
+    /** Create a board by parsing the 'board' node of an XML document: no error
+     * protected is provided by the function so use it carefully!
+    * @param board_node
+    * The Document Object Model (DOM) node to be parsed in order to create the
+    * BoardMatrix object.
+    */
     public BoardMatrix(Node board_node)
     {
         // parse size
@@ -129,7 +163,13 @@ public class BoardMatrix
     
 
     // modification
-    
+    /** Modify (don't resize) the contents of a board by parsing the 'board' 
+    * node of an XML document: no error protection is provided by the function 
+    * so use it carefully!
+    * @param board_node
+    * The Document Object Model (DOM) node to be parsed in order to modify the
+    * BoardMatrix object.
+    */
     public final void parseCells(Node board_node)
     {
         // get the cell nodes from the document
@@ -162,6 +202,8 @@ public class BoardMatrix
         }
     }
 
+    /** Clear the board: set all cells to Cell.EMPTY.
+    */
     public void clear()
     {
         // local variables
@@ -173,9 +215,19 @@ public class BoardMatrix
                 cells[p.row][p.col] = Cell.EMPTY;
     }
     
+    /** Change the contents of a specific cell.
+    * @param p
+    * The position on the board to be modified.
+    * @param new_value
+    * The new contents of the cell.
+    * @return 
+    * The previous value of the cell, before it was modified, or 
+    * Cell.OUT_OF_BOUNDS if the specified position was invalid.
+    */
     public Cell setCell(Position p, Cell new_value)
     {
-        if(p.row < size.n_rows && p.col < size.n_cols)
+        if(p.row >= 0 && p.col >= 0 && 
+            p.row < size.n_rows && p.col < size.n_cols)
         {
             Cell previous_value = cells[p.row][p.col];
             cells[p.row][p.col] = new_value;
@@ -185,15 +237,27 @@ public class BoardMatrix
             return Cell.OUT_OF_BOUNDS;
     }
     
-    public Cell setCellOwner(Position p, Game.Player new_owner)
+    /** Change the owner of a specific cell to
+    * @param p
+    * The position on the board to be modified.
+    * @param new_owner
+    * The new owner of the cell.
+    * @return
+    * The previous owner of the cell or null if the specified position was 
+    * invalid.
+    */
+    public Player setCellOwner(Position p, Game.Player new_owner)
     {
-        Cell new_value = (new_owner == Player.WHITE) ? 
-                            Cell.PIECE_WHITE : Cell.PIECE_BLACK;
-        return setCell(p, new_value);
+        return pieceToPlayer(setCell(p, playerToPiece(new_owner)));
     }
 
     // query
 
+    /**
+     * Create a copy of the message receiver (this).
+     * @return 
+     * A deep copy of the object, with the same size and contents. 
+     */
     public BoardMatrix copy()
     {
         // local variables
@@ -209,17 +273,33 @@ public class BoardMatrix
         return clone;
     }
 
-
+    /**
+     * @return 
+     * The size of the board, as an inner-class 'Size' structure with n_rows
+     * and n_cols fields.
+     */
     public Size getSize()
     {
         return size;
     }
     
+    /**
+     * @return 
+     * The total number of cells, so the number of rows times the number of 
+     * columns. 
+     */
     public int get_n_cells()
     {
         return size.n_rows * size.n_cols;
     }
     
+    /**
+    * @param player
+    * The player whose pieces we'll be counting, or null.
+    * @return 
+    * The total number of pieces owned by the specified player (the number of
+    * empty cells if null is specified).
+    */
     public int count_player_pieces(Player player)
     {
         // local variables
@@ -235,13 +315,24 @@ public class BoardMatrix
         // finished
         return count;
     }
-    
+ 
+    /**
+    * @return 
+    * The total number of pieces on the board, so belonging to either player.
+    */
     public int count_pieces()
     {
         // total number of pieces = total cells - empty cells
         return get_n_cells() - count_player_pieces(null);
     }
 
+    /**
+    * @param p
+    * The position on the board we want to know the contents of.
+    * @return 
+    * The contents of the specified cell, or Cell.OUT_OF_BOUNDS is the position
+    * given is invalid.
+    */
     public Cell getCell(Position p)
     {
         if(p.row < 0 || p.col < 0 || p.row >= size.n_rows || p.col >= size.n_cols)
@@ -250,6 +341,13 @@ public class BoardMatrix
             return cells[p.row][p.col];
     }
     
+    /**
+    * @param p
+    * The position on the board we want to know the owner of.
+    * @return 
+    * The player who owns the specified cell, or null if the position is invalid
+    * or the cell has no owner.
+    */
     public Player getCellOwner(Position p)
     {
         Cell cell = getCell(p);
@@ -271,6 +369,13 @@ public class BoardMatrix
 
     /* OVERRIDES */
     
+    /**
+    * @param other
+    * The object to compare this one with.
+    * @return 
+    * True if and only if the other object is a BoardMatrix with an identical
+    * size and contents.
+    */
     @Override
     public boolean equals(Object other)
     {
@@ -293,6 +398,11 @@ public class BoardMatrix
         return true;
     }
 
+    /**
+    * @return 
+    * Hash function representative of the equals operator (size and cell 
+    * contents must be identical).
+    */
     @Override
     public int hashCode() 
     {
@@ -302,6 +412,11 @@ public class BoardMatrix
         return hash;
     }
     
+    /**
+    * @return 
+    * An XML 'board' tag containing the board information (size, number of 
+    * pieces and contents of each cell).
+    */
     @Override
     public String toString()
     {
@@ -326,6 +441,13 @@ public class BoardMatrix
         return result+"</board>";
     }
     
+    /**
+    * @return 
+    * A grid of characters representing the board in a more human-readable way.
+    * '*' = white piece
+    * '@' = black piece
+    * '-' = empty cell
+    */
     public String toConsole()
     {
         String result = "";
