@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import ac.memory.Memory;
 import ac.memory.episodic.EpisodicMemoryException;
 import ac.memory.episodic.Game;
+import ac.memory.episodic.Move;
 import ac.shared.CompleteBoardState;
 import ac.shared.RelevantPartialBoardState;
 
@@ -86,30 +87,46 @@ class IntrospectionEngine extends Thread
   private void searchNewRPBS() throws EpisodicMemoryException
   {
     // @todo get last won game
-    List<Game> list_cbs = this._memory.getWonGames(2);
+    int nb_game = 10;
+    List<Game> list_games = this._memory.getWonGames(nb_game);
+    RelevantPartialBoardState new_rpbs;
 
-    CompleteBoardState cbs1 = list_cbs.get(0).getLastMove()
-        .getCompleteBoardState();
-    CompleteBoardState cbs2 = list_cbs.get(1).getLastMove()
-        .getCompleteBoardState();
+    Move m1, m2;
+    CompleteBoardState cbs1, cbs2;
 
-    /* 
-     * @todo
-     * for(pair<cbs,cbs> pair : //chaque pair possible)
-     * {
-     * for(rpbs : chaque RPBS commun pour la pair courante
-     * {
-     * RPBS new_rpbs = rpbs.extersion(cbs1,cbs25;
-     * if(new_rpbs not already exist)
-     * {
-     * mem.add(new_rpbs);
-     * mem.associate(new_rpbs,cbs1)
-     * mem.associate(new_rpbs.cbs2)
-     * }
-     * }
-     * }
-     * * */
+    for (int i = 0; i < list_games.size(); i++)
+      for (int j = i + 1; j < list_games.size(); j++)
+        {
+          m1 = list_games.get(i).getLastMove();
+          m2 = list_games.get(j).getLastMove();
 
+          while ((m1 = m1.getPreviousMove()) != null
+              && (m2 = m2.getPreviousMove()) != null)
+            {
+
+              cbs1 = m1.getCompleteBoardState();
+              cbs2 = m2.getCompleteBoardState();
+
+              for (RelevantPartialBoardState rs1 : cbs1.getPartialStates())
+                for (RelevantPartialBoardState rs2 : cbs2.getPartialStates())
+                  if (rs1.equals(rs2))
+                    {
+                      new_rpbs = this.extension(rs1, cbs1, cbs2);
+                      // @TODO add a boost
+                      this._memory.putRelevantStructure(new_rpbs);
+                      this._memory.addAssociation(cbs1, new_rpbs);
+                      this._memory.addAssociation(cbs2, new_rpbs);
+                    }
+            }
+        }
+
+  }
+
+  private RelevantPartialBoardState extension(RelevantPartialBoardState rs1,
+      CompleteBoardState cbs1, CompleteBoardState cbs2)
+  {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }
