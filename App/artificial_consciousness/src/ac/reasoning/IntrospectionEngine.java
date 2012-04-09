@@ -22,7 +22,7 @@ class IntrospectionEngine extends Thread
 {
 
   @SuppressWarnings("unused")
-  private static final Logger logger = Logger
+  private static final Logger LOGGER = Logger
       .getLogger(IntrospectionEngine.class);
 
   /* **************************************************************************
@@ -66,14 +66,7 @@ class IntrospectionEngine extends Thread
          * }
          * * */
 
-        try
-          {
-            this.searchNewRPBS();
-          }
-        catch (EpisodicMemoryException e)
-          {
-            e.printStackTrace();
-          }
+        this.searchNewRPBS();
 
         // @todo implement this method and remove next line
         break;
@@ -84,15 +77,12 @@ class IntrospectionEngine extends Thread
    * PRIVATE METHODS
    * ************************************************************************ */
 
-  private void searchNewRPBS() throws EpisodicMemoryException
+  private void searchNewRPBS()
   {
     // @todo get last won game
     int nb_game = 10;
     List<Game> list_games = this._memory.getWonGames(nb_game);
-    RelevantPartialBoardState new_rpbs;
-
     Move m1, m2;
-    CompleteBoardState cbs1, cbs2;
 
     for (int i = 0; i < list_games.size(); i++)
       for (int j = i + 1; j < list_games.size(); j++)
@@ -103,23 +93,38 @@ class IntrospectionEngine extends Thread
           while ((m1 = m1.getPreviousMove()) != null
               && (m2 = m2.getPreviousMove()) != null)
             {
-
-              cbs1 = m1.getCompleteBoardState();
-              cbs2 = m2.getCompleteBoardState();
-
-              for (RelevantPartialBoardState rs1 : cbs1.getPartialStates())
-                for (RelevantPartialBoardState rs2 : cbs2.getPartialStates())
-                  if (rs1.equals(rs2))
-                    {
-                      new_rpbs = this.extension(rs1, cbs1, cbs2);
-                      // @TODO add a boost
-                      this._memory.putRelevantStructure(new_rpbs);
-                      this._memory.addAssociation(cbs1, new_rpbs);
-                      this._memory.addAssociation(cbs2, new_rpbs);
-                    }
+              this.searchNewRPBS(m1, m2);
             }
         }
 
+  }
+
+  private void searchNewRPBS(Move m1, Move m2)
+  {
+    RelevantPartialBoardState new_rpbs;
+    CompleteBoardState cbs1, cbs2;
+
+    try
+      {
+        cbs1 = m1.getCompleteBoardState();
+        cbs2 = m2.getCompleteBoardState();
+
+        for (RelevantPartialBoardState rs1 : m1.getRelevantPartialBoardStates())
+          for (RelevantPartialBoardState rs2 : m2
+              .getRelevantPartialBoardStates())
+            if (rs1.equals(rs2))
+              {
+                new_rpbs = this.extension(rs1, cbs1, cbs2);
+                // @TODO add a boost
+                this._memory.putRelevantStructure(new_rpbs);
+                this._memory.addAssociation(cbs1, new_rpbs);
+                this._memory.addAssociation(cbs2, new_rpbs);
+              }
+      }
+    catch (EpisodicMemoryException e)
+      {
+        LOGGER.debug(e.getMessage());
+      }
   }
 
   private RelevantPartialBoardState extension(RelevantPartialBoardState rs1,
