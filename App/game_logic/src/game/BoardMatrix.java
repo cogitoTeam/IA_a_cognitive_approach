@@ -47,6 +47,10 @@ public class BoardMatrix
             row = _row;
             col = _col;
         }
+        public Position()
+        {
+            this(0, 0);
+        }
         public void add(Direction delta)
         {
             row += delta.row;
