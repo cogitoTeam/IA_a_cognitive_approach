@@ -16,7 +16,7 @@ import java.util.Stack;
 public class ReversiRules extends Rules
 {
     /* CONSTANTS */
-    private static final Size BOARD_SIZE = new Size(8, 8);
+    private static final Size BOARD_SIZE = new Size(6, 6);
     
     /* SINGLETON */
     
@@ -143,9 +143,13 @@ public class ReversiRules extends Rules
         // remove all pieces
         board.clear();
         
+        Position middle = new Position(board.getSize().n_rows/2, 
+                board.getSize().n_cols/2);
+        
         // place 4 pieces, 2 white and 2 black, in the center
-        for(Position p = new Position(3,3); p.row < 5; p.row++)
-            for(p.col = 3; p.col < 5; p.col++)
+        Position p = new Position();
+        for(p.row = middle.row-1; p.row < middle.row+1; p.row++)
+            for(p.col = middle.col-1; p.col < middle.col+1; p.col++)
                 board.setCellOwner(p, ((p.row + p.col)%2 == 0) ? Player.WHITE 
                                                                 : Player.BLACK);
     }
