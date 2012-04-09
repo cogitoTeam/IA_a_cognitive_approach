@@ -132,6 +132,9 @@ public abstract class Rules
         if(hasWon(board, player))
             return Game.State.VICTORY;
         
+        else if(hasWon(board, Game.otherPlayer(player)))
+            return Game.State.DEFEAT;
+        
         // check if draw has occured
         else if(isDraw(board))
             return Game.State.DRAW;

@@ -28,6 +28,7 @@ public class Game
         MOVE_FAILURE,
         NO_CHANGE,
         VICTORY,
+        DEFEAT,
         DRAW;
     }
     
@@ -145,9 +146,14 @@ public class Game
         
         // check if the move end the game
         if(current_state == State.MOVE_SUCCESS)
-        {
             // switch the current player
             current_player = otherPlayer(current_player);
+        
+        else if(current_state == State.DEFEAT)
+        {
+            // one man's victory is another's defeat
+            current_player = otherPlayer(current_player);
+            current_state = State.VICTORY;
         }
     }
     
