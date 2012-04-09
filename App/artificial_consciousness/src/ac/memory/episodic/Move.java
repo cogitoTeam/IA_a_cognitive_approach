@@ -40,13 +40,13 @@ public interface Move
   Game getGame() throws EpisodicMemoryException;
 
   /**
-   * @return the previous move
+   * @return the previous move or null if current move is the first move.
    * @throws EpisodicMemoryException
    */
   Move getPreviousMove();
 
   /**
-   * @return the next move
+   * @return the next move or null if current move is the last move.
    * @throws EpisodicMemoryException
    */
   Move getNextMove();
