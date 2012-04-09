@@ -144,11 +144,24 @@ public class Game
         // if it's the right player's turn try to perform the move
         current_state = rules.tryMove(move, board, player);
         
-        // check if the move end the game
+        // switch players if the move was a success
         if(current_state == State.MOVE_SUCCESS)
+        {
             // switch the current player
             current_player = otherPlayer(current_player);
+            
+            // switch back again if this new player can't move
+            if(!rules.canMove(board, current_player))
+            {
+                current_player = otherPlayer(current_player);
+            
+                // end in a draw if neither player can move
+                if(!rules.canMove(board, current_player))
+                    current_state = State.DRAW;
+            }
+        }
         
+        // defeat state is neither used outside of this block: it's all relative
         else if(current_state == State.DEFEAT)
         {
             // one man's victory is another's defeat
