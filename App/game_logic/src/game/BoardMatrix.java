@@ -444,9 +444,9 @@ public class BoardMatrix
     /**
     * @return 
     * A grid of characters representing the board in a more human-readable way.
-    * '*' = white piece
-    * '@' = black piece
-    * '-' = empty cell
+    * <li>'*' = white piece</li>
+    * <li>'@' = black piece</li>
+    * <li>'-' = empty cell</li>
     */
     public String toConsole()
     {
