@@ -17,7 +17,7 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
     extends AbstractNodeRepository<NodeType>
 {
   protected Index<Node> id_index;
-  protected Index<Node> mark_index; // TODO Index data
+  protected Index<Node> mark_index;
   protected String ID_FIELD;
   protected String MARK_FIELD = "mark";
 

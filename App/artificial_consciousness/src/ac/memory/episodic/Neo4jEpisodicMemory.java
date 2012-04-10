@@ -5,8 +5,6 @@ package ac.memory.episodic;
 
 import java.util.List;
 
-import org.neo4j.graphdb.Relationship;
-
 import ac.memory.persistence.neo4j.GameNode;
 import ac.memory.persistence.neo4j.GameNodeRepository;
 import ac.memory.persistence.neo4j.MoveNodeRepository;
@@ -35,7 +33,7 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
     game_repo = new GameNodeRepository(Neo4jService.getInstance());
     move_repo = new MoveNodeRepository(Neo4jService.getInstance());
     obj_repo = new ObjectNodeRepository(Neo4jService.getInstance(),
-        Neo4jService.getObjIndex());
+        Neo4jService.getObjIndex(), Neo4jService.getObjMarkIndex());
   }
 
   @Override

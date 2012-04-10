@@ -36,9 +36,9 @@ public class Neo4jLatticeContext implements LatticeContext
   static
     {
       attr_repo = new AttributeNodeRepository(Neo4jService.getInstance(),
-          Neo4jService.getAttrIndex());
+          Neo4jService.getAttrIndex(), Neo4jService.getAttrMarkIndex());
       obj_repo = new ObjectNodeRepository(Neo4jService.getInstance(),
-          Neo4jService.getObjIndex());
+          Neo4jService.getObjIndex(), Neo4jService.getObjMarkIndex());
     }
 
   /* (non-Javadoc)
@@ -249,8 +249,8 @@ public class Neo4jLatticeContext implements LatticeContext
       {
         logger.debug("Generation of the HashMap");
         HashMap<Long, CompleteBoardState> ret = new HashMap<Long, CompleteBoardState>();
-        for (Iterator<ObjectNode> iterator = obj_repo.getAllNodesWithoutLast().iterator(); iterator
-            .hasNext();)
+        for (Iterator<ObjectNode> iterator = obj_repo.getAllNodesWithoutLast()
+            .iterator(); iterator.hasNext();)
           {
             ObjectNode obj = (ObjectNode) iterator.next();
             CompleteBoardState cbs = obj.getObject();
@@ -278,8 +278,8 @@ public class Neo4jLatticeContext implements LatticeContext
       {
         logger.debug("Generation of the HashMap");
         HashMap<Long, Pair<CompleteBoardState, HashSet<RelevantPartialBoardState>>> ret = new HashMap<Long, Pair<CompleteBoardState, HashSet<RelevantPartialBoardState>>>();
-        for (Iterator<ObjectNode> iterator = obj_repo.getAllNodesWithoutLast().iterator(); iterator
-            .hasNext();)
+        for (Iterator<ObjectNode> iterator = obj_repo.getAllNodesWithoutLast()
+            .iterator(); iterator.hasNext();)
           {
             ObjectNode obj = (ObjectNode) iterator.next();
             CompleteBoardState cbs = obj.getObject();
@@ -319,8 +319,8 @@ public class Neo4jLatticeContext implements LatticeContext
     try
       {
         HashMap<Long, RelevantPartialBoardState> ret = new HashMap<Long, RelevantPartialBoardState>();
-        for (Iterator<AttributeNode> iterator = attr_repo.getAllNodesWithoutLast()
-            .iterator(); iterator.hasNext();)
+        for (Iterator<AttributeNode> iterator = attr_repo
+            .getAllNodesWithoutLast().iterator(); iterator.hasNext();)
           {
             AttributeNode att = (AttributeNode) iterator.next();
             RelevantPartialBoardState rpbs = att.getObject();
@@ -339,8 +339,8 @@ public class Neo4jLatticeContext implements LatticeContext
   public String toString()
   {
     String ret = "[[ LATTICE CONTEXT";
-    for (Iterator<ObjectNode> iterator = obj_repo.getAllNodesWithoutLast().iterator(); iterator
-        .hasNext();)
+    for (Iterator<ObjectNode> iterator = obj_repo.getAllNodesWithoutLast()
+        .iterator(); iterator.hasNext();)
       {
         ObjectNode object = (ObjectNode) iterator.next();
         ret += "\n  " + object.getId() + " | ";
