@@ -1,5 +1,7 @@
 package ac.memory.persistence.neo4j;
 
+import java.util.List;
+
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
@@ -72,6 +74,24 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
    *          The attribute to remove
    */
   public abstract void deleteNode(NodeType node);
+
+  /**
+   * @param n
+   *          number of best valued wanted. Null value will be ignored
+   * @return list all object sorted by mark
+   * @throws NodeRepositoryException
+   */
+  public abstract List<ObjectNode> getBestValued()
+      throws NodeRepositoryException;
+
+  /**
+   * @param n
+   *          number of best valued wanted. Null value will be ignored
+   * @return list n best object sorted by mark
+   * @throws NodeRepositoryException
+   */
+  public abstract List<ObjectNode> getBestValued(Integer n)
+      throws NodeRepositoryException;
 
   /**
    * @return all NodeAttributes in the database

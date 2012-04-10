@@ -3,8 +3,8 @@ package ac.memory.persistence.neo4j;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-
-import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
+import java.util.ArrayList;
+import java.util.List;
 
 import ac.memory.persistence.neo4j.RelTypes;
 import ac.shared.CompleteBoardState;
@@ -21,7 +21,6 @@ import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.helpers.collection.IterableWrapper;
 import org.neo4j.index.lucene.QueryContext;
-import org.neo4j.index.lucene.ValueContext;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -155,18 +154,36 @@ public class ObjectNodeRepository extends
     return new ObjectNode(object);
   }
 
-  /**
-   * @return
-   * @throws NodeRepositoryException
-   */
-  public IndexHits<Node> getBestValued() throws NodeRepositoryException
+  @Override
+  public List<ObjectNode> getBestValued() throws NodeRepositoryException
+  {
+    return getBestValued(null);
+  }
+
+  @Override
+  public List<ObjectNode> getBestValued(Integer n)
+      throws NodeRepositoryException
   {
 
     QueryContext query = new QueryContext(MARK_FIELD + ":*").sort(new Sort(
         new SortField(MARK_FIELD, SortField.STRING, true)));
 
-    return mark_index.query(query);
+    IndexHits<Node> results = mark_index.query(query);
 
+    ArrayList<ObjectNode> objects = new ArrayList<>();
+
+    int i = 0;
+
+    for (Node node : results)
+      {
+        if (n == null || i < n)
+          objects.add(new ObjectNode(node));
+        else
+          break;
+
+        ++i;
+      }
+    return objects;
   }
 
   /**
