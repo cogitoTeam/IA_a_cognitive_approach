@@ -16,7 +16,7 @@ import java.util.Stack;
 public class ReversiRules extends Rules
 {
     /* CONSTANTS */
-    private static final Size BOARD_SIZE = new Size(4, 4);
+    private static final Size BOARD_SIZE = new Size(3, 3);
     
     /* SINGLETON */
     
@@ -206,6 +206,9 @@ public class ReversiRules extends Rules
     private boolean canFlipLine(Position start, Direction delta, 
             BoardMatrix board, Player player) 
     {
+        boolean check = (delta.row == 0 && delta.col == -1 && start.row == 1 && start.col == 2);
+        
+        
         // local variables
         Position iter = new Position(start.row, start.col);
         Player other = Game.otherPlayer(player);

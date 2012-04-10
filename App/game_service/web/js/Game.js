@@ -80,8 +80,9 @@ function Game()
                 return i_colour;
             
             // don't change current player
-            case "NO_CHANGE":
             case "MOVE_FAILURE":
+                console.log("move failed!")
+            case "NO_CHANGE":
             case "MOVE_SUCCESS":
                 return i_colour;
                 
@@ -179,18 +180,6 @@ function Game()
         // redraw indicators to reflect changed game state
         redraw_ui();
         
-        // no point contuining if nothing has changed
-        if(previous_turn == current_turn)
-            return;
-        
-        // clear the board upon restart
-        if(previous_turn >= n_players)
-        {
-            board.clear();
-            board.redraw();
-            return;
-        }
-        
         // get the game identifier (for future queries)
         id = Number(data[0].getAttribute('id'));
         debug.innerHTML = 'Game id: ' + id;
@@ -215,7 +204,7 @@ function Game()
             board.draw_option(r, c, current_turn);
         }
     }
-
+    
     obj.clickEvent = function(x, y)
     {
         // restart the game if it's a draw or somebody has won
