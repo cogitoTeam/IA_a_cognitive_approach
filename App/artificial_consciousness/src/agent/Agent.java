@@ -14,6 +14,11 @@ public abstract class Agent
 {
     /* NESTING */
     
+    /**
+     * Possible states the Agent might be in: 
+     * <li>NORMAL to signify that all is working as usual.</li>
+     * <li>ERROR if the Agent becomes confused and needs to be shut down.</li>
+     */
     public static enum State
     {
         NORMAL,
