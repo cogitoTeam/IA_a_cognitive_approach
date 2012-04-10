@@ -16,7 +16,7 @@ import java.util.Stack;
 public class ReversiRules extends Rules
 {
     /* CONSTANTS */
-    private static final Size BOARD_SIZE = new Size(6, 6);
+    private static final Size BOARD_SIZE = new Size(4, 4);
     
     /* SINGLETON */
     

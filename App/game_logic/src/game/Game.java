@@ -14,12 +14,27 @@ public class Game
 {
     /* NESTING */
     
+    /**
+     * The two players playing the Game: black and white. 
+     */
     public static enum Player
     {
         WHITE,
         BLACK
     }
     
+    /**
+     * The various state the Game might be in, based on the most recent event
+     * that has occurred:
+     * <li>WAITING_FOR_PLAYER if the first player has just joined.</li>
+     * <li>PLAYER_JOINED if the second player has just joined.</li>
+     * <li>MOVE_SUCCESS if the most recent move order was successful.</li>
+     * <li>MOVE_FAILURE if the most recent move order was illegal.</li>
+     * <li>NO_CHANGE if the last access to the structure wasn't a move order.</li>
+     * <li>VICTORY if the current player has just won the game.</li>
+     * <li>DEFEAT if the current player has just won the game.</li>
+     * <li>DRAW if the current player just drew the game.</li>
+     */
     public static enum State
     {
         WAITING_FOR_PLAYER,
