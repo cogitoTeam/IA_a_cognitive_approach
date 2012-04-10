@@ -196,7 +196,7 @@ function Game()
         board.redraw();
         
         // also draw legal moves
-        if(Game.DRAW_LEGAL_MOVES)
+        if(options_checkbox.checked)
         {
             turn_options = [];
             var nl_options = data[0].childNodes[1].childNodes;
