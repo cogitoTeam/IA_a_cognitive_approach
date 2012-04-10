@@ -18,6 +18,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+Game.DRAW_LEGAL_MOVES = false;
+
 Game.WHITE = 0;
 Game.BLACK = 1;
 Game.VICTORY_WHITE = 2;
@@ -173,7 +175,6 @@ function Game()
     {
         
         /* Parse new game state */
-        var previous_turn = current_turn; 
         current_turn = xml_parse_state(data[0].getAttribute('state'),
                                 data[0].childNodes[1].getAttribute('colour'));
                          
@@ -195,13 +196,16 @@ function Game()
         board.redraw();
         
         // also draw legal moves
-        turn_options = [];
-        var nl_options = data[0].childNodes[1].childNodes;
-        for(i = 0; i < nl_options.length; i++)
+        if(Game.DRAW_LEGAL_MOVES)
         {
-            var r = nl_options[i].getAttribute('row');
-            var c = nl_options[i].getAttribute('col');
-            board.draw_option(r, c, current_turn);
+            turn_options = [];
+            var nl_options = data[0].childNodes[1].childNodes;
+            for(i = 0; i < nl_options.length; i++)
+            {
+                var r = nl_options[i].getAttribute('row');
+                var c = nl_options[i].getAttribute('col');
+                board.draw_option(r, c, current_turn);
+            }
         }
     }
     
