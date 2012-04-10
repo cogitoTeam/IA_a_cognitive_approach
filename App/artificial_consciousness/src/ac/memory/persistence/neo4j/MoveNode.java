@@ -115,7 +115,6 @@ public class MoveNode extends AbstractEpisodicNode<MoveNode>
       }
     else
       {
-        logger.warn("Move " + getDate() + " has no " + s_debug + " move");
         return null;
       }
   }

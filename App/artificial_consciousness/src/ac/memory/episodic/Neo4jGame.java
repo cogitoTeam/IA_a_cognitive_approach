@@ -38,7 +38,7 @@ public class Neo4jGame implements Game
   {
     this.game = game;
     this.obj_repo = new ObjectNodeRepository(Neo4jService.getInstance(),
-        Neo4jService.getObjIndex());
+        Neo4jService.getObjIndex(), Neo4jService.getObjMarkIndex());
   }
 
   /* (non-Javadoc)

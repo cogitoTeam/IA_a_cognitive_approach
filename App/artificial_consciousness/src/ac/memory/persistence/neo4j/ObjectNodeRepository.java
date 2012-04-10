@@ -3,18 +3,24 @@ package ac.memory.persistence.neo4j;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import ac.memory.persistence.neo4j.RelTypes;
 import ac.shared.CompleteBoardState;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
+import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.helpers.collection.IterableWrapper;
+import org.neo4j.index.lucene.QueryContext;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -79,6 +85,8 @@ public class ObjectNodeRepository extends
 
         newNode.setProperty("object", bytes);
         newNode.setProperty(MARK_FIELD, (double) 0.5);
+        logger.debug("Indexing new mark");
+        Neo4jService.getObjMarkIndex().add(newNode, MARK_FIELD, (double) 0.5);
 
         if (logger.isDebugEnabled())
           logger.debug("Creating relationship to the root node");
@@ -144,6 +152,38 @@ public class ObjectNodeRepository extends
     if (logger.isDebugEnabled())
       logger.debug("Object found");
     return new ObjectNode(object);
+  }
+
+  @Override
+  public List<ObjectNode> getBestValued() throws NodeRepositoryException
+  {
+    return getBestValued(null);
+  }
+
+  @Override
+  public List<ObjectNode> getBestValued(Integer n)
+      throws NodeRepositoryException
+  {
+
+    QueryContext query = new QueryContext(MARK_FIELD + ":*").sort(new Sort(
+        new SortField(MARK_FIELD, SortField.STRING, true)));
+
+    IndexHits<Node> results = mark_index.query(query);
+
+    ArrayList<ObjectNode> objects = new ArrayList<>();
+
+    int i = 0;
+
+    for (Node node : results)
+      {
+        if (n == null || i < n)
+          objects.add(new ObjectNode(node));
+        else
+          break;
+
+        ++i;
+      }
+    return objects;
   }
 
   /**

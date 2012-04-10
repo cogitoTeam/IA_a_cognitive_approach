@@ -21,13 +21,17 @@ public class Neo4jService
       + "/neo4j/";
   private static GraphDatabaseService database;
   private static Index<Node> attr_index;
+  private static Index<Node> attr_mark_index;
   private static Index<Node> obj_index;
+  private static Index<Node> obj_mark_index;
 
   static
     {
       database = null;
       attr_index = null;
       obj_index = null;
+      attr_mark_index = null;
+      obj_mark_index = null;
     }
 
   /**
@@ -37,7 +41,8 @@ public class Neo4jService
   {
     if (database == null)
       {
-        if (logger.isDebugEnabled()) logger.debug("First call for Neo4jService, database initialization");
+        if (logger.isDebugEnabled())
+          logger.debug("First call for Neo4jService, database initialization");
         database = new EmbeddedGraphDatabase(DB_PATH);
         registerShutdownHook(database);
       }
@@ -67,6 +72,28 @@ public class Neo4jService
     return attr_index;
   }
 
+  /**
+   * @return the unique instance of attr mark index
+   */
+  public static Index<Node> getAttrMarkIndex()
+  {
+    if (attr_mark_index == null)
+      attr_mark_index = database.index().forNodes("mark_attr");
+
+    return attr_mark_index;
+  }
+
+  /**
+   * @return the unique instance of obj mark index
+   */
+  public static Index<Node> getObjMarkIndex()
+  {
+    if (obj_mark_index == null)
+      obj_mark_index = database.index().forNodes("mark_obj");
+
+    return obj_mark_index;
+  }
+
   private static void registerShutdownHook(final GraphDatabaseService graphDb)
   {
     // Registers a shutdown hook for the Neo4j instance so that it
@@ -77,9 +104,11 @@ public class Neo4jService
       @Override
       public void run()
       {
-        if (logger.isDebugEnabled()) logger.debug("Thread down : shutdown the database");
+        if (logger.isDebugEnabled())
+          logger.debug("Thread down : shutdown the database");
         graphDb.shutdown();
-        if (logger.isDebugEnabled()) logger.debug("Thread down : OK !");
+        if (logger.isDebugEnabled())
+          logger.debug("Thread down : OK !");
       }
     });
   }

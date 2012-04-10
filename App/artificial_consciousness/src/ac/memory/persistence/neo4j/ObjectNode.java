@@ -14,6 +14,7 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.graphdb.traversal.Traverser;
 import org.neo4j.helpers.collection.IterableWrapper;
+import org.neo4j.index.lucene.ValueContext;
 import org.neo4j.kernel.Traversal;
 import org.neo4j.kernel.Uniqueness;
 
@@ -35,7 +36,7 @@ public class ObjectNode extends
   /**
    * @param attributeNode
    */
-  ObjectNode(Node objectNode)
+  public ObjectNode(Node objectNode)
   {
     super(objectNode, ID_FIELD);
     if (logger.isDebugEnabled())
@@ -174,6 +175,12 @@ public class ObjectNode extends
             System.out.println("Won : " + (double) won + ", total: "
                 + (double) total + ", mark: " + mark);
             underlyingNode.setProperty(MARK_FIELD, mark);
+
+            logger.debug("Indexing new mark");
+            Neo4jService.getObjMarkIndex().remove(underlyingNode);
+            Neo4jService.getObjMarkIndex()
+                .add(underlyingNode, MARK_FIELD, mark);
+
             tx.success();
           }
         catch (Exception e)
