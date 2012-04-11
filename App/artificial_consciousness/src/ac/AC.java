@@ -3,7 +3,7 @@ package ac;
 import ac.analysis.Analysis;
 import agent.Action;
 import agent.Percept;
-import ac.memory.ActiveMemory;
+import ac.memory.Neo4jActiveMemory;
 import ac.memory.episodic.Neo4jEpisodicMemory;
 import ac.memory.semantic.Neo4jSemanticMemory;
 import ac.reasoning.Reasoning;
@@ -24,7 +24,7 @@ public class AC extends Agent
    * ************************************************************************ */
 
   private Analysis _analysis;
-  private ActiveMemory _memory;
+  private Neo4jActiveMemory _memory;
   private Reasoning _reasoning;
 
   /* **************************************************************************
@@ -36,7 +36,7 @@ public class AC extends Agent
    */
   public AC()
   {
-    this._memory = new ActiveMemory(new Neo4jEpisodicMemory(),
+    this._memory = new Neo4jActiveMemory(new Neo4jEpisodicMemory(),
         new Neo4jSemanticMemory());
     this._reasoning = new Reasoning(this._memory);
     this._analysis = new Analysis(this._memory, this._reasoning);
@@ -74,7 +74,7 @@ public class AC extends Agent
   /**
    * @return the memory module
    */
-  public ActiveMemory getMemory()
+  public Neo4jActiveMemory getMemory()
   {
     return _memory;
   }

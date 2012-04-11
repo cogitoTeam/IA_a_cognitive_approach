@@ -2,7 +2,7 @@ package ac.reasoning;
 
 import org.apache.log4j.Logger;
 
-import ac.memory.ActiveMemory;
+import ac.memory.Neo4jActiveMemory;
 import agent.Action;
 
 /**
@@ -21,7 +21,7 @@ public class Reasoning
    * ATTRIBUTES
    * ************************************************************************ */
 
-  private ActiveMemory _memory;
+  private Neo4jActiveMemory _memory;
 
   private ChoiceEngine _choice_engine;
   private IntrospectionEngine _introspection_engine;
@@ -34,7 +34,7 @@ public class Reasoning
    * @param memory
    *          an instance of ActiveMemory
    */
-  public Reasoning(ActiveMemory memory)
+  public Reasoning(Neo4jActiveMemory memory)
   {
     this._memory = memory;
     this._choice_engine = new ChoiceEngine(this._memory);
