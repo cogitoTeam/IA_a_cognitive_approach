@@ -81,7 +81,7 @@ class IntrospectionEngine extends Thread
   {
     // @todo get last won game
     int nb_game = 10;
-    List<Game> list_games = this._memory.getWonGames(nb_game);
+    List<Game> list_games = this._memory.getLastWonGames(nb_game);
     Move m1, m2;
 
     for (int i = 0; i < list_games.size(); i++)

@@ -62,10 +62,9 @@ abstract public class AbstractLatticeContextNodeRepository<ObjectType, NodeType>
    * 
    * @param id
    *          the ID
-   * @return the attribute
-   * @throws NodeRepositoryException
+   * @return the attribute, null if not exists
    */
-  public abstract NodeType getNodeById(long id) throws NodeRepositoryException;
+  public abstract NodeType getNodeById(long id);
 
   /**
    * Remove an attribute
@@ -81,8 +80,7 @@ abstract public class AbstractLatticeContextNodeRepository<ObjectType, NodeType>
    * @return list all object sorted by mark
    * @throws NodeRepositoryException
    */
-  public abstract List<NodeType> getBestValued()
-      throws NodeRepositoryException;
+  public abstract List<NodeType> getBestValued() throws NodeRepositoryException;
 
   /**
    * @param n

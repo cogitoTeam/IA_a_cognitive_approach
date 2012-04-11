@@ -84,7 +84,7 @@ public interface Memory
    * @throws MemoryException
    *           When no game started
    */
-  void EndOfGame(GameStatus status, float score) throws MemoryException;
+  void EndOfGame(GameStatus status, int score) throws MemoryException;
 
   /* INTROSPECTION */
 
@@ -95,7 +95,7 @@ public interface Memory
    *          number of games
    * @return the list of won games
    */
-  List<Game> getWonGames(int n);
+  List<Game> getLastWonGames(int n);
 
   /**
    * USED BY REASONING (INTROSPECTION) Give n last lost games
@@ -104,16 +104,31 @@ public interface Memory
    *          number of games
    * @return the list of won games
    */
-  List<Game> getLostGames(int n);
+  List<Game> getLastLostGames(int n);
 
   /**
-   * USED BY REASONING (INTROSPECTION) Give n most active board state
+   * USED BY REASONING (INTROSPECTION) Give n most active relevant partial board
+   * state
    * 
    * @param n
-   *          number of board states returned
-   * @return the list of board states
+   *          number of rpbs returned
+   * @return the list of rpbs
+   * @throws MemoryException
    */
-  List<CompleteBoardState> getMostActiveBoardStates(int n);
+  List<Pair<RelevantPartialBoardState, Double>> getMostActiveRPBS(int n)
+      throws MemoryException;
+
+  /**
+   * USED BY REASONING (INTROSPECTION) Give n most active complete board
+   * state
+   * 
+   * @param n
+   *          number of cbs returned
+   * @return the list of cbs
+   * @throws MemoryException
+   */
+  List<Pair<CompleteBoardState, Double>> getMostActiveCBS(int n)
+      throws MemoryException;
 
   /**
    * USED BY REASONING (INTROSPECTION) Add new RelevantStructure in the memory
@@ -122,15 +137,19 @@ public interface Memory
    * @param rpbs
    *          the rpbs
    * @return the id generated
+   * @throws MemoryException
    */
-  long putRelevantStructure(RelevantPartialBoardState rpbs);
+  long putRelevantStructure(RelevantPartialBoardState rpbs)
+      throws MemoryException;
 
   /**
    * Add new relationship between a cbs and a rpbs
    * 
    * @param cbs
    * @param rpbs
+   * @throws MemoryException
    */
-  void addAssociation(CompleteBoardState cbs, RelevantPartialBoardState rpbs);
+  void addAssociation(CompleteBoardState cbs, RelevantPartialBoardState rpbs)
+      throws MemoryException;
 
 }

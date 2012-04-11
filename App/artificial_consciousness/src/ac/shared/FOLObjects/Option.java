@@ -48,12 +48,14 @@ public class Option
   // ***************************************************************************
 
   /**
-   * @param partial_states
-   *          the partial_states to set
+   * Add a relevant partial board state to this option
+   * 
+   * @param partial_state
+   *          the relevant partial board state to add
    */
-  public void setPartialStates(List<RelevantPartialBoardState> partial_states)
+  public void addPartialStates(RelevantPartialBoardState partial_state)
   {
-    this._partial_states = partial_states;
+    this._partial_states.add(partial_state);
   }
 
   // ***************************************************************************
@@ -77,14 +79,11 @@ public class Option
   }
 
   /**
-   * Add a relevant partial board state to this option
-   * 
-   * @param partial_state
-   *          the relevant partial board state to add
+   * @return the list of RPBS checking with the CBS
    */
-  public void addPartialStates(RelevantPartialBoardState partial_state)
+  public List<RelevantPartialBoardState> getPartialStates()
   {
-    this._partial_states.add(partial_state);
+    return _partial_states;
   }
 
   // ***************************************************************************
@@ -107,6 +106,15 @@ public class Option
   public void setResult(CompleteBoardState result)
   {
     this._result = result;
+  }
+
+  /**
+   * @param partial_states
+   *          the partial_states to set
+   */
+  public void setPartialStates(List<RelevantPartialBoardState> partial_states)
+  {
+    this._partial_states = partial_states;
   }
 
 }

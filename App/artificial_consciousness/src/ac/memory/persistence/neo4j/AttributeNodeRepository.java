@@ -6,6 +6,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import ac.memory.persistence.neo4j.RelTypes;
 import ac.shared.RelevantPartialBoardState;
@@ -48,6 +49,19 @@ public class AttributeNodeRepository
     super(graphDb, id_index, mark_index, ID_FIELD);
     if (logger.isDebugEnabled())
       logger.debug("Building new AttributeNodeRepository");
+  }
+
+  /**
+   * @return a free id
+   */
+  public long getFreeId()
+  {
+    Random r = new Random();
+    long id = r.nextLong();
+    while (getNodeById(id) != null)
+      id = r.nextLong();
+    return id;
+
   }
 
   /**
@@ -155,7 +169,7 @@ public class AttributeNodeRepository
    * @throws NodeRepositoryException
    */
   @Override
-  public AttributeNode getNodeById(long id) throws NodeRepositoryException
+  public AttributeNode getNodeById(long id)
   {
     if (logger.isDebugEnabled())
       logger.debug("Getting an attribute by ID " + id);
@@ -163,7 +177,7 @@ public class AttributeNodeRepository
     if (attribute == null)
       {
         logger.warn("Attribute not found");
-        throw new NodeRepositoryException("[" + id + "] not found");
+        return null;
       }
     if (logger.isDebugEnabled())
       logger.debug("Attribute found");

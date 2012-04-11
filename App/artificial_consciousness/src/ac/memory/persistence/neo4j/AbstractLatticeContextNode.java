@@ -111,7 +111,6 @@ abstract public class AbstractLatticeContextNode<ObjectType, RelatedObjectType, 
    * @param object
    *          the object to associate
    */
-  @SuppressWarnings("unchecked")
   public abstract void addRelatedObject(RelatedObjectType object);
 
   /**

@@ -136,10 +136,9 @@ public class ObjectNodeRepository extends
    * @param id
    *          the ID
    * @return the objectNode
-   * @throws NodeException
    */
   @Override
-  public ObjectNode getNodeById(long id) throws NodeRepositoryException
+  public ObjectNode getNodeById(long id)
   {
     if (logger.isDebugEnabled())
       logger.debug("Getting an object by ID " + id);
@@ -147,7 +146,7 @@ public class ObjectNodeRepository extends
     if (object == null)
       {
         logger.warn("Object not found");
-        throw new NodeRepositoryException("[" + id + "] not found");
+        return null;
       }
     if (logger.isDebugEnabled())
       logger.debug("Object found");

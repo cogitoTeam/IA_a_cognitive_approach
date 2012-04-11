@@ -7,7 +7,6 @@ import ac.memory.persistence.neo4j.AttributeNode;
 import ac.memory.persistence.neo4j.AttributeNodeRepository;
 import ac.memory.persistence.neo4j.Neo4jService;
 import ac.memory.persistence.neo4j.NodeException;
-import ac.memory.persistence.neo4j.NodeRepositoryException;
 import ac.memory.persistence.neo4j.ObjectNode;
 import ac.memory.persistence.neo4j.ObjectNodeRepository;
 import ac.memory.semantic.lattice.LatticeContext;
@@ -58,10 +57,13 @@ public class Neo4jSemanticMemory implements SemanticMemory
     try
       {
         ObjectNode obj = obj_repo.getNodeById(cbs.getId());
-        return obj.getMark();
+        if (obj != null)
+          return obj.getMark();
+        else
+          return (double) 0.5;
 
       }
-    catch (NodeRepositoryException | NodeException e)
+    catch (NodeException e)
       {
         return (double) 0.5;
       }
@@ -77,10 +79,13 @@ public class Neo4jSemanticMemory implements SemanticMemory
     try
       {
         AttributeNode attr = attr_repo.getNodeById(cbs.getId());
-        return attr.getMark();
+        if (attr != null)
+          return attr.getMark();
+        else
+          return (double) 0.5;
 
       }
-    catch (NodeRepositoryException | NodeException e)
+    catch (NodeException e)
       {
         return (double) 0.5;
       }
