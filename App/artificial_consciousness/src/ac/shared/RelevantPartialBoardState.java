@@ -2,8 +2,6 @@ package ac.shared;
 
 import java.io.Serializable;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 import ac.analysis.structure.Rule;
 
 /**
@@ -55,6 +53,17 @@ public class RelevantPartialBoardState implements Serializable
     this.init(0, rule);
   }
 
+  /**
+   * DON'T SUPRESS THIS METHOD. THX
+   * 
+   * @param id
+   */
+  public RelevantPartialBoardState(long id)
+  {
+    this._id = id;
+    this._rule = null;
+  }
+
   private void init(long id, String rule)
   {
     this._id = id;
@@ -68,22 +77,22 @@ public class RelevantPartialBoardState implements Serializable
   @Override
   public boolean equals(Object o)
   {
-    if(o instanceof RelevantPartialBoardState) 
+    if (o instanceof RelevantPartialBoardState)
       {
-        RelevantPartialBoardState rpbs = (RelevantPartialBoardState)o;
-        
-        if(this._id != 0 && rpbs._id != 0)
+        RelevantPartialBoardState rpbs = (RelevantPartialBoardState) o;
+
+        if (this._id != 0 && rpbs._id != 0)
           return (this._id == rpbs._id);
         else
           {
-            //@todo test avec une comparaison logique
+            // @todo test avec une comparaison logique
             return false;
           }
       }
     else
       return false;
   }
-  
+
   // ***************************************************************************
   // GETTERS
   // ***************************************************************************

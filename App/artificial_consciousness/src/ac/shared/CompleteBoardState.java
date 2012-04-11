@@ -3,7 +3,6 @@
  */
 package ac.shared;
 
-
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 28 mars 2012
