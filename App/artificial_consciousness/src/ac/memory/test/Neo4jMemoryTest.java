@@ -38,22 +38,56 @@ public class Neo4jMemoryTest
    */
   public static void main(String[] args)
   {
-    boolean add = false;
+    boolean add = true;
+    boolean init = false;
 
     if (add)
       {
         System.out
             .println("/////////////////// Testing Memory ///////////////////////");
         System.out.println("Init memory");
-        init();
+        if (init)
+          init();
 
-        System.out.println("Playing a Game");
         playGame(GameStatus.DEFEAT, 10);
-        System.out.println("Playing a Game");
         playGame(GameStatus.DEFEAT, 20);
-        System.out.println("Playing a Game");
         playGame(GameStatus.VICTORY, 10);
-        System.out.println("Playing a Game");
+        playGame(GameStatus.DRAW, 0);
+        playGame(GameStatus.DEFEAT, 10);
+        playGame(GameStatus.DEFEAT, 20);
+        playGame(GameStatus.VICTORY, 10);
+        playGame(GameStatus.DRAW, 0);
+        playGame(GameStatus.DEFEAT, 10);
+        playGame(GameStatus.DEFEAT, 20);
+        playGame(GameStatus.VICTORY, 10);
+        playGame(GameStatus.DRAW, 0);
+        playGame(GameStatus.DEFEAT, 10);
+        playGame(GameStatus.DEFEAT, 20);
+        playGame(GameStatus.VICTORY, 10);
+        playGame(GameStatus.DRAW, 0);
+        playGame(GameStatus.DEFEAT, 10);
+        playGame(GameStatus.DEFEAT, 20);
+        playGame(GameStatus.VICTORY, 10);
+        playGame(GameStatus.DRAW, 0);
+        playGame(GameStatus.DEFEAT, 10);
+        playGame(GameStatus.DEFEAT, 20);
+        playGame(GameStatus.VICTORY, 10);
+        playGame(GameStatus.DRAW, 0);
+        playGame(GameStatus.DEFEAT, 10);
+        playGame(GameStatus.DEFEAT, 20);
+        playGame(GameStatus.VICTORY, 10);
+        playGame(GameStatus.DRAW, 0);
+        playGame(GameStatus.DEFEAT, 10);
+        playGame(GameStatus.DEFEAT, 20);
+        playGame(GameStatus.VICTORY, 10);
+        playGame(GameStatus.DRAW, 0);
+        playGame(GameStatus.DEFEAT, 10);
+        playGame(GameStatus.DEFEAT, 20);
+        playGame(GameStatus.VICTORY, 10);
+        playGame(GameStatus.DRAW, 0);
+        playGame(GameStatus.DEFEAT, 10);
+        playGame(GameStatus.DEFEAT, 20);
+        playGame(GameStatus.VICTORY, 10);
         playGame(GameStatus.DRAW, 0);
 
         System.out.println("PRINTING MEMORY");
@@ -100,17 +134,19 @@ public class Neo4jMemoryTest
 
   private static void playGame(GameStatus status, int score)
   {
+    System.out.println("==> PLAYING NEW GAME");
     int nb_moves = (int) Math.round((Math.random() * (double) 10) + 20);
-    System.out.println("Playing new game with " + nb_moves + " moves");
+    System.out.println(" 1   Playing new game with " + nb_moves + " moves");
 
     boolean first = true;
 
     // Chaque move
     for (int i = 0; i < nb_moves; ++i)
       {
+        System.out.println("  >> New Move");
 
         // ANALYSIS PUT LES OPTIONS
-        System.out.println("Analysis putting options");
+        System.out.println("     Analysis putting options");
         try
           {
             List<RelevantPartialBoardState> list = memory
@@ -132,7 +168,7 @@ public class Neo4jMemoryTest
           }
 
         // REASONING BEGIN NEW GAME
-        System.out.println("Reasoning begin new game");
+        System.out.println("      Reasoning begin new game");
         if (first)
           try
             {
@@ -144,7 +180,7 @@ public class Neo4jMemoryTest
             }
 
         // REASONING MAKE A CHOICE
-        System.out.println("Reasoning make a choice");
+        System.out.println("      Reasoning make a choice");
         try
           {
             List<Pair<Option, Double>> list = memory.getGradedOptions();
@@ -157,10 +193,11 @@ public class Neo4jMemoryTest
             System.err.println("Error: " + e.getMessage());
           }
         first = false;
+        System.out.println("");
       }
 
     // REASONING END OF GAME
-    System.out.println("Reasoning finishes game");
+    System.out.println("  >> Reasoning finishes game");
     try
       {
         memory.EndOfGame(status, score);

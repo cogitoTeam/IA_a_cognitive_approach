@@ -284,8 +284,6 @@ public class AttributeNodeRepository
 
     IndexHits<Node> results = mark_index.query(query);
 
-    System.out.println(results.size());
-
     ArrayList<AttributeNode> attributes = new ArrayList<>();
 
     int i = 0;
