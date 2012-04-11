@@ -41,7 +41,35 @@ public class TimeRemaining
     System.out.println("Soit          " + heures + " heures");
     System.out.println("Soit          " + minutes + " minutes");
     System.out
-        .println("\n\n Et maintenant pensez à chaque minute qui passe :)");
+        .println("\n\n Et maintenant pensez à chaque minute qui passe :)\n\n");
+    
+    System.out.println("                          oooo$$$$$$$$$$$$oooo");
+    System.out.println("                      oo$$$$$$$$$$$$$$$$$$$$$$$$o");
+    System.out.println("                   oo$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$o         o$   $$ o$");
+    System.out.println("   o $ oo        o$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$o       $$ $$ $$o$");
+    System.out.println("oo $ $ \"$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$");
+    System.out.println("\"$$$$$$o$     o$$$$$$$$$      $$$$$$$$$$$      $$$$$$$$$$o    $$$$$$$$");
+    System.out.println("  $$$$$$$    $$$$$$$$$$$      $$$$$$$$$$$      $$$$$$$$$$$$$$$$$$$$$$$");
+    System.out.println("  $$$$$$$$$$$$$$$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$$$$$$  \"\"\"$$$");
+    System.out.println("   \"$$$\"\"\"\"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     \"$$$");
+    System.out.println("    $$$   o$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     \"$$$o");
+    System.out.println("   o$$\"   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$       $$$o");
+    System.out.println("   $$$    $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\" \"$$$$$$ooooo$$$$o");
+    System.out.println("  o$$$oooo$$$$$  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   o$$$$$$$$$$$$$$$$$");
+    System.out.println("  $$$$$$$$\"$$$$   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     $$$$\"\"\"\"\"\"\"\"");
+    System.out.println(" \"\"\"\"       $$$$    \"$$$$$$$$$$$$$$$$$$$$$$$$$$$$\"      o$$$");
+    System.out.println("            \"$$$o     \"\"\"$$$$$$$$$$$$$$$$$$\"$$\"         $$$");
+    System.out.println("              $$$o          \"$$\"\"$$$$$$\"\"\"\"           o$$$");
+    System.out.println("               $$$$o                                o$$$\"");
+    System.out.println("                \"$$$$o      o$$$$$$o\"$$$$o        o$$$$");
+    System.out.println("                  \"$$$$$oo     \"\"$$$$o$$$$$o   o$$$$\"\"");
+    System.out.println("                     \"\"$$$$$oooo  \"$$$o$$$$$$$$$\"\"\"");
+    System.out.println("                        \"\"$$$$$$$oo $$$$$$$$$$");
+    System.out.println("                                \"\"\"\"$$$$$$$$$$$");
+    System.out.println("                                    $$$$$$$$$$$$");
+    System.out.println("                                     $$$$$$$$$$\"");
+    System.out.println("                                      \"$$$\"\"  ");
+    
   }
 
 }
