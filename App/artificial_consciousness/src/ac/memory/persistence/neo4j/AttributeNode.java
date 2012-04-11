@@ -81,8 +81,16 @@ public class AttributeNode
   @Override
   public double getMark() throws NodeException
   {
-    // TODO Auto-generated method stub
-    return (double) 0.5;
+    try
+      {
+        return (double) underlyingNode.getProperty(MARK_FIELD);
+      }
+    catch (Exception e)
+      {
+        logger.error("The attribute node " + getId() + " has no mark field.");
+        throw new NodeException("The attribute node " + getId()
+            + " has no mark field.", e);
+      }
   }
 
   /* (non-Javadoc)
@@ -109,7 +117,7 @@ public class AttributeNode
   public void performMark() throws NodeException
   {
     int nb = 0;
-    int total = 0;
+    double total = 0;
 
     try
       {
@@ -128,7 +136,7 @@ public class AttributeNode
           {
             double mark = 0.5;
             if (nb != 0)
-              mark = (double) total / (double) nb;
+              mark = total / (double) nb;
             underlyingNode.setProperty(MARK_FIELD, mark);
 
             if (logger.isDebugEnabled())
@@ -156,4 +164,54 @@ public class AttributeNode
             e);
       }
   }
+
+  /* (non-Javadoc)
+   * 
+   * @see
+   * ac.memory.persistence.neo4j.AbstractLatticeContextNode#addRelatedObject
+   * (java.lang.Object) */
+  @Override
+  public void addRelatedObject(ObjectNode object)
+  {
+    if (logger.isDebugEnabled())
+      logger.debug("Relate new object to the atribute");
+    if (logger.isDebugEnabled())
+      logger.debug("Opening transaction");
+    Transaction tx = underlyingNode.getGraphDatabase().beginTx();
+    try
+      {
+        if (!this.equals(object))
+          {
+            Relationship related = getRelationshipTo(object);
+            if (related == null)
+              {
+
+                object.getUnderlyingNode().createRelationshipTo(underlyingNode,
+                    RelTypes.RELATED);
+                try
+                  {
+                    performMark();
+                  }
+                catch (NodeException e)
+                  {
+                    logger.error("Error when perfoming mark", e);
+                  }
+
+              }
+            else
+              {
+                logger.warn("Relationship already exists");
+              }
+            tx.success();
+          }
+      }
+    finally
+      {
+        if (logger.isDebugEnabled())
+          logger.debug("Transaction finished");
+        tx.finish();
+      }
+
+  }
+
 }

@@ -172,8 +172,6 @@ public class ObjectNode extends
             double mark = 0.5;
             if (total != 0)
               mark = (double) won / (double) total;
-            System.out.println("Won : " + (double) won + ", total: "
-                + (double) total + ", mark: " + mark);
             underlyingNode.setProperty(MARK_FIELD, mark);
 
             if (logger.isDebugEnabled())
@@ -225,6 +223,55 @@ public class ObjectNode extends
           }
 
       }
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see
+   * ac.memory.persistence.neo4j.AbstractLatticeContextNode#addRelatedObject
+   * (java.lang.Object) */
+  @Override
+  public void addRelatedObject(AttributeNode attribute)
+  {
+    if (logger.isDebugEnabled())
+      logger.debug("Relate new object to the atribute");
+    if (logger.isDebugEnabled())
+      logger.debug("Opening transaction");
+    Transaction tx = underlyingNode.getGraphDatabase().beginTx();
+    try
+      {
+        if (!this.equals(attribute))
+          {
+            Relationship related = getRelationshipTo(attribute);
+            if (related == null)
+              {
+
+                underlyingNode.createRelationshipTo(
+                    attribute.getUnderlyingNode(), RelTypes.RELATED);
+                try
+                  {
+                    attribute.performMark();
+                  }
+                catch (NodeException e)
+                  {
+                    logger.error("Error when perfoming mark", e);
+                  }
+
+              }
+            else
+              {
+                logger.warn("Relationship already exists");
+              }
+            tx.success();
+          }
+      }
+    finally
+      {
+        if (logger.isDebugEnabled())
+          logger.debug("Transaction finished");
+        tx.finish();
+      }
+
   }
 
 }
