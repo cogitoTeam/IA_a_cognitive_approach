@@ -30,7 +30,7 @@ import org.neo4j.index.lucene.QueryContext;
  */
 public class AttributeNodeRepository
     extends
-    AbstractLatticeConceptNodeRepository<RelevantPartialBoardState, AttributeNode>
+    AbstractLatticeContextNodeRepository<RelevantPartialBoardState, AttributeNode>
 {
   private static final Logger logger = Logger
       .getLogger(AttributeNodeRepository.class);

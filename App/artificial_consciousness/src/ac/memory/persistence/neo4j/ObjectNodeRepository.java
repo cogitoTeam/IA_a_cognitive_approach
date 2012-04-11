@@ -28,7 +28,7 @@ import org.neo4j.index.lucene.QueryContext;
  * @version 0.1
  */
 public class ObjectNodeRepository extends
-    AbstractLatticeConceptNodeRepository<CompleteBoardState, ObjectNode>
+    AbstractLatticeContextNodeRepository<CompleteBoardState, ObjectNode>
 {
   private static final Logger logger = Logger
       .getLogger(ObjectNodeRepository.class);

@@ -15,7 +15,7 @@ import org.neo4j.graphdb.index.Index;
  * @param <NodeType>
  *          Type of nodes wrapping class
  */
-abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
+abstract public class AbstractLatticeContextNodeRepository<ObjectType, NodeType>
     extends AbstractNodeRepository<NodeType>
 {
   protected Index<Node> id_index;
@@ -35,7 +35,7 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
    * @param id_field
    *          field identifier
    */
-  public AbstractLatticeConceptNodeRepository(GraphDatabaseService graphDb,
+  public AbstractLatticeContextNodeRepository(GraphDatabaseService graphDb,
       Index<Node> id_index, Index<Node> mark_index, String id_field)
   {
     super(graphDb);
