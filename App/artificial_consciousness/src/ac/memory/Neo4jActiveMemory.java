@@ -64,6 +64,8 @@ public class Neo4jActiveMemory implements Memory
         Neo4jService.getObjIndex(), Neo4jService.getObjMarkIndex());
     this.att_repo = new AttributeNodeRepository(Neo4jService.getInstance(),
         Neo4jService.getAttrIndex(), Neo4jService.getAttrMarkIndex());
+
+    this.option_buffer = new LinkedList<>();
   }
 
   /* (non-Javadoc)
@@ -290,6 +292,16 @@ public class Neo4jActiveMemory implements Memory
         throw new MemoryException(
             "Error occured when trying to add association in memory", e);
       }
+  }
+
+  @Override
+  public String toString()
+  {
+    String ret = "Neo4jMEMORY: \n";
+    ret += episodic.toString();
+    ret += "\n" + semantic.toString();
+
+    return ret;
   }
 
   /**

@@ -90,4 +90,10 @@ public class Neo4jSemanticMemory implements SemanticMemory
         return (double) 0.5;
       }
   }
+
+  @Override
+  public String toString()
+  {
+    return this.context.toString();
+  }
 }
