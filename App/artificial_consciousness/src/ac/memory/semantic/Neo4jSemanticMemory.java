@@ -34,9 +34,9 @@ public class Neo4jSemanticMemory implements SemanticMemory
   {
     this.context = new Neo4jLatticeContext();
     this.obj_repo = new ObjectNodeRepository(Neo4jService.getInstance(),
-        Neo4jService.getObjIndex());
+        Neo4jService.getObjIndex(), Neo4jService.getObjMarkIndex());
     this.attr_repo = new AttributeNodeRepository(Neo4jService.getInstance(),
-        Neo4jService.getAttrIndex());
+        Neo4jService.getAttrIndex(), Neo4jService.getAttrMarkIndex());
   }
 
   /* (non-Javadoc)

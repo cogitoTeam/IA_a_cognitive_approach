@@ -81,7 +81,7 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
    * @return list all object sorted by mark
    * @throws NodeRepositoryException
    */
-  public abstract List<ObjectNode> getBestValued()
+  public abstract List<NodeType> getBestValued()
       throws NodeRepositoryException;
 
   /**
@@ -90,7 +90,7 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
    * @return list n best object sorted by mark
    * @throws NodeRepositoryException
    */
-  public abstract List<ObjectNode> getBestValued(Integer n)
+  public abstract List<NodeType> getBestValued(Integer n)
       throws NodeRepositoryException;
 
   /**

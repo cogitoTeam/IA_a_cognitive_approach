@@ -10,6 +10,7 @@ import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
 import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.traversal.Traverser;
 import org.neo4j.helpers.collection.IterableWrapper;
 
@@ -121,11 +122,36 @@ public class AttributeNode
             nb++;
 
           }
-        underlyingNode.setProperty(MARK_FIELD, (double) total / (double) nb);
+
+        Transaction tx = Neo4jService.getInstance().beginTx();
+        try
+          {
+            double mark = 0.5;
+            if (nb != 0)
+              mark = (double) total / (double) nb;
+            underlyingNode.setProperty(MARK_FIELD, mark);
+
+            if (logger.isDebugEnabled())
+              logger.debug("Indexing new attribute mark");
+            Neo4jService.getAttrMarkIndex().remove(underlyingNode);
+            Neo4jService.getAttrMarkIndex().add(underlyingNode, MARK_FIELD,
+                mark);
+
+            tx.success();
+          }
+        catch (Exception e)
+          {
+            throw e;
+          }
+        finally
+          {
+            tx.finish();
+          }
+
       }
     catch (Exception e)
       {
-        // TODO logger l'erreur
+        logger.warn("Error when trying to perfom the mark calcul", e);
         throw new NodeException("Error when trying to perfom the mark calcul",
             e);
       }

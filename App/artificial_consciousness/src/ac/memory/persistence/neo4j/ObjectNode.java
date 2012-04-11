@@ -14,7 +14,6 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.graphdb.traversal.Traverser;
 import org.neo4j.helpers.collection.IterableWrapper;
-import org.neo4j.index.lucene.ValueContext;
 import org.neo4j.kernel.Traversal;
 import org.neo4j.kernel.Uniqueness;
 
@@ -34,6 +33,7 @@ public class ObjectNode extends
   static final String ID_FIELD = "id_obj";
 
   /**
+   * @param objectNode
    * @param attributeNode
    */
   public ObjectNode(Node objectNode)
@@ -176,10 +176,13 @@ public class ObjectNode extends
                 + (double) total + ", mark: " + mark);
             underlyingNode.setProperty(MARK_FIELD, mark);
 
-            logger.debug("Indexing new mark");
+            if (logger.isDebugEnabled())
+              logger.debug("Indexing new object mark");
             Neo4jService.getObjMarkIndex().remove(underlyingNode);
             Neo4jService.getObjMarkIndex()
                 .add(underlyingNode, MARK_FIELD, mark);
+
+            performDependingAttributeMark();
 
             tx.success();
           }
@@ -197,6 +200,30 @@ public class ObjectNode extends
         logger.warn("Error when trying to perfom the mark calcul", e);
         throw new NodeException("Error when trying to perfom the mark calcul",
             e);
+      }
+  }
+
+  /**
+   * Perform mark for depending attribute
+   */
+  private void performDependingAttributeMark()
+  {
+    for (Iterator<Relationship> iterator = underlyingNode.getRelationships(
+        RelTypes.RELATED, Direction.OUTGOING).iterator(); iterator.hasNext();)
+      {
+        Relationship rel = (Relationship) iterator.next();
+        AttributeNode attr = new AttributeNode(rel.getEndNode());
+
+        try
+          {
+            attr.performMark();
+          }
+        catch (NodeException e)
+          {
+            logger.warn(
+                "Error when performing mark for attribute " + attr.getId(), e);
+          }
+
       }
   }
 
