@@ -1,0 +1,51 @@
+\documentclass[a4paper,french,twoside,10pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{multirow}
+\hypersetup{pdfborder={0 0 0}}
+\pagestyle{fancy}
+\setlength{\parskip}{1.5ex plus .4ex minus .4ex}
+\renewcommand{\labelitemi}{\textbullet}
+
+%\fancyhead[L]{\textsc{Pré-rapport Projet TER}\footnotesize{ : Etude et développement d'un moteur de recherche}}
+%\fancyhead[R]{}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\ #1}}
+
+\fancyhead[R]{\leftmark\ --\ \rightmark}
+\fancyhead[L]{\textsc{Rapport Final}}
+
+%Modification des marges
+%\\oddsidemargin}{-2,5cm}
+%\addtolength{\textwidth}{5cm}
+%\addtolength{\topmargin}{-2,5cm}
+%\addtolength{\textheight}{4cm}
+
+%definition des fonctions de la page de garde
+\input{gardedef}
+
+\begin{document}
+\renewcommand{\labelitemii}{\textasteriskcentered}
+
+\input{garde}
+
+\newpage
+
+\input{merci}
+
+\newpage
+
+\input{intro}
+
+\tableofcontents
+
+\input{presentation}
+coucou :
+\leftmark
+\rightmark
+
+\end{document}
