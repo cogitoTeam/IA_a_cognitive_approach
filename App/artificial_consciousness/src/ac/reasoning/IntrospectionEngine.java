@@ -1,9 +1,14 @@
 package ac.reasoning;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import ac.analysis.inferenceEngine.Homomorphisms;
+import ac.analysis.structure.Atom;
+import ac.analysis.structure.Substitution;
+import ac.analysis.structure.Term;
 import ac.memory.Memory;
 import ac.memory.MemoryException;
 import ac.memory.episodic.EpisodicMemoryException;
@@ -73,7 +78,7 @@ class IntrospectionEngine extends Thread
           }
         catch (MemoryException e)
           {
-            LOGGER.error("An error occured during introspection",e);
+            LOGGER.error("An error occured during introspection", e);
           }
 
         // @todo implement this method and remove next line
@@ -117,6 +122,8 @@ class IntrospectionEngine extends Thread
         cbs1 = m1.getCompleteBoardState();
         cbs2 = m2.getCompleteBoardState();
 
+        // @TODO les cbs sont-ils composés de variables où de constante.
+
         for (RelevantPartialBoardState rs1 : m1.getRelevantPartialBoardStates())
           for (RelevantPartialBoardState rs2 : m2
               .getRelevantPartialBoardStates())
@@ -135,11 +142,82 @@ class IntrospectionEngine extends Thread
       }
   }
 
+  // peut retourner une liste d'extension
   private RelevantPartialBoardState extension(RelevantPartialBoardState rs1,
       CompleteBoardState cbs1, CompleteBoardState cbs2)
   {
-    
-    return null;
+    RelevantPartialBoardState new_rs;
+
+    Homomorphisms homo_cbs;
+    Homomorphisms homo_cbs1 = new Homomorphisms(rs1.getRule().getPremise(),
+        cbs1.getBoardStateFacts().getAtomList());
+    Homomorphisms homo_cbs2 = new Homomorphisms(rs1.getRule().getPremise(),
+        cbs2.getBoardStateFacts().getAtomList());
+
+    ArrayList<Substitution> substitution_list1 = homo_cbs1.getHomomorphisms();
+    ArrayList<Substitution> substitution_list2 = homo_cbs2.getHomomorphisms();
+
+    ArrayList<Term> vars1 = this.getVariables(cbs1.getBoardStateFacts()
+        .getAtomList());
+
+    ArrayList<Term> vars;
+
+    for (Substitution sub1 : substitution_list1)
+      {
+        vars = sub1.getVariables();
+
+        for (Term t : vars1)
+          {
+            vars.add(t);
+            // ajouter tous les prédicats contenant t au RS
+            new_rs = cbs1.getPart(vars);
+
+            // tester si il existe un HOMO de RS dans cbs2 (en gardant sub2
+            // comme
+            // base)
+            for (Substitution sub2 : substitution_list2)
+              {
+                homo_cbs = new Homomorphisms(new_rs.getRule().getPremise(),
+                    cbs2.getBoardStateFacts().getAtomList());
+                
+                if (homo_cbs.backtrackRec(sub2))
+                  break;
+                  
+                //never break
+                vars.remove(t); //@TODO faire du récursif
+              }
+          }
+      }
+
+    return null; // @TODO always return null
+  }
+
+  /**
+   * 
+   * @return an list of Term
+   */
+  private ArrayList<Term> getVariables(ArrayList<Atom> atomList)
+  {
+    ArrayList<Term> variables = new ArrayList<Term>();
+
+    for (Atom a : atomList)
+      {
+        for (Term t : a.getTerms())
+          {
+            boolean contient = false;
+            if (t.isVariable())
+              {
+                for (Term i : variables)
+                  {
+                    if (t.equalsT(i))
+                      contient = true;
+                  }
+                if (!contient)
+                  variables.add(t);
+              }
+          }
+      }
+    return variables;
   }
 
 }

@@ -3,6 +3,10 @@
  */
 package ac.shared;
 
+import java.util.ArrayList;
+
+import ac.analysis.structure.Term;
+
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
  * @date 28 mars 2012
@@ -38,6 +42,12 @@ public class CompleteBoardState extends AbstractBoardState
 
   private void init()
   {
+  }
+
+  public RelevantPartialBoardState getPart(ArrayList<Term> vars)
+  {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }
