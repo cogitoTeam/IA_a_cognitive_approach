@@ -15,6 +15,7 @@ import ac.util.Pair;
 import ac.memory.persistence.neo4j.AttributeNode;
 import ac.memory.persistence.neo4j.AttributeNodeRepository;
 import ac.memory.persistence.neo4j.Neo4jService;
+import ac.memory.persistence.neo4j.NodeException;
 import ac.memory.persistence.neo4j.ObjectNode;
 import ac.memory.persistence.neo4j.ObjectNodeRepository;
 import ac.shared.CompleteBoardState;
@@ -348,12 +349,19 @@ public class Neo4jLatticeContext implements LatticeContext
         for (Iterator<AttributeNode> iterator2 = object.getRelatedObjects()
             .iterator(); iterator2.hasNext();)
           {
-            AttributeNode id_attribute = (AttributeNode) iterator2.next();
-            ret += id_attribute.getId() + ", ";
+            AttributeNode attribute = (AttributeNode) iterator2.next();
+            try
+              {
+                ret += "(" + attribute.getId() + "|" + attribute.getMark()
+                    + ", ";
+              }
+            catch (NodeException e)
+              {
+                System.err.println(e.getLocalizedMessage());
+              }
           }
       }
     ret += "\n]]";
     return ret;
   }
-
 }
