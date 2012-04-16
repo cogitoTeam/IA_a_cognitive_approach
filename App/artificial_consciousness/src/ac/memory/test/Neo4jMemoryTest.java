@@ -38,7 +38,7 @@ public class Neo4jMemoryTest
    */
   public static void main(String[] args)
   {
-    boolean add = true;
+    boolean add = false;
     boolean init = false;
 
     if (add)
@@ -104,7 +104,7 @@ public class Neo4jMemoryTest
         Neo4jService.getInstance(), Neo4jService.getAttrIndex(),
         Neo4jService.getAttrMarkIndex());
 
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 1000; ++i)
       {
         try
           {
@@ -116,7 +116,7 @@ public class Neo4jMemoryTest
           }
       }
 
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 1000; ++i)
       {
         try
           {
@@ -158,6 +158,15 @@ public class Neo4jMemoryTest
                 Option option = new Option(new Action.Move(new Position(0, 0)),
                     new CompleteBoardState(Math.round(Math.random()
                         * (double) 40.0)));
+
+                // Assignenement des homomorphismes
+                for (int k = 0; k < list.size(); ++k)
+                  {
+                    double proba = Math.random();
+                    if (proba < 0.1)
+                      option.addPartialStates(list.get(k));
+                  }
+
                 memory.putOption(option);
               }
 
