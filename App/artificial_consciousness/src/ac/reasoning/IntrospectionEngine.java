@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import ac.memory.Memory;
+import ac.memory.MemoryException;
 import ac.memory.episodic.EpisodicMemoryException;
 import ac.memory.episodic.Game;
 import ac.memory.episodic.Move;
@@ -66,7 +67,14 @@ class IntrospectionEngine extends Thread
          * }
          * * */
 
-        this.searchNewRPBS();
+        try
+          {
+            this.searchNewRPBS();
+          }
+        catch (MemoryException e)
+          {
+            LOGGER.error("An error occured during introspection",e);
+          }
 
         // @todo implement this method and remove next line
         break;
@@ -77,7 +85,7 @@ class IntrospectionEngine extends Thread
    * PRIVATE METHODS
    * ************************************************************************ */
 
-  private void searchNewRPBS()
+  private void searchNewRPBS() throws MemoryException
   {
     // @todo get last won game
     int nb_game = 10;
@@ -99,7 +107,7 @@ class IntrospectionEngine extends Thread
 
   }
 
-  private void searchNewRPBS(Move m1, Move m2)
+  private void searchNewRPBS(Move m1, Move m2) throws MemoryException
   {
     RelevantPartialBoardState new_rpbs;
     CompleteBoardState cbs1, cbs2;
@@ -130,7 +138,7 @@ class IntrospectionEngine extends Thread
   private RelevantPartialBoardState extension(RelevantPartialBoardState rs1,
       CompleteBoardState cbs1, CompleteBoardState cbs2)
   {
-    // TODO Auto-generated method stub
+    
     return null;
   }
 
