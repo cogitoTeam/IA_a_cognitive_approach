@@ -123,7 +123,14 @@ public class Homomorphisms {
 	/**
 	 * M�thode BacktrackRec le sous-algorithme de existeHomomorphisme
 	 */
-	private boolean backtrackRec(Substitution sol)
+	
+	//@TODO Nam, can you correct this sentence
+	/**
+	 * Search if exist an homomorphism with the given partial solution.
+	 * @param sol the partial solution
+	 * @return true if exist an homomorphism, false otherwise.
+	 */
+	public boolean backtrackRec(Substitution sol)
 	{
 		Term x;
 		ArrayList<Term> candidats;
@@ -194,10 +201,12 @@ public class Homomorphisms {
 			return orderedVariables.get(sol.num_Pairs());
 	}
 	
-	/**
-	 * M�thode BacktrackAllRec le sous-algorithme de getHomomorphismes
-	 */
-	private void backtrackAllRec(Substitution sol)
+	//@TODO Nam, can you correct this sentence
+  /**
+   * Search all homomorphism with the given partial solution.
+   * @param sol the partial solution
+   */
+	public void backtrackAllRec(Substitution sol)
 	{
 		Term x;
 		ArrayList<Term> candidats;
