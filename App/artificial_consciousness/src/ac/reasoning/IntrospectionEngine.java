@@ -146,7 +146,8 @@ class IntrospectionEngine extends Thread
   private RelevantPartialBoardState extension(RelevantPartialBoardState rs1,
       CompleteBoardState cbs1, CompleteBoardState cbs2)
   {
-    RelevantPartialBoardState new_rs;
+    boolean haveNewRPBS = false;
+    RelevantPartialBoardState new_rs = null;
 
     Homomorphisms homo_cbs;
     Homomorphisms homo_cbs1 = new Homomorphisms(rs1.getRule().getPremise(),
@@ -157,39 +158,51 @@ class IntrospectionEngine extends Thread
     ArrayList<Substitution> substitution_list1 = homo_cbs1.getHomomorphisms();
     ArrayList<Substitution> substitution_list2 = homo_cbs2.getHomomorphisms();
 
+    ArrayList<Term> vars;
     ArrayList<Term> vars1 = this.getVariables(cbs1.getBoardStateFacts()
         .getAtomList());
 
-    ArrayList<Term> vars;
 
     for (Substitution sub1 : substitution_list1)
       {
+        // variables de cbs1 utilisées par l'homomorphisme partiel (RS connu)
+        // puis suppression de celle-ci des choix possibles.
         vars = sub1.getVariables();
-
+        vars1.removeAll(vars);
+        
+        // parcours des choix de variables possibles
         for (Term t : vars1)
           {
             vars.add(t);
-            // ajouter tous les prédicats contenant t au RS
+            // créer un RS contenant tous les prédicats complétements
+            // instanciés
             new_rs = cbs1.getPart(vars);
 
-            // tester si il existe un HOMO de RS dans cbs2 (en gardant sub2
-            // comme
-            // base)
+            // tester si il existe un homomorphisme de RS dans cbs2 (en gardant
+            // sub2 comme base)
+            boolean haveHomomorphism = false;
             for (Substitution sub2 : substitution_list2)
               {
                 homo_cbs = new Homomorphisms(new_rs.getRule().getPremise(),
                     cbs2.getBoardStateFacts().getAtomList());
                 
                 if (homo_cbs.backtrackRec(sub2))
-                  break;
-                  
-                //never break
-                vars.remove(t); //@TODO faire du récursif
+                  {
+                    haveNewRPBS = true;
+                    haveHomomorphism = true;
+                    break;
+                  }
               }
+            
+            if(!haveHomomorphism)
+              vars.remove(t);
           }
       }
 
-    return null; // @TODO always return null
+    if(!haveNewRPBS)
+      new_rs = null;
+    
+    return new_rs; 
   }
 
   /**

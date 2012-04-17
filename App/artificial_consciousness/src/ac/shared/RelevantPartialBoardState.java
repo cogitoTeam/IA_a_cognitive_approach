@@ -1,8 +1,11 @@
 package ac.shared;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
+import ac.analysis.structure.Atom;
 import ac.analysis.structure.Rule;
+import ac.analysis.structure.Term;
 
 /**
  * Class which represents a Relevant structure (attribute of the lattice)
@@ -26,7 +29,7 @@ public class RelevantPartialBoardState implements Serializable
   private Rule _rule;
 
   // ***************************************************************************
-  // CONSTRUCTOR
+  // CONSTRUCTORS
   // ***************************************************************************
 
   /**
@@ -42,6 +45,23 @@ public class RelevantPartialBoardState implements Serializable
     this.init(id, rule);
   }
 
+  /**
+   * Construit un RPBS à partir d'une liste d'atomes.
+   * @param atoms_list
+   */
+  public RelevantPartialBoardState(ArrayList<Atom> atoms_list)
+  {
+    this._id = 0;
+    ArrayList<Term> terms = new ArrayList<Term>();
+    
+    for(Atom a : atoms_list)
+      for(Term t : a.getTerms())
+        if(!terms.contains(t))
+          terms.add(t);
+    
+    this._rule = new Rule(atoms_list, new Atom(PREFIX_LABEL, terms));
+  }
+  
   /**
    * Constructor with rule in parameter
    * 
