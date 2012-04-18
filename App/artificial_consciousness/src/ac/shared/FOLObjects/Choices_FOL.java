@@ -30,7 +30,7 @@ public class Choices_FOL
 
   public Choices_FOL()
   {
-    this._options = new LinkedList<Option>();
+    this._options = new LinkedList<Option_FOL>();
   }
   
   // ***************************************************************************
