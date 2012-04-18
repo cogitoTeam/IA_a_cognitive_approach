@@ -8,10 +8,8 @@ package test;
 import agent.Action;
 import agent.Percept;
 import agent.Percept.Choices;
-import agent.Percept.Defeat;
-import agent.Percept.Draw;
-import agent.Percept.Victory;
 import game.BoardMatrix.Position;
+import game.Game;
 import java.util.Scanner;
 
 
@@ -70,34 +68,18 @@ public class MTurkAgent extends SwitchAgent
         // send order
         return new Action.Move(p);
     }
-
-    @Override
-    protected Action victoryReaction(Victory percept)
-    {
-        System.out.print("You win!");
-        return gameEndReaction(percept);
-    }
-
-    @Override
-    protected Action defeatReaction(Defeat percept) 
-    {
-        System.out.print("You lose!");
-        return gameEndReaction(percept);
-    }
-
-    @Override
-    protected Action drawReaction(Draw percept)
-    {
-        System.out.print("It's a draw...");
-        return gameEndReaction(percept);
-    }
-
     
-    
-    /* SUBROUTINES */
-    
-    private Action gameEndReaction(Percept.GameEnd percept)
+    @Override
+    protected Action gameEndReaction(Percept.GameEnd percept)
     {
+        // tell the player who won
+        if(percept.getWinner() == getPlayer())
+            System.out.print("You win!");
+        else if(percept.getWinner() == Game.otherPlayer(getPlayer()))
+            System.out.print("You lose!");
+        else
+            System.out.print("It's a draw...");
+        
         // tell the user their score
         System.out.println("Your score: " + percept.getScore());
         // show the final board

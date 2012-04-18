@@ -15,14 +15,12 @@ public class Game
     /* NESTING */
     
     /**
-     * The two players playing the Game, black and white, plus a case for cells
-     * that are not owned.
+     * The two players playing the Game, black and white.
      */
     public static enum Player
     {
         WHITE,
-        BLACK,
-        NEITHER
+        BLACK
     }
     
     /**
@@ -68,9 +66,8 @@ public class Game
                 return Player.BLACK;
             case BLACK:
                 return Player.WHITE;
-            case NEITHER:
             default:
-                return Player.NEITHER;
+                return null;
         }
     }
 
@@ -89,9 +86,6 @@ public class Game
         
         else if(s.equals("BLACK") || s.equals("black"))
             return Player.BLACK;
-        
-        else if(s.equals("NEITHER") || s.equals("neither"))
-            return Player.NEITHER;
         
         else
             return null;

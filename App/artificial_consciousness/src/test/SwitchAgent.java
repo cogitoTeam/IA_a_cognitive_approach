@@ -16,28 +16,21 @@ public abstract class SwitchAgent extends Agent
     /* INTERFACE */
     
     protected abstract Action choicesReaction(Percept.Choices percept);
-    protected abstract Action victoryReaction(Percept.Victory percept);
-    protected abstract Action defeatReaction(Percept.Defeat percept);
-    protected abstract Action drawReaction(Percept.Draw percept);
+    protected abstract Action gameEndReaction(Percept.GameEnd percept);
     
     /* IMPLEMENTATIONS */
     
     @Override
     protected Action perceptReaction(Percept percept)
     {
+        int score;
         switch(percept.getType())
         {
             case CHOICES:
                 return choicesReaction((Percept.Choices)percept);
                 
-            case VICTORY:
-                return victoryReaction((Percept.Victory)percept);
-                
-            case DEFEAT:
-                return defeatReaction((Percept.Defeat)percept);
-                
-            case DRAW:
-                return drawReaction((Percept.Draw)percept);
+            case GAME_END:
+                return gameEndReaction((Percept.GameEnd)percept);
                 
             default:
                 return null;

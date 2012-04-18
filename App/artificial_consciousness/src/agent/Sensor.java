@@ -73,14 +73,15 @@ class Sensor extends XMLClient
         switch(current_state)
         {
             case VICTORY:
-                // 'victory' and 'defeat' percepts
-                return (player == current_player)
-                    ? new Percept.Victory(board.copy(), board_value)
-                    : new Percept.Defeat(board.copy(), board_value);
-                
+                return new Percept.GameEnd(board.copy(), board_value, 
+                        current_player);
+            case DEFEAT:
+                return new Percept.GameEnd(board.copy(), board_value, 
+                        Game.otherPlayer(current_player));
             case DRAW:
-                // 'draw' percept
-                return new Percept.Draw(board.copy(), board_value);
+                return new Percept.GameEnd(board.copy(), board_value, 
+                        null);
+                
                 
             case WAITING_FOR_PLAYER:
                 // 'waiting for player' percept

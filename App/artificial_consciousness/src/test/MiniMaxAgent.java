@@ -7,9 +7,7 @@ package test;
 
 import agent.Action;
 import agent.Percept.Choices;
-import agent.Percept.Defeat;
-import agent.Percept.Draw;
-import agent.Percept.Victory;
+import agent.Percept.GameEnd;
 import game.BoardMatrix;
 import game.Game;
 import game.Game.Player;
@@ -50,21 +48,7 @@ public class MiniMaxAgent extends SwitchAgent
     }
 
     @Override
-    protected Action victoryReaction(Victory percept) 
-    {
-        // restart the game
-        return new Action.Restart();
-    }
-
-    @Override
-    protected Action defeatReaction(Defeat percept) 
-    {
-        // restart the game
-        return new Action.Restart();
-    }
-
-    @Override
-    protected Action drawReaction(Draw percept) 
+    protected Action gameEndReaction(GameEnd percept) 
     {
         // restart the game
         return new Action.Restart();

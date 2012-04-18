@@ -6,6 +6,7 @@
 package agent;
 
 import game.BoardMatrix;
+import game.Game.Player;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,9 +19,7 @@ public abstract class Percept
         WAITING_FOR_PLAYER,
         OPPONENT_TURN,
         CHOICES,
-        VICTORY,
-        DEFEAT,
-        DRAW
+        GAME_END
     }
     
     
@@ -92,53 +91,20 @@ public abstract class Percept
     
     /* THE GAME HAS ENDED */
     
-    public static abstract class GameEnd extends Percept
+    public static class GameEnd extends Percept
     {
         // attributes
         private final int score;
+        private final Player winner;
         // creation
-        protected GameEnd(Type _type, BoardMatrix _current_board, int _score) 
+        protected GameEnd(BoardMatrix _current_board, int _score, Player _winner) 
         { 
-            super(_type, _current_board);
+            super(Type.GAME_END, _current_board);
             score = _score; 
+            winner = _winner;
         }
         // query
         public int getScore() { return score; }
-    }
-    
-    
-    /* THE GAME HAS ENDED, WE WERE DEFEATED */
-    
-    public static class Defeat extends GameEnd 
-    { 
-        // creation
-        public Defeat(BoardMatrix _current_board, int _score) 
-        { 
-            super(Type.DEFEAT, _current_board, _score); 
-        }
-    }
-    
-    
-    /* THE GAME HAS ENDED, WE WERE VICTORIOUS */
-    
-    public static class Victory extends GameEnd
-    { 
-        // creation
-        public Victory(BoardMatrix _current_board, int _score) 
-        { 
-            super(Type.VICTORY, _current_board, _score); 
-        }
-    }
-    
-    
-    /* THE GAME HAS ENDED, IT WAS A DRAW */
-    
-    public static class Draw extends GameEnd
-    { 
-        // creation
-        public Draw(BoardMatrix _current_board, int _score) 
-        { 
-            super(Type.DRAW, _current_board, _score); 
-        }
+        public Player getWinner() { return winner; }
     }
 }

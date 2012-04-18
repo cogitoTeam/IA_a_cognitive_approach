@@ -7,6 +7,7 @@
 package agent;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,7 +58,15 @@ class XMLClient
         try 
         {
             // get the document from url and parse
-            return xml_builder.parse(new URL(s_server_url+"?"+s_query).openStream());
+            Document doc = 
+                xml_builder.parse(new URL(s_server_url+"?"+s_query).openStream());
+            
+            // make sure we were successful in connecting
+            if(doc == null)
+                Logger.getLogger(XMLClient.class.getName()).log(Level.SEVERE,
+                        null, new ConnectException());
+            
+            return doc;
         } 
         catch (SAXException ex) 
         {
