@@ -3,6 +3,8 @@ package ac.analysis.inferenceEngine;
 import java.util.*;
 import java.io.*;
 
+import org.apache.log4j.Logger;
+
 import ac.analysis.structure.*;
 
 
@@ -26,6 +28,9 @@ public class KnowledgeBase {
   {
     BF = bF;
   }
+  
+  private static final Logger LOGGER = Logger.getLogger(KnowledgeBase.class);
+
 
   private FactBase BF;// base de faits
 	private ArrayList<Rule> BR;// base de r�gles
@@ -81,8 +86,7 @@ public class KnowledgeBase {
 		sourceFilename = nomFichier;
 		BufferedReader lectureFichier = new BufferedReader(new FileReader(
 				nomFichier));
-		System.out
-				.println("CHARGEMENT D'UNE BASE DE CONNAISSANCES � partir du fichier : "
+		LOGGER.debug("CHARGEMENT D'UNE BASE DE CONNAISSANCES à partir du fichier : "
 						+ nomFichier);
 
 		// cr�ation de la base de faits (utilise les m�thodes de la classe
@@ -102,9 +106,10 @@ public class KnowledgeBase {
 		for (int i = 0; i < n; i++) {
 			t = lectureFichier.readLine(); // les lignes suivantes du fichier
 											// sont les r�gles
-			BR.add(new Rule(t, "R�gle " + (i + 1)));
+			BR.add(new Rule(t, "Règle " + (i + 1)));
 		}
 		lectureFichier.close();
+		LOGGER.debug("FIN DU CHARGEMENT DE LA BASE DE CONNAISSANCE");
 	}
 
 //Les getters de la classe	
@@ -153,14 +158,15 @@ public class KnowledgeBase {
   public void addNewRule(Rule newRule) {
     BR.add(newRule);
   }
-//La m�thode toString de la classe
+  
+  //La méthode toString de la classe
 	public String toString() {
-		String BRs = "Nombre de r�gles : " + BR.size()
-				+ "\nListe des r�gles : \n";
+		String BRs = "Nombre de règles : " + BR.size()
+				+ "\nListe des règles : \n";
 		for (int i = 0; i < BR.size(); i++) {
 			BRs += "\t" + BR.get(i) + "\n";
 		}
-		return "\n  Base de faits\n" + BF + "\n  Base de r�gles\n" + BRs;
+		return "\n  Base de faits\n" + BF + "\n  Base de règles\n" + BRs;
 	}
 
 	
@@ -175,63 +181,74 @@ public class KnowledgeBase {
 	 */
 	public KnowledgeBase optimizedSaturation_FOL() throws IOException {
 		if (isSaturated)
-			return this; // evite le calcul de saturation au cas o� la base est
-							// d�j� satur�e
+			return this; // evite le calcul de saturation au cas où la base est
+							// déjà saturée
 		
-		// d�claration et initialisation des variables
+		if(LOGGER.isDebugEnabled())
+		  LOGGER.debug("DEBUT SATURATION KB");
+		
+		// déclaration et initialisation des variables
 		KnowledgeBase k = new KnowledgeBase(this);
 		RuleDependencyGraph ruleDependencyGraph = new RuleDependencyGraph(k); 
 		ruleDependencyGraph.calculeGDR(); //calcule le graphe de d�pendances des r�gles 
 		  				  //(et des faits)
 		
-		//algorithme de saturation avec affichage des �l�ments qui illustrent
-		//l'exploitation du graphe de d�pendances des r�gles (et des faits)
-		System.out.println(ruleDependencyGraph); 
-		System.out.println("--> D�but de l'algorithme de cha�nage avant");
-		for (int i = 0; i < BF.getAtomList().size(); i++) {
-			System.out.print("\n  Fait consid�r� : "
-					+ BF.getAtomList().get(i));
-			//appel � la fonction r�cursive qui calcule des nouveaux faits  
-			//en appliquant les successeurs des faits (puis r�gles) consid�r�s
-			computeNewFactsRec(ruleDependencyGraph.getGraphe().get(i), k.BF); 
-													 
-														
+		//algorithme de saturation avec affichage des éléments qui illustrent
+		//l'exploitation du graphe de dépendances des règles (et des faits)
+	  if(LOGGER.isDebugEnabled())
+	    {
+	      LOGGER.debug(ruleDependencyGraph.toString()); 
+	      LOGGER.debug("--> Début de l'algorithme de chaînage avant");
+	    }
+
+	  for (int i = 0; i < BF.getAtomList().size(); i++) {
+			//appel à la fonction récursive qui calcule des nouveaux faits  
+			//en appliquant les successeurs des faits (puis règles) considérés
+			computeNewFactsRec(ruleDependencyGraph.getGraphe().get(i), k.BF); 													 
 		}
-		System.out.println("\n--> Fin de l'algorithme de cha�nage avant");
-		k.isSaturated = true; //indique que la base est satur�e
+		
+	  k.isSaturated = true; //indique que la base est saturée
+		
+		if(LOGGER.isDebugEnabled())
+      LOGGER.debug("FIN SATURATION KB");
+		
 		return k;
 	}
 
 	/**
-	 * M�thode r�cursive qui calcule les nouveaux faits g�n�r�s par des successeurs
-	 * (de faits ou de r�gles selon le cas) pass�s en param�tre 
-	 * @param successeurs La liste de successeurs � consid�rer
-	 * @param faits La base de faits courante (les nouveux faits y seront ajout�s)
+	 * Méthode récursive qui calcule les nouveaux faits générés par des successeurs
+	 * (de faits ou de règles selon le cas) passés en paramètre 
+	 * @param successeurs La liste de successeurs à considérer
+	 * @param faits La base de faits courante (les nouveux faits y seront ajoutés)
 	 */
 	private void computeNewFactsRec(ArrayList<Rule> successeurs, FactBase faits) {
 		ArrayList<Rule> successeursNew;
 		// Debut de l'algorithme qui exploite le graphe de
-		// d�pendance des r�gles
+		// dépendance des régles
 		for (Rule r : successeurs) {
-			//Affiche l'ordre dans lequel les r�gles sont consid�r�e
-			System.out.print("\n\tR�gle consid�r�e : " + r);
-			Homomorphisms s = new Homomorphisms(r.getPremise(), faits);
+			//Affiche l'ordre dans lequel les règles sont considérée
+		  if(LOGGER.isDebugEnabled())
+	      LOGGER.debug("\n\tRègle considérée : " + r);
+
+	    Homomorphisms s = new Homomorphisms(r.getPremise(), faits);
 			if (s.existsHomomorphismTest())
 				for (Substitution hom : s.getHomomorphisms()) {
 					Atom temp = r.getConclusion().applySubtitution(hom);
 					if (!faits.atomExistsTest(temp)) {
 						faits.addNewFact(temp);
-						System.out.print("\n\tNouveau fait ajout� : " + temp
-								+ "\n  �tape suivante : successeurs de "
+						 
+						if(LOGGER.isDebugEnabled())
+				        LOGGER.debug("\n\tNouveau fait ajouté : " + temp
+								+ "\n  étape suivante : successeurs de "
 								+ r.getName());
+						
 						successeursNew = new ArrayList<Rule>(
 								computeSuccessors(r));
-						//appel r�cursive qui parcourt le graphe en profondeur
+						//appel récursive qui parcourt le graphe en profondeur
 						computeNewFactsRec(successeursNew, faits); 
 					}
 				}
 		}
-		System.out.print("\n  Retour � l'�tape pr�c�dente");
 	}
 
 	/**

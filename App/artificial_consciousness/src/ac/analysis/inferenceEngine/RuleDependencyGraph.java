@@ -110,7 +110,7 @@ public class RuleDependencyGraph
 	public String toString()
 	{
 		String s = new String();
-		s+="GRAPHE DE D�PENDENCE DES FAITS ET DES R�GLES :\n";
+		s+="GRAPHE DE DÉPENDENCE DES FAITS ET DES RÈGLES :\n";
 		
 		Iterator<Atom> faitsIter = kb.getFB().getAtomList().iterator();
 		Iterator<Rule> reglesIter = kb.getRB().iterator();
