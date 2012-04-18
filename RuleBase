@@ -1,12 +1,5 @@
 
-11
-isWhite(x)
-isBlack(x)
-isEmpty(x)
-isEdge(x)
-isCorner(x)
-near(x,y)
-aligned(x,y,z)
+4
 near(x,y);near(y,x)
 aligned(x,y,z);aligned(z,y,x)
 aligned(w,x,y);aligned(x,y,z);aligned(w,x,z)
