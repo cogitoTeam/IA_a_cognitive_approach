@@ -47,12 +47,10 @@ public class Analysis
   {
     BasicAnalysisEngine folConversion = new BasicAnalysisEngine(percept);
     folConversion.runEngine();
+    
+    folConversion.getOutput().linkRelevant(this._memory.getRelevantPartialBoardStates());
 
-    AdvancedAnalysisEngine findHomomorphisms = new AdvancedAnalysisEngine(
-        folConversion.getOutput());
-    findHomomorphisms.runEngine(this._memory.getRelevantPartialBoardStates());
-
-    for (Option_FOL o : findHomomorphisms.getOutput().getOptions())
+    for (Option_FOL o : folConversion.getOutput().getOptions())
       this._memory.putOption(o);
 
     return this._reasoning.stimulate();
