@@ -6,6 +6,7 @@ import java.io.*;
 import org.apache.log4j.Logger;
 
 import ac.analysis.structure.*;
+import ac.util.LinkedSet;
 
 
 /**
@@ -221,11 +222,17 @@ public class KnowledgeBase {
 	 * @param successeurs La liste de successeurs à considérer
 	 * @param faits La base de faits courante (les nouveux faits y seront ajoutés)
 	 */
-	private void computeNewFactsRec(ArrayList<Rule> successeurs, FactBase faits) {
-		ArrayList<Rule> successeursNew;
+	private void computeNewFactsRec(LinkedSet<Rule> successeurs, FactBase faits) {
 		// Debut de l'algorithme qui exploite le graphe de
 		// dépendance des régles
-		for (Rule r : successeurs) {
+
+		if(LOGGER.isDebugEnabled())
+      LOGGER.debug(successeurs);
+		
+		Rule r;
+		while (!successeurs.isEmpty()) {   
+		  r = successeurs.removeFirst();
+		  
 			//Affiche l'ordre dans lequel les règles sont considérée
 		  if(LOGGER.isDebugEnabled())
 	      LOGGER.debug("\n\tRègle considérée : " + r);
@@ -238,16 +245,14 @@ public class KnowledgeBase {
 						faits.addNewFact(temp);
 						 
 						if(LOGGER.isDebugEnabled())
-				        LOGGER.debug("\n\tNouveau fait ajouté : " + temp
-								+ "\n  étape suivante : successeurs de "
-								+ r.getName());
+				        LOGGER.debug("\n\tNouveau fait ajouté : " + temp);
 						
-						successeursNew = new ArrayList<Rule>(
-								computeSuccessors(r));
-						//appel récursive qui parcourt le graphe en profondeur
-						computeNewFactsRec(successeursNew, faits); 
+						successeurs.addAll(computeSuccessors(r));
 					}
 				}
+			
+			if(LOGGER.isDebugEnabled())
+        LOGGER.debug(successeurs);
 		}
 	}
 
@@ -256,7 +261,7 @@ public class KnowledgeBase {
 	 * @param r La r�gle dont on veut calculer les successeurs
 	 * @return La liste de successeurs de r
 	 */
-	private ArrayList<Rule> computeSuccessors(Rule r) {
+	private LinkedSet<Rule> computeSuccessors(Rule r) {
 		RuleDependencyGraph g = new RuleDependencyGraph(this);
 		int n = Integer.parseInt(r.getName().substring(6))
 				+ BF.getAtomList().size() - 1;

@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import ac.analysis.structure.*;
 import ac.util.ArraySet;
+import ac.util.LinkedSet;
 
 
 
@@ -21,7 +22,7 @@ public class RuleDependencyGraph
 {
 
 	private KnowledgeBase kb; //la base de connaissances r�f�renc�e
-	private ArrayList<ArrayList<Rule>> graphe; //tableau des listes de successeurs de chaque r�gle
+	private ArrayList<LinkedSet<Rule>> graphe; //tableau des listes de successeurs de chaque r�gle
 
 //Les constructeurs de la classe	
 	/**
@@ -30,7 +31,7 @@ public class RuleDependencyGraph
 	public RuleDependencyGraph() 
 	{
 		kb = new KnowledgeBase();
-		graphe = new ArrayList <ArrayList<Rule>>();
+		graphe = new ArrayList <LinkedSet<Rule>>();
 	}
 	
 	/**
@@ -39,7 +40,7 @@ public class RuleDependencyGraph
 	public RuleDependencyGraph(RuleDependencyGraph copy)
 	{
 		kb = new KnowledgeBase(copy.kb);
-		graphe = new ArrayList <ArrayList <Rule>> (copy.graphe);
+		graphe = new ArrayList <LinkedSet<Rule>> (copy.graphe);
 	}
 	
 	/**
@@ -48,7 +49,7 @@ public class RuleDependencyGraph
 	public RuleDependencyGraph(KnowledgeBase bc)
 	{
 		kb = bc;
-		graphe = new ArrayList <ArrayList<Rule>>();
+		graphe = new ArrayList <LinkedSet<Rule>>();
 	}
 	
 //Les getters de la classe	
@@ -56,22 +57,22 @@ public class RuleDependencyGraph
 		return kb;
 	}
 
-	public ArrayList<ArrayList<Rule>> getGraphe() {
+	public ArrayList<LinkedSet<Rule>> getGraphe() {
 		return graphe;
 	}
 
 //Les m�thodes qui caract�risent les fonctionnalit�es de la classe	
 	/**
-	 * M�thode de calcul du graphe de d�pendances des r�gles
+	 * Méthode de calcul du graphe de dépendances des règles
 	 */
 	public void calculeGDR()
 	{
-		ArraySet<Rule> listeSuccesseurs;
+		LinkedSet<Rule> listeSuccesseurs;
 		
 		//calcul de règles dépendants des faits
 		for (Atom fait : kb.getFB().getAtomList())
 		{
-			listeSuccesseurs = new ArraySet <Rule> ();
+			listeSuccesseurs = new LinkedSet<Rule> ();
 			for (Rule r : kb.getRB()) {
 				for (Atom a : r.getPremise()) {
 					if (fait.unifiableA(a))
@@ -84,7 +85,7 @@ public class RuleDependencyGraph
 		//calcul de règles dépendants des règles
 		for (Rule r1 : kb.getRB())
 		{
-			listeSuccesseurs = new ArraySet <Rule> ();
+			listeSuccesseurs = new LinkedSet<Rule> ();
 			for (Rule r2 : kb.getRB())
 				for (Atom a : r2.getPremise())
 					if (a.unifiableA(r1.getConclusion()))
@@ -115,7 +116,7 @@ public class RuleDependencyGraph
 		
 		Iterator<Atom> faitsIter = kb.getFB().getAtomList().iterator();
 		Iterator<Rule> reglesIter = kb.getRB().iterator();
-		Iterator<ArrayList<Rule>> listeSuccesseursIter = graphe.iterator();
+		Iterator<LinkedSet<Rule>> listeSuccesseursIter = graphe.iterator();
 		Iterator<Rule> successeursIter;
 
 		while (faitsIter.hasNext())	
