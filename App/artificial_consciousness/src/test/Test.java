@@ -7,6 +7,7 @@
 package test;
 
 import agent.Agent;
+import ac.AC;
 
 
 public class Test 
@@ -16,7 +17,7 @@ public class Test
     public static void main(String[] args) throws InterruptedException
     {
         // create agent(s)
-        Agent agent = new RandomAgent();
+        Agent agent = new AC();
         
         // main loop
         boolean stop = false;
