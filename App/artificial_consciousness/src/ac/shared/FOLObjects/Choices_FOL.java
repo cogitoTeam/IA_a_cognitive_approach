@@ -4,6 +4,8 @@
 package ac.shared.FOLObjects;
 
 import java.util.List;
+import java.util.LinkedList;
+
 
 import ac.shared.CompleteBoardState;
 
@@ -19,19 +21,18 @@ public class Choices_FOL
   // ATTRIBUTES
   // ***************************************************************************
 
-  /* (non-Javadoc)
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return "Choices_FOL [_current_board=" + _current_board + ", _options="
-        + _options + "]";
-  }
-
   private CompleteBoardState _current_board;
   private List<Option> _options;
 
+  // ***************************************************************************
+  // CONSTRUCTORS
+  // ***************************************************************************
+
+  public Choices_FOL()
+  {
+    this._options = new LinkedList<Option>();
+  }
+  
   // ***************************************************************************
   // METHODS
   // ***************************************************************************
@@ -45,7 +46,16 @@ public class Choices_FOL
   public void addOption(Option option)
   {
     this._options.add(option);
-
+  }
+  
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return "Choices_FOL [_current_board=" + _current_board + ", _options="
+        + _options + "]";
   }
 
   // ***************************************************************************
