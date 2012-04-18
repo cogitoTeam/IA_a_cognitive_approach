@@ -16,10 +16,10 @@ public class Test
     public static void main(String[] args) throws InterruptedException
     {
         // create agent(s)
-        Agent agent = new RandomAgent();
+        Agent agent = new MiniMaxAgent();
         
         // main loop
-        /*boolean stop = false;
+        boolean stop = false;
         while(!stop)
         {
             // update the agent(s)
@@ -34,7 +34,5 @@ public class Test
         }
         
         System.out.println("Stopped");
-        *
-        */
     }
 }
