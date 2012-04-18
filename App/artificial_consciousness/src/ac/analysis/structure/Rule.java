@@ -2,6 +2,7 @@ package ac.analysis.structure;
 
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -11,9 +12,13 @@ import java.util.StringTokenizer;
  * apparaissant dans ses atomes pour pr�ciser que chaque terme n'y appara�t qu'une seule fois
  *
  */
-public class Rule
+public class Rule implements Serializable
 {
-	private String name;
+	/**
+   * 
+   */
+  private static final long serialVersionUID = 4373243435597065238L;
+  private String name;
 	private ArrayList<Atom> premise;//la liste des atomes hypoth�ses
 	private Atom conclusion;//la conclusion de la r�gle
 	private ArrayList<Term> terms;//l'ensemble des termes pr�sents dans la r�gle
