@@ -27,7 +27,6 @@ import ac.shared.RelevantPartialBoardState;
 class IntrospectionEngine extends Thread
 {
 
-  @SuppressWarnings("unused")
   private static final Logger LOGGER = Logger
       .getLogger(IntrospectionEngine.class);
 
@@ -35,7 +34,6 @@ class IntrospectionEngine extends Thread
    * ATTRIBUTES
    * ************************************************************************ */
 
-  @SuppressWarnings("unused")
   private Memory _memory;
 
   /* **************************************************************************
@@ -222,7 +220,7 @@ class IntrospectionEngine extends Thread
               {
                 for (Term i : variables)
                   {
-                    if (t.equalsT(i))
+                    if (t.equals(i))
                       contient = true;
                   }
                 if (!contient)
