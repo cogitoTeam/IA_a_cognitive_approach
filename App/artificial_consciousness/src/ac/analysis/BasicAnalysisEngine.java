@@ -206,34 +206,60 @@ public class BasicAnalysisEngine
         }
     
     //Add aligns
-    for (p.row = 0; p.row < matrix.getSize().n_rows-1; p.row++)
-      for (p.col = 0; p.col < matrix.getSize().n_cols-1; p.col++)
-        {
-          s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "','c_" + (p.row+2) + '_' + p.col + "')";
-          a = new Atom(s);
-          cbs.getBoardStateFacts().addNewFact(a);
-          
-          s = "aligned('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+1) + "','c_" + p.row + '_' + (p.col+2) + "')";
-          a = new Atom(s);
-          cbs.getBoardStateFacts().addNewFact(a);
-          
-          s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "','c_" + (p.row+2) + '_' + (p.col+2) + "')";
-          a = new Atom(s);
-          cbs.getBoardStateFacts().addNewFact(a);
-          
-          // aligned(x,y,z) --> aligned(z,y,x)
-          s = "aligned('c_" + (p.row+2) + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "','c_" + p.row + '_' + p.col + "',)";
-          a = new Atom(s);
-          cbs.getBoardStateFacts().addNewFact(a);
-          
-          s = "aligned('c_" + p.row + '_' + (p.col+2) + "','c_" + p.row + '_' + (p.col+1) + "','c_" + p.row + '_' + p.col + "')";
-          a = new Atom(s);
-          cbs.getBoardStateFacts().addNewFact(a);
-          
-          s = "aligned('c_" + (p.row+2) + '_' + (p.col+2) + "','c_" + (p.row+1) + '_' + (p.col+1) + "','c_" + p.row + '_' + p.col + "')";
-          a = new Atom(s);
-          cbs.getBoardStateFacts().addNewFact(a);
+    int shift_p2 = 0;
+    int shift_p3 = 0;
+    for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols-2; p.col++)
+        {      
+          for (shift_p2 = 1; shift_p2 + p.col < matrix.getSize().n_cols-1; ++shift_p2)
+            for (shift_p3 = shift_p2+1; shift_p3 + p.col < matrix.getSize().n_rows; ++shift_p3)
+              {
+                s = "aligned('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+shift_p2) + "','c_" + p.row + '_' + (p.col+shift_p3) + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+                
+                // aligned(x,y,z) --> aligned(z,y,x)
+                s = "aligned('c_" + p.row + '_' + (p.col+shift_p3) + "','c_" + p.row + '_' + (p.col+shift_p2) + "','c_" + p.row + '_' + p.col + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+              }
         }
+    
+    for (p.row = 0; p.row < matrix.getSize().n_rows-2; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
+        {      
+          for (shift_p2 = 1; shift_p2 + p.row < matrix.getSize().n_rows-1; ++shift_p2)
+            for (shift_p3 = shift_p2+1; shift_p3 + p.row < matrix.getSize().n_rows; ++shift_p3)
+              {
+                s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+shift_p2) + '_' + p.col + "','c_" + (p.row+shift_p3) + '_' + p.col + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+                
+                // aligned(x,y,z) --> aligned(z,y,x)
+                s = "aligned('c_" + (p.row+shift_p3) + '_' + p.col + "','c_" + (p.row+shift_p2) + '_' + p.col + "','c_" + p.row + '_' + p.col + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+              }
+        }
+    
+    for (p.row = 0; p.row < matrix.getSize().n_rows-2; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols-2; p.col++)
+        {      
+          for (shift_p2 = 1; shift_p2 + p.row < matrix.getSize().n_rows-1; ++shift_p2)
+            for (shift_p3 = shift_p2+1; shift_p3 + p.row < matrix.getSize().n_rows; ++shift_p3)
+              {
+                s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+shift_p2) + '_' + (p.col+shift_p2) + "','c_" + (p.row+shift_p3) + '_' + (p.col+shift_p3) + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+                
+                // aligned(x,y,z) --> aligned(z,y,x)
+                s = "aligned('c_" + (p.row+shift_p3) + '_' + (p.col+shift_p3) + "','c_" + (p.row+shift_p2) + '_' + (p.col+shift_p2) + "','c_" + p.row + '_' + p.col + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+              }
+        }
+                
+              
         
     return cbs;
 
@@ -249,12 +275,13 @@ public class BasicAnalysisEngine
   {
     BoardMatrix b = ReversiRules.getInstance().createBoard();
     CompleteBoardState cbs = convertMatrixtoCBS(b); 
-    
+    System.out.println(cbs);
+    /*
     KnowledgeBase kb = new KnowledgeBase("RuleBase");
     kb.setBF(cbs.getBoardStateFacts());
     kb.optimizedSaturation_FOL();
     
-    System.out.println(kb);
+    System.out.println(kb);*/
   }
 }
 

@@ -1,7 +1,5 @@
 
-2
-aligned(w,x,y);aligned(x,y,z);aligned(w,x,z)
-aligned(w,x,y);aligned(x,y,z);aligned(w,y,z)
+0
 
 
 
