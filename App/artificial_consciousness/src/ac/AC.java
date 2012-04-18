@@ -1,10 +1,12 @@
 package ac;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
 import ac.analysis.Analysis;
+import ac.analysis.structure.Atom;
 import agent.Action;
 import agent.Percept;
 import ac.memory.MemoryException;
@@ -12,7 +14,9 @@ import ac.memory.Neo4jActiveMemory;
 import ac.memory.episodic.Neo4jEpisodicMemory;
 import ac.memory.semantic.Neo4jSemanticMemory;
 import ac.reasoning.Reasoning;
+import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
+import ac.shared.RelevantPartialBoardState;
 import agent.Agent;
 
 /**
@@ -57,6 +61,34 @@ public class AC extends Agent
    * METHODS
    * ************************************************************************ */
 
+  /**
+   * bootstrap method for starting with some RelevantPartialBordState 
+   */
+  public void initialisation()
+  {
+    ArrayList<Atom> atoms_list = new ArrayList<Atom>();
+    RelevantPartialBoardState rpbs;
+    
+    atoms_list.add(new Atom("is_PIECE_BLACK(x)"));
+    atoms_list.add(new Atom("is_PIECE_BLACK(y)"));
+    atoms_list.add(new Atom("diff(x,y)"));
+    atoms_list.add(new Atom("is_near(y)"));
+    
+    try
+      {
+        this._memory.putRelevantStructure(new RelevantPartialBoardState(atoms_list));
+      }
+    catch (MemoryException e)
+      {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    
+    //@TODO add other rpbs
+    
+    
+  }
+  
   @Override
   protected void think()
   {
