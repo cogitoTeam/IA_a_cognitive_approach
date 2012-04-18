@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import ac.analysis.structure.*;
+import ac.util.ArraySet;
 
 
 
@@ -65,12 +66,12 @@ public class RuleDependencyGraph
 	 */
 	public void calculeGDR()
 	{
-		ArrayList<Rule> listeSuccesseurs;
+		ArraySet<Rule> listeSuccesseurs;
 		
-		//calcul de r�gles d�pendants des faits
+		//calcul de règles dépendants des faits
 		for (Atom fait : kb.getFB().getAtomList())
 		{
-			listeSuccesseurs = new ArrayList <Rule> ();
+			listeSuccesseurs = new ArraySet <Rule> ();
 			for (Rule r : kb.getRB()) {
 				for (Atom a : r.getPremise()) {
 					if (fait.unifiableA(a))
@@ -80,10 +81,10 @@ public class RuleDependencyGraph
 			graphe.add(listeSuccesseurs);
 		}
 		
-		//calcul de r�gles d�pendants des r�gles
+		//calcul de règles dépendants des règles
 		for (Rule r1 : kb.getRB())
 		{
-			listeSuccesseurs = new ArrayList <Rule> ();
+			listeSuccesseurs = new ArraySet <Rule> ();
 			for (Rule r2 : kb.getRB())
 				for (Atom a : r2.getPremise())
 					if (a.unifiableA(r1.getConclusion()))
