@@ -121,6 +121,8 @@ public class BasicAnalysisEngine
     String s;
     Atom a;
     CompleteBoardState cbs = new CompleteBoardState();
+    
+    //add case type
     for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
       for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
         {
@@ -129,6 +131,19 @@ public class BasicAnalysisEngine
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }
+    
+    //add diff
+    BoardMatrix.Position p2 = new Position(0, 0);
+    for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
+        for (p2.row = p.row; p2.row < matrix.getSize().n_rows; p2.row++)
+          for (p2.col = p.col; p2.col < matrix.getSize().n_cols; p2.col++)
+            if(!p.equals(p2))
+            {
+              s = "diff('c_" + p.row + '_' + p.col + "', 'c_" + p2.row + '_' + p2.col + "')";
+              a = new Atom(s);
+              cbs.getBoardStateFacts().addNewFact(a);
+            }
 
     //Add edges
     p.col = 0;
@@ -205,9 +220,7 @@ public class BasicAnalysisEngine
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }
-    
-    //add diff ???
-    
+        
     return cbs;
 
   }
