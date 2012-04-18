@@ -15,12 +15,14 @@ public class Game
     /* NESTING */
     
     /**
-     * The two players playing the Game: black and white. 
+     * The two players playing the Game, black and white, plus a case for cells
+     * that are not owned.
      */
     public static enum Player
     {
         WHITE,
-        BLACK
+        BLACK,
+        NEITHER
     }
     
     /**
@@ -56,10 +58,20 @@ public class Game
      * The player whose opponent we wish to know.
      * @return 
      * The specified players opponent, so BLACK for WHITE and WHITE for BLACK.
+     * The complementary of both null and NEITHER player is NEITHER.
      */
     public static Player otherPlayer(Player p)
     {
-        return (p == Player.WHITE) ? Player.BLACK : Player.WHITE;
+        switch(p)
+        {
+            case WHITE: 
+                return Player.BLACK;
+            case BLACK:
+                return Player.WHITE;
+            case NEITHER:
+            default:
+                return Player.NEITHER;
+        }
     }
 
     /**
@@ -68,7 +80,7 @@ public class Game
      * The String to parse.
      * @return 
      * The Game.Player corresponding to this String, or null if the String 
-     * doesn't correspond to any player.
+     * doesn't correspond to either player.
      */
     public static Player parsePlayer(String s)
     {
@@ -77,6 +89,9 @@ public class Game
         
         else if(s.equals("BLACK") || s.equals("black"))
             return Player.BLACK;
+        
+        else if(s.equals("NEITHER") || s.equals("neither"))
+            return Player.NEITHER;
         
         else
             return null;

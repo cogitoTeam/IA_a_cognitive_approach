@@ -63,12 +63,9 @@ class BootstrapClient extends XMLClient
         attributes = game_element.getElementsByTagName("current_player")
                         .item(0).getAttributes();
         Player current_player = 
-            Game.parsePlayer(attributes.getNamedItem("colour").getNodeValue()),
-        other_player = (current_player == Player.BLACK)
-                        ? Player.WHITE
-                        : Player.BLACK;
+            Game.parsePlayer(attributes.getNamedItem("colour").getNodeValue());
         // the host always moves first, so we're the current player iff hosting
-        player = (is_host) ? current_player : other_player;
+        player = (is_host) ? current_player : Game.otherPlayer(current_player);
         
         // finally create the sensor and actuator
         sensor = new Sensor(_s_server_url, rules, board);
