@@ -1,10 +1,12 @@
 package ac;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
 import ac.analysis.Analysis;
+import ac.analysis.structure.Atom;
 import agent.Action;
 import agent.Percept;
 import ac.memory.MemoryException;
@@ -12,6 +14,9 @@ import ac.memory.Neo4jActiveMemory;
 import ac.memory.episodic.Neo4jEpisodicMemory;
 import ac.memory.semantic.Neo4jSemanticMemory;
 import ac.reasoning.Reasoning;
+import ac.shared.CompleteBoardState;
+import ac.shared.GameStatus;
+import ac.shared.RelevantPartialBoardState;
 import agent.Agent;
 
 /**
@@ -34,6 +39,8 @@ public class AC extends Agent
   private Neo4jActiveMemory _memory;
   private Reasoning _reasoning;
 
+  private boolean existGame = false;
+
   /* **************************************************************************
    * CONSTRUCTOR
    * ************************************************************************ */
@@ -44,7 +51,7 @@ public class AC extends Agent
   public AC()
   {
     if (LOGGER.isDebugEnabled())
-      LOGGER.debug("Executing AC constructor");
+      LOGGER.debug("AC constructor call");
     this._memory = new Neo4jActiveMemory(new Neo4jEpisodicMemory(),
         new Neo4jSemanticMemory());
     this._reasoning = new Reasoning(this._memory);
@@ -56,11 +63,41 @@ public class AC extends Agent
    * METHODS
    * ************************************************************************ */
 
+  /**
+   * bootstrap method for starting with some RelevantPartialBordState
+   */
+  public void initialisation()
+  {
+    if (LOGGER.isDebugEnabled())
+      LOGGER.debug("AC bootstrap method call");
+    ArrayList<Atom> atoms_list = new ArrayList<Atom>();
+
+    if (LOGGER.isDebugEnabled())
+      LOGGER.debug("Generating some Atoms");
+    atoms_list.add(new Atom("is_PIECE_BLACK(x)"));
+    atoms_list.add(new Atom("is_PIECE_BLACK(y)"));
+    atoms_list.add(new Atom("diff(x,y)"));
+    atoms_list.add(new Atom("is_near(y)"));
+
+    try
+      {
+        if (LOGGER.isDebugEnabled())
+          LOGGER.debug("Put new RPBS in memory");
+        this._memory.putRelevantStructure(new RelevantPartialBoardState(
+            atoms_list));
+      }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occured when putting RPBS in memory", e);
+      }
+
+    // @TODO add other rpbs
+
+  }
+
   @Override
   protected void think()
   {
-    if (LOGGER.isDebugEnabled())
-      LOGGER.debug("Think method call, but this method is empty");
     // nothing to do
   }
 
@@ -69,18 +106,83 @@ public class AC extends Agent
   {
     Action action = null;
 
-    LOGGER.debug("Receive new percept: " + percept.getClass());
-    if (percept.getClass() == Percept.Choices.class)
+    if (LOGGER.isDebugEnabled())
+      LOGGER.debug("New percept received " + percept.getClass());
+
+    switch (percept.getType())
       {
-        LOGGER.debug("Choices percept type");
-        try
-          {
-            action = this._analysis.analyse((Percept.Choices) percept);
-          }
-        catch (Exception e)
-          {
-            LOGGER.error("An error occured in analysis module", e);
-          }
+        case CHOICES:
+          if (LOGGER.isDebugEnabled())
+            LOGGER.debug("AC have to make a choice");
+          if (!existGame)
+            {
+              if (LOGGER.isDebugEnabled())
+                LOGGER.debug("No game started");
+              try
+                {
+                  if (LOGGER.isDebugEnabled())
+                    LOGGER.debug("Beginning new game");
+                  this._memory.BeginOfGame();
+                }
+              catch (MemoryException e)
+                {
+                  LOGGER.error(
+                      "An error occured when starting new game in memory", e);
+                }
+              this.existGame = true;
+            }
+
+          try
+            {
+              if (LOGGER.isDebugEnabled())
+                LOGGER.debug("Call the analysis module to make a choice");
+              action = this._analysis.analyse((Percept.Choices) percept);
+            }
+          catch (Exception e)
+            {
+              LOGGER.error("An error occured when analyzing moves", e);
+            }
+          break;
+
+        case GAME_END:
+          if (LOGGER.isDebugEnabled())
+            LOGGER.debug("AC have to finish the current game");
+          this.existGame = false;
+
+          Percept.GameEnd game_end = (Percept.GameEnd) percept;
+
+          if (LOGGER.isDebugEnabled())
+            LOGGER.debug("Getting the game status");
+          GameStatus status = GameStatus.UNDEFINED;
+
+          if (game_end.getWinner() == this.getPlayer())
+            status = GameStatus.VICTORY;
+          else if (game_end.getWinner() == null)
+            status = GameStatus.DRAW;
+          else
+            status = GameStatus.DEFEAT;
+
+          if (LOGGER.isDebugEnabled())
+            LOGGER.debug("GameStatus: " + status.toString());
+
+          try
+            {
+              if (LOGGER.isDebugEnabled())
+                LOGGER.debug("Ending game in memory");
+              this._memory.EndOfGame(status, game_end.getScore());
+            }
+          catch (MemoryException e)
+            {
+              LOGGER.error(
+                  "An error occured when saying to memory the end of game", e);
+            }
+
+          if (LOGGER.isDebugEnabled())
+            LOGGER.debug("Restarting new Game :)");
+          action = new Action.Restart();
+
+          break;
+
       }
 
     return action;
