@@ -225,11 +225,14 @@ public class KnowledgeBase {
 	private void computeNewFactsRec(LinkedSet<Rule> successeurs, FactBase faits) {
 		// Debut de l'algorithme qui exploite le graphe de
 		// dépendance des régles
-
+	  Atom temp;
+    Rule r;
+    ArrayList<Substitution> substitutions_list;
+    Homomorphisms s;
+	  
 		if(LOGGER.isDebugEnabled())
       LOGGER.debug(successeurs);
 		
-		Rule r;
 		while (!successeurs.isEmpty()) {   
 		  r = successeurs.removeFirst();
 		  
@@ -237,19 +240,21 @@ public class KnowledgeBase {
 		  if(LOGGER.isDebugEnabled())
 	      LOGGER.debug("\n\tRègle considérée : " + r);
 
-	    Homomorphisms s = new Homomorphisms(r.getPremise(), faits);
-			if (s.existsHomomorphismTest())
-				for (Substitution hom : s.getHomomorphisms()) {
-					Atom temp = r.getConclusion().applySubtitution(hom);
-					if (!faits.atomExistsTest(temp)) {
-						faits.addNewFact(temp);
-						 
-						if(LOGGER.isDebugEnabled())
-				        LOGGER.debug("\n\tNouveau fait ajouté : " + temp);
-						
-						successeurs.addAll(computeSuccessors(r));
-					}
-				}
+	    s = new Homomorphisms(r.getPremise(), faits);
+	    substitutions_list = s.getHomomorphisms();
+			for (Substitution hom : substitutions_list) 
+			  {
+  				temp = r.getConclusion().applySubtitution(hom);
+  				if (!faits.atomExistsTest(temp)) 
+  				  {
+    					faits.addNewFact(temp);
+    					 
+    					if(LOGGER.isDebugEnabled())
+    		        LOGGER.debug("\n\tNouveau fait ajouté : " + temp);
+      					
+    					successeurs.addAll(computeSuccessors(r));
+    				}
+			  }
 			
 			if(LOGGER.isDebugEnabled())
         LOGGER.debug(successeurs);
