@@ -9,6 +9,7 @@ import ac.memory.Memory;
 import ac.memory.MemoryException;
 import ac.shared.FOLObjects.Option;
 import agent.Action;
+import agent.Action.Move;
 
 /**
  * Class ChoiceEngine Cette classe implémente la prise de décision
@@ -45,6 +46,7 @@ class ChoiceEngine
   {
     List<Pair<Option, Double>> options_list = null;
     Option option;
+    Action move = null;
 
     try
       {
@@ -55,19 +57,34 @@ class ChoiceEngine
         LOGGER.error("An error occurred during getting options.", e);
         return new Action.Exit();
       }
+    
+    if(options_list.size() == 0)
+      {
+        LOGGER.debug("Pas de choix en mémoire");
+        return new Action.Skip();
+      }
+
 
     option = this.getBetterOption(options_list);
-
-    try
+    
+    if (option != null)
       {
-        this._memory.OptionChosen(option);
+        try
+          {
+            this._memory.OptionChosen(option);
+          }
+        catch (MemoryException e)
+          {
+            LOGGER.error("An error occurred during storing a choice.", e);
+          }
+        
+        move = option.getMove();
       }
-    catch (MemoryException e)
-      {
-        LOGGER.error("An error occurred during storing a choice.", e);
-      }
+    else
+      LOGGER.debug("Better option null");
 
-    return option.getMove();
+
+    return move;
   }
 
   // ***************************************************************************
@@ -76,15 +93,20 @@ class ChoiceEngine
 
   private Option getBetterOption(List<Pair<Option, Double>> options_list)
   {
-    Option better_option = options_list.get(0).getFirst();
-    double max_grade = options_list.get(0).getSecond();
+    Option better_option = null;
 
-    for (Pair<Option, Double> pair : options_list)
-      if (pair.getSecond() > max_grade)
-        {
-          better_option = pair.getFirst();
-          max_grade = pair.getSecond();
-        }
+    if (options_list.size() > 0)
+      {
+        better_option = options_list.get(0).getFirst();
+        double max_grade = options_list.get(0).getSecond();
+
+        for (Pair<Option, Double> pair : options_list)
+          if (pair.getSecond() > max_grade)
+            {
+              better_option = pair.getFirst();
+              max_grade = pair.getSecond();
+            }
+      }
 
     return better_option;
   }
