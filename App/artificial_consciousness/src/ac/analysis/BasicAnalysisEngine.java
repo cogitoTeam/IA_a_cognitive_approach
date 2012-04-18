@@ -125,11 +125,89 @@ public class BasicAnalysisEngine
       for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
         {
           c = matrix.getCell(p);
-          s = "is_" + c + "('c_" + p.row + p.col + "')";
+          s = "is_" + c + "('c_" + p.row + '_' + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }
 
+    //Add edges
+    p.col = 0;
+    p.row = 0;
+    for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
+      {
+        s = "is_edge('c_" + p.row + '_' + 0 + "')";
+        a = new Atom(s);
+        cbs.getBoardStateFacts().addNewFact(a);
+        
+        s = "is_edge('c_" + p.row + '_' + (matrix.getSize().n_cols-1) + "')";
+        a = new Atom(s);
+        cbs.getBoardStateFacts().addNewFact(a);
+      }
+    
+    for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
+      {
+        s = "is_edge('c_" + 0 + '_' + p.col + "')";
+        a = new Atom(s);
+        cbs.getBoardStateFacts().addNewFact(a);
+        
+        s = "is_edge('c_" + (matrix.getSize().n_rows-1) + '_' +p.col  + "')";
+        a = new Atom(s);
+        cbs.getBoardStateFacts().addNewFact(a);
+      }
+    
+    //Add corners
+    s = "is_corner('c_" + 0 + '_' + 0 + "')";
+    a = new Atom(s);
+    cbs.getBoardStateFacts().addNewFact(a);
+    
+    s = "is_corner('c_" + (matrix.getSize().n_rows-1) + '_' + 0 + "')";
+    a = new Atom(s);
+    cbs.getBoardStateFacts().addNewFact(a);
+    
+    s = "is_corner('c_" + 0 + '_' + (matrix.getSize().n_cols-1) + "')";
+    a = new Atom(s);
+    cbs.getBoardStateFacts().addNewFact(a);
+    
+    s = "is_corner('c_" + (matrix.getSize().n_rows-1) + '_' + (matrix.getSize().n_cols-1) + "')";
+    a = new Atom(s);
+    cbs.getBoardStateFacts().addNewFact(a);
+    
+    //Add nears
+    for (p.row = 0; p.row < matrix.getSize().n_rows-1; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols-1; p.col++)
+        {
+          s = "is_near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "' )";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "is_near('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+1) + "' )";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "is_near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "' )";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+        }
+    
+    //Add aligns
+    for (p.row = 0; p.row < matrix.getSize().n_rows-1; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols-1; p.col++)
+        {
+          s = "is_align('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "','c_" + (p.row+2) + '_' + p.col + "' )";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "is_align('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+1) + "','c_" + p.row + '_' + (p.col+2) + "' )";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "is_align('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "','c_" + (p.row+2) + '_' + (p.col+2) + "' )";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+        }
+    
+    //add diff ???
+    
     return cbs;
 
   }
