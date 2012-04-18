@@ -124,7 +124,6 @@ public class Game
         rules = _rules;
         // create the required structures
         board = _rules.createBoard();
-        rules.reset(board);
         // start the game
         current_player = rules.getFirstPlayer();
         current_state = State.WAITING_FOR_PLAYER;
