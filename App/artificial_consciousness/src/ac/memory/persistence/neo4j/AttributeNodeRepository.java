@@ -4,19 +4,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import ac.memory.persistence.neo4j.RelTypes;
 import ac.shared.RelevantPartialBoardState;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
+import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.helpers.collection.IterableWrapper;
 import org.neo4j.index.lucene.QueryContext;
 
@@ -27,7 +31,7 @@ import org.neo4j.index.lucene.QueryContext;
  */
 public class AttributeNodeRepository
     extends
-    AbstractLatticeConceptNodeRepository<RelevantPartialBoardState, AttributeNode>
+    AbstractLatticeContextNodeRepository<RelevantPartialBoardState, AttributeNode>
 {
   private static final Logger logger = Logger
       .getLogger(AttributeNodeRepository.class);
@@ -45,6 +49,19 @@ public class AttributeNodeRepository
     super(graphDb, id_index, mark_index, ID_FIELD);
     if (logger.isDebugEnabled())
       logger.debug("Building new AttributeNodeRepository");
+  }
+
+  /**
+   * @return a free id
+   */
+  public long getFreeId()
+  {
+    Random r = new Random();
+    long id = r.nextLong();
+    while (getNodeById(id) != null)
+      id = r.nextLong();
+    return id;
+
   }
 
   /**
@@ -152,7 +169,7 @@ public class AttributeNodeRepository
    * @throws NodeRepositoryException
    */
   @Override
-  public AttributeNode getNodeById(long id) throws NodeRepositoryException
+  public AttributeNode getNodeById(long id)
   {
     if (logger.isDebugEnabled())
       logger.debug("Getting an attribute by ID " + id);
@@ -160,7 +177,7 @@ public class AttributeNodeRepository
     if (attribute == null)
       {
         logger.warn("Attribute not found");
-        throw new NodeRepositoryException("[" + id + "] not found");
+        return null;
       }
     if (logger.isDebugEnabled())
       logger.debug("Attribute found");
@@ -186,8 +203,8 @@ public class AttributeNodeRepository
         if (logger.isDebugEnabled())
           logger.debug("Removing from index " + ID_FIELD + " = "
               + attribute.getId());
-        id_index.remove(nodeAttribute, AttributeNode.ID_FIELD,
-            attribute.getId());
+        id_index.remove(nodeAttribute);
+        mark_index.remove(nodeAttribute);
 
         if (logger.isDebugEnabled())
           logger.debug("Removing relationships to objects");
@@ -237,6 +254,50 @@ public class AttributeNodeRepository
   protected Node getRootNode(GraphDatabaseService graphDb)
   {
     return getRootNode(graphDb, RelTypes.REF_ATTRIBUTES);
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see
+   * ac.memory.persistence.neo4j.AbstractLatticeConceptNodeRepository#getBestValued
+   * () */
+  @Override
+  public List<AttributeNode> getBestValued() throws NodeRepositoryException
+  {
+    return getBestValued(null);
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see
+   * ac.memory.persistence.neo4j.AbstractLatticeConceptNodeRepository#getBestValued
+   * (java.lang.Integer) */
+  @Override
+  public List<AttributeNode> getBestValued(Integer n)
+      throws NodeRepositoryException
+  {
+
+    QueryContext query = new QueryContext(MARK_FIELD + ":*").sort(new Sort(
+        new SortField(MARK_FIELD, SortField.STRING, true))); // TODO Try to test
+                                                             // with
+                                                             // SortField.DOUBLE
+
+    IndexHits<Node> results = mark_index.query(query);
+
+    ArrayList<AttributeNode> attributes = new ArrayList<>();
+
+    int i = 0;
+
+    for (Node node : results)
+      {
+        if (n == null || i < n)
+          attributes.add(new AttributeNode(node));
+        else
+          break;
+
+        ++i;
+      }
+    return attributes;
   }
 
 }

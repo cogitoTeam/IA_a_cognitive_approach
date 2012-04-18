@@ -1,0 +1,30 @@
+\def\blurb{%
+  \begin{tabular}{l p{0.4cm} c p{1cm} r}
+   \multirow{3}{*}{\hspace{-1cm}\includegraphics[width=3cm]{./files/um2}} & & & &  \multirow{3}{*}{\includegraphics[width=2cm]{./files/ufr}} \\
+    & & Ministère de l'Education Nationale & & \\
+    & & Université de Montpellier 2 & & \\
+    \vspace{0.5cm}
+   \end{tabular}
+   Rapport de Projet Informatique GMIN20B\\
+   du Master informatique 1\iere année effectué\\
+   de Janvier à Mai 2011 et encadré par\\
+   Violaine Prince\\
+  }
+\def\clap#1{\hbox to 0pt{\hss #1\hss}}%
+\def\ligne#1{%
+  \hbox to \hsize{%
+    \vbox{\centering #1}}}%
+\def\haut#1#2#3{%
+  \hbox to \hsize{%
+    \rlap{\vtop{\raggedright #1}}%
+    \hss
+    \clap{\vtop{\centering #2}}%
+    \hss
+    \llap{\vtop{\raggedleft #3}}}}%
+\def\bas#1#2#3{%
+  \hbox to \hsize{%
+    \rlap{\vbox{\raggedright #1}}%
+    \hss
+    \clap{\vbox{\centering #2}}%
+    \hss
+    \llap{\vbox{\raggedleft #3}}}}%

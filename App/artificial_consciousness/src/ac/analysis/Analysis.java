@@ -3,7 +3,7 @@ package ac.analysis;
 import java.io.IOException;
 
 import game.BoardMatrix;
-import ac.memory.ActiveMemory;
+import ac.memory.Neo4jActiveMemory;
 import ac.memory.MemoryException;
 import ac.reasoning.Reasoning;
 import ac.shared.FOLObjects.Option;
@@ -20,14 +20,14 @@ import agent.Percept.Choices;
 public class Analysis
 {
 
-  private ActiveMemory _memory;
+  private Neo4jActiveMemory _memory;
   private Reasoning _reasoning;
 
   /**
    * @param memory
    * @param reasoning
    */
-  public Analysis(ActiveMemory memory, Reasoning reasoning)
+  public Analysis(Neo4jActiveMemory memory, Reasoning reasoning)
   {
     this._memory = memory;
     this._reasoning = reasoning;

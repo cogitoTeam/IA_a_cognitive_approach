@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ac.memory.persistence.neo4j.AttributeNode;
-import ac.memory.persistence.neo4j.GameNode;
 import ac.memory.persistence.neo4j.MoveNode;
 import ac.memory.persistence.neo4j.NodeException;
 import ac.memory.semantic.lattice.LatticeContextException;

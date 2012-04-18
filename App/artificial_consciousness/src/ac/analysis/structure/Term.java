@@ -64,14 +64,33 @@ public class Term
 // Les m�thodes qui caract�risent les fonctionnalit�es de la classe	
 	
 	/**
+	 * 
 	 * Teste l'�galite du terme 't' et du terme courant (constante, label)
 	 * @param t le terme � tester
 	 * @return vrai si 't' et le terme courant sont �gaux, faux sinon
+	 * 
+	 * @Deprecated use equals because is an method of Object class.
 	 */
+	@Deprecated
 	public boolean equalsT(Term t)
 	{
 		return(t.constant==constant && t.label.equals(this.label));
 	}
+	
+	/**
+	* Teste l'égalite du terme 't' et du terme courant (constante, label)
+	* @param o le terme à tester
+	* @return vrai si 't' et le terme courant sont égaux, faux sinon.
+	*/
+  @Override
+  public boolean equals(Object o)
+  {
+    if(!o.getClass().equals(this.getClass()))
+      return false;
+    
+    Term t = (Term)o;
+    return t.constant == this.constant && t.label.equals(this.label);
+  }
 	
 	//M�thode toString de la classe		
 	/**

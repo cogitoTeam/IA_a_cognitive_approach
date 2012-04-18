@@ -15,7 +15,7 @@ import org.neo4j.graphdb.index.Index;
  * @param <NodeType>
  *          Type of nodes wrapping class
  */
-abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
+abstract public class AbstractLatticeContextNodeRepository<ObjectType, NodeType>
     extends AbstractNodeRepository<NodeType>
 {
   protected Index<Node> id_index;
@@ -35,7 +35,7 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
    * @param id_field
    *          field identifier
    */
-  public AbstractLatticeConceptNodeRepository(GraphDatabaseService graphDb,
+  public AbstractLatticeContextNodeRepository(GraphDatabaseService graphDb,
       Index<Node> id_index, Index<Node> mark_index, String id_field)
   {
     super(graphDb);
@@ -62,10 +62,9 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
    * 
    * @param id
    *          the ID
-   * @return the attribute
-   * @throws NodeRepositoryException
+   * @return the attribute, null if not exists
    */
-  public abstract NodeType getNodeById(long id) throws NodeRepositoryException;
+  public abstract NodeType getNodeById(long id);
 
   /**
    * Remove an attribute
@@ -81,8 +80,7 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
    * @return list all object sorted by mark
    * @throws NodeRepositoryException
    */
-  public abstract List<ObjectNode> getBestValued()
-      throws NodeRepositoryException;
+  public abstract List<NodeType> getBestValued() throws NodeRepositoryException;
 
   /**
    * @param n
@@ -90,7 +88,7 @@ abstract public class AbstractLatticeConceptNodeRepository<ObjectType, NodeType>
    * @return list n best object sorted by mark
    * @throws NodeRepositoryException
    */
-  public abstract List<ObjectNode> getBestValued(Integer n)
+  public abstract List<NodeType> getBestValued(Integer n)
       throws NodeRepositoryException;
 
   /**

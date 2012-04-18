@@ -10,6 +10,7 @@ import ac.memory.persistence.neo4j.GameNodeRepository;
 import ac.memory.persistence.neo4j.MoveNodeRepository;
 import ac.memory.persistence.neo4j.Neo4jService;
 import ac.memory.persistence.neo4j.NodeRepositoryException;
+import ac.memory.persistence.neo4j.ObjectNode;
 import ac.memory.persistence.neo4j.ObjectNodeRepository;
 import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
@@ -95,11 +96,14 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
   {
     try
       {
-        obj_repo.getNodeById(board_state.getId());
+        ObjectNode object = obj_repo.getNodeById(board_state.getId());
+        if (object == null)
+          obj_repo.createNode(board_state);
+        
         move_repo.addMove(game_repo.getLast(),
             obj_repo.getNodeById(board_state.getId()));
       }
-    catch (NodeRepositoryException e)
+    catch (Exception e)
       {
         throw new EpisodicMemoryException("Error occured when adding new move",
             e);

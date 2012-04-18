@@ -44,6 +44,7 @@ class ChoiceEngine
   Action start()
   {
     List<Pair<Option, Double>> options_list = null;
+    Option option;
 
     try
       {
@@ -51,11 +52,22 @@ class ChoiceEngine
       }
     catch (MemoryException e)
       {
-        LOGGER.error(e.getMessage());
+        LOGGER.error("An error occurred during getting options.", e);
         return new Action.Exit();
       }
 
-    return this.getBetterOption(options_list).getMove();
+    option = this.getBetterOption(options_list);
+
+    try
+      {
+        this._memory.OptionChosen(option);
+      }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occurred during storing a choice.", e);
+      }
+
+    return option.getMove();
   }
 
   // ***************************************************************************

@@ -30,7 +30,7 @@ public abstract class AbstractBoardState implements Serializable
   public AbstractBoardState()
   {
     // DEFAULT CONSTRUCTOR
-    
+
   }
 
   /**
@@ -69,7 +69,8 @@ public abstract class AbstractBoardState implements Serializable
   }
 
   /**
-   * @param boardStateFacts the boardStateFacts ({@link FactBase}) to set
+   * @param boardStateFacts
+   *          the boardStateFacts ({@link FactBase}) to set
    */
   public void setBoardStateFacts(FactBase boardStateFacts)
   {

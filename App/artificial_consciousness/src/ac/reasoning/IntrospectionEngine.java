@@ -1,10 +1,16 @@
 package ac.reasoning;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import ac.analysis.inferenceEngine.Homomorphisms;
+import ac.analysis.structure.Atom;
+import ac.analysis.structure.Substitution;
+import ac.analysis.structure.Term;
 import ac.memory.Memory;
+import ac.memory.MemoryException;
 import ac.memory.episodic.EpisodicMemoryException;
 import ac.memory.episodic.Game;
 import ac.memory.episodic.Move;
@@ -66,7 +72,14 @@ class IntrospectionEngine extends Thread
          * }
          * * */
 
-        this.searchNewRPBS();
+        try
+          {
+            this.searchNewRPBS();
+          }
+        catch (MemoryException e)
+          {
+            LOGGER.error("An error occured during introspection", e);
+          }
 
         // @todo implement this method and remove next line
         break;
@@ -77,11 +90,11 @@ class IntrospectionEngine extends Thread
    * PRIVATE METHODS
    * ************************************************************************ */
 
-  private void searchNewRPBS()
+  private void searchNewRPBS() throws MemoryException
   {
     // @todo get last won game
     int nb_game = 10;
-    List<Game> list_games = this._memory.getWonGames(nb_game);
+    List<Game> list_games = this._memory.getLastWonGames(nb_game);
     Move m1, m2;
 
     for (int i = 0; i < list_games.size(); i++)
@@ -99,7 +112,7 @@ class IntrospectionEngine extends Thread
 
   }
 
-  private void searchNewRPBS(Move m1, Move m2)
+  private void searchNewRPBS(Move m1, Move m2) throws MemoryException
   {
     RelevantPartialBoardState new_rpbs;
     CompleteBoardState cbs1, cbs2;
@@ -108,6 +121,8 @@ class IntrospectionEngine extends Thread
       {
         cbs1 = m1.getCompleteBoardState();
         cbs2 = m2.getCompleteBoardState();
+
+        // @TODO les cbs sont-ils composés de variables où de constante.
 
         for (RelevantPartialBoardState rs1 : m1.getRelevantPartialBoardStates())
           for (RelevantPartialBoardState rs2 : m2
@@ -127,11 +142,95 @@ class IntrospectionEngine extends Thread
       }
   }
 
+  // peut retourner une liste d'extension
   private RelevantPartialBoardState extension(RelevantPartialBoardState rs1,
       CompleteBoardState cbs1, CompleteBoardState cbs2)
   {
-    // TODO Auto-generated method stub
-    return null;
+    boolean haveNewRPBS = false;
+    RelevantPartialBoardState new_rs = null;
+
+    Homomorphisms homo_cbs;
+    Homomorphisms homo_cbs1 = new Homomorphisms(rs1.getRule().getPremise(),
+        cbs1.getBoardStateFacts().getAtomList());
+    Homomorphisms homo_cbs2 = new Homomorphisms(rs1.getRule().getPremise(),
+        cbs2.getBoardStateFacts().getAtomList());
+
+    ArrayList<Substitution> substitution_list1 = homo_cbs1.getHomomorphisms();
+    ArrayList<Substitution> substitution_list2 = homo_cbs2.getHomomorphisms();
+
+    ArrayList<Term> vars;
+    ArrayList<Term> vars1 = this.getVariables(cbs1.getBoardStateFacts()
+        .getAtomList());
+
+
+    for (Substitution sub1 : substitution_list1)
+      {
+        // variables de cbs1 utilisées par l'homomorphisme partiel (RS connu)
+        // puis suppression de celle-ci des choix possibles.
+        vars = sub1.getVariables();
+        vars1.removeAll(vars);
+        
+        // parcours des choix de variables possibles
+        for (Term t : vars1)
+          {
+            vars.add(t);
+            // créer un RS contenant tous les prédicats complétements
+            // instanciés
+            new_rs = cbs1.getPart(vars);
+
+            // tester si il existe un homomorphisme de RS dans cbs2 (en gardant
+            // sub2 comme base)
+            boolean haveHomomorphism = false;
+            for (Substitution sub2 : substitution_list2)
+              {
+                homo_cbs = new Homomorphisms(new_rs.getRule().getPremise(),
+                    cbs2.getBoardStateFacts().getAtomList());
+                
+                if (homo_cbs.backtrackRec(sub2))
+                  {
+                    haveNewRPBS = true;
+                    haveHomomorphism = true;
+                    break;
+                  }
+              }
+            
+            if(!haveHomomorphism)
+              vars.remove(t);
+          }
+      }
+
+    if(!haveNewRPBS)
+      new_rs = null;
+    
+    return new_rs; 
+  }
+
+  /**
+   * 
+   * @return an list of Term
+   */
+  private ArrayList<Term> getVariables(ArrayList<Atom> atomList)
+  {
+    ArrayList<Term> variables = new ArrayList<Term>();
+
+    for (Atom a : atomList)
+      {
+        for (Term t : a.getTerms())
+          {
+            boolean contient = false;
+            if (t.isVariable())
+              {
+                for (Term i : variables)
+                  {
+                    if (t.equalsT(i))
+                      contient = true;
+                  }
+                if (!contient)
+                  variables.add(t);
+              }
+          }
+      }
+    return variables;
   }
 
 }

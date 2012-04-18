@@ -14,7 +14,6 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.graphdb.traversal.Traverser;
 import org.neo4j.helpers.collection.IterableWrapper;
-import org.neo4j.index.lucene.ValueContext;
 import org.neo4j.kernel.Traversal;
 import org.neo4j.kernel.Uniqueness;
 
@@ -34,6 +33,7 @@ public class ObjectNode extends
   static final String ID_FIELD = "id_obj";
 
   /**
+   * @param objectNode
    * @param attributeNode
    */
   public ObjectNode(Node objectNode)
@@ -172,14 +172,15 @@ public class ObjectNode extends
             double mark = 0.5;
             if (total != 0)
               mark = (double) won / (double) total;
-            System.out.println("Won : " + (double) won + ", total: "
-                + (double) total + ", mark: " + mark);
             underlyingNode.setProperty(MARK_FIELD, mark);
 
-            logger.debug("Indexing new mark");
+            if (logger.isDebugEnabled())
+              logger.debug("Indexing new object mark");
             Neo4jService.getObjMarkIndex().remove(underlyingNode);
             Neo4jService.getObjMarkIndex()
                 .add(underlyingNode, MARK_FIELD, mark);
+
+            performDependingAttributeMark();
 
             tx.success();
           }
@@ -198,6 +199,79 @@ public class ObjectNode extends
         throw new NodeException("Error when trying to perfom the mark calcul",
             e);
       }
+  }
+
+  /**
+   * Perform mark for depending attribute
+   */
+  private void performDependingAttributeMark()
+  {
+    for (Iterator<Relationship> iterator = underlyingNode.getRelationships(
+        RelTypes.RELATED, Direction.OUTGOING).iterator(); iterator.hasNext();)
+      {
+        Relationship rel = (Relationship) iterator.next();
+        AttributeNode attr = new AttributeNode(rel.getEndNode());
+
+        try
+          {
+            attr.performMark();
+          }
+        catch (NodeException e)
+          {
+            logger.warn(
+                "Error when performing mark for attribute " + attr.getId(), e);
+          }
+
+      }
+  }
+
+  /* (non-Javadoc)
+   * 
+   * @see
+   * ac.memory.persistence.neo4j.AbstractLatticeContextNode#addRelatedObject
+   * (java.lang.Object) */
+  @Override
+  public void addRelatedObject(AttributeNode attribute)
+  {
+    if (logger.isDebugEnabled())
+      logger.debug("Relate new object to the atribute");
+    if (logger.isDebugEnabled())
+      logger.debug("Opening transaction");
+    Transaction tx = underlyingNode.getGraphDatabase().beginTx();
+    try
+      {
+        if (!this.equals(attribute))
+          {
+            Relationship related = getRelationshipTo(attribute);
+            if (related == null)
+              {
+
+                underlyingNode.createRelationshipTo(
+                    attribute.getUnderlyingNode(), RelTypes.RELATED);
+                try
+                  {
+                    attribute.performMark();
+                  }
+                catch (NodeException e)
+                  {
+                    logger.error("Error when perfoming mark", e);
+                  }
+
+              }
+            else
+              {
+                logger.warn("Relationship already exists");
+              }
+            tx.success();
+          }
+      }
+    finally
+      {
+        if (logger.isDebugEnabled())
+          logger.debug("Transaction finished");
+        tx.finish();
+      }
+
   }
 
 }

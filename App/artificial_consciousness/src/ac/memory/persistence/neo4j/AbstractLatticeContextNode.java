@@ -111,40 +111,7 @@ abstract public class AbstractLatticeContextNode<ObjectType, RelatedObjectType, 
    * @param object
    *          the object to associate
    */
-  @SuppressWarnings("unchecked")
-  public void addRelatedObject(RelatedObjectType object)
-  {
-    if (logger.isDebugEnabled())
-      logger.debug("Relate new object to the node");
-    if (logger.isDebugEnabled())
-      logger.debug("Opening transaction");
-    Transaction tx = underlyingNode.getGraphDatabase().beginTx();
-    try
-      {
-        if (!this.equals(object))
-          {
-            Relationship related = getRelationshipTo(object);
-            if (related == null)
-              {
-                underlyingNode
-                    .createRelationshipTo(
-                        ((AbstractLatticeContextNode<ObjectType, RelatedObjectType, StoredObjectType>) object)
-                            .getUnderlyingNode(), RelTypes.RELATED);
-              }
-            else
-              {
-                logger.warn("Relationship already exists");
-              }
-            tx.success();
-          }
-      }
-    finally
-      {
-        if (logger.isDebugEnabled())
-          logger.debug("Transaction finished");
-        tx.finish();
-      }
-  }
+  public abstract void addRelatedObject(RelatedObjectType object);
 
   /**
    * Remove a relationship between the tow objects

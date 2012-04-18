@@ -12,7 +12,6 @@ import ac.memory.persistence.neo4j.GameNode;
 import ac.memory.persistence.neo4j.MoveNode;
 import ac.memory.persistence.neo4j.Neo4jService;
 import ac.memory.persistence.neo4j.NodeException;
-import ac.memory.persistence.neo4j.NodeRepositoryException;
 import ac.memory.persistence.neo4j.ObjectNode;
 import ac.memory.persistence.neo4j.ObjectNodeRepository;
 import ac.shared.GameStatus;
@@ -164,9 +163,13 @@ public class Neo4jGame implements Game
         try
           {
             ObjectNode obj = obj_repo.getNodeById(id);
-            obj.performMark();
+            if (obj != null)
+              obj.performMark();
+            else
+              logger.warn("Error when trying to perform the mark");
+
           }
-        catch (NodeRepositoryException | NodeException e)
+        catch (NodeException e)
           {
             logger.warn("Error when trying to perform the mark");
             continue;

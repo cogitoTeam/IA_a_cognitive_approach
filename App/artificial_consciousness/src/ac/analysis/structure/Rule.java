@@ -18,12 +18,16 @@ public class Rule
 	private Atom conclusion;//la conclusion de la r�gle
 	private ArrayList<Term> terms;//l'ensemble des termes pr�sents dans la r�gle
 
-//// Les constructeurs de la classe	
+  // ***************************************************************************
+  // CONSTRUCTORS
+  // ***************************************************************************
+
 	
 	/**
 	 * Constructeur vide
 	 */
-	public Rule() {
+	public Rule() 
+	{
 		super();
 		this.name = "";
 		this.premise = new ArrayList<Atom>();
@@ -31,6 +35,25 @@ public class Rule
 		this.terms = new ArrayList<Term>();
 	}
 
+	/**
+	 * 
+	 * @param premise hypothèse de la règle.
+	 * @param conclusion conclusion de la règle.
+	 */
+	public Rule(ArrayList<Atom> premise, Atom conclusion) 
+	{
+	  this.name = "";
+    this.premise = premise;
+    this.conclusion = conclusion;
+    this.terms = new ArrayList<Term>();
+    
+    for(Atom a : premise)
+      for(Term t : a.getTerms())
+        this.addTerm(t);
+    
+    for(Term t : conclusion.getTerms())
+      this.addTerm(t);
+	}
 
 	/**
 	 * Constructeur
@@ -64,7 +87,11 @@ public class Rule
 		conclusion = premise.remove(premise.size()-1);
 	}
 	
-// Les getters et setters de la classe	
+	
+	// ***************************************************************************
+  // GETTERS / SETTERS
+  // ***************************************************************************
+
 	
 	/**
 	 * Accesseur en lecture

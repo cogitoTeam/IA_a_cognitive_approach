@@ -25,6 +25,26 @@ public class Atom
    * **************************************************************************** */
 
   /**
+   * Empty Constructor for {@link Atom}
+   */
+  public Atom()
+  {
+    label = "";
+    terms = new ArrayList<Term>();
+  }
+  
+  /**
+   * 
+   * @param label the label of this atom.
+   * @param termes the list of terms of this atom.
+   */
+  public Atom(String label, ArrayList<Term> termes)
+  {
+    this.label = label;
+    this.terms = termes;
+  }
+  
+  /**
    * Copy Constructor
    * 
    * @param copy
@@ -94,15 +114,6 @@ public class Atom
 
           }
       }
-  }
-
-  /**
-   * Empty Constructor for {@link Atom}
-   */
-  public Atom()
-  {
-    label = "";
-    terms = new ArrayList<Term>();
   }
 
   /* *****************************************************************************
