@@ -66,7 +66,8 @@ public class AC extends Agent
   /**
    * bootstrap method for starting with some RelevantPartialBordState
    */
-  public void initialisation()
+  @Override
+  public void bootstrap()
   {
     if (LOGGER.isDebugEnabled())
       LOGGER.debug("AC bootstrap method call");
