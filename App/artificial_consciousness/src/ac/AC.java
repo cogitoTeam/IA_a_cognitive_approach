@@ -1,8 +1,13 @@
 package ac;
 
+import java.io.IOException;
+
+import org.apache.log4j.Logger;
+
 import ac.analysis.Analysis;
 import agent.Action;
 import agent.Percept;
+import ac.memory.MemoryException;
 import ac.memory.Neo4jActiveMemory;
 import ac.memory.episodic.Neo4jEpisodicMemory;
 import ac.memory.semantic.Neo4jSemanticMemory;
@@ -18,6 +23,8 @@ import agent.Agent;
  */
 public class AC extends Agent
 {
+
+  private static final Logger LOGGER = Logger.getLogger(AC.class);
 
   /* **************************************************************************
    * ATTRIBUTS
@@ -56,7 +63,22 @@ public class AC extends Agent
   @Override
   protected Action perceptReaction(Percept percept)
   {
-    // TODO Auto-generated method stub
+    Action action = null;
+    
+    LOGGER.debug("percept reçu "+percept.getClass());
+    if(percept.getClass() == Percept.Choices.class)
+      {
+        LOGGER.debug("percept de types choices");
+        try
+          {
+            action = this._analysis.analyse((Percept.Choices)percept);
+          }
+        catch (Exception e)
+          {
+            LOGGER.error("erreur lors de l'analyse", e);
+          }          
+      }
+
     return null;
   }
 

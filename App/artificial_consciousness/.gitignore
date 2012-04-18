@@ -16,7 +16,7 @@ local.properties
 # Netbeans project files
 nbproject/**
 build.xml
-log4j.properties
+
 manifest.mf
 
 # External tool builders

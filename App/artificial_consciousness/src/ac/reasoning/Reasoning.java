@@ -57,7 +57,7 @@ public class Reasoning
     Action action = _choice_engine.start();
     // @todo restart introspection only after game end or after x minutes of
     // inactivity
-    _introspection_engine.start();
+    //_introspection_engine.start();
     return action;
   }
 

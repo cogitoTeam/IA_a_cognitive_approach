@@ -2,6 +2,12 @@
 
 To ensure data persistence, this module incorporates an embedded version of Neo4j. Neo4j is an high-performance NOSQL graph database (see here : http://neo4j.org).
 
+Args to run the java application : 
+-XX:+UseParallelGC
+-XX:+UseConcMarkSweepGC
+-XX:+UseNUMA
+-Xmx2G
+
 ## This package is composed of this entities :
 
 * The neo4j util : witch provides the unique database object, and the repositories,

@@ -50,6 +50,7 @@ public class AdvancedAnalysisEngine
   {
     super();
     this.input = input;
+    output = new Choices_FOL();
   }
 
   /* **************************************************************************

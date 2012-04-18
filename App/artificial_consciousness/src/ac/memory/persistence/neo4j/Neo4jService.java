@@ -42,8 +42,20 @@ public class Neo4jService
     if (database == null)
       {
         if (logger.isDebugEnabled())
-          logger.debug("First call for Neo4jService, database initialization");
-        database = new EmbeddedGraphDatabase(DB_PATH);
+          {
+            logger
+                .debug("First call for Neo4jService, database initialization");
+            logger.debug("Path of the database: " + DB_PATH);
+          }
+        try
+          {
+            database = new EmbeddedGraphDatabase(DB_PATH);
+          }
+        catch (Exception e)
+          {
+            logger.debug("Error when creating the embedded database.");
+            throw e;
+          }
         registerShutdownHook(database);
       }
 
