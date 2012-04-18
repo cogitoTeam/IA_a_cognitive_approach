@@ -12,6 +12,7 @@ import ac.memory.Neo4jActiveMemory;
 import ac.memory.episodic.Neo4jEpisodicMemory;
 import ac.memory.semantic.Neo4jSemanticMemory;
 import ac.reasoning.Reasoning;
+import ac.shared.GameStatus;
 import agent.Agent;
 
 /**
@@ -33,6 +34,8 @@ public class AC extends Agent
   private Analysis _analysis;
   private Neo4jActiveMemory _memory;
   private Reasoning _reasoning;
+  
+  private boolean existGame = false;
 
   /* **************************************************************************
    * CONSTRUCTOR
@@ -66,20 +69,65 @@ public class AC extends Agent
     Action action = null;
     
     LOGGER.debug("percept reçu "+percept.getClass());
-    if(percept.getClass() == Percept.Choices.class)
+    
+    switch(percept.getType())
       {
-        LOGGER.debug("percept de types choices");
+        case CHOICES :
+          if(!existGame)
+            {
+              try
+                {
+                  this._memory.BeginOfGame();
+                }
+              catch (MemoryException e)
+                {
+                  LOGGER.error("erreur lors de la déclaration de begin of game", e);
+                }
+              this.existGame = true;
+            }
+          LOGGER.debug("percept de types choices");
+          try
+            {
+              action = this._analysis.analyse((Percept.Choices)percept);
+            }
+          catch (Exception e)
+            {
+              LOGGER.error("erreur lors de l'analyse", e);
+            } 
+          break;
+        
+        case GAME_END :
+          this.existGame = false;
+
+          Percept.GameEnd game_end = (Percept.GameEnd)percept;
+          
+          GameStatus status = GameStatus.UNDEFINED;
+          
+          if(game_end.getWinner() == this.getPlayer())
+            status = GameStatus.VICTORY;
+          else if(game_end.getWinner() == null)
+            status = GameStatus.DRAW;
+          else
+            status = GameStatus.DEFEAT;
+
+            
         try
           {
-            action = this._analysis.analyse((Percept.Choices)percept);
+            this._memory.EndOfGame(status, game_end.getScore());
           }
-        catch (Exception e)
+        catch (MemoryException e)
           {
-            LOGGER.error("erreur lors de l'analyse", e);
-          }          
+            LOGGER.error("erreur lors de la déclaration de end of game", e);
+          }
+
+          action = new Action.Restart();
+
+          break;
+          
+
       }
 
-    return null;
+    return action;
   }
 
   @Override
