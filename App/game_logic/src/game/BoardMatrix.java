@@ -85,7 +85,7 @@ public class BoardMatrix
     * A BoardMatrix.Cell enumeration case (ex: Board.Cell.PIECE_WHITE).
     * @return 
     * The corresponding Game.Player enumeration case 
-    * (ex: Game.Player.WHITE) or Player. if there is no such case.
+    * (ex: Game.Player.WHITE) or null if there is no such case.
     */
     public static Player pieceToPlayer(Cell c)
     {
@@ -97,7 +97,7 @@ public class BoardMatrix
                 return Player.BLACK;
             case EMPTY:
             default:
-                return Player.NEITHER;
+                return null;
         }
     }
 
@@ -350,9 +350,8 @@ public class BoardMatrix
     * @param p
     * The position on the board we want to know the owner of.
     * @return 
-    * The player (BLACK or WHITE) who owns the specified cell, null if the 
-    * position is invalid (out of bounds) or the NEITHER if the cell has no 
-    * owner (is EMPTY).
+    * The player (BLACK or WHITE) who owns the specified cell or null if the 
+    * position is invalid (out of bounds) or the cell has no owner (is EMPTY).
     */
     public Player getCellOwner(Position p)
     {
@@ -364,9 +363,6 @@ public class BoardMatrix
                 
             case PIECE_BLACK:
                 return Player.BLACK;
-                
-            case EMPTY:
-                return Player.NEITHER;
                 
             case OUT_OF_BOUNDS:                
             default:

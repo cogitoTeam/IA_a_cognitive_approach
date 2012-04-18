@@ -7,9 +7,6 @@
 package test;
 
 import agent.Agent;
-import game.BoardMatrix;
-import game.BoardMatrix.Position;
-import game.ReversiRules;
 
 
 public class Test 
@@ -18,11 +15,8 @@ public class Test
     
     public static void main(String[] args) throws InterruptedException
     {
-        BoardMatrix b = ReversiRules.getInstance().createBoard();
-        System.out.println(b.getCell(new Position(0, 0)));
-        
         // create agent(s)
-        /*Agent agent = new MiniMaxAgent();
+        Agent agent = new MiniMaxAgent();
         
         // main loop
         boolean stop = false;
@@ -39,6 +33,6 @@ public class Test
             Thread.sleep(1000);
         }
         
-        System.out.println("Stopped");*/
+        System.out.println("Stopped");
     }
 }
