@@ -21,7 +21,22 @@ public class BoardMatrix
     /* NESTING */
     public static enum Cell
     {
-        EMPTY, PIECE_BLACK, PIECE_WHITE, OUT_OF_BOUNDS
+        EMPTY, PIECE_BLACK, PIECE_WHITE, OUT_OF_BOUNDS;
+        
+        public String toRule()
+        {
+          switch(this)
+          {
+            case EMPTY:
+              return "isEmpty";
+            case PIECE_BLACK:
+              return "isBlack";
+            case PIECE_WHITE:
+              return "isWhite";
+            default:
+              return "error";       
+          }
+        }
     }
     
     public static class Size

@@ -6,6 +6,7 @@ import game.BoardMatrix;
 import game.ReversiRules;
 import game.BoardMatrix.*;
 import ac.AC;
+import ac.analysis.inferenceEngine.KnowledgeBase;
 import ac.analysis.structure.*;
 import ac.memory.MemoryException;
 import ac.shared.CompleteBoardState;
@@ -114,7 +115,7 @@ public class BasicAnalysisEngine
    * @return an instance of a {@link CompleteBoardState} class which represents
    *         the converted BoardMatrix
    */
-  private CompleteBoardState convertMatrixtoCBS(BoardMatrix matrix)
+  private static CompleteBoardState convertMatrixtoCBS(BoardMatrix matrix)
   {
     BoardMatrix.Position p = new Position(0, 0);
     Cell c;
@@ -127,63 +128,50 @@ public class BasicAnalysisEngine
       for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
         {
           c = matrix.getCell(p);
-          s = "is_" + c + "('c_" + p.row + '_' + p.col + "')";
+          s = c.toRule() + "('c_" + p.row + '_' + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }
     
-    //add diff
-    BoardMatrix.Position p2 = new Position(0, 0);
-    for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
-      for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
-        for (p2.row = p.row; p2.row < matrix.getSize().n_rows; p2.row++)
-          for (p2.col = p.col; p2.col < matrix.getSize().n_cols; p2.col++)
-            if(!p.equals(p2))
-            {
-              s = "diff('c_" + p.row + '_' + p.col + "', 'c_" + p2.row + '_' + p2.col + "')";
-              a = new Atom(s);
-              cbs.getBoardStateFacts().addNewFact(a);
-            }
-
     //Add edges
     p.col = 0;
     p.row = 0;
     for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
       {
-        s = "is_edge('c_" + p.row + '_' + 0 + "')";
+        s = "isEdge('c_" + p.row + '_' + 0 + "')";
         a = new Atom(s);
         cbs.getBoardStateFacts().addNewFact(a);
         
-        s = "is_edge('c_" + p.row + '_' + (matrix.getSize().n_cols-1) + "')";
+        s = "isEdge('c_" + p.row + '_' + (matrix.getSize().n_cols-1) + "')";
         a = new Atom(s);
         cbs.getBoardStateFacts().addNewFact(a);
       }
     
     for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
       {
-        s = "is_edge('c_" + 0 + '_' + p.col + "')";
+        s = "isEdge('c_" + 0 + '_' + p.col + "')";
         a = new Atom(s);
         cbs.getBoardStateFacts().addNewFact(a);
         
-        s = "is_edge('c_" + (matrix.getSize().n_rows-1) + '_' +p.col  + "')";
+        s = "isEdge('c_" + (matrix.getSize().n_rows-1) + '_' +p.col  + "')";
         a = new Atom(s);
         cbs.getBoardStateFacts().addNewFact(a);
       }
     
     //Add corners
-    s = "is_corner('c_" + 0 + '_' + 0 + "')";
+    s = "isCorner('c_" + 0 + '_' + 0 + "')";
     a = new Atom(s);
     cbs.getBoardStateFacts().addNewFact(a);
     
-    s = "is_corner('c_" + (matrix.getSize().n_rows-1) + '_' + 0 + "')";
+    s = "isCorner('c_" + (matrix.getSize().n_rows-1) + '_' + 0 + "')";
     a = new Atom(s);
     cbs.getBoardStateFacts().addNewFact(a);
     
-    s = "is_corner('c_" + 0 + '_' + (matrix.getSize().n_cols-1) + "')";
+    s = "isCorner('c_" + 0 + '_' + (matrix.getSize().n_cols-1) + "')";
     a = new Atom(s);
     cbs.getBoardStateFacts().addNewFact(a);
     
-    s = "is_corner('c_" + (matrix.getSize().n_rows-1) + '_' + (matrix.getSize().n_cols-1) + "')";
+    s = "isCorner('c_" + (matrix.getSize().n_rows-1) + '_' + (matrix.getSize().n_cols-1) + "')";
     a = new Atom(s);
     cbs.getBoardStateFacts().addNewFact(a);
     
@@ -191,15 +179,15 @@ public class BasicAnalysisEngine
     for (p.row = 0; p.row < matrix.getSize().n_rows-1; p.row++)
       for (p.col = 0; p.col < matrix.getSize().n_cols-1; p.col++)
         {
-          s = "is_near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "')";
+          s = "near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
           
-          s = "is_near('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+1) + "')";
+          s = "near('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+1) + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
           
-          s = "is_near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "')";
+          s = "near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }
@@ -208,15 +196,15 @@ public class BasicAnalysisEngine
     for (p.row = 0; p.row < matrix.getSize().n_rows-1; p.row++)
       for (p.col = 0; p.col < matrix.getSize().n_cols-1; p.col++)
         {
-          s = "is_align('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "','c_" + (p.row+2) + '_' + p.col + "')";
+          s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "','c_" + (p.row+2) + '_' + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
           
-          s = "is_align('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+1) + "','c_" + p.row + '_' + (p.col+2) + "')";
+          s = "aligned('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+1) + "','c_" + p.row + '_' + (p.col+2) + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
           
-          s = "is_align('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "','c_" + (p.row+2) + '_' + (p.col+2) + "')";
+          s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "','c_" + (p.row+2) + '_' + (p.col+2) + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }
@@ -234,12 +222,13 @@ public class BasicAnalysisEngine
   public static void main(String[] args) throws IOException, MemoryException
   {
     BoardMatrix b = ReversiRules.getInstance().createBoard();
-    Choices test = new Choices(b); 
+    CompleteBoardState cbs = convertMatrixtoCBS(b); 
     
-    BasicAnalysisEngine bae = new BasicAnalysisEngine(test);
-    bae.runEngine();
+    KnowledgeBase kb = new KnowledgeBase("RuleBase");
+    kb.setBF(cbs.getBoardStateFacts());
+    kb.optimizedSaturation_FOL();
     
-    System.out.println(bae.getOutput());
+    System.out.println(kb);
   }
 }
 
