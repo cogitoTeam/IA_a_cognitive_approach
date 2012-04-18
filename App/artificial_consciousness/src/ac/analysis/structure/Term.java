@@ -1,14 +1,20 @@
 package ac.analysis.structure;
 
+import java.io.Serializable;
+
 /**
  * Mod�lise un terme : une variable ou une constante. Elle poss�de un attribut bool�en qui
  * determine si ce terme est constante ou pas, et une m�thode qui determine l'egalit� entre 
  * deux termes.
  *
  */
-public class Term
+public class Term implements Serializable
 {
-	private String label;//le nom du terme (par exemple : x, 'toto')
+	/**
+   * 
+   */
+  private static final long serialVersionUID = 5174312039198169556L;
+  private String label;//le nom du terme (par exemple : x, 'toto')
 	private boolean constant;//vrai si le terme courant est une constante, faux sinon (c'est une variable)
 
 //Les constructeurs de la classe	

@@ -1,5 +1,6 @@
 package ac.analysis.structure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,8 +13,12 @@ import java.util.ArrayList;
  * @author namratapatel
  */
 
-public class Atom
+public class Atom implements Serializable
 {
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 655992608339297963L;
   /* **************************************************************************
    * FIELD
    * ************************************************************************* */
