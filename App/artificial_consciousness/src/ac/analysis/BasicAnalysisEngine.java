@@ -1,8 +1,13 @@
 package ac.analysis;
 
+import java.io.IOException;
+
 import game.BoardMatrix;
+import game.ReversiRules;
 import game.BoardMatrix.*;
+import ac.AC;
 import ac.analysis.structure.*;
+import ac.memory.MemoryException;
 import ac.shared.CompleteBoardState;
 import ac.shared.FOLObjects.*;
 import agent.Percept.*;
@@ -43,6 +48,7 @@ public class BasicAnalysisEngine
   {
     super();
     this.setInput(choices);
+    output = new Choices_FOL();
   }
 
   /* **************************************************************************
@@ -119,12 +125,31 @@ public class BasicAnalysisEngine
       for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
         {
           c = matrix.getCell(p);
-          s = "is" + c + "(c_" + p.row + p.col + ")";
+          s = "is_" + c + "('c_" + p.row + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }
 
-    return null;
+    return cbs;
 
   }
+  
+//just for tests
+  /**
+   * @param args
+   * @throws IOException
+   * @throws MemoryException 
+   */
+  public static void main(String[] args) throws IOException, MemoryException
+  {
+    BoardMatrix b = ReversiRules.getInstance().createBoard();
+    Choices test = new Choices(b); 
+    
+    BasicAnalysisEngine bae = new BasicAnalysisEngine(test);
+    bae.runEngine();
+    
+    System.out.println(bae.getOutput());
+  }
 }
+
+

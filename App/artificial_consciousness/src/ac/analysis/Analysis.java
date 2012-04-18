@@ -3,6 +3,8 @@ package ac.analysis;
 import java.io.IOException;
 
 import game.BoardMatrix;
+import game.ReversiRules;
+import ac.AC;
 import ac.memory.Neo4jActiveMemory;
 import ac.memory.MemoryException;
 import ac.reasoning.Reasoning;
@@ -61,13 +63,18 @@ public class Analysis
   /**
    * @param args
    * @throws IOException
+   * @throws MemoryException 
    */
-  public static void main(String[] args) throws IOException
+  public static void main(String[] args) throws IOException, MemoryException
   {
-    BoardMatrix b = new BoardMatrix(null);
+    BoardMatrix b = ReversiRules.getInstance().createBoard();
 
     Choices test = new Choices(b);
     test.getCurrentBoard();
+    AC new_AC = new AC();
+    Analysis test_analysis = new Analysis(new_AC.getMemory(),new_AC.getReasoning());
+    test_analysis.analyse(test);
+    
     System.out.println(test.getCurrentBoard());
   }
 }

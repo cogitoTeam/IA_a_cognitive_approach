@@ -19,6 +19,16 @@ public class Choices_FOL
   // ATTRIBUTES
   // ***************************************************************************
 
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return "Choices_FOL [_current_board=" + _current_board + ", _options="
+        + _options + "]";
+  }
+
   private CompleteBoardState _current_board;
   private List<Option> _options;
 

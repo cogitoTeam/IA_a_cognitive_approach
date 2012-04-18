@@ -14,6 +14,15 @@ import ac.analysis.structure.FactBase;
  */
 public abstract class AbstractBoardState implements Serializable
 {
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return "AbstractBoardState [boardStateFacts=" + boardStateFacts + "]";
+  }
+
   private static final long serialVersionUID = 6794929662400698592L;
 
   protected long id;
@@ -29,7 +38,7 @@ public abstract class AbstractBoardState implements Serializable
    */
   public AbstractBoardState()
   {
-    // DEFAULT CONSTRUCTOR
+    boardStateFacts = new FactBase();
 
   }
 
