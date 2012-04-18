@@ -76,10 +76,9 @@ public class AC extends Agent
     if (LOGGER.isDebugEnabled())
       LOGGER.debug("Generating some Atoms");
 
-    atoms_list.add(new Atom("is_PIECE_BLACK(x)"));
-    atoms_list.add(new Atom("is_PIECE_BLACK(y)"));
-    atoms_list.add(new Atom("diff(x,y)"));
-    atoms_list.add(new Atom("is_near(y)"));
+    atoms_list.add(new Atom("isBlack(x)"));
+    atoms_list.add(new Atom("isBlack(y)"));
+    atoms_list.add(new Atom("near(x,y)"));
 
     try
       {
