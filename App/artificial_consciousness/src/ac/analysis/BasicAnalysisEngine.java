@@ -190,6 +190,19 @@ public class BasicAnalysisEngine
           s = "near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
+          
+          // near(x,y) --> near(y,x)
+          s = "near('c_" + (p.row+1) + '_' + p.col + "','c_" + p.row + '_' + p.col + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "near('c_" + p.row + '_' + (p.col+1) + "','c_" + p.row + '_' + p.col + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "near('c_" + (p.row+1) + '_' + (p.col+1) + "','c_" + p.row + '_' + p.col + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
         }
     
     //Add aligns
@@ -205,6 +218,19 @@ public class BasicAnalysisEngine
           cbs.getBoardStateFacts().addNewFact(a);
           
           s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "','c_" + (p.row+2) + '_' + (p.col+2) + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          // aligned(x,y,z) --> aligned(z,y,x)
+          s = "aligned('c_" + (p.row+2) + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "','c_" + p.row + '_' + p.col + "',)";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "aligned('c_" + p.row + '_' + (p.col+2) + "','c_" + p.row + '_' + (p.col+1) + "','c_" + p.row + '_' + p.col + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "aligned('c_" + (p.row+2) + '_' + (p.col+2) + "','c_" + (p.row+1) + '_' + (p.col+1) + "','c_" + p.row + '_' + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }

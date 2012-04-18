@@ -1,7 +1,5 @@
 
-4
-near(x,y);near(y,x)
-aligned(x,y,z);aligned(z,y,x)
+2
 aligned(w,x,y);aligned(x,y,z);aligned(w,x,z)
 aligned(w,x,y);aligned(x,y,z);aligned(w,y,z)
 
