@@ -364,8 +364,10 @@ public class BoardMatrix
             case PIECE_BLACK:
                 return Player.BLACK;
                 
-            case OUT_OF_BOUNDS:
             case EMPTY:
+                return Player.NEITHER;
+                
+            case OUT_OF_BOUNDS:                
             default:
                 return null;
         }
