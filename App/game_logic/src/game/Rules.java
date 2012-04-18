@@ -29,7 +29,9 @@ public abstract class Rules
      */
     public BoardMatrix createBoard()
     {
-        return new BoardMatrix(getBoardSize());
+        BoardMatrix b = new BoardMatrix(getBoardSize());
+        reset(b);
+        return b;
     }
     
     /** 

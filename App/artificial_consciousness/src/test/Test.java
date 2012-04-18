@@ -19,7 +19,7 @@ public class Test
     public static void main(String[] args) throws InterruptedException
     {
         BoardMatrix b = ReversiRules.getInstance().createBoard();
-        System.out.println(b.getCell(new Position()));
+        System.out.println(b.getCell(new Position(0, 0)));
         
         // create agent(s)
         /*Agent agent = new MiniMaxAgent();
