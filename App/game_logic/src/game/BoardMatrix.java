@@ -350,8 +350,9 @@ public class BoardMatrix
     * @param p
     * The position on the board we want to know the owner of.
     * @return 
-    * The player who owns the specified cell, or null if the position is invalid
-    * or the cell has no owner.
+    * The player (BLACK or WHITE) who owns the specified cell, null if the 
+    * position is invalid (out of bounds) or the NEITHER if the cell has no 
+    * owner (is EMPTY).
     */
     public Player getCellOwner(Position p)
     {
