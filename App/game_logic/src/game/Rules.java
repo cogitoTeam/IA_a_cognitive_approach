@@ -19,6 +19,19 @@ public abstract class Rules
     /* METHODS */
 
     // query
+    
+        
+    /**
+     * Create a board to play the game defined by these rules.
+     * @return 
+     * A brand-new and deep BoardMatrix with the correct size to play the game
+     * defined by this rule-set.
+     */
+    public BoardMatrix createBoard()
+    {
+        return new BoardMatrix(getBoardSize());
+    }
+    
     /** 
     * Get the board resulting from a given player's move at a given position
     * of a given board.
@@ -150,6 +163,13 @@ public abstract class Rules
     // query
     
     /**
+     * Check the size of the board defined by these rules.
+     * @return 
+     * The size of the board this particular game is played on.
+     */
+    public abstract BoardMatrix.Size getBoardSize();
+    
+    /**
      * Check which player is supposed to play first by these rules.
      * @return 
      * The player who, by these rules, moves first.
@@ -228,15 +248,6 @@ public abstract class Rules
      */
     public abstract boolean isLegalMove(Position p, BoardMatrix board, 
                                         Player player);
-    
-    
-    /**
-     * Create a board to play the game defined by these rules.
-     * @return 
-     * A brand-new and deep BoardMatrix with the correct size to play the game
-     * defined by this rule-set.
-     */
-    public abstract BoardMatrix createBoard();
     
     
     // modification

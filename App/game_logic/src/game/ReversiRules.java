@@ -36,6 +36,13 @@ public class ReversiRules extends Rules
     
     // query
     
+        
+    @Override
+    public Size getBoardSize()
+    {
+        return BOARD_SIZE;
+    }
+    
     @Override
     public Player getFirstPlayer() 
     {
@@ -65,7 +72,6 @@ public class ReversiRules extends Rules
                 && getValue(board, player) 
                         > getValue(board, Game.otherPlayer(player)));
     }
-    
     
     @Override
     public int getValue(BoardMatrix board, Player player) 
@@ -158,12 +164,6 @@ public class ReversiRules extends Rules
     public String toString() 
     {
         return "reversi";
-    }
-
-    @Override
-    public BoardMatrix createBoard() 
-    {
-        return new BoardMatrix(BOARD_SIZE);
     }
 
     

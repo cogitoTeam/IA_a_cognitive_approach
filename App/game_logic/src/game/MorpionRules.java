@@ -32,6 +32,13 @@ public class MorpionRules extends Rules
     /* IMPLEMENT INTERFACE */
     
     // query
+    
+    @Override
+    public Size getBoardSize()
+    {
+        return BOARD_SIZE;
+    }
+    
     @Override
     public Player getFirstPlayer() 
     {
@@ -156,12 +163,6 @@ public class MorpionRules extends Rules
     public String toString() 
     {
         return "morpion";
-    }
-
-    @Override
-    public BoardMatrix createBoard()
-    {
-        return new BoardMatrix(BOARD_SIZE);
     }
 
 }
