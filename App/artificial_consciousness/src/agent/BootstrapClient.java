@@ -27,6 +27,7 @@ class BootstrapClient extends XMLClient
     // creation
     public BootstrapClient(String _s_server_url)
     {
+        // create XMLClient
         super(_s_server_url);
 
         // ask the server for a new game, complete with identifier

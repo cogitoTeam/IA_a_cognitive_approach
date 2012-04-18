@@ -7,7 +7,6 @@
 package test;
 
 import agent.Agent;
-import game.ReversiRules;
 
 
 public class Test 
