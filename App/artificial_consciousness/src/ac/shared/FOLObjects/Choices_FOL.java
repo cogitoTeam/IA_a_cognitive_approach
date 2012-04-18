@@ -20,7 +20,7 @@ public class Choices_FOL
   // ***************************************************************************
 
   private CompleteBoardState _current_board;
-  private List<Option> _options;
+  private List<Option_FOL> _options;
 
   // ***************************************************************************
   // METHODS
@@ -32,7 +32,7 @@ public class Choices_FOL
    * @param _options
    *          the options to set
    */
-  public void addOption(Option option)
+  public void addOption(Option_FOL option)
   {
     this._options.add(option);
 
@@ -53,7 +53,7 @@ public class Choices_FOL
   /**
    * @return the options
    */
-  public List<Option> getOptions()
+  public List<Option_FOL> getOptions()
   {
     return _options;
   }

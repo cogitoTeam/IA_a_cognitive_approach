@@ -23,7 +23,7 @@ import ac.memory.semantic.lattice.LatticeContextException;
 import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
 import ac.shared.RelevantPartialBoardState;
-import ac.shared.FOLObjects.Option;
+import ac.shared.FOLObjects.Option_FOL;
 
 /**
  * The class Active Memory is in French the "Mémoire primaire". It acts as a
@@ -46,7 +46,7 @@ public class Neo4jActiveMemory implements Memory
   ObjectNodeRepository obj_repo;
   AttributeNodeRepository att_repo;
 
-  List<Pair<Option, Double>> option_buffer;
+  List<Pair<Option_FOL, Double>> option_buffer;
 
   /**
    * Default constructor for the active memory
@@ -101,7 +101,7 @@ public class Neo4jActiveMemory implements Memory
    * 
    * @see ac.memory.Memory#putOption(ac.shared.FOLObjects.Option) */
   @Override
-  public void putOption(Option option) throws MemoryException
+  public void putOption(Option_FOL option) throws MemoryException
   {
     if (logger.isDebugEnabled())
       logger.debug("Put new option in the Active Memory buffer");
@@ -127,14 +127,14 @@ public class Neo4jActiveMemory implements Memory
     double mark = total / (double) nb;
     if (logger.isDebugEnabled())
       logger.debug("grade = " + mark);
-    option_buffer.add(new Pair<Option, Double>(option, mark));
+    option_buffer.add(new Pair<Option_FOL, Double>(option, mark));
   }
 
   /* (non-Javadoc)
    * 
    * @see ac.memory.Memory#getGradedOptions() */
   @Override
-  public List<Pair<Option, Double>> getGradedOptions() throws MemoryException
+  public List<Pair<Option_FOL, Double>> getGradedOptions() throws MemoryException
   {
     return option_buffer;
   }
@@ -143,7 +143,7 @@ public class Neo4jActiveMemory implements Memory
    * 
    * @see ac.memory.Memory#OptionChosen(ac.shared.FOLObjects.Option) */
   @Override
-  public void OptionChosen(Option option) throws MemoryException
+  public void OptionChosen(Option_FOL option) throws MemoryException
   {
     // TODO verify that the option chosen is in the buffer list.
     try

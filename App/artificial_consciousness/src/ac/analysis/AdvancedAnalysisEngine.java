@@ -8,7 +8,7 @@ import ac.analysis.inferenceEngine.KnowledgeBase;
 import ac.analysis.structure.Query;
 import ac.shared.RelevantPartialBoardState;
 import ac.shared.FOLObjects.Choices_FOL;
-import ac.shared.FOLObjects.Option;
+import ac.shared.FOLObjects.Option_FOL;
 
 /**
  * This class represents the Advanced Conceptual Analyzer : it uses an inference
@@ -104,7 +104,7 @@ public class AdvancedAnalysisEngine
 
     Homomorphisms h;
     Query q;
-    for (Option o : output.getOptions())
+    for (Option_FOL o : output.getOptions())
       {
         kb.setBF(o.getResult().getBoardStateFacts());
         kb.optimizedSaturation_FOL();

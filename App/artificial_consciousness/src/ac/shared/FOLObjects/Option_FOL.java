@@ -14,7 +14,7 @@ import ac.shared.RelevantPartialBoardState;
  * @date 4 avr. 2012
  * @version 0.1
  */
-public class Option
+public class Option_FOL
 {
   // ***************************************************************************
   // ATTRIBUTES
@@ -36,7 +36,7 @@ public class Option
    * @param result
    *          the result of the move
    */
-  public Option(Action move, CompleteBoardState result)
+  public Option_FOL(Action move, CompleteBoardState result)
   {
     this._move = move;
     this._result = result;

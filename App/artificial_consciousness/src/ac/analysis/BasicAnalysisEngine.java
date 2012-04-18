@@ -93,11 +93,11 @@ public class BasicAnalysisEngine
     output.setCurrent_board(current_board);
 
     CompleteBoardState result;
-    Option tmp;
+    Option_FOL tmp;
     for (agent.Action.Option o : input.getOptions())
       {
         result = convertMatrixtoCBS(o.getResult());
-        tmp = new Option(o.getAction(), result);
+        tmp = new Option_FOL(o.getAction(), result);
         output.addOption(tmp);
       }
   }

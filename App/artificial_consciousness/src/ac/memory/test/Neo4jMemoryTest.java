@@ -17,7 +17,7 @@ import ac.memory.semantic.Neo4jSemanticMemory;
 import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
 import ac.shared.RelevantPartialBoardState;
-import ac.shared.FOLObjects.Option;
+import ac.shared.FOLObjects.Option_FOL;
 import ac.util.Pair;
 import agent.Action;
 import agent.Action.Type;
@@ -155,7 +155,7 @@ public class Neo4jMemoryTest
             // On put des options
             for (int j = 0; j < 10; ++j)
               {
-                Option option = new Option(new Action.Move(new Position(0, 0)),
+                Option_FOL option = new Option_FOL(new Action.Move(new Position(0, 0)),
                     new CompleteBoardState(Math.round(Math.random()
                         * (double) 40.0)));
 
@@ -192,7 +192,7 @@ public class Neo4jMemoryTest
         System.out.println("      Reasoning make a choice");
         try
           {
-            List<Pair<Option, Double>> list = memory.getGradedOptions();
+            List<Pair<Option_FOL, Double>> list = memory.getGradedOptions();
             int nb = list.size();
             nb = (int) Math.round(Math.random() * (double) (nb - 1));
             memory.OptionChosen(list.get(nb).first);

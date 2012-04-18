@@ -11,7 +11,7 @@ import ac.memory.episodic.Game;
 import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
 import ac.shared.RelevantPartialBoardState;
-import ac.shared.FOLObjects.Option;
+import ac.shared.FOLObjects.Option_FOL;
 
 /**
  * Interface for class Memory, which declar methods uses by other modules to
@@ -43,7 +43,7 @@ public interface Memory
    * @param option
    * @throws MemoryException
    */
-  void putOption(Option option) throws MemoryException;
+  void putOption(Option_FOL option) throws MemoryException;
 
   /* REASONING */
 
@@ -54,7 +54,7 @@ public interface Memory
    * @return the list of the CompleteBoardState in the ActiveMemory
    * @throws MemoryException
    */
-  List<Pair<Option, Double>> getGradedOptions() throws MemoryException;
+  List<Pair<Option_FOL, Double>> getGradedOptions() throws MemoryException;
 
   /**
    * USED BY REASONING Choice done by the reasonning module
@@ -64,7 +64,7 @@ public interface Memory
    * @throws MemoryException
    *           When the Option is not present in the active memory
    */
-  void OptionChosen(Option option) throws MemoryException;
+  void OptionChosen(Option_FOL option) throws MemoryException;
 
   /**
    * USED BY REASONING Indicates to the memory that new game begin

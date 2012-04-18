@@ -6,7 +6,7 @@ import game.BoardMatrix;
 import ac.memory.Neo4jActiveMemory;
 import ac.memory.MemoryException;
 import ac.reasoning.Reasoning;
-import ac.shared.FOLObjects.Option;
+import ac.shared.FOLObjects.Option_FOL;
 import agent.Action;
 import agent.Percept.Choices;
 
@@ -50,7 +50,7 @@ public class Analysis
         folConversion.getOutput());
     findHomomorphisms.runEngine(this._memory.getRelevantPartialBoardStates());
 
-    for (Option o : findHomomorphisms.getOutput().getOptions())
+    for (Option_FOL o : findHomomorphisms.getOutput().getOptions())
       this._memory.putOption(o);
 
     return this._reasoning.stimulate();
