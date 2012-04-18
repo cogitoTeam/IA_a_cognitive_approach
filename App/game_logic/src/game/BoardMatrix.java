@@ -13,6 +13,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import ac.analysis.structure.Term;
+
 
 public class BoardMatrix
 {
@@ -61,6 +63,17 @@ public class BoardMatrix
             return (row >= 0 && row < size.n_rows 
                     && col >= 0 && col < size.n_cols);
         }
+        
+        @Override
+        public boolean equals(Object o)
+        {
+          if(!o.getClass().equals(this.getClass()))
+            return false;
+          
+          Position p = (Position)o;
+          return p.row == this.row && p.col == this.col;
+        }
+        
         @Override
         public String toString()
         {

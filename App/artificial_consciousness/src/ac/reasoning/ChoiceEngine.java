@@ -85,6 +85,7 @@ class ChoiceEngine
       LOGGER.debug("Better option null");
 
 
+    LOGGER.debug("choice move :" +move);
     return move;
   }
 

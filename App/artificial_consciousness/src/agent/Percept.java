@@ -137,7 +137,7 @@ public abstract class Percept
     public static class GameEnd extends Percept
     {
         // attributes
-        private final int score;
+        private final int score; //the score of the player who received this percept
         private final Player winner;
         // creation
         protected GameEnd(BoardMatrix _current_board, int _score, Player _winner) 

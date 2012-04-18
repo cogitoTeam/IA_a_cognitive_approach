@@ -1,5 +1,6 @@
 package ac.analysis.structure;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -13,8 +14,12 @@ import java.util.*;
  * base)
  * 
  */
-public class FactBase
+public class FactBase implements Serializable
 {
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -8578199799701477962L;
   /* **************************************************************************
    * FIELD
    * ************************************************************************* */
