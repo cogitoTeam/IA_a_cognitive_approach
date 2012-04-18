@@ -103,7 +103,7 @@ class ChoiceEngine
         double max_grade = options_list.get(0).getSecond();
 
         for (Pair<Option_FOL, Double> pair : options_list)
-          if (pair.getSecond() > max_grade)
+          if (pair.getSecond() > max_grade || (pair.getSecond() == max_grade && pileOuFace()))
             {
               better_option = pair.getFirst();
               max_grade = pair.getSecond();
@@ -113,4 +113,9 @@ class ChoiceEngine
     return better_option;
   }
 
+  private static boolean pileOuFace()
+  {
+    return Math.random() < 0.5;
+  }
+  
 }
