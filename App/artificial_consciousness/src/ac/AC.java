@@ -43,6 +43,8 @@ public class AC extends Agent
    */
   public AC()
   {
+    if (LOGGER.isDebugEnabled())
+      LOGGER.debug("Executing AC constructor");
     this._memory = new Neo4jActiveMemory(new Neo4jEpisodicMemory(),
         new Neo4jSemanticMemory());
     this._reasoning = new Reasoning(this._memory);
@@ -57,6 +59,8 @@ public class AC extends Agent
   @Override
   protected void think()
   {
+    if (LOGGER.isDebugEnabled())
+      LOGGER.debug("Think method call, but this method is empty");
     // nothing to do
   }
 
@@ -64,22 +68,22 @@ public class AC extends Agent
   protected Action perceptReaction(Percept percept)
   {
     Action action = null;
-    
-    LOGGER.debug("percept reçu "+percept.getClass());
-    if(percept.getClass() == Percept.Choices.class)
+
+    LOGGER.debug("Receive new percept: " + percept.getClass());
+    if (percept.getClass() == Percept.Choices.class)
       {
-        LOGGER.debug("percept de types choices");
+        LOGGER.debug("Choices percept type");
         try
           {
-            action = this._analysis.analyse((Percept.Choices)percept);
+            action = this._analysis.analyse((Percept.Choices) percept);
           }
         catch (Exception e)
           {
-            LOGGER.error("erreur lors de l'analyse", e);
-          }          
+            LOGGER.error("An error occured in analysis module", e);
+          }
       }
 
-    return null;
+    return action;
   }
 
   @Override
