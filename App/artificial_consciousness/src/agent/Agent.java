@@ -166,6 +166,11 @@ public abstract class Agent
     {
         // choose a reaction to the stimulus
         Action action = perceptReaction(percept);
+        
+        // do nothing for a null Action
+        if(action == null)
+            return;
+        
         // the agent receives feedback based on the success of their action
         actionResult(frontier.tryAction(action), action);
     }

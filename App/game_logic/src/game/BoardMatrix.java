@@ -161,6 +161,7 @@ public class BoardMatrix
         
         // create the matrix
         cells = new Cell[size.n_rows][size.n_cols];
+        clear();
         
         // update cells from DOM node
         parseCells(board_node);
@@ -209,7 +210,7 @@ public class BoardMatrix
 
     /** Clear the board: set all cells to Cell.EMPTY.
     */
-    public void clear()
+    public final void clear()
     {
         // local variables
         Position p = new Position(0, 0);
