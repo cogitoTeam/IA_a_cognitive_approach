@@ -181,6 +181,14 @@ public class AC extends Agent
 
           if (LOGGER.isDebugEnabled())
             LOGGER.debug("Restarting new Game :)");
+          
+        try
+          {
+            Thread.sleep(2000);
+          }
+        catch (InterruptedException e)
+          {}
+        
           action = new Action.Restart();
 
           break;
