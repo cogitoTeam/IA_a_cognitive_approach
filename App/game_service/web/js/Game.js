@@ -26,13 +26,14 @@ Game.VICTORY_WHITE = 2;
 Game.VICTORY_BLACK = 3;
 Game.DRAW = 4;
 
-Game.IMAGE_WHITE = load_image("york.png");
-Game.IMAGE_BLACK = load_image("tudor.png");
-Game.IMAGE_WHITE_ALPHA = load_image("york_alpha.png");
-Game.IMAGE_BLACK_ALPHA = load_image("tudor_alpha.png");
+Game.IMAGE_WHITE = load_image("white.png");
+Game.IMAGE_BLACK = load_image("black.png");
+Game.IMAGE_WHITE_ALPHA = load_image("white_alpha.png");
+Game.IMAGE_BLACK_ALPHA = load_image("black_alpha.png");
 
-Game.C_BACKGROUND = 'rgb(128,128,128)';
-Game.C_TEXT = 'rgb(0,0,0)';
+Game.C_BACKGROUND = 'rgb(0,113,35)';
+Game.C_BACKGROUNDINFO = 'rgb(0,0,0)';
+Game.C_TEXT = 'rgb(200,200,200)';
 
 function Game()
 {
@@ -104,14 +105,22 @@ function Game()
     var redraw_ui = function()
     {
         // redraw the state information
-        context_info.fillStyle = Game.C_BACKGROUND;
+        context_info.fillStyle = Game.C_BACKGROUNDINFO;
         context_info.fillRect(0,0,canvas_info.width, canvas_info.height);
 
         var image = null;
         var text = null;
         if(!waiting_for_player)
         {
-            var text_player = (is_local[current_turn]) ? "Your " : "Enemy "
+	    var text_player;
+	    if(is_local[current_turn]){
+		text_player = "Your ";
+		$("#wood_game").addClass("active");
+	    } else {
+		text_player = "Enemy ";
+		$("#wood_game").removeClass("active");
+	    }
+
             switch(current_turn)
             {
                 case typ.WHITE:
