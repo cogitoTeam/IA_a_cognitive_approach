@@ -23,16 +23,22 @@ public class BoardMatrix
     {
         EMPTY, PIECE_BLACK, PIECE_WHITE, OUT_OF_BOUNDS;
         
-        public String toRule()
+        public String toRule(Game.Player player)
         {
           switch(this)
           {
             case EMPTY:
               return "isEmpty";
             case PIECE_BLACK:
-              return "isBlack";
+              if(player == Player.BLACK)
+                return "isMy";
+              else
+                return "isOpp";
             case PIECE_WHITE:
-              return "isWhite";
+              if(player == Player.WHITE)
+                return "isMy";
+              else
+                return "isOpp";
             default:
               return "error";       
           }

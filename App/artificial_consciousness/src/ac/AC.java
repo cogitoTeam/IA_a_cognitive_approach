@@ -1,5 +1,7 @@
 package ac;
 
+import game.Game;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -76,8 +78,8 @@ public class AC extends Agent
     if (LOGGER.isDebugEnabled())
       LOGGER.debug("Generating some Atoms");
 
-    atoms_list.add(new Atom("isBlack(x)"));
-    atoms_list.add(new Atom("isBlack(y)"));
+    atoms_list.add(new Atom("isMy(x)"));
+    atoms_list.add(new Atom("isMy(y)"));
     atoms_list.add(new Atom("near(x,y)"));
 
     try
@@ -138,7 +140,7 @@ public class AC extends Agent
             {
               if (LOGGER.isDebugEnabled())
                 LOGGER.debug("Call the analysis module to make a choice");
-              action = this._analysis.analyse((Percept.Choices) percept);
+              action = this._analysis.analyse((Percept.Choices) percept, this.getPlayer());
             }
           catch (Exception e)
             {

@@ -5,9 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import game.BoardMatrix;
+import game.Game;
 import game.ReversiRules;
 import game.BoardMatrix.Cell;
 import game.BoardMatrix.Position;
+import game.Game.Player;
 import ac.AC;
 import ac.analysis.inferenceEngine.Homomorphisms;
 import ac.analysis.inferenceEngine.KnowledgeBase;
@@ -55,9 +57,9 @@ public class Analysis
    * @throws MemoryException
    * @throws IOException
    */
-  public Action analyse(Choices input) throws MemoryException, IOException
+  public Action analyse(Choices input, Game.Player player) throws MemoryException, IOException
   {
-    Choices_FOL output = basicAnalysisEngine(input);
+    Choices_FOL output = basicAnalysisEngine(input, player);
     
     advancedAnalysisEngine(output, this._memory.getRelevantPartialBoardStates());
 
@@ -74,10 +76,10 @@ public class Analysis
   /**
    * the method that runs the basic analyzer
    */
-  public static Choices_FOL basicAnalysisEngine(Choices input)
+  public static Choices_FOL basicAnalysisEngine(Choices input, Game.Player player)
   {
     BoardMatrix board = input.getCurrentBoard();
-    CompleteBoardState current_board = convertMatrixtoCBS(board);
+    CompleteBoardState current_board = convertMatrixtoCBS(board, player);
     Choices_FOL output = new Choices_FOL();
 
     output.setCurrent_board(current_board);
@@ -86,7 +88,7 @@ public class Analysis
     Option_FOL tmp;
     for (agent.Action.Option o : input.getOptions())
       {
-        result = convertMatrixtoCBS(o.getResult());
+        result = convertMatrixtoCBS(o.getResult(), player);
         tmp = new Option_FOL(o.getAction(), result);
         output.addOption(tmp);
       }
@@ -99,7 +101,7 @@ public class Analysis
    * @return an instance of a {@link CompleteBoardState} class which represents
    *         the converted BoardMatrix
    */
-  private static CompleteBoardState convertMatrixtoCBS(BoardMatrix matrix)
+  private static CompleteBoardState convertMatrixtoCBS(BoardMatrix matrix, Game.Player player)
   {
     BoardMatrix.Position p = new Position(0, 0);
     Cell c;
@@ -112,7 +114,7 @@ public class Analysis
       for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
         {
           c = matrix.getCell(p);
-          s = c.toRule() + "('c_" + p.row + '_' + p.col + "')";
+          s = c.toRule(player) + "('c_" + p.row + '_' + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }
@@ -305,13 +307,14 @@ public class Analysis
   public static void main(String[] args) throws IOException, MemoryException
   {
     BoardMatrix b = ReversiRules.getInstance().createBoard();
-
-    Choices test = new Choices(b);
+    System.out.println(convertMatrixtoCBS(b, Player.WHITE));
+    
+   /* Choices test = new Choices(b);
     test.getCurrentBoard();
     AC new_AC = new AC();
     Analysis test_analysis = new Analysis(new_AC.getMemory(),new_AC.getReasoning());
     test_analysis.analyse(test);
     
-    System.out.println(test.getCurrentBoard());
+    System.out.println(test.getCurrentBoard());*/
   }
 }
