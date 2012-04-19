@@ -205,7 +205,7 @@ public class KnowledgeBase {
 	  for (int i = 0; i < BF.getAtomList().size(); i++) {
 			//appel à la fonction récursive qui calcule des nouveaux faits  
 			//en appliquant les successeurs des faits (puis règles) considérés
-			computeNewFactsRec(ruleDependencyGraph.getGraphe().get(i), k.BF); 													 
+			computeNewFacts(ruleDependencyGraph.getGraphe().get(i), k.BF); 													 
 		}
 		
 	  k.isSaturated = true; //indique que la base est saturée
@@ -222,7 +222,7 @@ public class KnowledgeBase {
 	 * @param successeurs La liste de successeurs à considérer
 	 * @param faits La base de faits courante (les nouveux faits y seront ajoutés)
 	 */
-	private void computeNewFactsRec(LinkedSet<Rule> successeurs, FactBase faits) {
+	private void computeNewFacts(LinkedSet<Rule> successeurs, FactBase faits) {
 		// Debut de l'algorithme qui exploite le graphe de
 		// dépendance des régles
 	  Atom temp;

@@ -1,13 +1,23 @@
 package ac.analysis;
 
 import java.io.IOException;
+import java.util.List;
 
 import game.BoardMatrix;
 import game.ReversiRules;
+import game.BoardMatrix.Cell;
+import game.BoardMatrix.Position;
 import ac.AC;
+import ac.analysis.inferenceEngine.Homomorphisms;
+import ac.analysis.inferenceEngine.KnowledgeBase;
+import ac.analysis.structure.Atom;
+import ac.analysis.structure.Query;
 import ac.memory.Neo4jActiveMemory;
 import ac.memory.MemoryException;
 import ac.reasoning.Reasoning;
+import ac.shared.CompleteBoardState;
+import ac.shared.RelevantPartialBoardState;
+import ac.shared.FOLObjects.Choices_FOL;
 import ac.shared.FOLObjects.Option_FOL;
 import agent.Action;
 import agent.Percept.Choices;
@@ -38,23 +48,239 @@ public class Analysis
   /**
    * This is the input method from environment in case of a choice.
    * 
-   * @param percept
+   * @param input
    * @return an Action to stimulate the reasoning
    * @throws MemoryException
    * @throws IOException
    */
-  public Action analyse(Choices percept) throws MemoryException, IOException
+  public Action analyse(Choices input) throws MemoryException, IOException
   {
-    BasicAnalysisEngine folConversion = new BasicAnalysisEngine(percept);
-    folConversion.runEngine();
+    Choices_FOL output = basicAnalysisEngine(input);
     
-    folConversion.getOutput().linkRelevant(this._memory.getRelevantPartialBoardStates());
+    advancedAnalysisEngine(output, this._memory.getRelevantPartialBoardStates());
 
-    for (Option_FOL o : folConversion.getOutput().getOptions())
+    for (Option_FOL o : output.getOptions())
       this._memory.putOption(o);
 
     return this._reasoning.stimulate();
   }
+
+  /* **************************************************************************
+   * METHODS
+   * ************************************************************************* */
+
+  /**
+   * the method that runs the basic analyzer
+   */
+  public static Choices_FOL basicAnalysisEngine(Choices input)
+  {
+    BoardMatrix board = input.getCurrentBoard();
+    CompleteBoardState current_board = convertMatrixtoCBS(board);
+    Choices_FOL output = new Choices_FOL();
+
+    output.setCurrent_board(current_board);
+
+    CompleteBoardState result;
+    Option_FOL tmp;
+    for (agent.Action.Option o : input.getOptions())
+      {
+        result = convertMatrixtoCBS(o.getResult());
+        tmp = new Option_FOL(o.getAction(), result);
+        output.addOption(tmp);
+      }
+    return output;
+  }
+
+  /**
+   * @param matrix
+   *          a BoardMatrix
+   * @return an instance of a {@link CompleteBoardState} class which represents
+   *         the converted BoardMatrix
+   */
+  private static CompleteBoardState convertMatrixtoCBS(BoardMatrix matrix)
+  {
+    BoardMatrix.Position p = new Position(0, 0);
+    Cell c;
+    String s;
+    Atom a;
+    CompleteBoardState cbs = new CompleteBoardState();
+    
+    //add case type
+    for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
+        {
+          c = matrix.getCell(p);
+          s = c.toRule() + "('c_" + p.row + '_' + p.col + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+        }
+    
+    //Add edges
+    p.col = 0;
+    p.row = 0;
+    for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
+      {
+        s = "isEdge('c_" + p.row + '_' + 0 + "')";
+        a = new Atom(s);
+        cbs.getBoardStateFacts().addNewFact(a);
+        
+        s = "isEdge('c_" + p.row + '_' + (matrix.getSize().n_cols-1) + "')";
+        a = new Atom(s);
+        cbs.getBoardStateFacts().addNewFact(a);
+      }
+    
+    for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
+      {
+        s = "isEdge('c_" + 0 + '_' + p.col + "')";
+        a = new Atom(s);
+        cbs.getBoardStateFacts().addNewFact(a);
+        
+        s = "isEdge('c_" + (matrix.getSize().n_rows-1) + '_' +p.col  + "')";
+        a = new Atom(s);
+        cbs.getBoardStateFacts().addNewFact(a);
+      }
+    
+    //Add corners
+    s = "isCorner('c_" + 0 + '_' + 0 + "')";
+    a = new Atom(s);
+    cbs.getBoardStateFacts().addNewFact(a);
+    
+    s = "isCorner('c_" + (matrix.getSize().n_rows-1) + '_' + 0 + "')";
+    a = new Atom(s);
+    cbs.getBoardStateFacts().addNewFact(a);
+    
+    s = "isCorner('c_" + 0 + '_' + (matrix.getSize().n_cols-1) + "')";
+    a = new Atom(s);
+    cbs.getBoardStateFacts().addNewFact(a);
+    
+    s = "isCorner('c_" + (matrix.getSize().n_rows-1) + '_' + (matrix.getSize().n_cols-1) + "')";
+    a = new Atom(s);
+    cbs.getBoardStateFacts().addNewFact(a);
+    
+    //Add nears
+    for (p.row = 0; p.row < matrix.getSize().n_rows-1; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols-1; p.col++)
+        {
+          s = "near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "near('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+1) + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          // near(x,y) --> near(y,x)
+          s = "near('c_" + (p.row+1) + '_' + p.col + "','c_" + p.row + '_' + p.col + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "near('c_" + p.row + '_' + (p.col+1) + "','c_" + p.row + '_' + p.col + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+          
+          s = "near('c_" + (p.row+1) + '_' + (p.col+1) + "','c_" + p.row + '_' + p.col + "')";
+          a = new Atom(s);
+          cbs.getBoardStateFacts().addNewFact(a);
+        }
+    
+    //Add aligns
+    int shift_p2 = 0;
+    int shift_p3 = 0;
+    for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols-2; p.col++)
+        {      
+          for (shift_p2 = 1; shift_p2 + p.col < matrix.getSize().n_cols-1; ++shift_p2)
+            for (shift_p3 = shift_p2+1; shift_p3 + p.col < matrix.getSize().n_rows; ++shift_p3)
+              {
+                s = "aligned('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+shift_p2) + "','c_" + p.row + '_' + (p.col+shift_p3) + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+                
+                // aligned(x,y,z) --> aligned(z,y,x)
+                s = "aligned('c_" + p.row + '_' + (p.col+shift_p3) + "','c_" + p.row + '_' + (p.col+shift_p2) + "','c_" + p.row + '_' + p.col + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+              }
+        }
+    
+    for (p.row = 0; p.row < matrix.getSize().n_rows-2; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
+        {      
+          for (shift_p2 = 1; shift_p2 + p.row < matrix.getSize().n_rows-1; ++shift_p2)
+            for (shift_p3 = shift_p2+1; shift_p3 + p.row < matrix.getSize().n_rows; ++shift_p3)
+              {
+                s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+shift_p2) + '_' + p.col + "','c_" + (p.row+shift_p3) + '_' + p.col + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+                
+                // aligned(x,y,z) --> aligned(z,y,x)
+                s = "aligned('c_" + (p.row+shift_p3) + '_' + p.col + "','c_" + (p.row+shift_p2) + '_' + p.col + "','c_" + p.row + '_' + p.col + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+              }
+        }
+    
+    for (p.row = 0; p.row < matrix.getSize().n_rows-2; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols-2; p.col++)
+        {      
+          for (shift_p2 = 1; shift_p2 + p.row < matrix.getSize().n_rows-1; ++shift_p2)
+            for (shift_p3 = shift_p2+1; shift_p3 + p.row < matrix.getSize().n_rows; ++shift_p3)
+              {
+                s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+shift_p2) + '_' + (p.col+shift_p2) + "','c_" + (p.row+shift_p3) + '_' + (p.col+shift_p3) + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+                
+                // aligned(x,y,z) --> aligned(z,y,x)
+                s = "aligned('c_" + (p.row+shift_p3) + '_' + (p.col+shift_p3) + "','c_" + (p.row+shift_p2) + '_' + (p.col+shift_p2) + "','c_" + p.row + '_' + p.col + "')";
+                a = new Atom(s);
+                cbs.getBoardStateFacts().addNewFact(a);
+              }
+        }
+                  
+    return cbs;
+
+  }
+  
+  /**
+   * This method represents the Advanced Conceptual Analyzer : it uses an inference
+   * engine to analyze complete board states in order to find relevant structures
+   * within them. These then become relevant partial board states which are passed
+   * on to the memory.    
+   * @param rpbsList
+   *          the list of {@link RelevantPartialBoardState}s from the active
+   *          memory
+   * @throws IOException
+   */
+  public static void advancedAnalysisEngine(Choices_FOL input, List<RelevantPartialBoardState> rpbsList)
+      throws IOException
+  {
+    KnowledgeBase kb = new KnowledgeBase("RuleBase");
+
+    // can be omitted if clement adds the rule directly to the RuleBase file
+    for (RelevantPartialBoardState rpbs : rpbsList)
+      kb.addNewRule(rpbs.getRule());
+    // till here
+
+    Homomorphisms h;
+    Query q;
+    for (Option_FOL o : input.getOptions())
+      {
+        kb.setBF(o.getResult().getBoardStateFacts());
+        kb.optimizedSaturation_FOL();
+        for (RelevantPartialBoardState rpbs : rpbsList)
+          {
+            q = new Query(rpbs.getRule().getConclusion());
+            h = new Homomorphisms(q, kb.getFB());
+            if (h.existsHomomorphismTest())
+              o.addPartialStates(rpbs);
+          }
+      }
+  }
+
 
   
   //just for tests
