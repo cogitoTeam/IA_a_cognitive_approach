@@ -6,6 +6,7 @@ import java.io.*;
 import org.apache.log4j.Logger;
 
 import ac.analysis.structure.*;
+import ac.shared.RelevantPartialBoardState;
 import ac.util.LinkedSet;
 
 
@@ -180,17 +181,16 @@ public class KnowledgeBase {
 	 * @return k la base de connaissances satur�e
 	 * @throws IOException
 	 */
-	public KnowledgeBase optimizedSaturation_FOL() throws IOException {
+	public LinkedList<Long> optimizedSaturation_FOL() throws IOException {
 		if (isSaturated)
-			return this; // evite le calcul de saturation au cas où la base est
+			return new LinkedList<Long>(); // evite le calcul de saturation au cas où la base est
 							// déjà saturée
 		
 		if(LOGGER.isDebugEnabled())
 		  LOGGER.debug("DEBUT SATURATION KB");
 		
 		// déclaration et initialisation des variables
-		KnowledgeBase k = new KnowledgeBase(this);
-		RuleDependencyGraph ruleDependencyGraph = new RuleDependencyGraph(k); 
+		RuleDependencyGraph ruleDependencyGraph = new RuleDependencyGraph(this); 
 		ruleDependencyGraph.calculeGDR(); //calcule le graphe de d�pendances des r�gles 
 		  				  //(et des faits)
 		
@@ -210,15 +210,15 @@ public class KnowledgeBase {
 	    //@TODO voir comment gagner en temps
 	    rules.addAll(ruleDependencyGraph.getGraphe().get(i));
 		}
-    computeNewFacts(rules, k.BF);                           
+	  LinkedList<Long> list_rpbs = computeNewFacts(rules, this.BF);                           
 
 		
-	  k.isSaturated = true; //indique que la base est saturée
+	  this.isSaturated = true; //indique que la base est saturée
 		
 		if(LOGGER.isDebugEnabled())
       LOGGER.debug("FIN SATURATION KB");
 		
-		return k;
+		return list_rpbs;
 	}
 
 	/**
@@ -227,12 +227,13 @@ public class KnowledgeBase {
 	 * @param successeurs La liste de successeurs à considérer
 	 * @param faits La base de faits courante (les nouveux faits y seront ajoutés)
 	 */
-	private void computeNewFacts(LinkedSet<Rule> successeurs, FactBase faits) {
+	private LinkedList<Long> computeNewFacts(LinkedSet<Rule> successeurs, FactBase faits) {
 		// Debut de l'algorithme qui exploite le graphe de
 		// dépendance des régles
 	  Atom temp;
     Rule r;
     ArrayList<Substitution> substitutions_list;
+    LinkedList<Long> list_rpbs = new  LinkedList<>();
     Homomorphisms s;
 	  
 		if(LOGGER.isDebugEnabled())
@@ -253,6 +254,7 @@ public class KnowledgeBase {
   				if (!faits.atomExistsTest(temp)) 
   				  {
     					faits.addNewFact(temp);
+    					list_rpbs.add(Long.parseLong(temp.getLabel().substring(5)));
     					 
     					if(LOGGER.isDebugEnabled())
     		        LOGGER.debug("\n\tNouveau fait ajouté : " + temp);
@@ -264,6 +266,8 @@ public class KnowledgeBase {
 			if(LOGGER.isDebugEnabled())
         LOGGER.debug(successeurs);
 		}
+		
+		return list_rpbs;
 	}
 
 	/**
@@ -273,7 +277,7 @@ public class KnowledgeBase {
 	 */
 	private LinkedSet<Rule> computeSuccessors(Rule r) {
 		RuleDependencyGraph g = new RuleDependencyGraph(this);
-		int n = Integer.parseInt(r.getName().substring(6))
+		int n = Integer.parseInt(r.getName().substring(1))
 				+ BF.getAtomList().size() - 1;
 
 		g.calculeGDR();
@@ -291,7 +295,7 @@ public class KnowledgeBase {
 //		KnowledgeBase kSaturee = k.saturationOrdre0();
 	//	System.out.println(kSaturee);
 
-		k = k.optimizedSaturation_FOL();
+		k.optimizedSaturation_FOL();
 		System.out.println("\n\nBase de Faits satur�e par homomorphismes:\n\n"
 				+ k.BF);
 

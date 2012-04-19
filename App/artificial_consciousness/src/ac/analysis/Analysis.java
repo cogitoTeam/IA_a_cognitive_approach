@@ -1,6 +1,7 @@
 package ac.analysis;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import game.BoardMatrix;
@@ -12,6 +13,7 @@ import ac.analysis.inferenceEngine.Homomorphisms;
 import ac.analysis.inferenceEngine.KnowledgeBase;
 import ac.analysis.structure.Atom;
 import ac.analysis.structure.Query;
+import ac.analysis.structure.Rule;
 import ac.memory.Neo4jActiveMemory;
 import ac.memory.MemoryException;
 import ac.reasoning.Reasoning;
@@ -261,8 +263,14 @@ public class Analysis
     KnowledgeBase kb = new KnowledgeBase("RuleBase");
 
     // can be omitted if clement adds the rule directly to the RuleBase file
+    int cpt = -1;
+    Rule r;
     for (RelevantPartialBoardState rpbs : rpbsList)
-      kb.addNewRule(rpbs.getRule());
+      {
+        r = rpbs.getRule();
+        r.setName("R" + ++cpt);
+        kb.addNewRule(r);
+      }
     // till here
 
     Homomorphisms h;
@@ -270,14 +278,19 @@ public class Analysis
     for (Option_FOL o : input.getOptions())
       {
         kb.setBF(o.getResult().getBoardStateFacts());
-        kb.optimizedSaturation_FOL();
-        for (RelevantPartialBoardState rpbs : rpbsList)
+        LinkedList<Long> list_rpbs = kb.optimizedSaturation_FOL();
+        
+        for(Long id_rpbs : list_rpbs)
+          {
+            o.addPartialStates(id_rpbs);
+          }
+        
+        /*for (RelevantPartialBoardState rpbs : rpbsList)
           {
             q = new Query(rpbs.getRule().getConclusion());
             h = new Homomorphisms(q, kb.getFB());
             if (h.existsHomomorphismTest())
-              o.addPartialStates(rpbs);
-          }
+          }*/
       }
   }
 
