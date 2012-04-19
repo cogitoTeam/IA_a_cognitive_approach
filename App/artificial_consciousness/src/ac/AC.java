@@ -81,6 +81,8 @@ public class AC extends Agent
     atoms_list.add(new Atom("isMy(x)"));
     atoms_list.add(new Atom("isMy(y)"));
     atoms_list.add(new Atom("near(x,y)"));
+    atoms_list.add(new Atom("near(y,x)"));
+
 
     try
       {
@@ -93,8 +95,136 @@ public class AC extends Agent
       {
         LOGGER.error("An error occured when putting RPBS in memory", e);
       }
+    
+    atoms_list.clear();
+    atoms_list.add(new Atom("isOpp(x)"));
+    atoms_list.add(new Atom("isOpp(y)"));
+    atoms_list.add(new Atom("near(x,y)"));
+    atoms_list.add(new Atom("near(y,x)"));
 
-    // @TODO add other rpbs
+
+    try
+      {
+        if (LOGGER.isDebugEnabled())
+          LOGGER.debug("Put new RPBS in memory");
+        this._memory.putRelevantStructure(new RelevantPartialBoardState(
+            atoms_list));
+      }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occured when putting RPBS in memory", e);
+      }
+    
+    atoms_list.clear();
+    atoms_list.add(new Atom("isOpp(x)"));
+    atoms_list.add(new Atom("isMy(y)"));
+    atoms_list.add(new Atom("near(x,y)"));
+    atoms_list.add(new Atom("near(y,x)"));
+
+
+    try
+      {
+        if (LOGGER.isDebugEnabled())
+          LOGGER.debug("Put new RPBS in memory");
+        this._memory.putRelevantStructure(new RelevantPartialBoardState(
+            atoms_list));
+      }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occured when putting RPBS in memory", e);
+      }
+    
+    atoms_list.clear();
+    atoms_list.add(new Atom("isMy(x)"));
+    atoms_list.add(new Atom("isMy(y)"));
+    atoms_list.add(new Atom("isMy(z)"));
+    atoms_list.add(new Atom("near(x,y)"));
+    atoms_list.add(new Atom("near(y,x)"));
+    atoms_list.add(new Atom("near(y,z)"));
+    atoms_list.add(new Atom("near(z,y)"));
+    atoms_list.add(new Atom("aligned(x,y,z)"));
+    atoms_list.add(new Atom("aligned(z,y,x)"));
+
+    try
+      {
+        if (LOGGER.isDebugEnabled())
+          LOGGER.debug("Put new RPBS in memory");
+        this._memory.putRelevantStructure(new RelevantPartialBoardState(
+            atoms_list));
+      }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occured when putting RPBS in memory", e);
+      }
+    
+    atoms_list.clear();
+    atoms_list.add(new Atom("isOpp(x)"));
+    atoms_list.add(new Atom("isOpp(y)"));
+    atoms_list.add(new Atom("isOpp(z)"));
+    atoms_list.add(new Atom("near(x,y)"));
+    atoms_list.add(new Atom("near(y,x)"));
+    atoms_list.add(new Atom("near(y,z)"));
+    atoms_list.add(new Atom("near(z,y)"));
+    atoms_list.add(new Atom("aligned(x,y,z)"));
+    atoms_list.add(new Atom("aligned(z,y,x)"));
+
+    try
+      {
+        if (LOGGER.isDebugEnabled())
+          LOGGER.debug("Put new RPBS in memory");
+        this._memory.putRelevantStructure(new RelevantPartialBoardState(
+            atoms_list));
+      }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occured when putting RPBS in memory", e);
+      }
+    
+    atoms_list.clear();
+    atoms_list.add(new Atom("isMy(x)"));
+    atoms_list.add(new Atom("isOpp(y)"));
+    atoms_list.add(new Atom("isOpp(z)"));
+    atoms_list.add(new Atom("near(x,y)"));
+    atoms_list.add(new Atom("near(y,x)"));
+    atoms_list.add(new Atom("near(y,z)"));
+    atoms_list.add(new Atom("near(z,y)"));
+    atoms_list.add(new Atom("aligned(x,y,z)"));
+    atoms_list.add(new Atom("aligned(z,y,x)"));
+
+    try
+      {
+        if (LOGGER.isDebugEnabled())
+          LOGGER.debug("Put new RPBS in memory");
+        this._memory.putRelevantStructure(new RelevantPartialBoardState(
+            atoms_list));
+      }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occured when putting RPBS in memory", e);
+      }
+    
+    atoms_list.clear();
+    atoms_list.add(new Atom("isOpp(x)"));
+    atoms_list.add(new Atom("isMy(y)"));
+    atoms_list.add(new Atom("isMy(z)"));
+    atoms_list.add(new Atom("near(x,y)"));
+    atoms_list.add(new Atom("near(y,x)"));
+    atoms_list.add(new Atom("near(y,z)"));
+    atoms_list.add(new Atom("near(z,y)"));
+    atoms_list.add(new Atom("aligned(x,y,z)"));
+    atoms_list.add(new Atom("aligned(z,y,x)"));
+
+    try
+      {
+        if (LOGGER.isDebugEnabled())
+          LOGGER.debug("Put new RPBS in memory");
+        this._memory.putRelevantStructure(new RelevantPartialBoardState(
+            atoms_list));
+      }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occured when putting RPBS in memory", e);
+      }
 
   }
 
