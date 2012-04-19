@@ -1,36 +1,59 @@
 package ac.analysis.structure;
 
 /**
- * Mod�lise une requ�te conjonctive : une liste d'atomes. 
- * La classe BaseFaits poss�dant toutes les fonctionnalit�es attendues par une requ�te,
- * cette classe en est une sp�cialisation : notamment, elle ne modifie que la m�thode toString
- *
+ * Represents a conjunctive query : an atom list.
+ * This class extends {@code FactBase} in order to reuse the latter's
+ * functionality. It redefines merely the toString method
  */
-public class Query extends FactBase {
-//Les constructeurs 
-	public Query() {
-	}
+@SuppressWarnings("serial")
+public class Query extends FactBase
+{
+  /**
+   * Empty constructor
+   */
+  public Query()
+  {
+  }
 
-	public Query(Atom a) {
-	  super.addNewFact(a);
-	}
-	public Query(FactBase BF) {
-		super(BF);
-	}
+  /**
+   * Constructor with atom as parameter
+   * 
+   * @param a
+   */
+  public Query(Atom a)
+  {
+    super.addNewFact(a);
+  }
 
-	public Query(String baseFaits) {
-		super(baseFaits);
-	}
-// La m�thode toString de la classe	
-	public String toString()
-	{
-		String s = "Nombre d'atomes : "+atomList.size()+ "\n";
-		s+="Liste des atomes : \n";
-		for(int i=0;i<atomList.size();i++)
-		{
-			s += "\tAtome " + (i+1) + " : " + atomList.get(i) + "\n";			
-		}
-	 return s;
-	}
+  /**
+   * Constructor with a fact base as parameter
+   * 
+   * @param BF
+   */
+  public Query(FactBase BF)
+  {
+    super(BF);
+  }
+
+  /**
+   * Constructor with a string as parameter
+   * 
+   * @param baseFaits
+   */
+  public Query(String baseFaits)
+  {
+    super(baseFaits);
+  }
+
+  public String toString()
+  {
+    String s = "Nombre d'atomes : " + atomList.size() + "\n";
+    s += "Liste des atomes : \n";
+    for (int i = 0; i < atomList.size(); i++)
+      {
+        s += "\tAtome " + (i + 1) + " : " + atomList.get(i) + "\n";
+      }
+    return s;
+  }
 
 }

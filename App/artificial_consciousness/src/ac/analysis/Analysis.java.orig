@@ -59,8 +59,13 @@ public class Analysis
    */
   public Action analyse(Choices input, Game.Player player) throws MemoryException, IOException
   {
+<<<<<<< HEAD
+    Choices_FOL output = basicAnalysisEngine(input);
+
+=======
     Choices_FOL output = basicAnalysisEngine(input, player);
     
+>>>>>>> 0c8afcbbc1d049095fbd424e30043c058e04a5ea
     advancedAnalysisEngine(output, this._memory.getRelevantPartialBoardStates());
 
     for (Option_FOL o : output.getOptions())
@@ -294,6 +299,10 @@ public class Analysis
   {
     KnowledgeBase kb = new KnowledgeBase("RuleBase");
 
+<<<<<<< HEAD
+    for (RelevantPartialBoardState rpbs : rpbsList)
+      kb.addNewRule(rpbs.getRule());
+=======
     // can be omitted if clement adds the rule directly to the RuleBase file
     int cpt = -1;
     Rule r;
@@ -304,6 +313,7 @@ public class Analysis
         kb.addNewRule(r);
       }
     // till here
+>>>>>>> 0c8afcbbc1d049095fbd424e30043c058e04a5ea
 
     Homomorphisms h;
     Query q;
@@ -343,7 +353,12 @@ public class Analysis
     Analysis test_analysis = new Analysis(new_AC.getMemory(),
         new_AC.getReasoning());
     test_analysis.analyse(test);
+<<<<<<< HEAD
+
+    System.out.println(test.getCurrentBoard());
+=======
     
     System.out.println(test.getCurrentBoard());*/
+>>>>>>> 0c8afcbbc1d049095fbd424e30043c058e04a5ea
   }
 }

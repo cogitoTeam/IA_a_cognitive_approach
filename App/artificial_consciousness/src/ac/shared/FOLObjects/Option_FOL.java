@@ -5,10 +5,11 @@ import java.util.List;
 
 import ac.shared.CompleteBoardState;
 import agent.Action;
+import agent.Action.Option;
 import ac.shared.RelevantPartialBoardState;
 
 /**
- * 
+ * This class is the FOL version of the {@link Option} class in agent.Action
  * 
  * @author Clément Sipieter <csipieter@gmail.com>
  * @date 4 avr. 2012
