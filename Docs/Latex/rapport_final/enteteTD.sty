@@ -1,0 +1,95 @@
+
+% option enteteTD.sty 15-Mar-93
+
+%%%%%%%%%%%%%%%%%
+%\sem@temp{corrections}{}
+%\DeclareOptions{corrections}{\correctionstrue}
+%%%%%%%%%%%%%%%%%
+
+\RequirePackage{ifthen}
+\RequirePackage{supertabular}
+%\makeentete{Universite}{Formation}{duree}
+%           {Matiere TD}{num-td}{recommendations}
+
+\newcommand{\makeentete}[6]{
+\newlength{\SujetSauveLg}
+\setlength{\SujetSauveLg}{\parindent}
+\setlength\parindent{0truecm}
+\setlength\parskip{0.1truecm}
+
+#1\hfill\@date \\
+#2\hfill{}Dur\'ee: #3\\[0.8cm]
+\centerline{\textbf #4}\\
+\centerline{\textbf TD -- S\'eance  n° #5}\\[0.4cm]
+
+\hrule
+\ifthenelse{\not\equal{#6}{}}
+      {\emph{#6} \vspace{0.2cm} \hrule}{}
+\vspace{0.2cm}%4%)
+
+\setlength{\parindent}{\SujetSauveLg}
+}
+
+%\makecontrole{Universite}{Formation}{duree}
+%           {Matiere TD}{recommendations}
+
+\newcommand{\makecontrole}[5]{
+
+\newlength{\SujetSauveLg}
+\setlength{\SujetSauveLg}{\parindent}
+\setlength\parindent{0truecm}
+\setlength\parskip{0.1truecm}
+
+#1\hfill\@date \\
+#2\hfill{}Durée: #3\\[0.8cm]
+\centerline{\bfseries #4}\\
+\centerline{\bfseries Contr\^ole Continu}\\[0.4cm]
+
+\hrule
+\ifthenelse{\not\equal{#5}{}}
+      {\emph{#5} \vspace{0.2cm} \hrule}{}
+\vspace{0.2cm}%4%)
+
+\setlength{\parindent}{\SujetSauveLg}
+}
+
+%\makeexamen{Universite}{Formation}{duree}
+%           {Matiere TD}{Mois}
+
+\newcommand{\makeexamen}[5]{
+
+\newlength{\SujetSauveLg}
+\setlength{\SujetSauveLg}{\parindent}
+\setlength\parindent{0truecm}
+\setlength\parskip{0.1truecm}
+
+#1\hfill\@date \\
+#2\hfill{}Durée: #3\\[0.8cm]
+\centerline{\bfseries #4}\\
+\centerline{\bfseries Examen #5}\\[0.4cm]
+
+\hrule
+\vspace{0.2cm}%4%)
+
+\setlength{\parindent}{\SujetSauveLg}
+}
+\newcounter{NumroExo}
+
+\newcommand{\exo}[1][]{
+   \stepcounter{NumroExo}
+   \par\noindent \textbf{Exercice\(^{#1}\) \arabic{NumroExo} -- }
+}
+
+\newcommand{\exod}[1][]{
+   \stepcounter{NumroExo}
+   \par\noindent \textbf{(*)Exercice\(^{#1}\) \arabic{NumroExo} -- }
+}
+\newboolean{Correc}
+\setboolean{Correc}{false}
+
+\newcommand{\correction}[1]{\ifthenelse{\boolean{Correc}}
+{\vspace{0.5cm}\noindent \hrulefill \textbf{\textsf{Correction exercice} \arabic{NumroExo}} \hrulefill \vspace{0.5cm} #1 \vspace{0.5cm}\noindent\hrulefill 
+\textbf{\textsf{Fin correction exercice }\arabic{NumroExo}}\hrulefill \vspace{0.3cm}}{}}
+
+
+

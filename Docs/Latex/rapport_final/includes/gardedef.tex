@@ -1,0 +1,33 @@
+\def\blurb{%
+  \begin{tabular}{l p{0.6cm} c p{0.8cm} r}
+   \multirow{3}{*}{\vspace{-1.5cm}\hspace{-1cm}\includegraphics[width=3cm]{./files/um2}} & & & &  \multirow{3}{*}{\vspace{-1.5cm}\includegraphics[width=2cm]{./files/ufr}} \\
+    & & Ministère de l'Éducation Nationale & & \\
+    & & Université de Montpellier II & & \\ 
+    & & Place Eugène Bataillon & & \\ 
+    & & 34095 Montpellier Cedex 5 & & \\
+    & & & & \\
+    & & Rapport final du TER GMIN20B & & \\
+    & & du Master Informatique 1\iere année, & & \\
+    & & effectué de Janvier à Mai 2012 & & \\
+    & & et encadré par Violaine \textsc{Prince} & & \\
+    \vspace{0.5cm}
+   \end{tabular}
+  }
+\def\clap#1{\hbox to 0pt{\hss #1\hss}}%
+\def\ligne#1{%
+  \hbox to \hsize{%
+    \vbox{\centering #1}}}%
+\def\haut#1#2#3{%
+  \hbox to \hsize{%
+    \rlap{\vtop{\raggedright #1}}%
+    \hss
+    \clap{\vtop{\centering #2}}%
+    \hss
+    \llap{\vtop{\raggedleft #3}}}}%
+\def\bas#1#2#3{%
+  \hbox to \hsize{%
+    \rlap{\vbox{\raggedright #1}}%
+    \hss
+    \clap{\vbox{\centering #2}}%
+    \hss
+    \llap{\vbox{\raggedleft #3}}}}%
