@@ -30,16 +30,6 @@ public class CompleteBoardState extends AbstractBoardState
     init();
   }
 
-  /**
-   * /!\ This constructor will be removed later !
-   * 
-   * @param id
-   */
-  public CompleteBoardState(long id)
-  {
-    super(id);
-    init();
-  }
 
   private void init()
   {

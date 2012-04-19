@@ -309,6 +309,18 @@ public class FactBase implements Serializable
         return true;
     return false;
   }
+  
+  
+  public int hashCode()
+  {
+    String s = "";
+    for (Atom a : atomList)
+      {
+        s += a.toString();
+      }
+    
+    return s.hashCode();
+  }
 
   // La m�thode toString de la classe
   /**
