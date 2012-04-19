@@ -1,23 +1,55 @@
-\documentclass[a4paper,french,twoside,10pt]{book}
+\documentclass[a4paper,french,towsides,10pt]{book}
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
 \usepackage{fancyhdr}
-\usepackage{hyperref}
+\usepackage{enumerate}
 \usepackage{graphicx}
+\usepackage[french]{minitoc}
 \usepackage{multirow}
+\usepackage{placeins}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{tabularx}
+\usepackage[french,ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[bookmarks=true]{hyperref}
 \hypersetup{pdfborder={0 0 0}}
 \pagestyle{fancy}
 \setlength{\parskip}{1.5ex plus .4ex minus .4ex}
 \renewcommand{\labelitemi}{\textbullet}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 
-%\fancyhead[L]{\textsc{Pré-rapport Projet TER}\footnotesize{ : Etude et développement d'un moteur de recherche}}
-%\fancyhead[R]{}
+\def\doctitle{Formalisation et implémentation d'un modèle de conscience artificielle}
+
+
+
+\pagestyle{fancy}
 
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-\renewcommand{\sectionmark}[1]{\markright{\ #1}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 
-\fancyhead[R]{\leftmark\ --\ \rightmark}
-\fancyhead[L]{\textsc{Rapport Final}}
+\fancyhf{}
+
+\fancyhead[RO,LE]{\thepage}
+\fancyhead[LO]{\leftmark}
+\fancyhead[RE]{\doctitle}
+
+\fancypagestyle{corps}{ 
+\fancyhead[RO,LE]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+}
+
+\renewcommand{\footrulewidth}{0pt} % pas de filet en bas
+\fancypagestyle{plain}{ % pages de tetes de chapitre
+\fancyhead{}
+% supprime l’entete
+\renewcommand{\headrulewidth}{0pt} % et le filet
+}
+\newcommand{\clearemptydoublepage}{%
+	\newpage{\pagestyle{empty}\cleardoublepage}}
+
 
 %Modification des marges
 %\\oddsidemargin}{-2,5cm}
@@ -26,26 +58,42 @@
 %\addtolength{\textheight}{4cm}
 
 %definition des fonctions de la page de garde
-\input{gardedef}
+\input{includes/gardedef}
+
+%definition du titre et autres param
+\def\titre{\LARGE \doctitle}
+\def\sstitre{Rapport Final (Avril 2012)}
+\def\auteurs{
+      William \textsc{Dyce} \\
+      Thibaut \textsc{Marmin} \\
+      Namrata\textsc{Patel} \\
+      Clément \textsc{Sipieter}}
+      
+\def\url{https://github.com/marminthibaut/artificial\_consciousness}
 
 \begin{document}
 \renewcommand{\labelitemii}{\textasteriskcentered}
 
-\input{garde}
+\dominitoc
 
-\newpage
+\input{includes/garde}
+\clearemptydoublepage
 
 \input{merci}
-
-\newpage
-
+\clearemptydoublepage
 \input{intro}
+\clearemptydoublepage
 
 \tableofcontents
+\clearemptydoublepage
 
 \input{presentation}
-coucou :
-\leftmark
-\rightmark
+\clearemptydoublepage
+\input{analyse}
+\clearemptydoublepage
+\input{developpement}
+\clearemptydoublepage
+\input{conclusion}
+\clearemptydoublepage
 
 \end{document}
