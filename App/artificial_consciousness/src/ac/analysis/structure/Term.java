@@ -8,7 +8,7 @@ import java.io.Serializable;
  * deux termes.
  *
  */
-public class Term implements Serializable
+public class Term implements Serializable, Comparable<Term>
 {
 	/**
    * 
@@ -108,6 +108,16 @@ public class Term implements Serializable
 		if(constant) return "'"+label+"'";
 		else return label;
 	}
+
+  @Override
+  public int compareTo(Term t)
+  {
+    int val = this.label.compareTo(t.label);
+    if(val == 0)
+      val = ((Boolean)this.constant).compareTo(t.constant);
+    
+    return val;
+  }
 	
 	
 }
