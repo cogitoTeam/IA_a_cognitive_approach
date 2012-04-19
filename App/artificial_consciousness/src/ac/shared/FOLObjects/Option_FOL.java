@@ -23,7 +23,7 @@ public class Option_FOL
 
   private Action _move;
   private CompleteBoardState _result;
-  private List<RelevantPartialBoardState> _partial_states;
+  private List<Long> _partial_states;
 
   // ***************************************************************************
   // CONSTRUCTOR
@@ -41,7 +41,7 @@ public class Option_FOL
   {
     this._move = move;
     this._result = result;
-    this._partial_states = new LinkedList<RelevantPartialBoardState>();
+    this._partial_states = new LinkedList<Long>();
   }
 
   // ***************************************************************************
@@ -54,7 +54,7 @@ public class Option_FOL
    * @param partial_state
    *          the relevant partial board state to add
    */
-  public void addPartialStates(RelevantPartialBoardState partial_state)
+  public void addPartialStates(Long partial_state)
   {
     this._partial_states.add(partial_state);
   }
@@ -82,7 +82,7 @@ public class Option_FOL
   /**
    * @return the list of RPBS checking with the CBS
    */
-  public List<RelevantPartialBoardState> getPartialStates()
+  public List<Long> getPartialStates()
   {
     return _partial_states;
   }
@@ -113,7 +113,7 @@ public class Option_FOL
    * @param partial_states
    *          the partial_states to set
    */
-  public void setPartialStates(List<RelevantPartialBoardState> partial_states)
+  public void setPartialStates(List<Long> partial_states)
   {
     this._partial_states = partial_states;
   }

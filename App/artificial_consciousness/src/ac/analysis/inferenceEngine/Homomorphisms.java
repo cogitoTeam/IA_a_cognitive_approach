@@ -233,7 +233,7 @@ public class Homomorphisms {
 	public static void main(String[] args) throws IOException
 	{
 		KnowledgeBase k = new KnowledgeBase("ex2.txt");
-		k = k.optimizedSaturation_FOL();
+		k.optimizedSaturation_FOL();
 		Query query = new Query("p('A',y);r(x,y,z)");
 		Homomorphisms h = new Homomorphisms (query,k.getFB());
 		System.out.println("A1 = " + query + "\nA2 = " + k.getFB() + "\n\nExistent-ils d'homomorphismes de A1 dans A2 ?");

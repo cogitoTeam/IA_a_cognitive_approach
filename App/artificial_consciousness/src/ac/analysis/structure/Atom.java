@@ -332,6 +332,11 @@ public class Atom implements Serializable
     return s;
   }
   
+  public boolean contains(Term t)
+  {
+    return this.terms.contains(t);
+  }
+  
   /* *****************************************************************************
    * MAIN
    * **************************************************************************** */

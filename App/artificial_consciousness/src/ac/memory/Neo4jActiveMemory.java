@@ -110,11 +110,11 @@ public class Neo4jActiveMemory implements Memory
 
     if (logger.isDebugEnabled())
       logger.debug("Grade calculation for the new option");
-    for (RelevantPartialBoardState rpbs : option.getPartialStates())
+    for (Long id_rpbs : option.getPartialStates())
       {
         try
           {
-            total += att_repo.getNodeById(rpbs.getId()).getMark();
+            total += att_repo.getNodeById(id_rpbs).getMark();
             ++nb;
           }
         catch (NodeException | NullPointerException e)

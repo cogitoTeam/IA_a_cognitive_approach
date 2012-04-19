@@ -2,6 +2,9 @@ package ac.reasoning;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
@@ -16,6 +19,7 @@ import ac.memory.episodic.Game;
 import ac.memory.episodic.Move;
 import ac.shared.CompleteBoardState;
 import ac.shared.RelevantPartialBoardState;
+import ac.util.ArraySet;
 
 /**
  * Class IntrospectionEngine Cette classe implémente le moteur d'introspection
@@ -155,26 +159,47 @@ class IntrospectionEngine extends Thread
     ArrayList<Substitution> substitution_list1 = homo_cbs1.getHomomorphisms();
     ArrayList<Substitution> substitution_list2 = homo_cbs2.getHomomorphisms();
 
-    ArrayList<Term> vars;
-    ArrayList<Term> vars1 = this.getVariables(cbs1.getBoardStateFacts()
-        .getAtomList());
+    TreeMap<Term, LinkedList<TreeSet<Term>>> term_map = new TreeMap<>();
 
+    ArrayList<Atom> atom_list = cbs1.getBoardStateFacts().getAtomList();
+    ArrayList<Term> all_vars = this.getVariables(atom_list);
 
+    for (Term t : all_vars)
+      term_map.put(t, new LinkedList<TreeSet<Term>>());
+
+    TreeSet<Term> tree ;
+    for (Atom a : atom_list)
+      {
+        tree = new TreeSet<>();
+        for (Term t : a.getTerms())
+            tree.add(t);
+          
+        for (Term t : tree)
+          term_map.get(t).add((TreeSet<Term>)tree.clone()); 
+        
+      }
+    
     for (Substitution sub1 : substitution_list1)
       {
-        // variables de cbs1 utilisées par l'homomorphisme partiel (RS connu)
-        // puis suppression de celle-ci des choix possibles.
-        vars = sub1.getVariables();
-        vars1.removeAll(vars);
+        TreeMap<Term, LinkedList<TreeSet<Term>>> current_map = (TreeMap<Term, LinkedList<TreeSet<Term>> >)term_map.clone();
+
+        ArrayList<Term> used_vars = sub1.getVariables();
+        for (Term t : sub1.getVariables())
+          for (TreeSet<Term> current_tree : current_map.get(t))
+            current_tree.remove(t);
         
-        // parcours des choix de variables possibles
-        for (Term t : vars1)
+        ArraySet<Term> choices = getChoices(current_map, all_vars);
+        
+        Term t;
+        while(choices.size() > 0)
           {
-            vars.add(t);
+            t = choices.getRandom();
+                  
+            used_vars.add(t);
             // créer un RS contenant tous les prédicats complétements
             // instanciés
-            new_rs = cbs1.getPart(vars);
-
+            new_rs = cbs1.getPart(used_vars);
+    
             // tester si il existe un homomorphisme de RS dans cbs2 (en gardant
             // sub2 comme base)
             boolean haveHomomorphism = false;
@@ -182,7 +207,7 @@ class IntrospectionEngine extends Thread
               {
                 homo_cbs = new Homomorphisms(new_rs.getRule().getPremise(),
                     cbs2.getBoardStateFacts().getAtomList());
-                
+    
                 if (homo_cbs.backtrackRec(sub2))
                   {
                     haveNewRPBS = true;
@@ -190,20 +215,41 @@ class IntrospectionEngine extends Thread
                     break;
                   }
               }
-            
-            if(!haveHomomorphism)
-              vars.remove(t);
-          }
-      }
-
-    if(!haveNewRPBS)
-      new_rs = null;
     
-    return new_rs; 
+            if (!haveHomomorphism)
+              used_vars.remove(t);
+            else
+              for (TreeSet<Term> current_tree : current_map.get(t))
+                current_tree.remove(t);
+            
+            choices = getChoices(current_map, all_vars);
+          }
+          
+      }
+    
+    if (!haveNewRPBS)
+      new_rs = null;
+
+    return new_rs;
   }
+
+  private ArraySet<Term> getChoices(
+      TreeMap<Term, LinkedList<TreeSet<Term>>> current_map,
+      ArrayList<Term> all_vars)
+  {
+    ArraySet<Term> vars = new ArraySet<Term>();
+    for (Term t : all_vars)
+      for (TreeSet<Term> current_tree : current_map.get(t))
+        if (current_tree.size() == 1)
+          vars.add(current_tree.first());
+
+    return vars;
+  }
+
 
   /**
    * 
+   * @param used_term
    * @return an list of Term
    */
   private ArrayList<Term> getVariables(ArrayList<Atom> atomList)
@@ -211,22 +257,21 @@ class IntrospectionEngine extends Thread
     ArrayList<Term> variables = new ArrayList<Term>();
 
     for (Atom a : atomList)
-      {
-        for (Term t : a.getTerms())
-          {
-            boolean contient = false;
-            if (t.isVariable())
-              {
-                for (Term i : variables)
-                  {
-                    if (t.equals(i))
-                      contient = true;
-                  }
-                if (!contient)
-                  variables.add(t);
-              }
-          }
-      }
+      for (Term t : a.getTerms())
+        {
+          boolean contient = false;
+          if (t.isVariable())
+            {
+              for (Term i : variables)
+                {
+                  if (t.equals(i))
+                    contient = true;
+                }
+              if (!contient)
+                variables.add(t);
+            }
+        }
+
     return variables;
   }
 
