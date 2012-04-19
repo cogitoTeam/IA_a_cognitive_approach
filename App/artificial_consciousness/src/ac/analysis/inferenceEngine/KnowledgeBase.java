@@ -227,7 +227,7 @@ public class KnowledgeBase {
 	 * @param successeurs La liste de successeurs à considérer
 	 * @param faits La base de faits courante (les nouveux faits y seront ajoutés)
 	 */
-	private LinkedList<Long> computeNewFacts(LinkedSet<Rule> successeurs, FactBase faits) {
+	private LinkedList<Long> computeNewFacts(LinkedList<Rule> successeurs, FactBase faits) {
 		// Debut de l'algorithme qui exploite le graphe de
 		// dépendance des régles
 	  Atom temp;
@@ -248,23 +248,13 @@ public class KnowledgeBase {
 
 	    s = new Homomorphisms(r.getPremise(), faits);
 	    substitutions_list = s.getHomomorphisms();
-			for (Substitution hom : substitutions_list) 
-			  {
-  				temp = r.getConclusion().applySubtitution(hom);
-  				if (!faits.atomExistsTest(temp)) 
-  				  {
-    					faits.addNewFact(temp);
-    					list_rpbs.add(Long.parseLong(temp.getLabel().substring(5)));
-    					 
-    					if(LOGGER.isDebugEnabled())
-    		        LOGGER.debug("\n\tNouveau fait ajouté : " + temp);
-      					
-    					successeurs.addAll(computeSuccessors(r));
-    				}
-			  }
-			
-			if(LOGGER.isDebugEnabled())
-        LOGGER.debug(successeurs);
+	    int size = substitutions_list.size();
+			for (int i=0; i < size; ++i) 
+			  list_rpbs.add(Long.parseLong(r.getConclusion().getLabel().substring(5)));
+			  
+			if(size>0)
+        LOGGER.debug("\n\tNouveau fait ajouté : " + r.getConclusion());
+
 		}
 		
 		return list_rpbs;
@@ -300,4 +290,47 @@ public class KnowledgeBase {
 				+ k.BF);
 
 	}
+	
+	
+	/**
+   * M�thode de saturation << premier ordre >> de la base de faits
+   * par le cha�nage avant en exploitant le graphe de d�pendances des r�gles 
+   * (et des faits)
+   * 
+   * @return k la base de connaissances satur�e
+   * @throws IOException
+   */
+  public LinkedList<Long> optimizedSaturation_FOL_vTEST() throws IOException {
+    if (isSaturated)
+      return new LinkedList<Long>(); // evite le calcul de saturation au cas où la base est
+              // déjà saturée
+    
+    if(LOGGER.isDebugEnabled())
+      LOGGER.debug("DEBUT SATURATION KB");
+    
+    // déclaration et initialisation des variables
+    //RuleDependencyGraph ruleDependencyGraph = new RuleDependencyGraph(this); 
+    //ruleDependencyGraph.calculeGDR_vTEST(); //calcule le graphe de d�pendances des r�gles 
+                //(et des faits)
+    
+    //algorithme de saturation avec affichage des éléments qui illustrent
+    //l'exploitation du graphe de dépendances des règles (et des faits)
+    if(LOGGER.isDebugEnabled())
+      {
+        //LOGGER.debug(ruleDependencyGraph.toString()); 
+        LOGGER.debug("--> Début de l'algorithme de chaînage avant");
+      }
+
+    LinkedList<Long> list_rpbs = computeNewFacts(new LinkedList<Rule>(this.BR), this.BF);                           
+
+    
+    this.isSaturated = true; //indique que la base est saturée
+    
+    if(LOGGER.isDebugEnabled())
+      LOGGER.debug("FIN SATURATION KB");
+    
+    return list_rpbs;
+  }
+
+
 }

@@ -310,7 +310,7 @@ public class Analysis
     for (Option_FOL o : input.getOptions())
       {
         kb.setBF(o.getResult().getBoardStateFacts());
-        LinkedList<Long> list_rpbs = kb.optimizedSaturation_FOL();
+        LinkedList<Long> list_rpbs = kb.optimizedSaturation_FOL_vTEST();
         
         for(Long id_rpbs : list_rpbs)
           {

@@ -94,6 +94,34 @@ public class RuleDependencyGraph
 		}
 	}
 	
+//Les m�thodes qui caract�risent les fonctionnalit�es de la classe 
+  /**
+   * Méthode de calcul du graphe de dépendances des règles
+   */
+  public void calculeGDR_vTEST()
+  {
+    LinkedSet<Rule> listeSuccesseurs;
+    
+    //pas de calcul de règles dépendants des faits
+    for (Atom fait : kb.getFB().getAtomList())
+      {
+        listeSuccesseurs = new LinkedSet<Rule> ();
+        graphe.add(listeSuccesseurs);
+      }
+
+    
+    //calcul de règles dépendants des règles
+    for (Rule r1 : kb.getRB())
+    {
+      listeSuccesseurs = new LinkedSet<Rule> ();
+      for (Rule r2 : kb.getRB())
+        for (Atom a : r2.getPremise())
+          if (a.unifiableA(r1.getConclusion()))
+            listeSuccesseurs.add(r2);
+      graphe.add(listeSuccesseurs);     
+    }
+  }
+	
 	public RuleDependencyGraph calculeGDRAvecRequete(FactBase requete, KnowledgeBase k) {
 		
 		Rule q = new Rule();

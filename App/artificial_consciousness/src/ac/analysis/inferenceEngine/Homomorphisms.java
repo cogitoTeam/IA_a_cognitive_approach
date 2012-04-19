@@ -106,8 +106,8 @@ public class Homomorphisms {
 	 */
 	public ArrayList<Substitution> getHomomorphisms() 
 	{
-		preprocessing();
-		backtrackAllRec(new Substitution());
+	  ArrayList<Atom>[] atom_rank = preprocessing();
+		backtrackAllRec(new Substitution(), atom_rank, 0);
 		return S;
 	}
 	
@@ -145,7 +145,7 @@ public class Homomorphisms {
 			{
 				solPrime = new Substitution (sol);
 				solPrime.addPair(new TermPair(x,c));
-				if (isPartialHomomorphismTest(solPrime))
+				if (isPartialHomomorphismTest(solPrime, A1))
 					if(backtrackRec(solPrime))
 						return true;
 			}		
@@ -157,10 +157,10 @@ public class Homomorphisms {
 	 * M�thode qui teste si une substitution est un homomorphisme partiel
 	 * @param solPrime la substitution � consid�rer
 	 */
-	private boolean isPartialHomomorphismTest(Substitution sol) 
+	private boolean isPartialHomomorphismTest(Substitution sol, ArrayList<Atom> atoms) 
 	{
 		ArrayList<Atom> A1Prime = new ArrayList<Atom>();
-		for (Atom a : A1)
+		for (Atom a : atoms)
 		{
 			int counter = 0;
 			for (Term t1 : a.getTerms())
@@ -176,11 +176,35 @@ public class Homomorphisms {
 	/**
 	 * M�thode de pr�traitement des variables de A1 qui calcule un ordre total sur ces variables
 	 */
-	private void preprocessing()
+	private ArrayList<Atom>[] preprocessing()
 	{
 		//ordonne variables de A1 (donne rang � chacun), ordonne atomes de A1 selon rang		
 		orderedVariables = getVariables();
+		return getAtomRank(A1, orderedVariables);
 	}
+	
+	private static ArrayList<Atom>[] getAtomRank(ArrayList<Atom> atomset, ArrayList<Term> vars)
+  {
+    //initialisation
+    AtomSet[] atom_rank = new AtomSet[vars.size()];
+    for(int i = 0; i<vars.size(); ++i)
+      atom_rank[i] = new AtomSet();
+    
+    //
+    for(Atom a: atomset)
+    {
+      int rank = 0;
+      for(Term t: a.getTerms())
+      {
+        int tmp = vars.indexOf(t);
+        if(rank < tmp)
+          rank = tmp;
+      }
+      atom_rank[rank].add(a);
+    }
+    
+    return atom_rank;
+  }
 	
 	/**
 	 * M�thode qui retourne l'ensemble d'images possibles pour la variable donn�e en param�tre
@@ -206,7 +230,7 @@ public class Homomorphisms {
    * Search all homomorphism with the given partial solution.
    * @param sol the partial solution
    */
-	public void backtrackAllRec(Substitution sol)
+	public void backtrackAllRec(Substitution sol, ArrayList<Atom>[] atom_rank, int rank)
 	{
 		Term x;
 		ArrayList<Term> candidats;
@@ -218,14 +242,14 @@ public class Homomorphisms {
 		}
 		else
 		{
-			x = chooseUnassignedVariable(sol);
+			x = orderedVariables.get(rank);
 			candidats = computeCandidates(x);
 			for (Term c: candidats)
 			{
 				solPrime = new Substitution (sol);
 				solPrime.addPair(new TermPair(x,c));
-				if (isPartialHomomorphismTest(solPrime))
-					backtrackAllRec(solPrime);
+				if (isPartialHomomorphismTest(solPrime, atom_rank[rank]))
+					backtrackAllRec(solPrime, atom_rank, rank+1);
 			}		
 		}
 	}
