@@ -46,6 +46,12 @@ public class ArraySet<E> extends ArrayList<E> implements Set<E>
     throw new UnsupportedOperationException();
   }
   
+  public E getRandom()
+  {
+    int index = (int) (Math.random()*this.size());
+    return this.get(index);
+  }
+  
   
   
   
