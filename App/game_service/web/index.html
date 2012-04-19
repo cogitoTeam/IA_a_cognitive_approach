@@ -23,18 +23,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <meta name="author" content="William">
     <!-- Date: 2012-03-13 -->
     <style>
-        body { padding:64px; text-align:center }
-        canvas { border:2px solid #C0C0C0; }
+        body { padding:10px; text-align:center; background-color:black; color:white; font-family: sans}
+	h1 { position:absolute; left:20px; top:0 }
+        #info_canvas { border:1px solid #C0C0C0; }
+	#game_canvas { margin:40px; border: 2px solid #7E3000; border-width:2px 0 0 2px; }
+ 	#wood_game { background-image:url('data/wood.jpg'); width: 480px; height: 480px; display:inline-block; border:3px solid black;border-width:0 3px 3px 0 !important;}
+	.active { box-shadow: 0px 0px 50px white; border:3px solid #7E3000 !important;}
+	#pub { position:fixed; top:0px; right:0px; padding:10px;}
     </style>
 </head>
 	
 <body>
-    <h1>HTML 5 Client</h1>
-    <canvas height="300" width="300" id="game_canvas">
-        Can't load HTML 5 canvas: is your browser up to date?
-    </canvas>
+    <h1>AC-cogito</h1>
+    <div id="pub" >
+	<a href="https://github.com/marminthibaut/artificial_consciousness"><img src="data/logo.png"></a>
+    </div>
+    <div id="wood_game" class="">
+       <canvas id="game_canvas" width="400" height="400">
+           Can't load HTML 5 canvas: is your browser up to date?
+       </canvas>
+    </div>
     </br>
-    <canvas height="50" width="300" id="info_canvas">
+    <canvas id="info_canvas" width="400" height="50">
         Can't load HTML 5 canvas: is your browser up to date?
     </canvas>
     

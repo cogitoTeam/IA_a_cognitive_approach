@@ -35,7 +35,7 @@ function main()
         // clear canvases
         context.fillStyle = Game.C_BACKGROUND;
         context.fillRect(0,0,canvas.width, canvas.height);
-        context_info.fillStyle = Game.C_BACKGROUND;
+        context_info.fillStyle = Game.C_BACKGROUNDINFO;
         context_info.fillRect(0,0,canvas_info.width, canvas_info.height);
         
         // draw "loading" text
