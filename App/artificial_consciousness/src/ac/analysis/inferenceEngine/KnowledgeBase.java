@@ -273,7 +273,7 @@ public class KnowledgeBase {
 	 */
 	private LinkedSet<Rule> computeSuccessors(Rule r) {
 		RuleDependencyGraph g = new RuleDependencyGraph(this);
-		int n = Integer.parseInt(r.getName().substring(6))
+		int n = Integer.parseInt(r.getName().substring(2))
 				+ BF.getAtomList().size() - 1;
 
 		g.calculeGDR();

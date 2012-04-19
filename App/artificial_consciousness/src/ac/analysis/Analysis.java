@@ -46,7 +46,7 @@ public class Analysis
   }
 
   /**
-   * This is the input method from environment in case of a choice.
+   * This is the input method from the environment in case of a choice.
    * 
    * @param input
    * @return an Action to stimulate the reasoning
@@ -56,7 +56,7 @@ public class Analysis
   public Action analyse(Choices input) throws MemoryException, IOException
   {
     Choices_FOL output = basicAnalysisEngine(input);
-    
+
     advancedAnalysisEngine(output, this._memory.getRelevantPartialBoardStates());
 
     for (Option_FOL o : output.getOptions())
@@ -70,7 +70,14 @@ public class Analysis
    * ************************************************************************* */
 
   /**
-   * the method that runs the basic analyzer
+   * This method runs the basic conceptual analyzer. It takes choices in the
+   * form of matrices from the game and converts them into first order logic
+   * formulas
+   * 
+   * @param input
+   *          The matrices representing the choices provided by the game engine
+   * @return an instance of {@link Choices_FOL} which represents the same
+   *         choices in FOL
    */
   public static Choices_FOL basicAnalysisEngine(Choices input)
   {
@@ -104,8 +111,8 @@ public class Analysis
     String s;
     Atom a;
     CompleteBoardState cbs = new CompleteBoardState();
-    
-    //add case type
+
+    // add case type
     for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
       for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
         {
@@ -114,8 +121,8 @@ public class Analysis
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }
-    
-    //Add edges
+
+    // Add edges
     p.col = 0;
     p.row = 0;
     for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
@@ -123,147 +130,168 @@ public class Analysis
         s = "isEdge('c_" + p.row + '_' + 0 + "')";
         a = new Atom(s);
         cbs.getBoardStateFacts().addNewFact(a);
-        
-        s = "isEdge('c_" + p.row + '_' + (matrix.getSize().n_cols-1) + "')";
+
+        s = "isEdge('c_" + p.row + '_' + (matrix.getSize().n_cols - 1) + "')";
         a = new Atom(s);
         cbs.getBoardStateFacts().addNewFact(a);
       }
-    
+
     for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
       {
         s = "isEdge('c_" + 0 + '_' + p.col + "')";
         a = new Atom(s);
         cbs.getBoardStateFacts().addNewFact(a);
-        
-        s = "isEdge('c_" + (matrix.getSize().n_rows-1) + '_' +p.col  + "')";
+
+        s = "isEdge('c_" + (matrix.getSize().n_rows - 1) + '_' + p.col + "')";
         a = new Atom(s);
         cbs.getBoardStateFacts().addNewFact(a);
       }
-    
-    //Add corners
+
+    // Add corners
     s = "isCorner('c_" + 0 + '_' + 0 + "')";
     a = new Atom(s);
     cbs.getBoardStateFacts().addNewFact(a);
-    
-    s = "isCorner('c_" + (matrix.getSize().n_rows-1) + '_' + 0 + "')";
+
+    s = "isCorner('c_" + (matrix.getSize().n_rows - 1) + '_' + 0 + "')";
     a = new Atom(s);
     cbs.getBoardStateFacts().addNewFact(a);
-    
-    s = "isCorner('c_" + 0 + '_' + (matrix.getSize().n_cols-1) + "')";
+
+    s = "isCorner('c_" + 0 + '_' + (matrix.getSize().n_cols - 1) + "')";
     a = new Atom(s);
     cbs.getBoardStateFacts().addNewFact(a);
-    
-    s = "isCorner('c_" + (matrix.getSize().n_rows-1) + '_' + (matrix.getSize().n_cols-1) + "')";
+
+    s = "isCorner('c_" + (matrix.getSize().n_rows - 1) + '_'
+        + (matrix.getSize().n_cols - 1) + "')";
     a = new Atom(s);
     cbs.getBoardStateFacts().addNewFact(a);
-    
-    //Add nears
-    for (p.row = 0; p.row < matrix.getSize().n_rows-1; p.row++)
-      for (p.col = 0; p.col < matrix.getSize().n_cols-1; p.col++)
+
+    // Add nears
+    for (p.row = 0; p.row < matrix.getSize().n_rows - 1; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols - 1; p.col++)
         {
-          s = "near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + p.col + "')";
+          s = "near('c_" + p.row + '_' + p.col + "','c_" + (p.row + 1) + '_'
+              + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
-          
-          s = "near('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+1) + "')";
+
+          s = "near('c_" + p.row + '_' + p.col + "','c_" + p.row + '_'
+              + (p.col + 1) + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
-          
-          s = "near('c_" + p.row + '_' + p.col + "','c_" + (p.row+1) + '_' + (p.col+1) + "')";
+
+          s = "near('c_" + p.row + '_' + p.col + "','c_" + (p.row + 1) + '_'
+              + (p.col + 1) + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
-          
+
           // near(x,y) --> near(y,x)
-          s = "near('c_" + (p.row+1) + '_' + p.col + "','c_" + p.row + '_' + p.col + "')";
+          s = "near('c_" + (p.row + 1) + '_' + p.col + "','c_" + p.row + '_'
+              + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
-          
-          s = "near('c_" + p.row + '_' + (p.col+1) + "','c_" + p.row + '_' + p.col + "')";
+
+          s = "near('c_" + p.row + '_' + (p.col + 1) + "','c_" + p.row + '_'
+              + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
-          
-          s = "near('c_" + (p.row+1) + '_' + (p.col+1) + "','c_" + p.row + '_' + p.col + "')";
+
+          s = "near('c_" + (p.row + 1) + '_' + (p.col + 1) + "','c_" + p.row
+              + '_' + p.col + "')";
           a = new Atom(s);
           cbs.getBoardStateFacts().addNewFact(a);
         }
-    
-    //Add aligns
+
+    // Add aligns
     int shift_p2 = 0;
     int shift_p3 = 0;
     for (p.row = 0; p.row < matrix.getSize().n_rows; p.row++)
-      for (p.col = 0; p.col < matrix.getSize().n_cols-2; p.col++)
-        {      
-          for (shift_p2 = 1; shift_p2 + p.col < matrix.getSize().n_cols-1; ++shift_p2)
-            for (shift_p3 = shift_p2+1; shift_p3 + p.col < matrix.getSize().n_rows; ++shift_p3)
+      for (p.col = 0; p.col < matrix.getSize().n_cols - 2; p.col++)
+        {
+          for (shift_p2 = 1; shift_p2 + p.col < matrix.getSize().n_cols - 1; ++shift_p2)
+            for (shift_p3 = shift_p2 + 1; shift_p3 + p.col < matrix.getSize().n_rows; ++shift_p3)
               {
-                s = "aligned('c_" + p.row + '_' + p.col + "','c_" + p.row + '_' + (p.col+shift_p2) + "','c_" + p.row + '_' + (p.col+shift_p3) + "')";
+                s = "aligned('c_" + p.row + '_' + p.col + "','c_" + p.row + '_'
+                    + (p.col + shift_p2) + "','c_" + p.row + '_'
+                    + (p.col + shift_p3) + "')";
                 a = new Atom(s);
                 cbs.getBoardStateFacts().addNewFact(a);
-                
+
                 // aligned(x,y,z) --> aligned(z,y,x)
-                s = "aligned('c_" + p.row + '_' + (p.col+shift_p3) + "','c_" + p.row + '_' + (p.col+shift_p2) + "','c_" + p.row + '_' + p.col + "')";
+                s = "aligned('c_" + p.row + '_' + (p.col + shift_p3) + "','c_"
+                    + p.row + '_' + (p.col + shift_p2) + "','c_" + p.row + '_'
+                    + p.col + "')";
                 a = new Atom(s);
                 cbs.getBoardStateFacts().addNewFact(a);
               }
         }
-    
-    for (p.row = 0; p.row < matrix.getSize().n_rows-2; p.row++)
+
+    for (p.row = 0; p.row < matrix.getSize().n_rows - 2; p.row++)
       for (p.col = 0; p.col < matrix.getSize().n_cols; p.col++)
-        {      
-          for (shift_p2 = 1; shift_p2 + p.row < matrix.getSize().n_rows-1; ++shift_p2)
-            for (shift_p3 = shift_p2+1; shift_p3 + p.row < matrix.getSize().n_rows; ++shift_p3)
+        {
+          for (shift_p2 = 1; shift_p2 + p.row < matrix.getSize().n_rows - 1; ++shift_p2)
+            for (shift_p3 = shift_p2 + 1; shift_p3 + p.row < matrix.getSize().n_rows; ++shift_p3)
               {
-                s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+shift_p2) + '_' + p.col + "','c_" + (p.row+shift_p3) + '_' + p.col + "')";
+                s = "aligned('c_" + p.row + '_' + p.col + "','c_"
+                    + (p.row + shift_p2) + '_' + p.col + "','c_"
+                    + (p.row + shift_p3) + '_' + p.col + "')";
                 a = new Atom(s);
                 cbs.getBoardStateFacts().addNewFact(a);
-                
+
                 // aligned(x,y,z) --> aligned(z,y,x)
-                s = "aligned('c_" + (p.row+shift_p3) + '_' + p.col + "','c_" + (p.row+shift_p2) + '_' + p.col + "','c_" + p.row + '_' + p.col + "')";
+                s = "aligned('c_" + (p.row + shift_p3) + '_' + p.col + "','c_"
+                    + (p.row + shift_p2) + '_' + p.col + "','c_" + p.row + '_'
+                    + p.col + "')";
                 a = new Atom(s);
                 cbs.getBoardStateFacts().addNewFact(a);
               }
         }
-    
-    for (p.row = 0; p.row < matrix.getSize().n_rows-2; p.row++)
-      for (p.col = 0; p.col < matrix.getSize().n_cols-2; p.col++)
-        {      
-          for (shift_p2 = 1; shift_p2 + p.row < matrix.getSize().n_rows-1; ++shift_p2)
-            for (shift_p3 = shift_p2+1; shift_p3 + p.row < matrix.getSize().n_rows; ++shift_p3)
+
+    for (p.row = 0; p.row < matrix.getSize().n_rows - 2; p.row++)
+      for (p.col = 0; p.col < matrix.getSize().n_cols - 2; p.col++)
+        {
+          for (shift_p2 = 1; shift_p2 + p.row < matrix.getSize().n_rows - 1; ++shift_p2)
+            for (shift_p3 = shift_p2 + 1; shift_p3 + p.row < matrix.getSize().n_rows; ++shift_p3)
               {
-                s = "aligned('c_" + p.row + '_' + p.col + "','c_" + (p.row+shift_p2) + '_' + (p.col+shift_p2) + "','c_" + (p.row+shift_p3) + '_' + (p.col+shift_p3) + "')";
+                s = "aligned('c_" + p.row + '_' + p.col + "','c_"
+                    + (p.row + shift_p2) + '_' + (p.col + shift_p2) + "','c_"
+                    + (p.row + shift_p3) + '_' + (p.col + shift_p3) + "')";
                 a = new Atom(s);
                 cbs.getBoardStateFacts().addNewFact(a);
-                
+
                 // aligned(x,y,z) --> aligned(z,y,x)
-                s = "aligned('c_" + (p.row+shift_p3) + '_' + (p.col+shift_p3) + "','c_" + (p.row+shift_p2) + '_' + (p.col+shift_p2) + "','c_" + p.row + '_' + p.col + "')";
+                s = "aligned('c_" + (p.row + shift_p3) + '_'
+                    + (p.col + shift_p3) + "','c_" + (p.row + shift_p2) + '_'
+                    + (p.col + shift_p2) + "','c_" + p.row + '_' + p.col + "')";
                 a = new Atom(s);
                 cbs.getBoardStateFacts().addNewFact(a);
               }
         }
-                  
+
     return cbs;
 
   }
-  
+
   /**
-   * This method represents the Advanced Conceptual Analyzer : it uses an inference
-   * engine to analyze complete board states in order to find relevant structures
-   * within them. These then become relevant partial board states which are passed
-   * on to the memory.    
+   * This method represents the Advanced Conceptual Analyzer : it uses an
+   * inference
+   * engine to analyze complete board states in order to find relevant
+   * structures
+   * within them. These then become relevant partial board states which are
+   * passed
+   * on to the memory.
+   * 
    * @param rpbsList
    *          the list of {@link RelevantPartialBoardState}s from the active
    *          memory
    * @throws IOException
    */
-  public static void advancedAnalysisEngine(Choices_FOL input, List<RelevantPartialBoardState> rpbsList)
-      throws IOException
+  public static void advancedAnalysisEngine(Choices_FOL input,
+      List<RelevantPartialBoardState> rpbsList) throws IOException
   {
     KnowledgeBase kb = new KnowledgeBase("RuleBase");
 
-    // can be omitted if clement adds the rule directly to the RuleBase file
     for (RelevantPartialBoardState rpbs : rpbsList)
       kb.addNewRule(rpbs.getRule());
-    // till here
 
     Homomorphisms h;
     Query q;
@@ -281,13 +309,11 @@ public class Analysis
       }
   }
 
-
-  
-  //just for tests
+  // just for tests
   /**
    * @param args
    * @throws IOException
-   * @throws MemoryException 
+   * @throws MemoryException
    */
   public static void main(String[] args) throws IOException, MemoryException
   {
@@ -296,9 +322,10 @@ public class Analysis
     Choices test = new Choices(b);
     test.getCurrentBoard();
     AC new_AC = new AC();
-    Analysis test_analysis = new Analysis(new_AC.getMemory(),new_AC.getReasoning());
+    Analysis test_analysis = new Analysis(new_AC.getMemory(),
+        new_AC.getReasoning());
     test_analysis.analyse(test);
-    
+
     System.out.println(test.getCurrentBoard());
   }
 }

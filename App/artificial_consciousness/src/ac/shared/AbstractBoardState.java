@@ -5,7 +5,6 @@ package ac.shared;
 
 import java.io.Serializable;
 
-import ac.analysis.structure.Atom;
 import ac.analysis.structure.FactBase;
 
 /**

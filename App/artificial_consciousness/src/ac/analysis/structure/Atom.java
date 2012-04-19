@@ -198,6 +198,7 @@ public class Atom implements Serializable
    * @return {@code true} if the two atoms are equivalent, {@code false}
    *         otherwise
    */
+  @SuppressWarnings("deprecation")
   public boolean equalsA(Atom r)
   {
     if (!equalsP(r))
@@ -247,6 +248,7 @@ public class Atom implements Serializable
    *         {@code False} otherwise
    * 
    */
+  @SuppressWarnings("deprecation")
   public boolean unifiableA(Atom r)
   {
     Atom a = new Atom(this), b = new Atom(r);
@@ -291,6 +293,7 @@ public class Atom implements Serializable
    * @param to
    *          the new term to replace with 
    */
+  @SuppressWarnings("deprecation")
   public void replace(Term from, Term to, ArrayList<Term> inList)
   {
     for (int i = 0; i < inList.size(); i++)

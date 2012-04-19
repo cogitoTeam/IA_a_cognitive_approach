@@ -3,18 +3,18 @@
  */
 package ac.shared.FOLObjects;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.LinkedList;
 
-
-import ac.analysis.inferenceEngine.Homomorphisms;
-import ac.analysis.inferenceEngine.KnowledgeBase;
-import ac.analysis.structure.Query;
 import ac.shared.CompleteBoardState;
-import ac.shared.RelevantPartialBoardState;
 
 /**
+ * This class represents a first-order-logic object. It contains the following
+ * attributes:
+ * <p>
+ * {@code _current_board} : a {@link CompleteBoardState}
+ * <p>
+ * {@code _options} : a list of {@link Option_FOL}
  * 
  * @author Clément Sipieter <csipieter@gmail.com>
  * @author namratapatel
@@ -35,11 +35,14 @@ public class Choices_FOL
   // CONSTRUCTORS
   // ***************************************************************************
 
+  /**
+   * Empty constructor
+   */
   public Choices_FOL()
   {
     this._options = new LinkedList<Option_FOL>();
   }
-  
+
   // ***************************************************************************
   // METHODS
   // ***************************************************************************
@@ -54,10 +57,10 @@ public class Choices_FOL
   {
     this._options.add(option);
   }
-  
+
   /* (non-Javadoc)
-   * @see java.lang.Object#toString()
-   */
+   * 
+   * @see java.lang.Object#toString() */
   @Override
   public String toString()
   {
