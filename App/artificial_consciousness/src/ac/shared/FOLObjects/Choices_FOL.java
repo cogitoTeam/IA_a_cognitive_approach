@@ -45,42 +45,6 @@ public class Choices_FOL
   // ***************************************************************************
 
   /**
-   * This method represents the Advanced Conceptual Analyzer : it uses an inference
-   * engine to analyze complete board states in order to find relevant structures
-   * within them. These then become relevant partial board states which are passed
-   * on to the memory.    
-   * @param rpbsList
-   *          the list of {@link RelevantPartialBoardState}s from the active
-   *          memory
-   * @throws IOException
-   */
-  public void linkRelevant(List<RelevantPartialBoardState> rpbsList)
-      throws IOException
-  {
-    KnowledgeBase kb = new KnowledgeBase("RuleBase");
-
-    // can be omitted if clement adds the rule directly to the RuleBase file
-    for (RelevantPartialBoardState rpbs : rpbsList)
-      kb.addNewRule(rpbs.getRule());
-    // till here
-
-    Homomorphisms h;
-    Query q;
-    for (Option_FOL o : this.getOptions())
-      {
-        kb.setBF(o.getResult().getBoardStateFacts());
-        kb.optimizedSaturation_FOL();
-        for (RelevantPartialBoardState rpbs : rpbsList)
-          {
-            q = new Query(rpbs.getRule().getConclusion());
-            h = new Homomorphisms(q, kb.getFB());
-            if (h.existsHomomorphismTest())
-              o.addPartialStates(rpbs);
-          }
-      }
-  }
-  
-  /**
    * @param option
    *          option to add
    * @param _options
