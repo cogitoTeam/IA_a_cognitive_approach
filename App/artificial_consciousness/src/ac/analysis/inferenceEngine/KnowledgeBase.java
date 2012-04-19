@@ -202,11 +202,16 @@ public class KnowledgeBase {
 	      LOGGER.debug("--> Début de l'algorithme de chaînage avant");
 	    }
 
+	  LinkedSet rules = new LinkedSet<Rule>();
 	  for (int i = 0; i < BF.getAtomList().size(); i++) {
 			//appel à la fonction récursive qui calcule des nouveaux faits  
 			//en appliquant les successeurs des faits (puis règles) considérés
-			computeNewFacts(ruleDependencyGraph.getGraphe().get(i), k.BF); 													 
+	    
+	    //@TODO voir comment gagner en temps
+	    rules.addAll(ruleDependencyGraph.getGraphe().get(i));
 		}
+    computeNewFacts(rules, k.BF);                           
+
 		
 	  k.isSaturated = true; //indique que la base est saturée
 		

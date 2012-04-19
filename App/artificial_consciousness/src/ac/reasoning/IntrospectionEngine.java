@@ -140,7 +140,6 @@ class IntrospectionEngine extends Thread
       }
   }
 
-  // peut retourner une liste d'extension
   private RelevantPartialBoardState extension(RelevantPartialBoardState rs1,
       CompleteBoardState cbs1, CompleteBoardState cbs2)
   {

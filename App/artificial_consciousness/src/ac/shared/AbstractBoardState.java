@@ -5,6 +5,7 @@ package ac.shared;
 
 import java.io.Serializable;
 
+import ac.analysis.structure.Atom;
 import ac.analysis.structure.FactBase;
 
 /**
@@ -25,7 +26,6 @@ public abstract class AbstractBoardState implements Serializable
 
   private static final long serialVersionUID = 6794929662400698592L;
 
-  protected long id;
   protected FactBase boardStateFacts;
 
   // TODO list of defining facts
@@ -39,17 +39,6 @@ public abstract class AbstractBoardState implements Serializable
   public AbstractBoardState()
   {
     boardStateFacts = new FactBase();
-
-  }
-
-  /**
-   * /!\ This constructor will be removed later
-   * 
-   * @param id
-   */
-  public AbstractBoardState(long id)
-  {
-    this.id = id;
   }
 
   /**
@@ -57,17 +46,9 @@ public abstract class AbstractBoardState implements Serializable
    */
   public long getId()
   {
-    return id;
+    return boardStateFacts.hashCode();
   }
 
-  /**
-   * @param id
-   *          the id to set
-   */
-  public void setId(long id)
-  {
-    this.id = id;
-  }
 
   /**
    * @return the boardStateFacts ({@link FactBase})
