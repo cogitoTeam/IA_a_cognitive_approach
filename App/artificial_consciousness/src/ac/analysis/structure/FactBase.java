@@ -269,7 +269,6 @@ public class FactBase implements Serializable
    *          the atom to test
    * @return true if the atom exists, false otherwise
    */
-  @SuppressWarnings("deprecation")
   public boolean atomExistsTest(Atom a)
   {
     for (int i = 0; i < atomList.size(); i++)
@@ -297,7 +296,6 @@ public class FactBase implements Serializable
    *          the term to test
    * @return true if the term exists in the base, false otherwise
    */
-  @SuppressWarnings("deprecation")
   public boolean termExistsTest(Term t)
   {
     for (int i = 0; i < terms.size(); i++)

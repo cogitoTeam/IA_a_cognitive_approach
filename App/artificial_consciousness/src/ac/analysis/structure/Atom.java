@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author namratapatel
  */
 
-public class Atom implements Serializable
+public class Atom implements Serializable, Comparable<Atom>
 {
   /**
    * 
@@ -37,18 +37,20 @@ public class Atom implements Serializable
     label = "";
     terms = new ArrayList<Term>();
   }
-  
+
   /**
    * 
-   * @param label the label of this atom.
-   * @param termes the list of terms of this atom.
+   * @param label
+   *          the label of this atom.
+   * @param termes
+   *          the list of terms of this atom.
    */
   public Atom(String label, ArrayList<Term> termes)
   {
     this.label = label;
     this.terms = termes;
   }
-  
+
   /**
    * Copy Constructor
    * 
@@ -198,29 +200,27 @@ public class Atom implements Serializable
    * @return {@code true} if the two atoms are equivalent, {@code false}
    *         otherwise
    */
-  @SuppressWarnings("deprecation")
   public boolean equalsA(Atom r)
   {
     if (!equalsP(r))
       return false;
+
     for (int i = 0, counter = 0; i < terms.size(); i++)
-      {
-        if (terms.get(i).equalsT(r.terms.get(i)))
-          counter++;
-        if (counter == terms.size())
-          return true;
-      }
-    return false;
+      if (!terms.get(i).equalsT(r.terms.get(i)))
+        return false;
+
+    return true;
   }
 
   /**
    * Makes this {@code Atom} and the one specified distinct, i.e
    * <p>
-   * if the 2 atoms have variables, their variables are renamed so that
-   * they are distinct
+   * if the 2 atoms have variables, their variables are renamed so that they are
+   * distinct
    * 
    * @param b
-   *          the atom to make distinct with this {@code Atom} (it is modified in the method)
+   *          the atom to make distinct with this {@code Atom} (it is modified
+   *          in the method)
    * @return a copy of this {@code Atom} after its modification (leaving this
    *         {@code Atom} unmodified in the method)
    */
@@ -291,7 +291,7 @@ public class Atom implements Serializable
    * @param from
    *          the old term to be replaced
    * @param to
-   *          the new term to replace with 
+   *          the new term to replace with
    */
   @SuppressWarnings("deprecation")
   public void replace(Term from, Term to, ArrayList<Term> inList)
@@ -331,19 +331,19 @@ public class Atom implements Serializable
     s += ")";
     return s;
   }
-  
+
   public boolean contains(Term t)
   {
     return this.terms.contains(t);
   }
-  
+
   /* *****************************************************************************
    * MAIN
    * **************************************************************************** */
 
-
   /**
    * Demo of class
+   * 
    * @param args
    */
   public static void main(String[] args)
@@ -351,10 +351,25 @@ public class Atom implements Serializable
     Atom a = new Atom("r(x,y,z)");
     Atom b = new Atom("r(x,y,x)");
     if (a.unifiableA(b))
-      System.out.println("a = " + a + " and b = " + b + " are unifiable"); 
+      System.out.println("a = " + a + " and b = " + b + " are unifiable");
     else
-      System.out.println("a = " + a + " and b = " + b
-          + " are not unifiable"); 
+      System.out.println("a = " + a + " and b = " + b + " are not unifiable");
 
+  }
+
+  @Override
+  public int compareTo(Atom o)
+  {
+    int val = this.label.compareTo(o.label);
+    if (val == 0)
+      {
+        for (int i = 0, counter = 0; i < terms.size(); i++)
+          {
+            val = terms.get(i).compareTo(o.terms.get(i));
+            if (val != 0)
+              return val;
+          }
+      }
+    return val;
   }
 }
