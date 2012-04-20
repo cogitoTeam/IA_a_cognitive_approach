@@ -1,6 +1,7 @@
 package ac.analysis;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -296,37 +297,40 @@ public class Analysis
   public static void advancedAnalysisEngine(Choices_FOL input,
       List<RelevantPartialBoardState> rpbsList) throws IOException
   {
-    KnowledgeBase kb = new KnowledgeBase("RuleBase");
+    ArrayList<Rule> br = new ArrayList<>();
 
-    // can be omitted if clement adds the rule directly to the RuleBase file
     int cpt = -1;
     Rule r;
     for (RelevantPartialBoardState rpbs : rpbsList)
       {
         r = rpbs.getRule();
         r.setName("R" + ++cpt);
-        kb.addNewRule(r);
+        br.add(r);
       }
-    // till here
 
     Homomorphisms h;
     Query q;
+    LinkedList<KnowledgeBase> kb_list = new LinkedList<>();
     for (Option_FOL o : input.getOptions())
       {
         if(LOGGER.isDebugEnabled())
           LOGGER.debug("new option");
-        kb.setBF(o.getResult().getBoardStateFacts());
         
-        LinkedList<Long> list_rpbs = kb.optimizedSaturation_FOL_vTEST();
-        
-        for(Long id_rpbs : list_rpbs)
+        KnowledgeBase kb = new KnowledgeBase(o, br);  
+        kb_list.add(kb);
+        //lancement du thread
+        kb.start();
+      }
+    
+    //attente de la fin de chaque thread
+    for(KnowledgeBase kb : kb_list)
+      {
+        try
           {
-            if(LOGGER.isDebugEnabled())
-              LOGGER.debug(id_rpbs);
-            
-            o.addPartialStates(id_rpbs);
+            kb.join();
           }
-
+        catch (InterruptedException e)
+          {}
       }
   }
 
