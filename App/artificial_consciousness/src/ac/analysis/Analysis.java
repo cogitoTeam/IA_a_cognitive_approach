@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import game.BoardMatrix;
 import game.Game;
 import game.ReversiRules;
@@ -35,6 +37,8 @@ import agent.Percept.Choices;
  */
 public class Analysis
 {
+
+  private static final Logger LOGGER = Logger.getLogger(Analysis.class);
 
   private Neo4jActiveMemory _memory;
   private Reasoning _reasoning;
@@ -309,20 +313,20 @@ public class Analysis
     Query q;
     for (Option_FOL o : input.getOptions())
       {
+        if(LOGGER.isDebugEnabled())
+          LOGGER.debug("new option");
         kb.setBF(o.getResult().getBoardStateFacts());
+        
         LinkedList<Long> list_rpbs = kb.optimizedSaturation_FOL_vTEST();
         
         for(Long id_rpbs : list_rpbs)
           {
+            if(LOGGER.isDebugEnabled())
+              LOGGER.debug(id_rpbs);
+            
             o.addPartialStates(id_rpbs);
           }
-        
-        /*for (RelevantPartialBoardState rpbs : rpbsList)
-          {
-            q = new Query(rpbs.getRule().getConclusion());
-            h = new Homomorphisms(q, kb.getFB());
-            if (h.existsHomomorphismTest())
-          }*/
+
       }
   }
 

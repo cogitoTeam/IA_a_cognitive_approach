@@ -89,7 +89,8 @@ public class KnowledgeBase {
 		sourceFilename = nomFichier;
 		BufferedReader lectureFichier = new BufferedReader(new FileReader(
 				nomFichier));
-		LOGGER.debug("CHARGEMENT D'UNE BASE DE CONNAISSANCES à partir du fichier : "
+		if(LOGGER.isDebugEnabled())
+		  LOGGER.debug("CHARGEMENT D'UNE BASE DE CONNAISSANCES à partir du fichier : "
 						+ nomFichier);
 
 		// cr�ation de la base de faits (utilise les m�thodes de la classe
@@ -112,7 +113,9 @@ public class KnowledgeBase {
 			BR.add(new Rule(t, "Règle " + (i + 1)));
 		}
 		lectureFichier.close();
-		LOGGER.debug("FIN DU CHARGEMENT DE LA BASE DE CONNAISSANCE");
+		
+		if(LOGGER.isDebugEnabled())
+		  LOGGER.debug("FIN DU CHARGEMENT DE LA BASE DE CONNAISSANCE");
 	}
 
 //Les getters de la classe	
@@ -254,7 +257,8 @@ public class KnowledgeBase {
 			  list_rpbs.add(Long.parseLong(r.getConclusion().getLabel().substring(5)));
 			  
 			if(size>0)
-        LOGGER.debug("\n\tNouveau fait ajouté : " + r.getConclusion());
+			  if(LOGGER.isDebugEnabled())
+			    LOGGER.debug("\n\tNouveau fait ajouté : " + r.getConclusion());
 
 		}
 		
