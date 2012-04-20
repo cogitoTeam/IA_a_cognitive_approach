@@ -14,7 +14,7 @@ public class Test
 
   public static void main(String[] args) throws InterruptedException
   {
-    boolean bootstrap = true;
+    boolean bootstrap = false;
     // create agent(s)
     Agent agent = new AC();
 

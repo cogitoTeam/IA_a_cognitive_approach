@@ -78,8 +78,8 @@ public class AC extends Agent
     if (LOGGER.isDebugEnabled())
       LOGGER.debug("Generating some Atoms");
 
-    atoms_list.add(new Atom("isMy(x)"));
-    atoms_list.add(new Atom("isMy(y)"));
+    atoms_list.add(new Atom("isMine(x)"));
+    atoms_list.add(new Atom("isMine(y)"));
     atoms_list.add(new Atom("near(x,y)"));
     atoms_list.add(new Atom("near(y,x)"));
 
@@ -117,7 +117,7 @@ public class AC extends Agent
     
     atoms_list.clear();
     atoms_list.add(new Atom("isOpp(x)"));
-    atoms_list.add(new Atom("isMy(y)"));
+    atoms_list.add(new Atom("isMine(y)"));
     atoms_list.add(new Atom("near(x,y)"));
     atoms_list.add(new Atom("near(y,x)"));
 
@@ -135,9 +135,9 @@ public class AC extends Agent
       }
     
     atoms_list.clear();
-    atoms_list.add(new Atom("isMy(x)"));
-    atoms_list.add(new Atom("isMy(y)"));
-    atoms_list.add(new Atom("isMy(z)"));
+    atoms_list.add(new Atom("isMine(x)"));
+    atoms_list.add(new Atom("isMine(y)"));
+    atoms_list.add(new Atom("isMine(z)"));
     atoms_list.add(new Atom("near(x,y)"));
     atoms_list.add(new Atom("near(y,x)"));
     atoms_list.add(new Atom("near(y,z)"));
@@ -181,7 +181,7 @@ public class AC extends Agent
       }
     
     atoms_list.clear();
-    atoms_list.add(new Atom("isMy(x)"));
+    atoms_list.add(new Atom("isMine(x)"));
     atoms_list.add(new Atom("isOpp(y)"));
     atoms_list.add(new Atom("isOpp(z)"));
     atoms_list.add(new Atom("near(x,y)"));
@@ -205,8 +205,8 @@ public class AC extends Agent
     
     atoms_list.clear();
     atoms_list.add(new Atom("isOpp(x)"));
-    atoms_list.add(new Atom("isMy(y)"));
-    atoms_list.add(new Atom("isMy(z)"));
+    atoms_list.add(new Atom("isMine(y)"));
+    atoms_list.add(new Atom("isMine(z)"));
     atoms_list.add(new Atom("near(x,y)"));
     atoms_list.add(new Atom("near(y,x)"));
     atoms_list.add(new Atom("near(y,z)"));
@@ -316,7 +316,7 @@ public class AC extends Agent
           
         try
           {
-            Thread.sleep(2000);
+            Thread.sleep(10_000);
           }
         catch (InterruptedException e)
           {}
