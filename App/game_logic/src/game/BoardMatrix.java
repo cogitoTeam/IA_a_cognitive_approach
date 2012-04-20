@@ -31,12 +31,12 @@ public class BoardMatrix
               return "isEmpty";
             case PIECE_BLACK:
               if(player == Player.BLACK)
-                return "isMy";
+                return "isMine";
               else
                 return "isOpp";
             case PIECE_WHITE:
               if(player == Player.WHITE)
-                return "isMy";
+                return "isMine";
               else
                 return "isOpp";
             default:

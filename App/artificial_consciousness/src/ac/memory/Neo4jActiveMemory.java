@@ -124,9 +124,13 @@ public class Neo4jActiveMemory implements Memory
           }
       }
 
-    double mark = total / (double) nb;
+    double mark = 0.5;
+    if (nb != 0)
+      mark = total / (double) nb;
+
     if (logger.isDebugEnabled())
-      logger.debug("grade = " + mark);
+      logger.debug("grade = " + mark + "(" + total + " / " + nb + ")");
+
     option_buffer.add(new Pair<Option_FOL, Double>(option, mark));
   }
 
@@ -134,7 +138,8 @@ public class Neo4jActiveMemory implements Memory
    * 
    * @see ac.memory.Memory#getGradedOptions() */
   @Override
-  public List<Pair<Option_FOL, Double>> getGradedOptions() throws MemoryException
+  public List<Pair<Option_FOL, Double>> getGradedOptions()
+      throws MemoryException
   {
     return option_buffer;
   }
