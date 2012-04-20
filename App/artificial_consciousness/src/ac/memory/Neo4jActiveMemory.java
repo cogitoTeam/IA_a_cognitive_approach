@@ -105,7 +105,7 @@ public class Neo4jActiveMemory implements Memory
   {
     if (logger.isDebugEnabled())
       logger.debug("Put new option in the Active Memory buffer");
-    double total = 0.5;
+    double total = 0;
     int nb = 0;
 
     if (logger.isDebugEnabled())
