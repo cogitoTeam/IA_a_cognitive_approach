@@ -5,6 +5,9 @@ package ac.memory.episodic;
 
 import java.util.List;
 
+import com.jcraft.jsch.Logger;
+
+import ac.memory.persistence.neo4j.AttributeNodeRepository;
 import ac.memory.persistence.neo4j.GameNode;
 import ac.memory.persistence.neo4j.GameNodeRepository;
 import ac.memory.persistence.neo4j.MoveNodeRepository;
@@ -26,6 +29,7 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
   GameNodeRepository game_repo;
   MoveNodeRepository move_repo;
   ObjectNodeRepository obj_repo;
+  AttributeNodeRepository att_repo;
 
   /**
    * Default constructor
@@ -36,6 +40,8 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
     move_repo = new MoveNodeRepository(Neo4jService.getInstance());
     obj_repo = new ObjectNodeRepository(Neo4jService.getInstance(),
         Neo4jService.getObjIndex(), Neo4jService.getObjMarkIndex());
+    att_repo = new AttributeNodeRepository(Neo4jService.getInstance(),
+        Neo4jService.getAttrIndex(), Neo4jService.getAttrMarkIndex());
   }
 
   @Override
@@ -99,10 +105,14 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
       {
         ObjectNode object = obj_repo.getNodeById(board_state.getId());
         if (object == null)
-          obj_repo.createNode(board_state);
+          object = obj_repo.createNode(board_state);
 
-        move_repo.addMove(game_repo.getLast(),
-            obj_repo.getNodeById(board_state.getId()), rpbs_ids);
+        move_repo.addMove(game_repo.getLast(), object);
+
+        for (Long rpbs_id : rpbs_ids)
+          {
+            object.addRelatedObject(att_repo.getNodeById(rpbs_id));
+          }
       }
     catch (Exception e)
       {
