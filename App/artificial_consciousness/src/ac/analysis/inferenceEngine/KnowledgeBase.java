@@ -26,9 +26,10 @@ public class KnowledgeBase {
 	/**
    * @param bF the bF to set
    */
-  public void setBF(FactBase bF)
+  public void setBF(FactBase BF)
   {
-    BF = bF;
+    this.BF = BF;
+    this.isSaturated = false;
   }
   
   private static final Logger LOGGER = Logger.getLogger(KnowledgeBase.class);
