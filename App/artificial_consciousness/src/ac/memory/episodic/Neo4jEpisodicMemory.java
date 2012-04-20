@@ -14,6 +14,7 @@ import ac.memory.persistence.neo4j.ObjectNode;
 import ac.memory.persistence.neo4j.ObjectNodeRepository;
 import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -91,7 +92,7 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
    * 
    * @see ac.memory.episodic.EpisodicMemory#newMove() */
   @Override
-  public void newMove(CompleteBoardState board_state)
+  public void newMove(CompleteBoardState board_state, List<Long> rpbs_ids)
       throws EpisodicMemoryException
   {
     try
@@ -99,9 +100,9 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
         ObjectNode object = obj_repo.getNodeById(board_state.getId());
         if (object == null)
           obj_repo.createNode(board_state);
-        
+
         move_repo.addMove(game_repo.getLast(),
-            obj_repo.getNodeById(board_state.getId()));
+            obj_repo.getNodeById(board_state.getId()), rpbs_ids);
       }
     catch (Exception e)
       {

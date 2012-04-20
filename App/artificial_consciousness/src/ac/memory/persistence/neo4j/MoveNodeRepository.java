@@ -4,6 +4,7 @@
 package ac.memory.persistence.neo4j;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
@@ -39,9 +40,12 @@ public class MoveNodeRepository extends
    * @param game
    * @param board_state
    *          the related board state (an object of the lattice)
-   * @return the new MoveNode
+   * @param rpbs_ids
+   *          list of rpbs ids who are checking with the board_state
+   * @return the new MoveNode (null if an error occured)
    */
-  public MoveNode addMove(GameNode game, ObjectNode board_state)
+  public MoveNode addMove(GameNode game, ObjectNode board_state,
+      List<Long> rpbs_ids)
   {
     // to guard against duplications we use the lock grabbed on ref node
     // when
@@ -105,10 +109,27 @@ public class MoveNodeRepository extends
         newMoveNode.createRelationshipTo(game.underlyingNode,
             RelTypes.RELATED_GAME);
 
+        if (logger.isDebugEnabled())
+          logger
+              .debug("Creation of all relationships beatween the object and the attributes");
+
+        AttributeNodeRepository attr_repo = new AttributeNodeRepository(
+            Neo4jService.getInstance(), Neo4jService.getAttrIndex(),
+            Neo4jService.getAttrMarkIndex());
+        for (Long rpbs_id : rpbs_ids)
+          {
+            board_state.addRelatedObject(attr_repo.getNodeById(rpbs_id));
+          }
+
         tx.success();
         if (logger.isDebugEnabled())
           logger.debug("New Move added successfuly");
         return new MoveNode(newMoveNode);
+      }
+    catch (Exception e)
+      {
+        logger.error("Error occured when adding new Move", e);
+        return null;
       }
     finally
       {

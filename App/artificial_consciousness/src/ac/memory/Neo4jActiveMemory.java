@@ -153,7 +153,7 @@ public class Neo4jActiveMemory implements Memory
     // TODO verify that the option chosen is in the buffer list.
     try
       {
-        episodic.newMove(option.getResult());
+        episodic.newMove(option.getResult(),option.getPartialStates());
       }
     catch (EpisodicMemoryException e)
       {
