@@ -40,12 +40,9 @@ public class MoveNodeRepository extends
    * @param game
    * @param board_state
    *          the related board state (an object of the lattice)
-   * @param rpbs_ids
-   *          list of rpbs ids who are checking with the board_state
    * @return the new MoveNode (null if an error occured)
    */
-  public MoveNode addMove(GameNode game, ObjectNode board_state,
-      List<Long> rpbs_ids)
+  public MoveNode addMove(GameNode game, ObjectNode board_state)
   {
     // to guard against duplications we use the lock grabbed on ref node
     // when
@@ -108,18 +105,6 @@ public class MoveNodeRepository extends
               .debug("Creation of the RELATED_GAME RELATION between the new move node and its related game");
         newMoveNode.createRelationshipTo(game.underlyingNode,
             RelTypes.RELATED_GAME);
-
-        if (logger.isDebugEnabled())
-          logger
-              .debug("Creation of all relationships beatween the object and the attributes");
-
-        AttributeNodeRepository attr_repo = new AttributeNodeRepository(
-            Neo4jService.getInstance(), Neo4jService.getAttrIndex(),
-            Neo4jService.getAttrMarkIndex());
-        for (Long rpbs_id : rpbs_ids)
-          {
-            board_state.addRelatedObject(attr_repo.getNodeById(rpbs_id));
-          }
 
         tx.success();
         if (logger.isDebugEnabled())
