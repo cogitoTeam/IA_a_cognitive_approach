@@ -38,6 +38,7 @@ Game.C_TEXT = 'rgb(200,200,200)';
 function Game()
 {
     /* ATTRIBUTES */
+    const WATCH_ID = parseInt(DIV_GAME_ID.innerHTML.toString());
     
     // receiver 
     var obj = this;
@@ -161,7 +162,7 @@ function Game()
             }
         }
         else
-            text = "Waiting for opponent...";
+            text = "Awaiting other player...";
         
         // draw icon of winning/current name
         if(image != null)
@@ -191,6 +192,15 @@ function Game()
     
     obj.update_from_xml = function(data)
     {
+        // get the game identifier (for future queries)
+        id = Number(data[0].getAttribute('id'));
+        if(is_observer && game_id != id)
+        {
+            is_observer = false;
+            if(data[0].getAttribute('state') == "WAITING_FOR_PLAYER")
+                waiting_for_player = true;
+        }
+        DIV_GAME_ID.innerHTML = id.toString();
         
         /* Parse new game state */
         current_turn = xml_parse_state(data[0].getAttribute('state'),
@@ -198,10 +208,6 @@ function Game()
                          
         // redraw indicators to reflect changed game state
         redraw_ui();
-        
-        // get the game identifier (for future queries)
-        id = Number(data[0].getAttribute('id'));
-        DIV_GAME_ID.innerHTML = id.toString();
         
         /* Parse new board state */
         // create the board if it doesn't already exist
@@ -266,7 +272,6 @@ function Game()
     }
 
     /* INITIALISE */
-    const WATCH_ID = parseInt(DIV_GAME_ID.innerHTML.toString());
     if(!isNaN(WATCH_ID))
     {
         is_observer = true;
