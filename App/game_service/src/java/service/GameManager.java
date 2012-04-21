@@ -6,7 +6,6 @@
 package service;
 
 import game.Game;
-import game.MorpionRules;
 import game.ReversiRules;
 import game.Rules;
 import java.util.HashMap;

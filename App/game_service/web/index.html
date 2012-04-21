@@ -41,15 +41,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </div>
     <div id="wood_game" class="">
         
-    <b>Join an open game</b>
-    <form>
-    <input type="button" value="Join" onclick="window.location.href='game.jsp'">
-    </form>
-    <br><br>
-    <b>Watch a game</b>
+    <b>Join a game</b>
     <form action="game.jsp" method="get">
-        Game identifier: <input type="text" name="watch_id" />
-    <input type="submit" value="Watch" />
+    <input type="text" name="game_id" />
+    <input type="submit" value="Join" /> <br>
+    <input type="radio" name="join_type" value="watch">Observe<br>
+    <input type="radio" name="join_type" value="join">Participate<br>
     </form> 
     </div>
 </body>
