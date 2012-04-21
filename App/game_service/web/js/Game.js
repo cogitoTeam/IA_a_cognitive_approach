@@ -127,7 +127,8 @@ function Game()
 		$("#wood_game").removeClass("active");
 	    }
             else
-                text_player = current_turn == Game.WHITE ? "White " : "Black ";
+                text_player = "Observing " + 
+                    (current_turn == Game.WHITE ? "white " : "black ");
 
             switch(current_turn)
             {
@@ -269,6 +270,7 @@ function Game()
     if(!isNaN(WATCH_ID))
     {
         is_observer = true;
+        waiting_for_player = false;
         game_id = WATCH_ID;
         ajax_request_refresh(game_id);
     }
