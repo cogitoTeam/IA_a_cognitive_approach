@@ -33,6 +33,7 @@ public class GameServlet extends HttpServlet
         if(parameters.containsKey("game_id"))
             game = gm.getGame(Integer.parseInt(parameters.get("game_id")[0]));
        
+        // if the game is still null (game number not found)
         if(game == null)
             game = gm.findGame();
         
@@ -53,7 +54,13 @@ public class GameServlet extends HttpServlet
                 // Is the move badly formed ?
                 else if(parameters.containsKey("row") || parameters.containsKey("col")
                 || parameters.containsKey("player"))
-                    game.failMove();
+                    game.setState(Game.State.MOVE_FAILURE);
+                
+                /*else
+                // A simple refresh, nothing has changed since last update
+                    game.setState(Game.State.NO_CHANGE);
+                    * 
+                    */
             }
         }
         

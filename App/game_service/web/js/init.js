@@ -35,8 +35,6 @@ var DIV_IS_OBSERVER = document.getElementById('is_observer');
 const REQUESTED_ID = parseInt(DIV_GAME_ID.innerHTML.toString());
 const REQUEST_WATCH = (DIV_IS_OBSERVER.innerHTML.toString() == "watch");
 
-console.log(DIV_IS_OBSERVER.innerHTML.toString());
-
 // the main application holder
 var game;
 

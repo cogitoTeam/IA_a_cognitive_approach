@@ -128,21 +128,12 @@ public class Game
     
     
     /**
-     * Reset the state of the Game to reflect that the most recent event is
-     * the joining of a new player.
+     * Reset the state of the Game to reflect that the most recent event is,
+     * for instance, the joining of a new player.
      */
-    public void join()
+    public void setState(State new_state)
     {
-        current_state = State.PLAYER_JOINED;
-    }
-    
-    /**
-     * Reset the state of the Game to reflect the failure of the most recent
-     * move.
-     */
-    public void failMove()
-    {
-        current_state = State.NO_CHANGE;
+        current_state = new_state;
     }
     
     /**

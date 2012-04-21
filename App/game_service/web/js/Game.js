@@ -49,6 +49,7 @@ function Game()
     var n_players = 2;
     var id = null;
     var is_observer = false;
+    var is_turn_thief = false;
     var is_local = [false, false];
     var waiting_for_player = true;
 
@@ -69,30 +70,43 @@ function Game()
                 {
                     is_local[i_colour] = true;
                     is_local[i_other] = false;
+                    is_turn_thief = false;
                 }
                 return i_colour;
                 
             case "PLAYER_JOINED":
-                // if I'm not the host then I must be the client
-                if(!is_observer && !is_local[i_colour] && !is_local[i_other])
-                {
-                    console.log("You are player " + i_other)
-                    is_local[i_colour] = false;
-                    is_local[i_other] = true;
-                }
-                waiting_for_player = false;
-                return i_colour;
+                    // if I'm not the host then I must be the client
+                    if(!is_observer && !is_local[i_colour] && !is_local[i_other])
+                    {
+                        if(is_turn_thief)
+                        {
+                            is_turn_thief = false;
+                            console.log("You took over player " + i_colour)
+                            is_local[i_colour] = true;
+                            is_local[i_other] = false;
+                        }
+                        else
+                        {
+                            console.log("You are player " + i_other)
+                            is_local[i_colour] = false;
+                            is_local[i_other] = true;
+                        }
+                    }
+                    waiting_for_player = false;
+                    return i_colour;
             
             // don't change current player
             case "MOVE_FAILURE":
                 console.log("move failed!");
             case "NO_CHANGE":
             case "MOVE_SUCCESS":
-                if(!is_observer && !is_local[i_colour] && !is_local[i_other])
+                if(is_turn_thief)
                 {
+                    is_turn_thief = false;
                     console.log("You took over player " + i_colour)
                     is_local[i_colour] = true;
                     is_local[i_other] = false;
+                    waiting_for_player = false;
                 }
                 return i_colour;
                 
@@ -290,6 +304,8 @@ function Game()
             is_observer = true;
             waiting_for_player = false;
         }
+        else
+            is_turn_thief = true;
         
     }
     else
