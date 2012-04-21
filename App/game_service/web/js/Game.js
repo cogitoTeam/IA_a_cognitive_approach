@@ -48,6 +48,7 @@ function Game()
     var current_turn;
     var n_players = 2;
     var id = null;
+    var is_observer = false;
     var is_local = [false, false];
     var waiting_for_player = true;
 
@@ -64,7 +65,7 @@ function Game()
             // first player to join plays first
             case "WAITING_FOR_PLAYER":
                 // only the host sees the game start
-                if(!is_local[i_colour] && !is_local[i_other])
+                if(!is_observer && !is_local[i_colour] && !is_local[i_other])
                 {
                     is_local[i_colour] = true;
                     is_local[i_other] = false;
@@ -73,7 +74,7 @@ function Game()
                 
             case "PLAYER_JOINED":
                 // if I'm not the host then I must be the client
-                if(!is_local[i_colour] && !is_local[i_other])
+                if(!is_observer && !is_local[i_colour] && !is_local[i_other])
                 {
                     console.log("I am player " + i_other)
                     is_local[i_colour] = false;
@@ -113,16 +114,20 @@ function Game()
         if(!waiting_for_player)
         {
 	    var text_player;
+            
+            
 	    if(is_local[current_turn])
             {
 		text_player = "Your ";
 		$("#wood_game").addClass("active");
 	    }
-            else
+            else if (is_local[(current_turn+1) % 2])
             {
 		text_player = "Enemy ";
 		$("#wood_game").removeClass("active");
 	    }
+            else
+                text_player = current_turn == Game.WHITE ? "White " : "Black ";
 
             switch(current_turn)
             {
@@ -223,6 +228,13 @@ function Game()
     
     obj.clickEvent = function(x, y)
     {
+        // observers can't make moves
+        if(is_observer)
+        {
+            console.log("you are observing this match...")
+            return;
+        }
+        
         // restart the game if it's a draw or somebody has won
         if(current_turn >= n_players)
         {
@@ -256,7 +268,7 @@ function Game()
     const WATCH_ID = parseInt(DIV_GAME_ID.innerHTML.toString());
     if(!isNaN(WATCH_ID))
     {
-        console.log(WATCH_ID);
+        is_observer = true;
         game_id = WATCH_ID;
         ajax_request_refresh(game_id);
     }
