@@ -10,7 +10,9 @@ import game.MorpionRules;
 import game.ReversiRules;
 import game.Rules;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 
 public class GameManager 
@@ -31,7 +33,7 @@ public class GameManager
     
     private Rules rules;
     private Map<Integer, Game> games;
-    private Game waiting;
+    private Queue<Game> waiting;
     
     /* METHODS */
     
@@ -41,7 +43,7 @@ public class GameManager
         //rules = MorpionRules.getInstance();
         rules = ReversiRules.getInstance();
         games = new HashMap<Integer, Game>();
-        waiting = null;
+        waiting = new LinkedList<Game>();
     }
     
     // query
@@ -59,7 +61,7 @@ public class GameManager
     public synchronized Game findGame()
     {
         // always join a game if possible
-        if(waiting == null)
+        if(waiting.isEmpty())
             return newGame();
         else
             return openGame();
@@ -77,7 +79,7 @@ public class GameManager
         next_id++;
         
         // add the game to the waiting queue
-        waiting = game;
+        waiting.add(game);
         
         // return the game we created
         return game;
@@ -86,8 +88,7 @@ public class GameManager
     private synchronized Game openGame()
     {
         // join the game at the head of the queue
-        Game open_game = waiting;
-        waiting = null;
+        Game open_game = waiting.poll();
         open_game.join();
         return open_game;
     }

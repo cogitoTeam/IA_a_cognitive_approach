@@ -25,10 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <style>
         body { padding:10px; text-align:center; background-color:black; color:white; font-family: sans}
 	h1 { position:absolute; left:20px; top:0 }
- 	#wood_game { text-align:center; 
-                background-image:url('data/wood.jpg'); 
-                width: 480px; height: 480px; display:inline-block; 
-                border:3px solid black;border-width:0 3px 3px 0 !important;}
+        #info_canvas { border:1px solid #C0C0C0; }
+	#game_canvas { margin:40px; border: 2px solid #7E3000; border-width:2px 0 0 2px; }
+ 	#wood_game { background-image:url('data/wood.jpg'); width: 480px; height: 480px; display:inline-block; border:3px solid black;border-width:0 3px 3px 0 !important;}
 	.active { box-shadow: 0px 0px 50px white; border:3px solid #7E3000 !important;}
 	#pub { position:fixed; top:0px; right:0px; padding:10px;}
     </style>
@@ -40,18 +39,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<a href="https://github.com/marminthibaut/artificial_consciousness"><img src="data/logo.png"></a>
     </div>
     <div id="wood_game" class="">
-        
-    <b>Join an open game</b>
-    <form>
-    <input type="button" value="Join" onclick="window.location.href='game.jsp'">
-    </form>
-    <br><br>
-    <b>Watch a game</b>
-    <form action="game.jsp" method="get">
-        Game identifier: <input type="text" name="watch_id" />
-    <input type="submit" value="Watch" />
-    </form> 
+       <canvas id="game_canvas" width="400" height="400">
+           Can't load HTML 5 canvas: is your browser up to date?
+       </canvas>
     </div>
+    </br>
+    <canvas id="info_canvas" width="400" height="50">
+        Can't load HTML 5 canvas: is your browser up to date?
+    </canvas>
+    
+<%@page import="java.util.Map"%>
+    <p> Game identifier: <div id="game_id">
+    
+    <% Map<String, String[]> parameters = request.getParameterMap();
+    if(parameters.containsKey("watch_id") && parameters.get("watch_id") != null)
+        out.print(Integer.parseInt(parameters.get("watch_id")[0]));
+    %>
+    </div>
+    </p>
+
+    <p>
+        Show options: <input type="checkbox" checked="checked" id="options_checkbox">
+    </p>
+    
+    <script type="text/javascript">var DATA_LOCATION = "data/";</script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+    <script type="text/javascript" src="js/ajax.js"></script>
+    <script type="text/javascript" src="js/Board.js"></script>
+    <script type="text/javascript" src="js/Game.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+   
+    
 </body>
 
 </html>
