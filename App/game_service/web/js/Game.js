@@ -48,6 +48,8 @@ function Game()
     var current_turn;
     var n_players = 2;
     var id = null;
+    var is_observer = false;
+    var is_turn_thief = false;
     var is_local = [false, false];
     var waiting_for_player = true;
 
@@ -64,29 +66,48 @@ function Game()
             // first player to join plays first
             case "WAITING_FOR_PLAYER":
                 // only the host sees the game start
-                if(!is_local[i_colour] && !is_local[i_other])
+                if(!is_observer && !is_local[i_colour] && !is_local[i_other])
                 {
                     is_local[i_colour] = true;
                     is_local[i_other] = false;
+                    is_turn_thief = false;
                 }
                 return i_colour;
                 
             case "PLAYER_JOINED":
-                // if I'm not the host then I must be the client
-                if(!is_local[i_colour] && !is_local[i_other])
-                {
-                    console.log("I am player " + i_other)
-                    is_local[i_colour] = false;
-                    is_local[i_other] = true;
-                }
-                waiting_for_player = false;
-                return i_colour;
+                    // if I'm not the host then I must be the client
+                    if(!is_observer && !is_local[i_colour] && !is_local[i_other])
+                    {
+                        if(is_turn_thief)
+                        {
+                            is_turn_thief = false;
+                            console.log("You took over player " + i_colour)
+                            is_local[i_colour] = true;
+                            is_local[i_other] = false;
+                        }
+                        else
+                        {
+                            console.log("You are player " + i_other)
+                            is_local[i_colour] = false;
+                            is_local[i_other] = true;
+                        }
+                    }
+                    waiting_for_player = false;
+                    return i_colour;
             
             // don't change current player
             case "MOVE_FAILURE":
                 console.log("move failed!");
             case "NO_CHANGE":
             case "MOVE_SUCCESS":
+                if(is_turn_thief)
+                {
+                    is_turn_thief = false;
+                    console.log("You took over player " + i_colour)
+                    is_local[i_colour] = true;
+                    is_local[i_other] = false;
+                    waiting_for_player = false;
+                }
                 return i_colour;
                 
             // victory
@@ -113,16 +134,21 @@ function Game()
         if(!waiting_for_player)
         {
 	    var text_player;
+            
+            
 	    if(is_local[current_turn])
             {
 		text_player = "Your ";
 		$("#wood_game").addClass("active");
 	    }
-            else
+            else if (is_local[(current_turn+1) % 2])
             {
 		text_player = "Enemy ";
 		$("#wood_game").removeClass("active");
 	    }
+            else
+                text_player = "Observing " + 
+                    (current_turn == Game.WHITE ? "white " : "black ");
 
             switch(current_turn)
             {
@@ -155,7 +181,7 @@ function Game()
             }
         }
         else
-            text = "Waiting for opponent...";
+            text = "Awaiting other player...";
         
         // draw icon of winning/current name
         if(image != null)
@@ -185,6 +211,15 @@ function Game()
     
     obj.update_from_xml = function(data)
     {
+        // get the game identifier (for future queries)
+        id = Number(data[0].getAttribute('id'));
+        if(is_observer && game_id != id)
+        {
+            is_observer = false;
+            if(data[0].getAttribute('state') == "WAITING_FOR_PLAYER")
+                waiting_for_player = true;
+        }
+        DIV_GAME_ID.innerHTML = id.toString();
         
         /* Parse new game state */
         current_turn = xml_parse_state(data[0].getAttribute('state'),
@@ -192,10 +227,6 @@ function Game()
                          
         // redraw indicators to reflect changed game state
         redraw_ui();
-        
-        // get the game identifier (for future queries)
-        id = Number(data[0].getAttribute('id'));
-        DIV_GAME_ID.innerHTML = id.toString();
         
         /* Parse new board state */
         // create the board if it doesn't already exist
@@ -223,6 +254,13 @@ function Game()
     
     obj.clickEvent = function(x, y)
     {
+        // observers can't make moves
+        if(is_observer)
+        {
+            console.log("you are observing this match...")
+            return;
+        }
+        
         // restart the game if it's a draw or somebody has won
         if(current_turn >= n_players)
         {
@@ -253,12 +291,22 @@ function Game()
     }
 
     /* INITIALISE */
-    const WATCH_ID = parseInt(DIV_GAME_ID.innerHTML.toString());
-    if(!isNaN(WATCH_ID))
+    if(!isNaN(REQUESTED_ID))
     {
-        console.log(WATCH_ID);
-        game_id = WATCH_ID;
+        // join the requested game
+        game_id = REQUESTED_ID;
         ajax_request_refresh(game_id);
+        
+        // join in observe mode
+        if(REQUEST_WATCH)
+        {
+            console.log("observing this match");
+            is_observer = true;
+            waiting_for_player = false;
+        }
+        else
+            is_turn_thief = true;
+        
     }
     else
         ajax_request_id();

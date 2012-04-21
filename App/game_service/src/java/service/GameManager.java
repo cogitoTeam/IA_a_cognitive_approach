@@ -6,7 +6,6 @@
 package service;
 
 import game.Game;
-import game.MorpionRules;
 import game.ReversiRules;
 import game.Rules;
 import java.util.HashMap;
@@ -89,7 +88,7 @@ public class GameManager
     {
         // join the game at the head of the queue
         Game open_game = waiting.poll();
-        open_game.join();
+        open_game.setState(Game.State.PLAYER_JOINED);
         return open_game;
     }
     
