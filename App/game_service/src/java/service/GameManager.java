@@ -61,7 +61,7 @@ public class GameManager
     public synchronized Game findGame()
     {
         // always join a game if possible
-        if(waiting == null)
+        if(waiting.isEmpty())
             return newGame();
         else
             return openGame();

@@ -84,7 +84,7 @@ function Game()
             
             // don't change current player
             case "MOVE_FAILURE":
-                console.log("move failed!")
+                console.log("move failed!");
             case "NO_CHANGE":
             case "MOVE_SUCCESS":
                 return i_colour;
@@ -113,10 +113,13 @@ function Game()
         if(!waiting_for_player)
         {
 	    var text_player;
-	    if(is_local[current_turn]){
+	    if(is_local[current_turn])
+            {
 		text_player = "Your ";
 		$("#wood_game").addClass("active");
-	    } else {
+	    }
+            else
+            {
 		text_player = "Enemy ";
 		$("#wood_game").removeClass("active");
 	    }
@@ -192,7 +195,7 @@ function Game()
         
         // get the game identifier (for future queries)
         id = Number(data[0].getAttribute('id'));
-        debug.innerHTML = 'Game id: ' + id;
+        DIV_GAME_ID.innerHTML = id.toString();
         
         /* Parse new board state */
         // create the board if it doesn't already exist
@@ -250,7 +253,14 @@ function Game()
     }
 
     /* INITIALISE */
-    ajax_request_id();
+    const WATCH_ID = parseInt(DIV_GAME_ID.innerHTML.toString());
+    if(WATCH_ID != NaN)
+    {
+        game_id = WATCH_ID;
+        ajax_request_refresh(game_id);
+    }
+    else
+        ajax_request_id();
 
     /* RETURN INSTANCE */
     return obj;
