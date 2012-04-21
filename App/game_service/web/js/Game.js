@@ -38,7 +38,6 @@ Game.C_TEXT = 'rgb(200,200,200)';
 function Game()
 {
     /* ATTRIBUTES */
-    const WATCH_ID = parseInt(DIV_GAME_ID.innerHTML.toString());
     
     // receiver 
     var obj = this;
@@ -77,7 +76,7 @@ function Game()
                 // if I'm not the host then I must be the client
                 if(!is_observer && !is_local[i_colour] && !is_local[i_other])
                 {
-                    console.log("I am player " + i_other)
+                    console.log("You are player " + i_other)
                     is_local[i_colour] = false;
                     is_local[i_other] = true;
                 }
@@ -89,6 +88,12 @@ function Game()
                 console.log("move failed!");
             case "NO_CHANGE":
             case "MOVE_SUCCESS":
+                if(!is_observer && !is_local[i_colour] && !is_local[i_other])
+                {
+                    console.log("You took over player " + i_colour)
+                    is_local[i_colour] = true;
+                    is_local[i_other] = false;
+                }
                 return i_colour;
                 
             // victory
@@ -272,12 +277,20 @@ function Game()
     }
 
     /* INITIALISE */
-    if(!isNaN(WATCH_ID))
+    if(!isNaN(REQUESTED_ID))
     {
-        is_observer = true;
-        waiting_for_player = false;
-        game_id = WATCH_ID;
+        // join the requested game
+        game_id = REQUESTED_ID;
         ajax_request_refresh(game_id);
+        
+        // join in observe mode
+        if(REQUEST_WATCH)
+        {
+            console.log("observing this match");
+            is_observer = true;
+            waiting_for_player = false;
+        }
+        
     }
     else
         ajax_request_id();

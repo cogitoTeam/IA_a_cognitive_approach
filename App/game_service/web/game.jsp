@@ -49,14 +49,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </canvas>
     
 <%@page import="java.util.Map"%>
-    <p> Game identifier: <div id="game_id">
-    
-    <% Map<String, String[]> parameters = request.getParameterMap();
-    if(parameters.containsKey("watch_id") && parameters.get("watch_id") != null)
-        out.print(Integer.parseInt(parameters.get("watch_id")[0]));
-    %>
-    </div>
+    <p> Game identifier: 
+    <div id="game_id"><% 
+        Map<String, String[]> parameters = request.getParameterMap();
+        if(parameters.containsKey("game_id") && parameters.get("game_id")[0] != "")
+            out.print(Integer.parseInt(parameters.get("game_id")[0]));
+        %></div>
     </p>
+    <p> Participation type:
+    <div id="is_observer"><%
+        if(parameters.containsKey("join_type") && parameters.get("join_type")[0] != "")
+            out.print(parameters.get("join_type")[0]);
+        %></div>
+    </p>
+    
 
     <p>
         Show options: <input type="checkbox" checked="checked" id="options_checkbox">

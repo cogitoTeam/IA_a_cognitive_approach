@@ -25,11 +25,17 @@ var canvas = document.getElementById('game_canvas');
 var canvas_info = document.getElementById('info_canvas');
 var context = canvas.getContext('2d');
 var context_info  = canvas_info.getContext('2d');
-var DIV_GAME_ID = document.getElementById('game_id');
 
-
+// vanilla html objects
 var options_checkbox = document.getElementById('options_checkbox');
+var DIV_GAME_ID = document.getElementById('game_id');
+var DIV_IS_OBSERVER = document.getElementById('is_observer');
 
+// request attributes
+const REQUESTED_ID = parseInt(DIV_GAME_ID.innerHTML.toString());
+const REQUEST_WATCH = (DIV_IS_OBSERVER.innerHTML.toString() == "watch");
+
+console.log(DIV_IS_OBSERVER.innerHTML.toString());
 
 // the main application holder
 var game;
@@ -58,25 +64,4 @@ function load_image(file_name)
   
   // return the handler
   return img;
-}
-
-
-/* DEBUG UTILITIES */
-
-// http://davesquared.net/2008/07/write-out-fields-of-javascript-object.html
-function writeObj(obj, message)
-{
-  if (!message)
-      message = obj;
-  
-  var details = "\n" + message + "\n";
-  var fieldContents;
-  for (var field in obj) 
-  {
-    fieldContents = obj[field];
-    if (typeof(fieldContents) == "function")
-      fieldContents = "(function)";
-    details += "\t" + field + ": " + fieldContents + "\n";
-  }
-  console.log(details);
 }
