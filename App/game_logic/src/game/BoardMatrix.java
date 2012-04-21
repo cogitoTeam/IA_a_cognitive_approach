@@ -27,16 +27,13 @@ public class BoardMatrix
           {
             case EMPTY:
               return "isEmpty";
+                
             case PIECE_BLACK:
-              if(player == Player.BLACK)
-                return "isMine";
-              else
-                return "isOpp";
+              return (player == Player.BLACK) ? "isMine" : "isOpp";
+                
             case PIECE_WHITE:
-              if(player == Player.WHITE)
-                return "isMine";
-              else
-                return "isOpp";
+              return (player == Player.WHITE) ? "isMine" : "isOpp";
+                
             default:
               return "error";       
           }
