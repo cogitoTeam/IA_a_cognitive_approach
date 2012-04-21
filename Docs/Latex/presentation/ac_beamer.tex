@@ -1,0 +1,82 @@
+\documentclass{beamer}
+\usepackage[utf8x]{inputenc}
+\usepackage{hyperref}
+\usepackage[footheight=1em]{beamerthemeboxes}
+%\usepackage{pgfpages}
+%\setbeameroption{show notes on second screen=left}
+\usetheme{Singapore}
+
+%\usetheme{Frankfurt}
+
+
+%\addfootboxtemplate{\color{white}}{\color{gray}
+  %\insertframenumber/\inserttotalframenumber\null}
+
+
+
+%\setbeamertemplate{background canvas}{\includegraphics
+%   [width=\paperwidth,height=\paperheight]{img/fond.png}}
+
+
+\title{Analyse et implémentation d'un modèle de conscience artificielle}
+\subtitle{Travail d'Étude et de Recherche \\ Master Informatique 1\ière année (GMIN20B)}
+\author{William Dyce \and Thibaut Marmin \\ Namrata Patel \and Clément Sipieter}
+\institute{Université Montpellier 2\\Encadré par Violaine Prince et Guillaume Tisserant}
+\date{7 mai 2012}
+
+\begin{document}
+
+\AtBeginSection[]
+{
+  \begin{frame}{Analyse et implémentation d'un modèle de conscience artificielle}
+  \begin{columns}[t]
+  \begin{column}{5cm}
+  \tableofcontents[sections={1-4},currentsection,hideothersubsections]
+  \end{column}
+  \begin{column}{5cm}
+  \tableofcontents[sections={5-8},currentsection,hideothersubsections]
+  \end{column}
+  \end{columns}
+  \end{frame}
+}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Analyse et implémentation d'un modèle de conscience artificielle}
+    
+
+  \begin{columns}[t]
+  \begin{column}{5cm}
+  \tableofcontents[sections={1-4},hideallsubsections]
+  \end{column}
+  \begin{column}{5cm}
+  \tableofcontents[sections={4-8},hideallsubsections]
+  \end{column}
+  \end{columns}
+
+\end{frame}
+
+\section{Introduction}
+\input{introduction}
+
+\section{Analyse Générale}
+\input{analyse_generale}
+
+\section{Analyse Détaillée}
+\input{analyse_detaillee}
+
+\section{Notre implémentation}
+\input{notre_implementation}
+
+\section{Outils de travail}
+\input{outils_de_travail}
+
+\section{Conclusion \& Perspectives}
+\input{conclusion_et_perspectives}
+
+\section{Demonstration \& Questions}
+\input{demonstration_et_questions}
+
+\end{document}
