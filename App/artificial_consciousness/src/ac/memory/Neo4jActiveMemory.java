@@ -105,7 +105,7 @@ public class Neo4jActiveMemory implements Memory
   {
     if (logger.isDebugEnabled())
       logger.debug("Put new option in the Active Memory buffer");
-    double total = 0.5;
+    double total = 0;
     int nb = 0;
 
     if (logger.isDebugEnabled())
@@ -114,7 +114,13 @@ public class Neo4jActiveMemory implements Memory
       {
         try
           {
-            total += att_repo.getNodeById(id_rpbs).getMark();
+            if (logger.isDebugEnabled())
+              logger.debug("Getting rpbs " + id_rpbs);
+            AttributeNode att = att_repo.getNodeById(id_rpbs);
+
+            if (logger.isDebugEnabled())
+              logger.debug("Mark of rpbs " + id_rpbs + ": " + att.getMark());
+            total += att.getMark();
             ++nb;
           }
         catch (NodeException | NullPointerException e)
@@ -153,7 +159,7 @@ public class Neo4jActiveMemory implements Memory
     // TODO verify that the option chosen is in the buffer list.
     try
       {
-        episodic.newMove(option.getResult());
+        episodic.newMove(option.getResult(), option.getPartialStates());
       }
     catch (EpisodicMemoryException e)
       {

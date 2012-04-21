@@ -4,6 +4,7 @@ import java.util.List;
 
 import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * Interface for an episodic memory
@@ -39,9 +40,12 @@ public interface EpisodicMemory
    * 
    * @param board_state
    *          the completeBoardState related to this move
+   * @param rpbs_ids
+   *          list of rpbs ids who are checking with the board_state
    * @throws EpisodicMemoryException
    */
-  void newMove(CompleteBoardState board_state) throws EpisodicMemoryException;
+  void newMove(CompleteBoardState board_state, List<Long> rpbs_ids)
+      throws EpisodicMemoryException;
 
   /**
    * @param status

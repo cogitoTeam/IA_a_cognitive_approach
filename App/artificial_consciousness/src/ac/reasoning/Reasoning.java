@@ -52,7 +52,9 @@ public class Reasoning
    */
   public Action stimulate()
   {
-    LOGGER.debug("stimulate");
+    if(LOGGER.isDebugEnabled())
+      LOGGER.debug("stimulate");
+    
     _introspection_engine.interrupt();
     Action action = _choice_engine.start();
     // @todo restart introspection only after game end or after x minutes of

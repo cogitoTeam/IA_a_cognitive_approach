@@ -140,7 +140,8 @@ class IntrospectionEngine extends Thread
       }
     catch (EpisodicMemoryException e)
       {
-        LOGGER.debug(e.getMessage());
+        if(LOGGER.isDebugEnabled())
+          LOGGER.debug(e.getMessage());
       }
   }
 

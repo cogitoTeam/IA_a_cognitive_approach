@@ -55,13 +55,15 @@ class ChoiceEngine
       }
     catch (MemoryException e)
       {
-        LOGGER.error("An error occurred during getting options.", e);
+        if(LOGGER.isDebugEnabled())
+          LOGGER.error("An error occurred during getting options.", e);
         return new Action.Exit();
       }
     
     if(options_list.size() == 0)
       {
-        LOGGER.debug("Pas de choix en mémoire");
+        if(LOGGER.isDebugEnabled())
+          LOGGER.debug("Pas de choix en mémoire");
         return new Action.Skip();
       }
 
@@ -76,16 +78,20 @@ class ChoiceEngine
           }
         catch (MemoryException e)
           {
-            LOGGER.error("An error occurred during storing a choice.", e);
+            if(LOGGER.isDebugEnabled())
+              LOGGER.error("An error occurred during storing a choice.", e);
           }
         
         move = option.getMove();
       }
     else
-      LOGGER.debug("Better option null");
+      if(LOGGER.isDebugEnabled())
+        LOGGER.debug("Better option null");
 
 
-    LOGGER.debug("choice move :" +move);
+    if(LOGGER.isDebugEnabled())
+      LOGGER.debug("choice move :" +move);
+    
     return move;
   }
 
@@ -97,6 +103,15 @@ class ChoiceEngine
   {
     Option_FOL better_option = null;
 
+    if(LOGGER.isDebugEnabled())
+      {
+        String s = "Choice";
+        for (Pair<Option_FOL, Double> pair : options_list)
+          s += "["+ pair.getSecond() +"]";
+        
+        LOGGER.debug(s);
+      }
+    
     if (options_list.size() > 0)
       {
         better_option = options_list.get(0).getFirst();

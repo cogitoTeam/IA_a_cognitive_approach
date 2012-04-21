@@ -5,6 +5,9 @@ package ac.memory.episodic;
 
 import java.util.List;
 
+import com.jcraft.jsch.Logger;
+
+import ac.memory.persistence.neo4j.AttributeNodeRepository;
 import ac.memory.persistence.neo4j.GameNode;
 import ac.memory.persistence.neo4j.GameNodeRepository;
 import ac.memory.persistence.neo4j.MoveNodeRepository;
@@ -14,6 +17,7 @@ import ac.memory.persistence.neo4j.ObjectNode;
 import ac.memory.persistence.neo4j.ObjectNodeRepository;
 import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
+import ac.shared.RelevantPartialBoardState;
 
 /**
  * @author Thibaut Marmin <marminthibaut@gmail.com>
@@ -25,6 +29,7 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
   GameNodeRepository game_repo;
   MoveNodeRepository move_repo;
   ObjectNodeRepository obj_repo;
+  AttributeNodeRepository att_repo;
 
   /**
    * Default constructor
@@ -35,6 +40,8 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
     move_repo = new MoveNodeRepository(Neo4jService.getInstance());
     obj_repo = new ObjectNodeRepository(Neo4jService.getInstance(),
         Neo4jService.getObjIndex(), Neo4jService.getObjMarkIndex());
+    att_repo = new AttributeNodeRepository(Neo4jService.getInstance(),
+        Neo4jService.getAttrIndex(), Neo4jService.getAttrMarkIndex());
   }
 
   @Override
@@ -91,17 +98,21 @@ public class Neo4jEpisodicMemory implements EpisodicMemory
    * 
    * @see ac.memory.episodic.EpisodicMemory#newMove() */
   @Override
-  public void newMove(CompleteBoardState board_state)
+  public void newMove(CompleteBoardState board_state, List<Long> rpbs_ids)
       throws EpisodicMemoryException
   {
     try
       {
         ObjectNode object = obj_repo.getNodeById(board_state.getId());
         if (object == null)
-          obj_repo.createNode(board_state);
-        
-        move_repo.addMove(game_repo.getLast(),
-            obj_repo.getNodeById(board_state.getId()));
+          object = obj_repo.createNode(board_state);
+
+        move_repo.addMove(game_repo.getLast(), object);
+
+        for (Long rpbs_id : rpbs_ids)
+          {
+            object.addRelatedObject(att_repo.getNodeById(rpbs_id));
+          }
       }
     catch (Exception e)
       {
