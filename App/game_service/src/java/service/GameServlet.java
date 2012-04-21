@@ -29,8 +29,10 @@ public class GameServlet extends HttpServlet
         // Is the client requesting a specific game or a new one ?
         GameManager gm = GameManager.getInstance();
         game = null;
+        
         if(parameters.containsKey("game_id"))
             game = gm.getGame(Integer.parseInt(parameters.get("game_id")[0]));
+       
         if(game == null)
             game = gm.findGame();
         
