@@ -9,3 +9,6 @@
 *.md5
 *.nav
 *.snm
+!*.svg
+!*.dia
+!*.png
