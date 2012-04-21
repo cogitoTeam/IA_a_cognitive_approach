@@ -62,10 +62,11 @@ public class Analysis
    * @throws MemoryException
    * @throws IOException
    */
-  public Action analyse(Choices input, Game.Player player) throws MemoryException, IOException
+  public Action analyse(Choices input, Game.Player player)
+      throws MemoryException, IOException
   {
     Choices_FOL output = basicAnalysisEngine(input, player);
-    
+
     advancedAnalysisEngine(output, this._memory.getRelevantPartialBoardStates());
 
     for (Option_FOL o : output.getOptions())
@@ -88,7 +89,8 @@ public class Analysis
    * @return an instance of {@link Choices_FOL} which represents the same
    *         choices in FOL
    */
-  public static Choices_FOL basicAnalysisEngine(Choices input, Game.Player player)
+  public static Choices_FOL basicAnalysisEngine(Choices input,
+      Game.Player player)
   {
     BoardMatrix board = input.getCurrentBoard();
     CompleteBoardState current_board = convertMatrixtoCBS(board, player);
@@ -113,7 +115,8 @@ public class Analysis
    * @return an instance of a {@link CompleteBoardState} class which represents
    *         the converted BoardMatrix
    */
-  private static CompleteBoardState convertMatrixtoCBS(BoardMatrix matrix, Game.Player player)
+  private static CompleteBoardState convertMatrixtoCBS(BoardMatrix matrix,
+      Game.Player player)
   {
     BoardMatrix.Position p = new Position(0, 0);
     Cell c;
@@ -258,8 +261,10 @@ public class Analysis
     for (p.row = 0; p.row < matrix.getSize().n_rows - 2; p.row++)
       for (p.col = 0; p.col < matrix.getSize().n_cols - 2; p.col++)
         {
-          for (shift_p2 = 1; shift_p2 + p.row < matrix.getSize().n_rows - 1; ++shift_p2)
-            for (shift_p3 = shift_p2 + 1; shift_p3 + p.row < matrix.getSize().n_rows; ++shift_p3)
+          for (shift_p2 = 1; shift_p2 + p.row < matrix.getSize().n_rows - 1
+              && shift_p2 + p.col < matrix.getSize().n_cols - 1; ++shift_p2)
+            for (shift_p3 = shift_p2 + 1; shift_p3 + p.row < matrix.getSize().n_rows
+                && shift_p3 + p.col < matrix.getSize().n_cols; ++shift_p3)
               {
                 s = "aligned('c_" + p.row + '_' + p.col + "','c_"
                     + (p.row + shift_p2) + '_' + (p.col + shift_p2) + "','c_"
@@ -313,24 +318,25 @@ public class Analysis
     LinkedList<KnowledgeBase> kb_list = new LinkedList<>();
     for (Option_FOL o : input.getOptions())
       {
-        if(LOGGER.isDebugEnabled())
+        if (LOGGER.isDebugEnabled())
           LOGGER.debug("new option");
-        
-        KnowledgeBase kb = new KnowledgeBase(o, br);  
+
+        KnowledgeBase kb = new KnowledgeBase(o, br);
         kb_list.add(kb);
-        //lancement du thread
+        // lancement du thread
         kb.start();
       }
-    
-    //attente de la fin de chaque thread
-    for(KnowledgeBase kb : kb_list)
+
+    // attente de la fin de chaque thread
+    for (KnowledgeBase kb : kb_list)
       {
         try
           {
             kb.join();
           }
         catch (InterruptedException e)
-          {}
+          {
+          }
       }
   }
 
@@ -344,14 +350,14 @@ public class Analysis
   {
     BoardMatrix b = ReversiRules.getInstance().createBoard();
     System.out.println(convertMatrixtoCBS(b, Player.WHITE));
-    
-   /* Choices test = new Choices(b);
-    test.getCurrentBoard();
-    AC new_AC = new AC();
-    Analysis test_analysis = new Analysis(new_AC.getMemory(),
-        new_AC.getReasoning());
-    test_analysis.analyse(test);
-    
-    System.out.println(test.getCurrentBoard());*/
+
+    /* Choices test = new Choices(b);
+     * test.getCurrentBoard();
+     * AC new_AC = new AC();
+     * Analysis test_analysis = new Analysis(new_AC.getMemory(),
+     * new_AC.getReasoning());
+     * test_analysis.analyse(test);
+     * 
+     * System.out.println(test.getCurrentBoard()); */
   }
 }
