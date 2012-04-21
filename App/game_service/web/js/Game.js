@@ -254,8 +254,9 @@ function Game()
 
     /* INITIALISE */
     const WATCH_ID = parseInt(DIV_GAME_ID.innerHTML.toString());
-    if(WATCH_ID != NaN)
+    if(!isNaN(WATCH_ID))
     {
+        console.log(WATCH_ID);
         game_id = WATCH_ID;
         ajax_request_refresh(game_id);
     }
