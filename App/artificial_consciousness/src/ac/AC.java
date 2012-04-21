@@ -79,6 +79,38 @@ public class AC extends Agent
       LOGGER.debug("Generating some Atoms");
 
     atoms_list.add(new Atom("isMine(x)"));
+
+    try
+      {
+        if (LOGGER.isDebugEnabled())
+          LOGGER.debug("Put new RPBS in memory");
+        
+        this._memory.putRelevantStructure(new RelevantPartialBoardState(
+            atoms_list));
+      }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occured when putting RPBS in memory", e);
+      }
+    
+    atoms_list.clear();
+    atoms_list.add(new Atom("isOpp(x)"));
+
+    try
+      {
+        if (LOGGER.isDebugEnabled())
+          LOGGER.debug("Put new RPBS in memory");
+        
+        this._memory.putRelevantStructure(new RelevantPartialBoardState(
+            atoms_list));
+      }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occured when putting RPBS in memory", e);
+      }
+    
+    atoms_list.clear();
+    atoms_list.add(new Atom("isMine(x)"));
     atoms_list.add(new Atom("isMine(y)"));
     atoms_list.add(new Atom("near(x,y)"));
     atoms_list.add(new Atom("near(y,x)"));
