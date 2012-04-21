@@ -1,0 +1,14 @@
+*.kilepr
+*.aux
+*.log
+*.out
+*.idx
+*.toc
+*.ind
+*.ilg
+*.md5
+*.nav
+*.snm
+!*.svg
+!*.dia
+!*.png
