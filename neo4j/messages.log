@@ -1,0 +1,218 @@
+2012-04-21 10:59:20.626+0200: Creating new db @ /home/clement/dev/m1/cogito/neo4j/neostore
+2012-04-21 10:59:22.238+0200: Opened [/home/clement/dev/m1/cogito/neo4j/nioneo_logical.log.1] clean empty log, version=0, lastTxId=1
+2012-04-21 10:59:22.302+0200: Opened [/home/clement/dev/m1/cogito/neo4j/index/lucene.log.1] clean empty log, version=0, lastTxId=1
+2012-04-21 10:59:22.348+0200: TM new log: tm_tx_log.1
+2012-04-21 10:59:22.407+0200: --- STARTUP diagnostics START ---
+2012-04-21 10:59:22.407+0200: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1334998760639, id:-4077374158966507803, store version: 13561656364791302]
+2012-04-21 10:59:22.408+0200: Kernel version: Neo4j - Graph Database Kernel 1.6.1
+2012-04-21 10:59:22.409+0200: Neo4j component versions:
+2012-04-21 10:59:22.409+0200:   Neo4j - Graph Database Kernel 1.6.1
+2012-04-21 10:59:22.410+0200: Diagnostics providers:
+    KernelDiagnostics:Versions
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+    LINUX_SCHEDULERS
+    org.neo4j.kernel.Config
+    NEO_STORE_VERSIONS
+    NEO_STORE_ID_USAGE
+    KernelDiagnostics:StoreFiles
+2012-04-21 10:59:22.413+0200: System memory information:
+    Total Physical memory: 5,75 GB
+    Free Physical memory: 3,55 GB
+    Committed virtual memory: 1,84 GB
+    Total swap space: 1,95 GB
+    Free swap space: 1,95 GB
+2012-04-21 10:59:22.416+0200: JVM memory information:
+    Free  memory: 66,66 MB
+    Total memory: 88,25 MB
+    Max   memory: 1,28 GB
+    Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+    Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen, PS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=2,44 MB, used=552,69 kB, max=48,00 MB, threshold=0,00 B
+    Memory Pool: PS Eden Space (Heap memory): committed=23,06 MB, used=21,59 MB, max=483,69 MB, threshold=?
+    Memory Pool: PS Survivor Space (Heap memory): committed=3,81 MB, used=0,00 B, max=3,81 MB, threshold=?
+    Memory Pool: PS Old Gen (Heap memory): committed=61,38 MB, used=0,00 B, max=982,69 MB, threshold=0,00 B
+    Memory Pool: PS Perm Gen (Non-heap memory): committed=20,75 MB, used=9,47 MB, max=166,00 MB, threshold=0,00 B
+2012-04-21 10:59:22.421+0200: Operating system information:
+    Operating System: Linux; version: 3.2-4.slh.1-aptosid-amd64; arch: amd64; cpus: 4
+    Max number of file descriptors: 4096
+    Number of open file descriptors: 82
+    Process id: 27942@vostro
+    Byte order: LITTLE_ENDIAN
+2012-04-21 10:59:22.422+0200: JVM information:
+    VM Name: OpenJDK 64-Bit Server VM
+    VM Vendor: Oracle Corporation
+    VM Version: 21.0-b17
+    JIT compiler: HotSpot 64-Bit Tiered Compilers
+    VM Arguments: [-Dfile.encoding=UTF-8]
+2012-04-21 10:59:22.422+0200: Java classpath:
+     [bootstrap] /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/plugin.jar
+     [loader.1] file:/usr/lib/jvm/java-7-openjdk-common/jre/lib/ext/sunpkcs11.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/graphstream.old.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/scala-library-2.9.0-1.jar
+     [bootstrap] /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/charsets.jar
+     [bootstrap] /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/sunrsasign.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/neo4j-jmx-1.6.1.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/client-server-2012.02.23.21.32.25.jar
+     [bootstrap] /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rhino.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/jalinopt-2012.02.29.16.58.02.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/lucene-core-3.5.0.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/neo4j-kernel-1.6.1-tests.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/commons-math-2.2.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/hppc-0.4.0.jar
+     [loader.1] file:/usr/lib/x86_64-linux-gnu/jni/libjava-access-bridge-jni.so.0.0.0
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/PDFRenderer.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/geronimo-jta_1.1_spec-1.1.1.jar
+     [loader.1] file:/usr/lib/jvm/java-7-openjdk-common/jre/lib/ext/sunjce_provider.jar
+     [loader.1] file:/usr/share/java/gnome-java-bridge.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/neo4j-graph-matching-1.6.1.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/jgrapht-jdk1.6.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/toools-2012.02.23.21.32.25.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/grph-2012.03.06.11.51.23.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/neo4j-shell-1.6.1.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/jline-1.0.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/mail.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/bin/
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/bsh-2.0b4.jar
+     [bootstrap] /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jce.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/Experiments-2012.02.23.21.32.25.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/neo4j-kernel-1.6.1.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [loader.1] file:/usr/lib/jvm/java-7-openjdk-common/jre/lib/ext/localedata.jar
+     [bootstrap] /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jsse.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/neo4j-community-1.6.1.jar
+     [loader.1] file:/usr/lib/jvm/java-7-openjdk-common/jre/lib/ext/dnsns.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/log4j-1.2.15.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/drmsim-brite-2012.02.23.21.32.25.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/javafarm-2012.02.23.21.32.25.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/jfig-bean.jar
+     [bootstrap] /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/netx.jar
+     [bootstrap] /usr/lib/jvm/java-7-openjdk-amd64/jre/classes
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/lib/game_logic.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/neo4j-graph-algo-1.6.1.jar
+     [bootstrap] /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar
+     [loader.1] file:/usr/lib/jvm/java-7-openjdk-common/jre/lib/ext/pulse-java.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/neo4j-udc-1.6.1.jar
+     [bootstrap] /usr/lib/jvm/java-7-openjdk-common/jre/lib/resources.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/Grph/java4unix-2012.02.23.21.32.25.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/neo4j-cypher-1.6.1.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/neo4j-lucene-index-1.6.1.jar
+     [classpath + loader.0] file:/home/clement/dev/m1/cogito/App/artificial_consciousness/lib/neo4j/server-api-1.6.1.jar
+     [loader.1] file:/usr/lib/jvm/java-7-openjdk-common/jre/lib/ext/zipfs.jar
+2012-04-21 10:59:22.426+0200: Library path:
+    /usr/java/packages/lib/amd64
+    /usr/lib/x86_64-linux-gnu/jni
+    /lib/x86_64-linux-gnu
+    /usr/lib/x86_64-linux-gnu
+    /usr/lib/jni
+    /lib
+    /usr/lib
+2012-04-21 10:59:22.426+0200: System.properties:
+    sun.boot.library.path = /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64
+    path.separator = :
+    file.encoding.pkg = sun.io
+    user.country = FR
+    sun.java.launcher = SUN_STANDARD
+    sun.os.patch.level = unknown
+    user.dir = /home/clement/dev/m1/cogito
+    sun.jnu.encoding = UTF-8
+    sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+    user.home = /home/clement
+    user.timezone = Europe/Paris
+    file.encoding = UTF-8
+    user.name = clement
+    sun.java.command = test.Test
+    sun.arch.data.model = 64
+    user.language = fr
+    awt.toolkit = sun.awt.X11.XToolkit
+    file.separator = /
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    sun.cpu.isalist = 
+2012-04-21 10:59:22.427+0200: Linux scheduler information:
+    noop deadline [cfq] 
+    noop deadline [cfq] 
+2012-04-21 10:59:22.428+0200: Neo4j Kernel properties:
+    store_dir=/home/clement/dev/m1/cogito/neo4j
+    logical_log=/home/clement/dev/m1/cogito/neo4j/nioneo_logical.log
+    node_auto_indexing=false
+    neostore.relationshipstore.db.mapped_memory=100M
+    neostore.nodestore.db.mapped_memory=20M
+    use_memory_mapped_buffers=true
+    rebuild_idgenerators_fast=true
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    neostore.propertystore.db.arrays.mapped_memory=130M
+    neostore.propertystore.db.strings.mapped_memory=130M
+    neo_store=/home/clement/dev/m1/cogito/neo4j/neostore
+    neostore.propertystore.db.index.mapped_memory=1M
+    create=true
+    neostore.propertystore.db.mapped_memory=90M
+    relationship_auto_indexing=false
+2012-04-21 10:59:22.429+0200: Store versions:
+    NeoStore v0.A.0
+    NodeStore v0.A.0
+    RelationshipStore v0.A.0
+    RelationshipTypeStore v0.A.0
+    PropertyStore v0.A.0
+    PropertyIndexStore v0.A.0
+    StringPropertyStore v0.A.0
+    ArrayPropertyStore v0.A.0
+2012-04-21 10:59:22.429+0200: Id usage:
+    NodeStore: used=1 high=0
+    RelationshipStore: used=0 high=-1
+    RelationshipTypeStore: used=0 high=-1
+    PropertyStore: used=0 high=-1
+    PropertyIndexStore: used=0 high=-1
+    StringPropertyStore: used=1 high=0
+    ArrayPropertyStore: used=1 high=0
+2012-04-21 10:59:22.430+0200: Storage files:
+    neostore.propertystore.db.index.keys.id: 9,00 B
+    index:
+      lucene.log.active: 4,00 B
+      lucene-store.db: 40,00 B
+      lucene.log.1: 16,00 B
+    - Total: 60,00 B
+    neostore.relationshiptypestore.db.names: 38,00 B
+    neostore.propertystore.db.id: 9,00 B
+    neostore.propertystore.db.arrays: 128,00 B
+    neostore.relationshiptypestore.db.names.id: 9,00 B
+    neostore.propertystore.db.index.keys: 38,00 B
+    nioneo_logical.log.1: 16,00 B
+    neostore.nodestore.db: 9,00 B
+    active_tx_log: 11,00 B
+    neostore.propertystore.db.index: 0,00 B
+    messages.log: 10,72 kB
+    neostore: 54,00 B
+    neostore.relationshipstore.db.id: 9,00 B
+    neostore.propertystore.db.strings: 128,00 B
+    neostore.propertystore.db.strings.id: 9,00 B
+    .gitignore: 3,00 B
+    neostore.relationshiptypestore.db: 0,00 B
+    neostore.propertystore.db: 0,00 B
+    neostore.relationshipstore.db: 0,00 B
+    neostore.propertystore.db.index.id: 9,00 B
+    neostore.relationshiptypestore.db.id: 9,00 B
+    nioneo_logical.log.active: 4,00 B
+    lock: 0,00 B
+    neostore.id: 9,00 B
+    tm_tx_log.1: 0,00 B
+    neostore.nodestore.db.id: 9,00 B
+    neostore.propertystore.db.arrays.id: 9,00 B
+2012-04-21 10:59:22.433+0200: --- STARTUP diagnostics END ---
+2012-04-21 10:59:22.505+0200: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-04-21 10:59:22.506+0200: Extension org.neo4j.kernel.KernelExtension[dummy] loaded ok
+2012-04-21 10:59:22.506+0200: Extension org.neo4j.kernel.KernelExtension[other dummy] loaded ok
+2012-04-21 10:59:22.507+0200: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-04-21 10:59:22.509+0200: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-04-21 10:59:23.960+0200: Closed log /home/clement/dev/m1/cogito/neo4j/nioneo_logical.log
+2012-04-21 10:59:24.210+0200: NeoStore closed
+2012-04-21 10:59:29.506+0200: Closed log /home/clement/dev/m1/cogito/neo4j/index/lucene.log
+2012-04-21 10:59:29.506+0200: NeoStore closed
+2012-04-21 10:59:29.514+0200: TM shutting down
