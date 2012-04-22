@@ -255,8 +255,6 @@ public class KnowledgeBase extends Thread
           {
             s = new Homomorphisms(r.getPremise(), faits);
             substitutions_list = s.getHomomorphisms();
-
-            LOGGER.debug("TEST");
             size = substitutions_list.size();
           }
         catch (Exception e)
