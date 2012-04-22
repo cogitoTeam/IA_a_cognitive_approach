@@ -12,3 +12,4 @@
 !*.svg
 !*.dia
 !*.png
+!img/*.png
