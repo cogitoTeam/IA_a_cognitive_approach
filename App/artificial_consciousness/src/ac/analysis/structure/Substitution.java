@@ -74,6 +74,15 @@ public class Substitution
   {
     return variables;
   }
+  
+  public ArrayList<Term> getSubstitues()
+  {
+    ArrayList<Term> list = new ArrayList<>();
+    for(TermPair p : this.pairList)
+      list.add(p.getY());
+    
+    return list;
+  }
 
   /**
    * Ajoute un couple de termes � la substitution

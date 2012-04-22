@@ -289,12 +289,12 @@ public class Neo4jActiveMemory implements Memory
    * @see ac.memory.Memory#addAssociation(ac.shared.CompleteBoardState,
    * ac.shared.RelevantPartialBoardState) */
   @Override
-  public void addAssociation(CompleteBoardState cbs,
+  public void addAssociation(long cbs_id,
       RelevantPartialBoardState rpbs) throws MemoryException
   {
     try
       {
-        semantic.getLatticeContext().setStatus(cbs, rpbs, true);
+        semantic.getLatticeContext().setStatus(cbs_id, rpbs.getId(), true);
       }
     catch (LatticeContextException e)
       {

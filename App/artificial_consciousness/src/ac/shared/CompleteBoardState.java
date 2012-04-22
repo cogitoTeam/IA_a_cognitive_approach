@@ -4,6 +4,7 @@
 package ac.shared;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import ac.analysis.structure.Atom;
 import ac.analysis.structure.Term;
@@ -33,6 +34,20 @@ public class CompleteBoardState extends AbstractBoardState
 
   private void init()
   {
+  }
+  
+  /**
+   * Remplace les constants du cbs par des variables
+   */
+  public void generalise(String s)
+  {
+    ArrayList<Term> terms = this.boardStateFacts.getTermSet();
+    
+    for(Term t : terms)
+      {
+        t.setConstant(false);
+        t.setLabel(s + t.getLabel().substring(1));
+      }
   }
 
   /**

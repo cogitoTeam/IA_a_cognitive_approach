@@ -36,10 +36,10 @@ public class Homomorphisms
    *          l'ensemble d'atomes � termes constantes
    */
   public Homomorphisms(ArrayList<Atom> ensembleVariables,
-      TreeSet<Atom> ensembleValeurs)
+      ArrayList<Atom> ensembleValeurs)
   {
     A1 = ensembleVariables; // l'ensemble de termes (variables)
-    A2 = ensembleValeurs; // l'ensemble de termes (constantes)
+    A2 = new TreeSet<>(ensembleValeurs); // l'ensemble de termes (constantes)
     orderedVariables = new ArrayList<Term>();
     S = new ArrayList<Substitution>(); // l'ensemble de homomorphismes
                                        // initialement vide
@@ -110,11 +110,11 @@ public class Homomorphisms
    * M�thode (Backtrack) qui recherche l'existence d'un homomorphisme de A1 dans
    * A2
    */
-  /* public boolean existsHomomorphismTest ()
-   * {
-   * preprocessing();
-   * return backtrackRec(new Substitution ());
-   * } */
+  public boolean existsHomomorphismTest(Substitution s)
+  {
+    ArrayList<Atom>[] atom_rank = preprocessing();
+    return backtrackRec(s, atom_rank, s.getPairList().size());
+  }
 
   /**
    * M�thode BacktrackRec le sous-algorithme de existeHomomorphisme
@@ -128,28 +128,28 @@ public class Homomorphisms
    *          the partial solution
    * @return true if exist an homomorphism, false otherwise.
    */
-  /* public boolean backtrackRec(Substitution sol)
-   * {
-   * Term x;
-   * Set<Term> candidats;
-   * Substitution solPrime;
-   * if (sol.num_Pairs() == orderedVariables.size())
-   * return true;
-   * else
-   * {
-   * x = chooseUnassignedVariable(sol);
-   * candidats = computeCandidates(x);
-   * for (Term c: candidats)
-   * {
-   * solPrime = new Substitution (sol);
-   * solPrime.addPair(new TermPair(x,c));
-   * if (isPartialHomomorphismTest(solPrime, A1))
-   * if(backtrackRec(solPrime))
-   * return true;
-   * }
-   * return false;
-   * }
-   * } */
+  public boolean backtrackRec(Substitution sol, ArrayList<Atom>[] atom_rank, int rank)
+  {
+    Term x;
+    Set<Term> candidats;
+    Substitution solPrime;
+    if (sol.num_Pairs() == orderedVariables.size())
+      return true;
+    else
+      {
+        x = chooseUnassignedVariable(sol);
+        candidats = computeCandidates(x);
+        for (Term c : candidats)
+          {
+            solPrime = new Substitution(sol);
+            solPrime.addPair(new TermPair(x, c));
+            if (solPrime.isHomomorphismTest(atom_rank[rank], A2))
+              if (backtrackRec(solPrime, atom_rank, rank+1))
+                return true;
+          }
+        return false;
+      }
+  }
 
   /**
    * M�thode qui teste si une substitution est un homomorphisme partiel
@@ -157,28 +157,28 @@ public class Homomorphisms
    * @param solPrime
    *          la substitution � consid�rer
    */
-  /* private boolean isPartialHomomorphismTest(Substitution sol, ArrayList<Atom>
-   * atoms)
-   * {
-   * int counter;
-   * ArrayList<Atom> A1Prime = new ArrayList<Atom>();
-   * ArrayList<Term> variables = sol.getVariables();
-   * 
-   * //applications de la substitutions au atomes
-   * for (Atom a : atoms)
-   * {
-   * counter = 0;
-   * 
-   * for (Term t1 : a.getTerms())
-   * for (Term t2 : variables)
-   * if (t1.equalsT(t2)||t1.isConstant())
-   * counter++;
-   * 
-   * if (counter >= a.getTerms().size())
-   * A1Prime.add(a);
-   * }
-   * return sol.isHomomorphismTest(A1Prime, A2);
-   * } */
+  private boolean isPartialHomomorphismTest(Substitution sol,
+      ArrayList<Atom> atoms, TreeSet<Atom> a2)
+  {
+    int counter;
+    ArrayList<Atom> A1Prime = new ArrayList<Atom>();
+    ArrayList<Term> variables = sol.getVariables();
+
+    // applications de la substitutions au atomes
+    for (Atom a : atoms)
+      {
+        counter = 0;
+
+        for (Term t1 : a.getTerms())
+          for (Term t2 : variables)
+            if (t1.equalsT(t2) || t1.isConstant())
+              counter++;
+
+        if (counter >= a.getTerms().size())
+          A1Prime.add(a);
+      }
+    return sol.isHomomorphismTest(A1Prime, a2);
+  }
 
   /**
    * M�thode de pr�traitement des variables de A1 qui calcule un ordre total sur
@@ -238,7 +238,11 @@ public class Homomorphisms
    */
   private Term chooseUnassignedVariable(Substitution sol)
   {
-    return orderedVariables.get(sol.num_Pairs());
+    for(Term t : orderedVariables)
+      if(!sol.getVariables().contains(t))
+        return t;
+    
+    return null;
   }
 
   // @TODO Nam, can you correct this sentence
@@ -274,7 +278,38 @@ public class Homomorphisms
       }
   }
 
-  /*public static void main(String[] args) throws IOException
+  public void backtrackAllRecVar(Substitution sol, ArrayList<Atom>[] atom_rank,
+      int rank)
+  {
+    Term x;
+    Set<Term> candidats;
+    Substitution solPrime;
+
+    if (sol.num_Pairs() == orderedVariables.size())
+      {
+        S.add(sol);
+        return;
+      }
+    else
+      {
+        x = orderedVariables.get(rank);
+        candidats = computeCandidates(x);
+        for (Term c : candidats)
+          {
+            solPrime = new Substitution(sol);
+            solPrime.addPair(new TermPair(x, c));
+            if (isPartialHomomorphismTest(solPrime, atom_rank[rank], A2))
+              backtrackAllRec(solPrime, atom_rank, rank + 1);
+          }
+      }
+  }
+
+  public TreeSet<Atom> getA2()
+  {
+    return this.A2;
+  }
+
+  /* public static void main(String[] args) throws IOException
    * {
    * KnowledgeBase k = new KnowledgeBase("ex2.txt");
    * k.optimizedSaturation_FOL();

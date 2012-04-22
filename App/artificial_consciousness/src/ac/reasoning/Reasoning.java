@@ -3,6 +3,7 @@ package ac.reasoning;
 import org.apache.log4j.Logger;
 
 import ac.memory.Memory;
+import ac.memory.MemoryException;
 import agent.Action;
 
 /**
@@ -33,6 +34,7 @@ public class Reasoning
   /**
    * @param memory
    *          an instance of ActiveMemory
+   * @throws MemoryException 
    */
   public Reasoning(Memory memory)
   {
@@ -57,10 +59,13 @@ public class Reasoning
     
     _introspection_engine.interrupt();
     Action action = _choice_engine.start();
-    // @todo restart introspection only after game end or after x minutes of
-    // inactivity
-    //_introspection_engine.start();
     return action;
+  }
+  
+  public void think()
+  {
+    //@todo replace run by start to start a new thread
+    _introspection_engine.run();
   }
 
 }

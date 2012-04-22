@@ -20,7 +20,10 @@ public class Term implements Serializable, Comparable<Term>
   private boolean constant;// vrai si le terme courant est une constante, faux
                            // sinon (c'est une variable)
 
-  // Les constructeurs de la classe
+  // ***************************************************************************
+  // CONSTRUCTORS
+  // ***************************************************************************
+
   /**
    * Constructeur de la classe Terme
    * 
@@ -48,38 +51,9 @@ public class Term implements Serializable, Comparable<Term>
     constant = false;
   }
 
-  // Les getters de la classe
-  /**
-   * Indique si le terme est une constante
-   * 
-   * @return vrai si le terme est une constante, faux sinon
-   */
-  public boolean isConstant()
-  {
-    return constant;
-  }
-
-  /**
-   * Indique si le terme est une variable
-   * 
-   * @return vrai si le terme est une variable, faux sinon
-   */
-  public boolean isVariable()
-  {
-    return !constant;
-  }
-
-  /**
-   * Accesseur en lecture
-   * 
-   * @return le label du terme
-   */
-  public String getLabel()
-  {
-    return label;
-  }
-
-  // Les m�thodes qui caract�risent les fonctionnalit�es de la classe
+  // ***************************************************************************
+  // METHODS
+  // ***************************************************************************
 
   /**
    * 
@@ -136,5 +110,61 @@ public class Term implements Serializable, Comparable<Term>
 
     return val;
   }
+
+  // ***************************************************************************
+  // GETTERS
+  // ***************************************************************************
+
+  /**
+   * Indique si le terme est une constante
+   * 
+   * @return vrai si le terme est une constante, faux sinon
+   */
+  public boolean isConstant()
+  {
+    return constant;
+  }
+
+  /**
+   * Indique si le terme est une variable
+   * 
+   * @return vrai si le terme est une variable, faux sinon
+   */
+  public boolean isVariable()
+  {
+    return !constant;
+  }
+
+  /**
+   * Accesseur en lecture
+   * 
+   * @return le label du terme
+   */
+  public String getLabel()
+  {
+    return label;
+  }
+  
+  //***************************************************************************
+  // SETTERS
+  // ***************************************************************************
+
+  public void copy(Term t)
+  {
+    this.label = new String(t.label);
+    this.constant = t.constant;
+  }
+  
+  public void setConstant(boolean is_constant)
+  {
+    this.constant = is_constant;
+  }
+  
+  public void setLabel(String label)
+  {
+    this.label = label;
+  }
+  
+  
 
 }

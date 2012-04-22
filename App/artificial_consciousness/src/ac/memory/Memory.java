@@ -149,7 +149,7 @@ public interface Memory
    * @param rpbs
    * @throws MemoryException
    */
-  void addAssociation(CompleteBoardState cbs, RelevantPartialBoardState rpbs)
+  void addAssociation(long cbs_id, RelevantPartialBoardState rpbs)
       throws MemoryException;
 
 }
