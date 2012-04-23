@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="26cm" height="14cm" viewBox="262 77 513 274" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="263" y="78" width="510.5" height="42"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="263" y="78" width="510.5" height="42"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:italic;font-weight:700" x="518.25" y="97">Memory</text>
+    <text style="fill: #000000;text-anchor:middle;font-size:11.2;font-family:sanserif;font-style:italic;font-weight:normal" x="518.25" y="112.5">Interface</text>
+    <rect style="fill: #ffffff" x="263" y="120" width="510.5" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="263" y="120" width="510.5" height="8"/>
+    <rect style="fill: #ffffff" x="263" y="128" width="510.5" height="222"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="263" y="128" width="510.5" height="222"/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="142">+getRelevantPartialBoardStates(): List&lt;RelevantPartialBoardState&gt;</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="158">+putOption(option:Option_FOL)</text>
+    <text style="fill: #000000;text-anchor:start;font-size:11.2;font-family:sanserif;font-style:italic;font-weight:normal" x="266" y="172.5"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="195">+getGradedOptions(): List&lt;Pair&lt;Option_FOL, Double&gt;&gt;</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="211">+OptionChosen(option:Option_FOL)</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="227">+BeginOfGame()</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="243">+EndOfGame(status:GameStatus,score:int)</text>
+    <text style="fill: #000000;text-anchor:start;font-size:11.2;font-family:sanserif;font-style:italic;font-weight:normal" x="266" y="257.5"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="280">+getLastWonGames(n:int): List&lt;Game&gt;</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="296">+getLastLostGames(n:int): List&lt;Game&gt;</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="312">+getAllRPBS(n:int): List&lt;Pair&lt;RelevantPartialBoardState, Double&gt;&gt;</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="328">+putRelevantStructure(rpbs:RelevantPartialBoardState): long</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="344">+addAssociation(cbs_id:long,rpbs:RelevantPartialBoardState)</text>
+  </g>
+</svg>

@@ -144,8 +144,7 @@ public interface Memory
 
   /**
    * Add new relationship between a cbs and a rpbs
-   * 
-   * @param cbs
+   * @param cbs_id 
    * @param rpbs
    * @throws MemoryException
    */
