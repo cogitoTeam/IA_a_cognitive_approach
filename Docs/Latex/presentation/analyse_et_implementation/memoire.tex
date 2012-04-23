@@ -4,6 +4,45 @@
 \end{center}
 \end{frame}
 
+\begin{frame}{Mémoire}{Mémoire épisodique}
+\def\imgsize{\textwidth}
+\only<1>{
+\includegraphics[width=\imgsize]{img/implementation_memory/1_episodic_general}
+}
+\only<2>{
+\includegraphics[width=\imgsize]{img/implementation_memory/2_episodic_general}
+}
+\only<3>{
+\includegraphics[width=\imgsize]{img/implementation_memory/3_episodic_general}
+}
+\only<4>{
+\includegraphics[width=\imgsize]{img/implementation_memory/4_episodic_general}
+}
+\only<5>{
+\includegraphics[width=\imgsize]{img/implementation_memory/5_episodic_general}
+}
+\only<6>{
+\includegraphics[width=\imgsize]{img/implementation_memory/6_episodic_general}
+}
+\end{frame}
+
+\begin{frame}{Mémoire}{Mémoire sémantique}
+\only<1>{
+\begin{block}{Vision en matrice}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/implementation_memory/context_matrix}
+\end{center}
+\end{block}
+}
+\only<2>{
+\begin{block}{Vision en graphe}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/implementation_memory/context_graph}
+\end{center}
+\end{block}
+}
+\end{frame}
+
 \begin{frame}{Mémoire}{Persistance}
 \begin{center}
 \includegraphics[width=0.3\textwidth]{img/neo4j/neo4j_logo}
@@ -30,9 +69,12 @@
 \end{block}
 \begin{block}{Comment typer les noeuds ?}
 \begin{enumerate}
+\uncover<2>{
 \item Créer un noeud \texttt{Maitre}
 \item Créer une relation typée \texttt{Racine $\rightarrow$ Maitre}
 \item Créer des relations typées \texttt{Maitre $\rightarrow$ Noeuds}
+}
 \end{enumerate}
 \end{block}
+
 \end{frame}
