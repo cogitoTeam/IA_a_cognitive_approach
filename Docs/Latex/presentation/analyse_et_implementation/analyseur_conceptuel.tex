@@ -1,19 +1,77 @@
-\begin{frame}{Analyseur conceptuel}{Conversion Matrice / Concepts}
-(RPBS)
+\begin{frame}{Analyseur conceptuel}{Généralités}
+\begin{itemize}
+  \item Représente les connaissances tirées de l'environnement
+  \item Analyse ces connaissances afin d'en tirer des nouvelles
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Analyseur conceptuel}{Graphes conceptuels vs. logique du premier}
-
+\begin{frame}{Analyseur conceptuel}{Analyse détaillée}
+\begin{itemize}
+  \item Représentation des connaissances : \textbf{vocabulaire}
+  \begin{itemize}
+    \item Graphes conceptuels de base ou
+    \item Formules de logique du premier ordre
+  \end{itemize}
+  \item Analyse des connaissances : \textbf{méchanisme}
+  \begin{itemize}
+    \item Interrogation avec la mémoire
+    \item Recherche d'homomorphismes
+  \end{itemize}
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Analyseur conceptuel}{Rôles du module}
-
+\begin{frame}{Analyseur conceptuel}{Implémentation : Rôles du module}
+\begin{itemize}
+  \item Convertisseur :
+  \begin{itemize}
+    \item Rend les données de l'environnement \enquote{lisibles} par l'IA
+  \end{itemize}
+  \item Moteur d'inférence :
+  \begin{itemize}
+    \item Applique les règles générés par l'IA afin d'en
+    sortir des nouveaux concepts
+  \end{itemize}
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Analyseur conceptuel}{Diagramme de classes}
-
+\begin{frame}{Analyseur conceptuel}{Implémentation : Classes principales}
+\begin{itemize}
+  \item \textbf {Choices (environnement)} : représente un plateau
+  courant, un coup et l'ensemble des plateaux résultants de ce coup
+  \item \textbf {BoardMatrix(environnement)} : représente un plateau en forme
+  d'une matrice
+  \item \textbf {Choices\_FOL (IA)} : version logique du premier ordre de
+  Choices (même structure, attributs décrits par des formules logiques)
+  \item \textbf {CompleteBoardState (IA)} : version logique du premier ordre de
+  BoardMatrix (classe qui décrit la configuration
+  d'un plateau complet comme une liste de faits logiques)
+  \item \textbf {RelevantPartialBoardState (IA)} : classe qui décrit la
+  configuration d'une sous-partie pertinante d'un plateau comme une règle
+  logique
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Analyseur conceptuel}{Représentation de concepts}
-représentation de concepts : graphes conceptuels ou formules logiques?
+
+\begin{frame}{Analyseur conceptuel}{Implémentation détaillée}
+\begin{itemize}
+  \item \textbf {Convertisseur} :
+  \begin{itemize}
+    \item Entrée (de l'environnement): instance de \enquote{Choices}
+    \item Algorithme qui transforme un \enquote{BoardMatrix} en un
+    \enquote{CompleteBoardState}
+    \item Sortie: instance de
+    \enquote{Choices\_FOL}
+  \end{itemize}
+  \item \textbf {Moteur d'inférence} :
+  \begin{itemize}
+    \item Entrée (de la mémoire) : instance de
+    \enquote{RelevantPartialBoardState}
+    \item Algorithme de saturation de la base de faits des
+    \enquote{CompleteBoardState} par la règle d'entrée
+    \item Ajout d'une liste de \enquote{RelevantPartialBoardState} présents dans
+    chaque \enquote{CompleteBoardState} du pacquet \enquote{Choices\_FOL}
+    \item Sortie (passée à la mémoire) : instance de
+    \enquote{Choices\_FOL}
+  \end{itemize}
+\end{itemize}
 \end{frame}
