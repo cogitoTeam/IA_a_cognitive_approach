@@ -1,26 +1,23 @@
 \begin{frame}{Raisonneur}{Moteur de choix}
-	\includegraphics[width=0.4\textwidth]{img/screenshoot/raisonneur_choix_0}	
-\end{frame}
-
-\begin{frame}{Raisonneur}{Moteur de choix}
 	\begin{minipage}{0.45\textwidth}
-		\includegraphics[width=\textwidth]{img/screenshoot/raisonneur_choix_1}
+		\only<1>{
+			\includegraphics[width=0.8\textwidth]{img/screenshoot/raisonneur_choix_0}	
+		}
+		\only<2>{
+			\includegraphics[width=0.8\textwidth]{img/screenshoot/raisonneur_choix_1}	
+		}
+		\only<3>{
+			\includegraphics[width=0.8\textwidth]{img/screenshoot/raisonneur_choix_2}	
+		}
 	\end{minipage}
 	\begin{minipage}{0.50\textwidth}
 		\begin{itemize}
-			\item $isCorner(x) \wedge isMine(x)$
-		\end{itemize}
-	\end{minipage}
-\end{frame}
-
-\begin{frame}{Raisonneur}{Moteur de choix}
-	\begin{minipage}{0.45\textwidth}
-		\includegraphics[width=\textwidth]{img/screenshoot/raisonneur_choix_2}
-	\end{minipage}
-	\begin{minipage}{0.50\textwidth}
-		\begin{itemize}
-			\item $isCorner(x) \wedge isMine(x)$
-			\item $isMine(w) \wedge isOpp(x) \wedge isOpp(y) \wedge aligned(w,x,y) \wedge isEmpty(z) \wedge aligned (x,y,z)$
+			\uncover<2->{
+				\item $isCorner(x) \wedge isMine(x)$
+			}
+			\uncover<3->{
+				\item $isMine(w) \wedge isOpp(x) \wedge isOpp(y) \wedge aligned(w,x,y) \wedge isEmpty(z) \wedge aligned (x,y,z)$
+			}
 		\end{itemize}
 	\end{minipage}
 \end{frame}
@@ -35,5 +32,40 @@
 \end{frame}
 
 \begin{frame}{Raisonneur}{Moteur d'introspection}
-Extraction de formes
+	Extraction de formes
+	\begin{center}
+		\only<1>{
+			\includegraphics[width=0.8\textwidth]{img/raisonneur/reconnaissance_de_formes_0}	
+		}
+		\only<2>{
+			\includegraphics[width=0.8\textwidth]{img/raisonneur/reconnaissance_de_formes_1}	
+		}
+		\only<3>{
+			\includegraphics[width=0.8\textwidth]{img/raisonneur/reconnaissance_de_formes_2}	
+		}
+		\only<4>{
+			\includegraphics[width=0.8\textwidth]{img/raisonneur/reconnaissance_de_formes_4}	
+		}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Raisonneur}{Moteur d'introspection}
+	\begin{minipage}{0.45\textwidth}
+			$\ldots isMine(x0) \wedge \\ 
+			isOpp(x1) \wedge \\
+			isOpp(x2) \wedge \\
+			aligned(x0,x1,x2) \wedge \\
+			isEmpty(x3) \wedge \\
+			aligned (x1,x2,x3) \wedge \\
+			\ldots isCorner(x3) \ldots$
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+			$\ldots isMine(y0) \wedge \\
+			isOpp(y1) \wedge \\
+			isOpp(y2) \wedge \\
+			aligned(y0,y1,y2) \wedge \\
+			isEmpty(y3) \wedge \\
+			aligned (y1,y2,y3) \wedge \\
+			\ldots isCorner(y3) \ldots$
+	\end{minipage}
 \end{frame}
