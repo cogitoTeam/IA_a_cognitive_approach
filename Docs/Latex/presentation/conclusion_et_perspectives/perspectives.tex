@@ -13,7 +13,7 @@ Un contexte est un triplet $(G,M,I)$ avec
 \begin{itemize}
 \item $G$ l'ensemble des objets
 \item $M$ l'ensemble des attributs
-\item $I \in G*M$ l'ensemble des relations
+\item $I \subseteq G*M$ l'ensemble des relations
 \end{itemize}
 On pourrait donc utiliser la mémoire sémantique comme contexte pour la création d'un treillis de concepts.
 \end{block}
@@ -30,18 +30,15 @@ On pourrait donc utiliser la mémoire sémantique comme contexte pour la créati
 
 \begin{frame}{Perspectives}{Un treillis de concepts en mémoire ?}
 \begin{block}{Exemple (concret)}
-\begin{columns}[t]
-	\begin{column}{0.5\textwidth}
-	\only<3>{\includegraphics[width=0.5\textwidth]{img/conclusion/espresso_tmp}}
-	\uncover<4->{\includegraphics[width=0.5\textwidth]{img/conclusion/espresso}}
-	\\
-	\only<5>{\includegraphics[width=0.5\textwidth]{img/conclusion/ordi_tmp}}
-	\uncover<6->{\includegraphics[width=0.5\textwidth]{img/conclusion/ordi}}
-	\end{column}
-	\begin{column}{0.5\textwidth}
-	\only<7>{\includegraphics[width=0.7\textwidth]{img/conclusion/cafe_renverse_tmp}}
-	\only<8->{\includegraphics[width=0.7\textwidth]{img/conclusion/cafe_renverse}}
-	\end{column}
-\end{columns}
+\begin{center}
+	\only<1>{\includegraphics[width=0.2\textwidth]{img/conclusion/espresso_tmp}}
+	\only<2->{\includegraphics[width=0.2\textwidth]{img/conclusion/espresso}}
+	\only<-2>{\includegraphics[width=0.2\textwidth]{img/conclusion/ordi_tmp}}
+	\only<3->{\includegraphics[width=0.2\textwidth]{img/conclusion/ordi}}
+\end{center}
+\begin{center}
+	\only<4>{\includegraphics[width=0.3\textwidth]{img/conclusion/cafe_renverse_tmp}}
+	\only<5->{\includegraphics[width=0.3\textwidth]{img/conclusion/cafe_renverse}}
+\end{center}
 \end{block}
 \end{frame}
