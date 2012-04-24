@@ -1,17 +1,62 @@
-\begin{frame}{Environnement \& Simulation}{L'arbitre}
+%----------------------------------------
+% WEBSERVICE "GAME SERVICE"
+%----------------------------------------
+
+\begin{frame}{Environnement \& Simulation}{Webservice \texttt{game\_service}}
 Environnement "arbitre" du jeux (séparation des agents de l'environnement)
-\end{frame}
 
-\begin{frame}{Environnement \& Simulation}{Librairie \texttt{game\_logic}}
-
-\end{frame}
-
-\begin{frame}{Environnement \& Simulation}{Web service \texttt{game\_service}}
+\begin{block}{Representationnal State Transfer (REST)}
 \begin{itemize}
-\item Java Servlet Technology
-\item Representationnal State Transfer (HTTP,XML)
+\item Technologie Java Servlet.
+	\begin{itemize}
+	\item Requetes par HTTP.
+	\item Réponses en XML.
+	\end{itemize}
+\item Technologie HTML 5.
+	\begin{itemize}
+	\item Asynchronous Javascript \& XML (AJAX).
+	\item Bibliothèque jQuery.
+	\end{itemize}
 \end{itemize}
+\end{block}
+
+
 \end{frame}
+
+
+%----------------------------------------
+% LIBRARIE "GAME LOGIC"
+%----------------------------------------
+
+\begin{frame}{Environnement \& Simulation}{Bibliothèque \texttt{game\_logic}}
+
+\begin{block}{Classe \texttt{BoardMatrix}}
+Plateau sous forme matricielle avec accesseurs adaptés.
+\end{block}
+
+\pause
+
+\begin{block}{Classe abstraite \texttt{Rules}}
+\begin{itemize}
+\item Forme du plateau? Configuration initiale?
+\item Qui joue en premier?
+\item Quand a-t-on gagné? Perdu? Un match nul?
+\item Quelles sont les coups possibles?
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{Classe \texttt{Game}}
+Associe un \texttt{Rules}, un \texttt{BoardMatrix}, un état, un joueur courant...
+\end{block}
+
+\end{frame}
+
+
+%----------------------------------------
+% CLIENT HUMAIN
+%----------------------------------------
 
 \begin{frame}{Environnement \& Simulation}{Client Humain}
 \begin{itemize}
@@ -20,8 +65,10 @@ Environnement "arbitre" du jeux (séparation des agents de l'environnement)
 \end{itemize}
 \end{frame}
 
+%----------------------------------------
+% CLIENT MACHINE
+%----------------------------------------
+
 \begin{frame}{Environnement \& Simulation}{Client machine frontière}
 
 \end{frame}
-
-
