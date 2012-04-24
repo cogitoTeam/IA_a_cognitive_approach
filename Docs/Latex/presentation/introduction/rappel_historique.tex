@@ -6,18 +6,17 @@
 
 \begin{block}{Deep Blue} 
 \begin{itemize}
-\item Programme d'échecs développé par IBM.
 \item Victoire contre Garry Kasparov en 1997.
-\item Première défaite d'un grand maître sous contraintes normales de temps.
+\item $1^{\grave{e}re}$ défaite de grand maître sous contraintes normales de temps.
 \end{itemize}
 \end{block}
 
 \pause
 
-\begin{block}{Robert Levinson} 
+\begin{block}{R. Levinson} 
 \begin{itemize}
 \item \textit{\og But doesn't know that it's playing chess.\fg{}}
-\item Est-ce donc vraiment de l'intelligence?
+\item Intelligence? Artificielle? Synthétique?
 \end{itemize}
 \end{block}
 
@@ -30,11 +29,11 @@
 %----------------------------------------
 
 \begin{frame}{Rappel historique}{Théorie des Jeux}
- 
+
 \begin{block}{Théorème du Minimax} 
 \begin{itemize}
-\item Élaboré par John Von Neumann en 1928.
-\item Stratégie optimale pour jeux compétitives tels les échecs.
+\item J. Von Neumann, 1928.
+\item \textit{Stratégie optimale pour un joueur donné.}
 \end{itemize}
 \end{block}
 
@@ -42,17 +41,8 @@
 
 \begin{block}{Équilibre de Nash} 
 \begin{itemize}
-\item Définit par John Forbes Nash en 1950.
-\item Fondation de la Théorie des Jeux.
-\end{itemize}
-\end{block}
-
-\pause
-
-\begin{block}{Élagage Alpha-beta} 
-\begin{itemize}
-\item Conçu par John McCarthy en 1958.
-\item Amélioration du Minimax.
+\item J. F. Nash, 1950.
+\item \textit{Union de stratégies, localement optimale pour tous.}
 \end{itemize}
 \end{block}
 
@@ -67,8 +57,8 @@
 
 \begin{block}{Domaine d'application}
 \begin{itemize}
-\item Jeux compétitifs à somme nulle.
-\item Durée et nombre d'options finis.
+\item \underline{Minimax}: Jeux compétitifs, à deux joueurs, à somme nulle.
+\item \underline{Minimax \& Nash}: Durée et nombre d'options finis.
 \end{itemize}
 \end{block}
 
@@ -76,12 +66,12 @@
 
 \begin{block}{Temps de calcul}
 \begin{itemize}
-\item Complexité moyenne $O(b^{\frac{d}{2}})$ avec élagage.
+\item Complexité moyenne \emph{$O(b^{\frac{d}{2}})$} si trié et élagé:
 	\begin{itemize}
-	\item d : profondeur de l'arbre de décision.
-	\item b : facteur de branchement.
+	\item d : longeur de la partie.
+	\item b : nombre d'options par tour.
 	\end{itemize}
-\item Utilisation d'heuristiques, donc perte d'optimalité.
+\item En pratique: besoin d'heuristiques, donc perte d'optimalité.
 \end{itemize}
 \end{block}
 
