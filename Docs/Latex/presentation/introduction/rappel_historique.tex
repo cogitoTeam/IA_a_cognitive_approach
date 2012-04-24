@@ -1,21 +1,88 @@
-\begin{frame}{Rappel historique}{Gasparov / Deep Blue}
+%----------------------------------------
+% RAPPEL HISTORIQUE - DEEP BLUE
+%----------------------------------------
 
-\end{frame}
+\begin{frame}{Rappel historique}{Deep Blue}
 
-\begin{frame}{Rappel historique}{Gasparov / État de l'art}
+\begin{block}{Deep Blue} 
 \begin{itemize}
-\item Minimax
-\item Théorème de Von Neumann
-\item Equilibre de Nash
+\item Programme d'échecs développé par IBM.
+\item Victoire contre Garry Kasparov en 1997.
+\item Premier défaite d'un grand maître sous contraintes normales de temps.
 \end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{Robert Levinson} 
+\begin{itemize}
+\item \textit{\og But doesn't know that it's playing chess.\fg{}}
+\item Est-ce donc vraiment de l'intelligence?
+\end{itemize}
+\end{block}
+
 \end{frame}
+
+
+
+%----------------------------------------
+% RAPPEL HISTORIQUE - THÉORIE DES JEUX
+%----------------------------------------
+
+\begin{frame}{Rappel historique}{Théorie des Jeux}
+ 
+\begin{block}{Théorème du Minimax} 
+\begin{itemize}
+\item Élaboré par John Von Neumann en 1928.
+\item Stratégie optimale pour jeux compétitives tels les échecs.
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{Équilibre de Nash} 
+\begin{itemize}
+\item Définit par John Forbes Nash en 1950.
+\item Fondation de la Théorie des Jeux.
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{Élagage Alpha-beta} 
+\begin{itemize}
+\item Conçu par John McCarthy en 1958.
+\item Amélioration du Minimax.
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
+%----------------------------------------
+% RAPPEL HISTORIQUE - LIMITES
+%----------------------------------------
 
 \begin{frame}{Rappel historique}{Limites}
+
+\begin{block}{Domaine d'application}
 \begin{itemize}
-\item Jeux à états finis
-\item déteministic
-\item descrètes
-\item à deux joueurs
-\item à somme null
+\item Jeux compétitifs à somme nulle.
+\item Durée et nombre d'options finis.
 \end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{Temps de calcul}
+\begin{itemize}
+\item Complexité moyenne $O(b^{\frac{d}{2}})$ avec élagage.
+	\begin{itemize}
+	\item d : profondeur de l'arbre de décision.
+	\item b : facteur de branchement.
+	\end{itemize}
+\item Utilisation d'heuristiques, donc perte d'optimalité.
+\end{itemize}
+\end{block}
+
 \end{frame}
