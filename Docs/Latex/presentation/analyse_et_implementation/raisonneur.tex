@@ -31,6 +31,17 @@
 	
 \end{frame}
 
+\begin{frame}{Raisonneur}{Valuation des formes}
+	\begin{minipage}{0.45\textwidth}
+		\includegraphics[width=0.8\textwidth]{img/screenshoot/raisonneur_choix_2}	
+	\end{minipage}
+	\begin{minipage}{0.50\textwidth}
+		\begin{itemize}
+			\item Moyenne de la probabilité de gain de chaque forme reconnue : $\overline{P(Gain|Forme)}$
+		\end{itemize}
+	\end{minipage}
+\end{frame}
+
 \begin{frame}{Raisonneur}{Moteur d'introspection}
 	Extraction de formes
 	\begin{center}
@@ -50,22 +61,27 @@
 \end{frame}
 
 \begin{frame}{Raisonneur}{Moteur d'introspection}
-	\begin{minipage}{0.45\textwidth}
-			$\ldots isMine(x0) \wedge \\ 
-			isOpp(x1) \wedge \\
-			isOpp(x2) \wedge \\
-			aligned(x0,x1,x2) \wedge \\
-			isEmpty(x3) \wedge \\
-			aligned (x1,x2,x3) \wedge \\
-			\ldots isCorner(x3) \ldots$
+	\begin{minipage}{1\textwidth}
+		\begin{minipage}{0.25\textwidth}
+			\only<1>{\includegraphics[width=\textwidth]{img/screenshoot/cbs0_reco0}	}
+			\only<2>{\includegraphics[width=\textwidth]{img/screenshoot/cbs0_reco1}	}
+			\only<3-4>{\includegraphics[width=\textwidth]{img/screenshoot/cbs0_reco2}	}
+		\end{minipage}
+		\begin{minipage}{0.75\textwidth}
+			\only<2>{$\ldots isMine(x0) \wedge isOpp(x1) \wedge isOpp(x2) \wedge aligned(x0,x1,x2)  \ldots $}
+			\only<3-4>{$\ldots isMine(x0) \wedge isOpp(x1) \wedge isOpp(x2) \wedge aligned(x0,x1,x2) \wedge isEmpty(x3) \wedge aligned (x1,x2,x3)			\wedge isCorner(x3) \ldots$}
+		\end{minipage}
 	\end{minipage}
-	\begin{minipage}{0.45\textwidth}
-			$\ldots isMine(y0) \wedge \\
-			isOpp(y1) \wedge \\
-			isOpp(y2) \wedge \\
-			aligned(y0,y1,y2) \wedge \\
-			isEmpty(y3) \wedge \\
-			aligned (y1,y2,y3) \wedge \\
-			\ldots isCorner(y3) \ldots$
+	\\[10pt]
+	\begin{minipage}{1\textwidth}
+		\begin{minipage}{0.25\textwidth}
+			\only<1>{\includegraphics[width=\textwidth]{img/screenshoot/cbs1_reco0}	}
+			\only<2-3>{\includegraphics[width=\textwidth]{img/screenshoot/cbs1_reco1}	}
+			\only<4>{\includegraphics[width=\textwidth]{img/screenshoot/cbs1_reco2}	}		
+		\end{minipage}
+		\begin{minipage}{0.75\textwidth}
+			\only<2-3>{$\ldots isMine(y0) \wedge isOpp(y1) \wedge isOpp(y2) \wedge aligned(y0,y1,y2)  \ldots $}
+			\only<4>{$\ldots isMine(y0) \wedge isOpp(y1) \wedge isOpp(y2) \wedge aligned(y0,y1,y2) \wedge isEmpty(y3) \wedge aligned (y1,y2,y3) \wedge isCorner(y3) \ldots$}
+		\end{minipage}
 	\end{minipage}
 \end{frame}
