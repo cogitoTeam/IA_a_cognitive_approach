@@ -5,12 +5,8 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
- * Mod�lise une r�gle de la forme "si hypoth�se alors conclusion: , o�
- * l'hypoth�se est compos�e dune conjonction
- * d'atomes, et la conclusion est compos�e d'un seul atome. Elle poss�de aussi
- * l'ensemble de termes
- * apparaissant dans ses atomes pour pr�ciser que chaque terme n'y appara�t
- * qu'une seule fois
+ * Represents a Rule in first order logic where
+ * the premise is a conjuction of atoms and the conclusion is a single atom. 
  * 
  */
 public class Rule implements Serializable
@@ -65,36 +61,30 @@ public class Rule implements Serializable
   /**
    * Constructeur
    * 
-   * @param regle
-   *          la r�gle, sous forme textuelle ; cette forme est sous forme
-   *          "atome1;atome2;...atomek", o� les (k-1) premiers atomes forment
-   *          l'hypoth�se,
-   *          et le dernier forme la conclusion
+   * @param rule
+   * @param ruleName 
    */
-  public Rule(String regle, String nomRegle)
+  public Rule(String rule, String ruleName)
   {
     Term t;
-    name = nomRegle;
+    name = ruleName;
     premise = new ArrayList<Atom>();
     terms = new ArrayList<Term>();
 
-    StringTokenizer st = new StringTokenizer(regle, ";");
+    StringTokenizer st = new StringTokenizer(rule, ";");
     while (st.hasMoreTokens())
       {
-        String s = st.nextToken(); // s repr�sente un atome
+        String s = st.nextToken();
         Atom a = new Atom(s);
-        premise.add(a);// ajout de a � la liste des atomes de l'hypoth�se (pour
-                       // l'instant)
+        premise.add(a);
         ArrayList<Term> terms = a.getTerms();
         for (int i = 0; i < terms.size(); i++)
           {
-            t = addTerm(terms.get(i)); // ajout � la liste des termes
+            t = addTerm(terms.get(i)); 
             a.getTerms().set(i, t);
 
           }
       }
-    // on a mis tous les atomes cr��s en hypoth�se
-    // reste � tranf�rer le dernier en conclusion
     conclusion = premise.remove(premise.size() - 1);
   }
 
@@ -103,9 +93,8 @@ public class Rule implements Serializable
   // ***************************************************************************
 
   /**
-   * Accesseur en lecture
    * 
-   * @return le nom de la r�gle
+   * @return the rule name
    */
   public String getName()
   {
@@ -113,9 +102,8 @@ public class Rule implements Serializable
   }
 
   /**
-   * Accesseur en lecture
    * 
-   * @return l'hypoth�se de la r�gle
+   * @return the premise
    */
   public ArrayList<Atom> getPremise()
   {
@@ -123,50 +111,46 @@ public class Rule implements Serializable
   }
 
   /**
-   * Accesseur en lecture
-   * 
-   * @return la conclusion de la r�gle
+   * @return the conclusion
    */
   public Atom getConclusion()
   {
     return conclusion;
   }
 
-  public void setName(String nom)
+  /**
+   * @param name to set
+   */
+  public void setName(String name)
   {
-    this.name = nom;
+    this.name = name;
   }
 
-  public void setPremise(ArrayList<Atom> hypothese)
+  /**
+   * @param premise to set
+   */
+  public void setPremise(ArrayList<Atom> premise)
   {
-    this.premise = hypothese;
+    this.premise = premise;
   }
 
+  /**
+   * @param conclusion to set
+   */
   public void setConclusion(Atom conclusion)
   {
     this.conclusion = conclusion;
   }
 
   /**
-   * Accesseur en lecture
    * 
-   * @return l'ensemble de termes de la r�gle
+   * @return the set of terms in the rule
    */
   public ArrayList<Term> getTerms()
   {
     return terms;
   }
 
-  // Les m�thodes qui caract�risent les fonctionnalit�es de la classe
-
-  /**
-   * Ajoute un terme � la liste des termes s'il n'existe pas d�j�
-   * 
-   * @param t
-   *          le terme � potentiellement ajouter
-   * @return un sommet terme, soit t s'il a �t� ins�r�, soit le sommet terme qui
-   *         existait d�j� dans la liste des sommets termes
-   */
   private Term addTerm(Term t)
   // SI : dans le cas o� le terme t n'existe pas d�j� dans la liste des sommets
   // termes, on l'ajoute � la bonne place
@@ -187,14 +171,7 @@ public class Rule implements Serializable
                                 // la liste des termes
   }
 
-  /**
-   * Cherche la position o� ins�rer le sommet terme 't'
-   * 
-   * @param t
-   *          le sommet terme � ins�rer
-   * @return la position o� doit �tre ajout�e le sommet terme
-   */
-  private int[] termDichotomicPosition(Term t)
+ private int[] termDichotomicPosition(Term t)
   // SE : si t se trouve dans la liste des termes, retourne son indice.
   // sinon retourne l'indice o� il devrait �tre ins�r�
   // SI : appelle la m�thode positionDichoRecursif en indiquant comme param�tre
@@ -245,7 +222,6 @@ public class Rule implements Serializable
     return termRecursiveDichotomicPosition(nom, milieu + 1, fin, tabReponses);
   }
 
-  // La m�thode toString de la classe
 
   public String toString()
   {
@@ -261,6 +237,9 @@ public class Rule implements Serializable
     return s;
   }
 
+  /**
+   * @return toString for the constructor
+   */
   public String toStringForConstructor()
   {
     String s = "";
@@ -273,6 +252,9 @@ public class Rule implements Serializable
   }
 
   // Test de la classe
+  /**
+   * @param args
+   */
   public static void main(String[] args)
   {
     Atom a = new Atom("mange(x,'Loup')");

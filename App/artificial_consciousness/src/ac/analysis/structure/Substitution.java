@@ -4,15 +4,7 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 
 /**
- * Mod�lise une substitution. Elle constiste d'une liste de CoupleTermes
- * et permet , par exemple , de d�finir la substitution des variables d'une
- * r�gle
- * par des constantes : chaque variable correspond � un CoupleTerme
- * qui d�finit sa substitution par une constante.
- * 
- * Elle poss�de en particulier une m�thode qui d�termine si cette substitution
- * est un homomorphisme
- * 
+ * Represents a substitution
  */
 public class Substitution
 {
@@ -21,7 +13,7 @@ public class Substitution
   private ArrayList<Term> variables = null;
 
   /**
-   * Constructeur vide de la classe Substition
+   * Empty constructor
    */
   public Substitution()
   {
@@ -30,54 +22,55 @@ public class Substitution
 
   }
 
-  // Les constructeurs de la classe
   /**
-   * Constructeur de la classe Substition
-   * 
-   * @param liste
-   *          une liste de couples de termes
+   * Constructor
+   * @param termPairList
+   *          list of term pairs
    */
-  public Substitution(ArrayList<TermPair> ensembleCouples)
+  public Substitution(ArrayList<TermPair> termPairList)
   {
-    pairList = ensembleCouples;
+    pairList = termPairList;
     variables = new ArrayList<Term>();
     for (TermPair c : pairList)
       variables.add(c.getX());
   }
 
   /**
-   * Constructeur par copie de substitution
+   * Copy constructor 
+   * @param copy 
    * 
-   * @param from
-   *          la substitution � copier
-   * @return to la substitution copi�e
    */
-  public Substitution(Substitution from)
+  public Substitution(Substitution copy)
   {
-    pairList = new ArrayList<TermPair>(from.getPairList());
+    pairList = new ArrayList<TermPair>(copy.getPairList());
     variables = new ArrayList<Term>();
     for (TermPair c : pairList)
       variables.add(c.getX());
   }
 
-  // Les getters de la classe
+  /**
+   * @return list of pairs
+   */
   public ArrayList<TermPair> getPairList()
   {
     return pairList;
   }
 
-  // Les m�thodes qui caract�risent les fonctionnalit�es de la classe
+
   /**
-   * @return variables La liste des variables pr�sents dans la substitution
+   * @return variables in the substitution
    */
   public ArrayList<Term> getVariables()
   {
     return variables;
   }
   
-  public ArrayList<Term> getSubstitues()
+  /**
+   * @return list of substitutes
+   */
+  public ArrayList<Term> getSubstitutes()
   {
-    ArrayList<Term> list = new ArrayList<>();
+    ArrayList<Term> list = new ArrayList<Term>();
     for(TermPair p : this.pairList)
       list.add(p.getY());
     
@@ -85,19 +78,19 @@ public class Substitution
   }
 
   /**
-   * Ajoute un couple de termes � la substitution
    * 
-   * @param couple
-   *          un couple de termes : (variable,constante)
+   * @param pair
+   *          term pair : (variable,constant)
    */
-  public void addPair(TermPair couple)
+  public void addPair(TermPair pair)
   {
-    pairList.add(couple);
-    variables.add(couple.getX());
+    pairList.add(pair);
+    variables.add(pair.getX());
   }
 
   /**
-   * Retourne le nombre de couples dans la substitution
+   * 
+   * @return the number of pairs in the substitution
    */
   public int num_Pairs()
   {
@@ -105,11 +98,11 @@ public class Substitution
   }
 
   /**
-   * M�thode qui remplace les termes d'une string selon la substitution d�finie
+   * Applies a substitution
    * 
    * @param s
-   *          string dans laquelle on d�sire faire le remplacement
-   * @return t nouvelle string avec les termes remplac�es
+   *          source string 
+   * @return the new string
    */
   public String replace(String s)
   {
@@ -121,13 +114,13 @@ public class Substitution
   }
 
   /**
-   * M�thode qui d�termine si cette substitution est un homomorphisme
-   * entre deux ensembles d'atomes (donn�s en param�tre)
+   * Determines if this substitution is a homomorphism
    * 
    * @param a1
-   *          L'ensemble des variables
+   *          set of variables
    * @param a2
-   *          L'ensemble des valeurs
+   *          set of values
+   * @return True is it is a homomorphism, False otherwise
    */
   public boolean isHomomorphismTest(ArrayList<Atom> a1, TreeSet<Atom> a2)
   {
@@ -142,7 +135,6 @@ public class Substitution
     return true;
   }
 
-  // M�thode toString de la classe
   public String toString()
   {
     String s = "{";
@@ -155,9 +147,11 @@ public class Substitution
   }
 
   // Test de la classe
+  /**
+   * @param args
+   */
   public static void main(String[] args)
   {
-    Substitution s;
     ArrayList<TermPair> couples = new ArrayList<TermPair>();
     Term x = new Term("x"), y = new Term("y"), z = new Term("z"), t = new Term(
         "t"), a = new Term("a", true), b = new Term("b", true), c = new Term(
@@ -167,8 +161,6 @@ public class Substitution
     couples.add(new TermPair(y, b));
     couples.add(new TermPair(z, c));
     couples.add(new TermPair(t, b));
-
-    s = new Substitution(couples);
 
     Atom a1 = new Atom("r(x,y,z)"), b1 = new Atom("s(z,t)"), c1 = new Atom(
         "r('a','b','c')"), d = new Atom("s('b','a')"), e = new Atom(
@@ -180,8 +172,6 @@ public class Substitution
     val.add(d);
     val.add(e);
 
-    // if(s.isHomomorphismTest(var, val))
-    // System.out.println(s + " est un homomorphisme");
   }
 
 }

@@ -1,51 +1,52 @@
 package ac.analysis.inferenceEngine;
 
- 
-
 import java.util.ArrayList;
 
 import ac.analysis.structure.*;
 
 /**
-* La classe qui calcule et stocke les substitutions d'un ensemble de termes variables dans un 
-* autre ensemble de termes constantes
-*/
-public class Substitutions 
+ * Calculates and stores possible substitutions between two sets of {@link Term}
+ * : one a set of variables, the other a set of constants
+ */
+public class Substitutions
 {
 
-	private ArrayList<Term> T1;
-	private ArrayList<Term> T2;
-	
-	public ArrayList<Substitution> S;
+  private ArrayList<Term> T1;
+  private ArrayList<Term> T2;
+  /**
+   * List of possible substitutions
+   */
+  public ArrayList<Substitution> S;
 
-	/**
-	 * Constructeur de la classe Substitutions
-	 * @param variables les termes variables 
-	 * @param constantes les termes constantes 
-	 */
-	public Substitutions (ArrayList<Term> variables, ArrayList<Term> constantes) 
-	{
-		T1 = variables; //l'ensemble de termes (variables)
-		T2 = constantes; //l'ensemble de termes (constantes)
-		S = new ArrayList<Substitution>(); //l'ensemble de substitutions initialement vide	
-	}
-	
-	/**
-	 * M�thode r�cursive qui g�n�re l'ensemble de substitutions de T1 dans T2 et le stocke dans S
-	 */
-	public void getSubstitutions(Substitution s) 
-	{
-		if (s != null && s.num_Pairs() == T1.size())
-			S.add(s); //si nombre de couples = nombre de variables, ajoute substitution � S
-		else 
-			for (int i = 0; i < T2.size(); i++) //pour toutes les constantes
-			{
-				//g�n�re le couple (prochaine variable, constante) 
-				TermPair couple = new TermPair(T1.get(s.num_Pairs()), T2.get(i));
-				Substitution temp = new Substitution(s);//copie de s
-				temp.addPair(couple); //ajoute le couple � la substitution
-				getSubstitutions(temp); //appel r�cursive
-			}			
-		return;
-	}
+  /**
+   * Constructor
+   * 
+   * @param variables
+   * @param constants
+   */
+  public Substitutions(ArrayList<Term> variables, ArrayList<Term> constants)
+  {
+    T1 = variables; 
+    T2 = constants; 
+    S = new ArrayList<Substitution>(); 
+  }
+
+  /**
+   * Computes the possible substitutions of
+   * @param s a given substitution
+   */
+  public void computeSubstitutions(Substitution s)
+  {
+    if (s != null && s.num_Pairs() == T1.size())
+      S.add(s); 
+    else
+      for (int i = 0; i < T2.size(); i++) 
+        {
+          TermPair pair = new TermPair(T1.get(s.num_Pairs()), T2.get(i));
+          Substitution temp = new Substitution(s);
+          temp.addPair(pair); 
+          computeSubstitutions(temp);
+        }
+    return;
+  }
 }

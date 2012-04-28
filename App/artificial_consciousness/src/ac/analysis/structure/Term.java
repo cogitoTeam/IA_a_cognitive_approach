@@ -3,11 +3,7 @@ package ac.analysis.structure;
 import java.io.Serializable;
 
 /**
- * Mod�lise un terme : une variable ou une constante. Elle poss�de un attribut
- * bool�en qui
- * determine si ce terme est constante ou pas, et une m�thode qui determine
- * l'egalit� entre
- * deux termes.
+ * Represents a Term in first order logic
  * 
  */
 public class Term implements Serializable, Comparable<Term>
@@ -16,22 +12,20 @@ public class Term implements Serializable, Comparable<Term>
    * 
    */
   private static final long serialVersionUID = 5174312039198169556L;
-  private String label;// le nom du terme (par exemple : x, 'toto')
-  private boolean constant;// vrai si le terme courant est une constante, faux
-                           // sinon (c'est une variable)
+  private String label;
+  private boolean constant;
 
   // ***************************************************************************
   // CONSTRUCTORS
   // ***************************************************************************
 
   /**
-   * Constructeur de la classe Terme
+   * Constructor
    * 
    * @param n
-   *          le label du terme
+   *          the label
    * @param c
-   *          boolean qui indique si le terme est une constante ou pas (et alors
-   *          c'est une variable)
+   *          boolean indicating whether the term is constant or not
    */
   public Term(String n, boolean c)
   {
@@ -40,10 +34,10 @@ public class Term implements Serializable, Comparable<Term>
   }
 
   /**
-   * Constructeur de la classe Terme pour cr�er une variable
+   * Constructor for a variable
    * 
    * @param n
-   *          le label du terme (qui doit �tre une variable)
+   *          the label
    */
   public Term(String n)
   {
@@ -57,13 +51,13 @@ public class Term implements Serializable, Comparable<Term>
 
   /**
    * 
-   * Teste l'�galite du terme 't' et du terme courant (constante, label)
+   * Equals method
    * 
    * @param t
-   *          le terme � tester
-   * @return vrai si 't' et le terme courant sont �gaux, faux sinon
+   *          the term to test
+   * @return True if 't' is equal to this term, False otherwise
    * 
-   * @Deprecated use equals because is an method of Object class.
+   * @Deprecated use equals because it is a method of the Object class.
    */
   public boolean equalsT(Term t)
   {
@@ -71,11 +65,11 @@ public class Term implements Serializable, Comparable<Term>
   }
 
   /**
-   * Teste l'égalite du terme 't' et du terme courant (constante, label)
-   * 
-   * @param o
-   *          le terme à tester
-   * @return vrai si 't' et le terme courant sont égaux, faux sinon.
+   *
+   * Equals method
+   * @param o 
+   *          
+   * @return True or False depending on the case 
    */
   @Override
   public boolean equals(Object o)
@@ -87,12 +81,6 @@ public class Term implements Serializable, Comparable<Term>
     return t.constant == this.constant && t.label.equals(this.label);
   }
 
-  // M�thode toString de la classe
-  /**
-   * Retourne la cha�ne de caract�res de ce terme
-   * 
-   * @return la cha�ne d�crivant le terme
-   */
   public String toString()
   {
     if (constant)
@@ -144,27 +132,34 @@ public class Term implements Serializable, Comparable<Term>
   {
     return label;
   }
-  
-  //***************************************************************************
+
+  // ***************************************************************************
   // SETTERS
   // ***************************************************************************
 
+  /**
+   * @param t
+   */
   public void copy(Term t)
   {
     this.label = new String(t.label);
     this.constant = t.constant;
   }
-  
+
+  /**
+   * @param is_constant
+   */
   public void setConstant(boolean is_constant)
   {
     this.constant = is_constant;
   }
-  
+
+  /**
+   * @param label
+   */
   public void setLabel(String label)
   {
     this.label = label;
   }
-  
-  
 
 }
