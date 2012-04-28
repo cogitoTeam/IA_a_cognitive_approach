@@ -8,25 +8,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import ac.analysis.structure.*;
-import ac.util.ArraySet;
 import ac.util.LinkedSet;
 
 
 
 /**
- * La classe qui mod�lise un graphe de d�pendances de r�gles (et de faits et de la requ�te)
- * Elle poss�de les m�thodes qui calculent ce graphe pour une base de connaissances donn�e
- *
+ * Constructs a graph which indicates the dependency of rules and facts
  */
 public class RuleDependencyGraph 
 {
 
-	private KnowledgeBase kb; //la base de connaissances r�f�renc�e
-	private ArrayList<LinkedSet<Rule>> graphe; //tableau des listes de successeurs de chaque r�gle
+	private KnowledgeBase kb; 
+	private ArrayList<LinkedSet<Rule>> graphe; 
 
-//Les constructeurs de la classe	
+
 	/**
-	 * Constructeur vide
+	 * Empty constructor
 	 */
 	public RuleDependencyGraph() 
 	{
@@ -35,7 +32,8 @@ public class RuleDependencyGraph
 	}
 	
 	/**
-	 * Constructeur par copie
+	 * Copy constructor
+	 * @param copy 
 	 */
 	public RuleDependencyGraph(RuleDependencyGraph copy)
 	{
@@ -44,98 +42,80 @@ public class RuleDependencyGraph
 	}
 	
 	/**
-	 * Constructeur � partir d'une base de connaissances
+	 * Constructor
+	 * @param k a Knowledge Base 
 	 */
-	public RuleDependencyGraph(KnowledgeBase bc)
+	public RuleDependencyGraph(KnowledgeBase k)
 	{
-		kb = bc;
+		kb = k;
 		graphe = new ArrayList <LinkedSet<Rule>>();
 	}
 	
-//Les getters de la classe	
+/**
+ * @return the knowledge base
+ */
 	public KnowledgeBase getKb() {
 		return kb;
 	}
 
+	/**
+	 * @return the rule dependency graph
+	 */
 	public ArrayList<LinkedSet<Rule>> getGraphe() {
 		return graphe;
 	}
 
-//Les m�thodes qui caract�risent les fonctionnalit�es de la classe	
+
 	/**
-	 * Méthode de calcul du graphe de dépendances des règles
+	 * Computes rule dependencies and stores them in a graph
 	 */
-	public void calculeGDR()
+	public void computeRDG()
 	{
-		LinkedSet<Rule> listeSuccesseurs;
+		LinkedSet<Rule> successorList;
 		
-		//calcul de règles dépendants des faits
-		for (Atom fait : kb.getFB().getAtomList())
+		for (Atom fact : kb.getFB().getAtomList())
 		{
-			listeSuccesseurs = new LinkedSet<Rule> ();
+			successorList = new LinkedSet<Rule> ();
 			for (Rule r : kb.getRB()) {
 				for (Atom a : r.getPremise()) {
-					if (fait.unifiableA(a))
-						listeSuccesseurs.add(r);
+					if (fact.unifiableA(a))
+						successorList.add(r);
 				}
 			}
-			graphe.add(listeSuccesseurs);
+			graphe.add(successorList);
 		}
 		
-		//calcul de règles dépendants des règles
 		for (Rule r1 : kb.getRB())
 		{
-			listeSuccesseurs = new LinkedSet<Rule> ();
+			successorList = new LinkedSet<Rule> ();
 			for (Rule r2 : kb.getRB())
 				for (Atom a : r2.getPremise())
 					if (a.unifiableA(r1.getConclusion()))
-						listeSuccesseurs.add(r2);
-			graphe.add(listeSuccesseurs);			
+						successorList.add(r2);
+			graphe.add(successorList);			
 		}
 	}
 	
-//Les m�thodes qui caract�risent les fonctionnalit�es de la classe 
-  /**
-   * Méthode de calcul du graphe de dépendances des règles
-   */
-  public void calculeGDR_vTEST()
-  {
-    LinkedSet<Rule> listeSuccesseurs;
-    
-    //pas de calcul de règles dépendants des faits
-    for (Atom fait : kb.getFB().getAtomList())
-      {
-        listeSuccesseurs = new LinkedSet<Rule> ();
-        graphe.add(listeSuccesseurs);
-      }
-
-    
-    //calcul de règles dépendants des règles
-    for (Rule r1 : kb.getRB())
-    {
-      listeSuccesseurs = new LinkedSet<Rule> ();
-      for (Rule r2 : kb.getRB())
-        for (Atom a : r2.getPremise())
-          if (a.unifiableA(r1.getConclusion()))
-            listeSuccesseurs.add(r2);
-      graphe.add(listeSuccesseurs);     
-    }
-  }
-	
-	public RuleDependencyGraph calculeGDRAvecRequete(FactBase requete, KnowledgeBase k) {
+ 
+	/**
+	 * Computes dependencies including a query (passed as parameter)
+	 * @param query
+	 * @param k
+	 * @return the graph
+	 */
+	public RuleDependencyGraph calculeGDRAvecRequete(FactBase query, KnowledgeBase k) {
 		
 		Rule q = new Rule();
 		q.setName("Requ�te");
-		q.setPremise(requete.getAtomList());
+		q.setPremise(query.getAtomList());
 		q.setConclusion(new Atom("gagn�()"));
 		k.getRB().add(q);
 		RuleDependencyGraph avecRequete = new RuleDependencyGraph(k);
-		avecRequete.calculeGDR();
+		avecRequete.computeRDG();
 		return avecRequete;
 	}
 
 	
-//La m�thode toString de la classe 
 	 
 	public String toString()
 	{
@@ -164,12 +144,16 @@ public class RuleDependencyGraph
 		return s;
 	}
 
+/**
+ * @param args
+ * @throws IOException
+ */
 //Test de la classe	
 	public static void main(String[] args) throws IOException 
 	{
 		KnowledgeBase bc = new KnowledgeBase("ex1.txt");
 		RuleDependencyGraph ruleDependencyGraph = new RuleDependencyGraph(bc);
-		ruleDependencyGraph.calculeGDR();
+		ruleDependencyGraph.computeRDG();
 		System.out.println(bc + "\n" + ruleDependencyGraph);
 	}
 

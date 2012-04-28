@@ -13,11 +13,8 @@ import game.ReversiRules;
 import game.BoardMatrix.Cell;
 import game.BoardMatrix.Position;
 import game.Game.Player;
-import ac.AC;
-import ac.analysis.inferenceEngine.Homomorphisms;
 import ac.analysis.inferenceEngine.KnowledgeBase;
 import ac.analysis.structure.Atom;
-import ac.analysis.structure.Query;
 import ac.analysis.structure.Rule;
 import ac.memory.Neo4jActiveMemory;
 import ac.memory.MemoryException;
@@ -58,6 +55,8 @@ public class Analysis
    * This is the input method from the environment in case of a choice.
    * 
    * @param input
+   * @param player
+   *          The current player
    * @return an Action to stimulate the reasoning
    * @throws MemoryException
    * @throws IOException
@@ -86,6 +85,8 @@ public class Analysis
    * 
    * @param input
    *          The matrices representing the choices provided by the game engine
+   * @param player
+   *          The current player
    * @return an instance of {@link Choices_FOL} which represents the same
    *         choices in FOL
    */
@@ -293,7 +294,7 @@ public class Analysis
    * within them. These then become relevant partial board states which are
    * passed
    * on to the memory.
-   * 
+   * @param input instance of {@link Choices_FOL}
    * @param rpbsList
    *          the list of {@link RelevantPartialBoardState}s from the active
    *          memory
@@ -302,7 +303,7 @@ public class Analysis
   public static void advancedAnalysisEngine(Choices_FOL input,
       List<RelevantPartialBoardState> rpbsList) throws IOException
   {
-    ArrayList<Rule> br = new ArrayList<>();
+    ArrayList<Rule> br = new ArrayList<Rule>();
 
     int cpt = -1;
     Rule r;
@@ -313,9 +314,7 @@ public class Analysis
         br.add(r);
       }
 
-    Homomorphisms h;
-    Query q;
-    LinkedList<KnowledgeBase> kb_list = new LinkedList<>();
+    LinkedList<KnowledgeBase> kb_list = new LinkedList<KnowledgeBase>();
     for (Option_FOL o : input.getOptions())
       {
         if (LOGGER.isDebugEnabled())
@@ -351,13 +350,5 @@ public class Analysis
     BoardMatrix b = ReversiRules.getInstance().createBoard();
     System.out.println(convertMatrixtoCBS(b, Player.WHITE));
 
-    /* Choices test = new Choices(b);
-     * test.getCurrentBoard();
-     * AC new_AC = new AC();
-     * Analysis test_analysis = new Analysis(new_AC.getMemory(),
-     * new_AC.getReasoning());
-     * test_analysis.analyse(test);
-     * 
-     * System.out.println(test.getCurrentBoard()); */
   }
 }

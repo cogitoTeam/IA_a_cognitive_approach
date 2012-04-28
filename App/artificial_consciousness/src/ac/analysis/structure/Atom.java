@@ -205,7 +205,7 @@ public class Atom implements Serializable, Comparable<Atom>
     if (!equalsP(r))
       return false;
 
-    for (int i = 0, counter = 0; i < terms.size(); i++)
+    for (int i = 0; i < terms.size(); i++)
       if (!terms.get(i).equalsT(r.terms.get(i)))
         return false;
 
@@ -248,7 +248,6 @@ public class Atom implements Serializable, Comparable<Atom>
    *         {@code False} otherwise
    * 
    */
-  @SuppressWarnings("deprecation")
   public boolean unifiableA(Atom r)
   {
     Atom a = new Atom(this), b = new Atom(r);
@@ -293,7 +292,6 @@ public class Atom implements Serializable, Comparable<Atom>
    * @param to
    *          the new term to replace with
    */
-  @SuppressWarnings("deprecation")
   public void replace(Term from, Term to, ArrayList<Term> inList)
   {
     for (int i = 0; i < inList.size(); i++)
@@ -332,6 +330,10 @@ public class Atom implements Serializable, Comparable<Atom>
     return s;
   }
 
+  /**
+   * @param t
+   * @return the value of t.contains
+   */
   public boolean contains(Term t)
   {
     return this.terms.contains(t);
@@ -363,7 +365,7 @@ public class Atom implements Serializable, Comparable<Atom>
     int val = this.label.compareTo(o.label);
     if (val == 0)
       {
-        for (int i = 0, counter = 0; i < terms.size(); i++)
+        for (int i = 0; i < terms.size(); i++)
           {
             val = terms.get(i).compareTo(o.terms.get(i));
             if (val != 0)
