@@ -1,7 +1,52 @@
+Le module de mémoire se décompose en trois parties :
+\begin{itemize}
+\item La mémoire à court terme,
+\item la mémoire épisodique,
+\item la mémoire sémantique
+\end{itemize}
+
+\subsubsection{Mémoire à court terme}
+
+La mémoire à court terme est le module avec lequel communiquent les modules d'analyse et de choix. Elle a un rôle de \emph{buffer} permettant de stocker temporairement les choix possibles analysés soumis par le module d'analyse poussé, et sont fournis au module de choix (module de raisonnement).
+
+L'accès aux ressources stockées en mémoire sémantique ou épisodique se fait également par la mémoire à court terme ; elle peut être décrite comme l'interface mémoire.
+
 \subsubsection{Mémoire épisodique}
 
-Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum arcu massa, hendrerit vel tempor in, sollicitudin in erat. Curabitur non risus nec elit consectetur faucibus sed sed purus. Nam blandit porta ipsum vitae vestibulum. Etiam imperdiet, orci sit amet tincidunt faucibus, urna diam porttitor mauris, at auctor metus neque at nibh. Morbi vel elit venenatis mauris rutrum vehicula. Nam scelerisque iaculis suscipit. Quisque pretium euismod ipsum at elementum. Vestibulum sit amet elit fringilla mauris cursus tincidunt eget sed ante. Ut laoreet ultricies lacus, sed aliquam enim rhoncus ut. Aliquam erat volutpat. Donec ac nulla massa. Maecenas laoreet, magna sed congue venenatis, lacus mi luctus elit, sed sagittis justo nisi ut felis. Aliquam interdum, leo non vestibulum euismod, enim eros eleifend ligula, at aliquet mi eros vitae diam. Suspendisse malesuada scelerisque quam at sodales. Fusce ac lacus sed massa pretium bibendum. 
+La mémoire épisodique stocke des parties et des coups appartenant à des parties. Tous les éléments sont datés au moment de l'ajout et peuvent être parcourus par ordre chronologique inversé (du plus récent au plus ancien).
+
+Cette mémoire est structurée sous la forme d'une double liste chaînée :
+\begin{itemize}
+\item liste chaînée de parties, avec accès à la dernière partie jouée, chaque partie donnant accès à son dernier coup joué et la partie précédente,
+\item liste chaînée de coups par partie, avec, pour chaque coup, accès au coup précédent.
+\end{itemize}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{files/memoire/episodic_general}
+\caption{Représentation de la mémoire, sous la forme d'une double liste chaînée avec accès par ordre chronologique inversé}
+\end{figure}
 
 \subsubsection{Mémoire sémantique}
 
-Etiam consequat, ante eget pellentesque placerat, lacus nisl facilisis lectus, nec luctus risus justo quis orci. Sed porttitor, neque quis ullamcorper venenatis, est augue convallis nisi, eu accumsan tortor magna nec urna. Aliquam erat volutpat. Nullam eget nulla nisl. Phasellus porta turpis id mauris eleifend rutrum. Suspendisse varius rhoncus magna, ut commodo ante lacinia at. Nullam viverra malesuada sapien eu luctus. 
+La mémoire sémantique permet le stockage :
+\begin{itemize}
+\item des plateaux rencontrés lors des parties,
+\item des formes remarquables ajoutées au fil du temps par le module  d'introspection,
+\item des relations entre les plateaux et les formes.
+\end{itemize}
+
+La structure d'une telle mémoire peu être vue comme :
+\begin{itemize}
+\item une matrice de booléens, chaque ligne correspondant à un plateau, et chaque colonne à une forme, (x,y)=TRUE signifiant la présence de la forme y dans le plateau x,
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{files/memoire/context_matrix}
+\caption{Représentation de la mémoire sémantique sous forme matricielle.}
+\end{figure}
+
+
+\item un graphe biparti avec présence d'un arc x -> y signifiant la présence de la forme y dans le plateau x.
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{files/memoire/context_graph}
+\caption{Représentation de la mémoire sémantique sous la forme d'un graphe biparti.}
+\end{figure}
+\end{itemize}
