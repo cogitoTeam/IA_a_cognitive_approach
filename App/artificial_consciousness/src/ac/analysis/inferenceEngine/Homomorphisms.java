@@ -3,19 +3,19 @@
  */
 package ac.analysis.inferenceEngine;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
 import ac.analysis.structure.*;
 
 /**
- * La classe qui calcule et stocke les homomorphismes d'un ensemble d'atomes
- * dans un
- * autre ensemble d'atomes
- * 
+ * Calculates homomorphisms (projections) between two sets of
+ * atoms
+ * <p>
+ * {@code A1} and {@code A2}
+ * <p>
+ * and stores them in as a list of {@link Substitution}
  */
 public class Homomorphisms
 {
@@ -28,41 +28,55 @@ public class Homomorphisms
   private ArrayList<Substitution> S;
 
   /**
-   * Constructeur de la classe Homomorphismes
+   * Constructor
    * 
-   * @param ensembleVariables
-   *          l'ensemble d'atomes � termes variables
-   * @param ensembleValeurs
-   *          l'ensemble d'atomes � termes constantes
+   * @param varSet
+   *          Set of variables (atoms with variable terms)
+   * @param valSet
+   *          Set of values (atoms with constant terms)
    */
-  public Homomorphisms(ArrayList<Atom> ensembleVariables,
-      ArrayList<Atom> ensembleValeurs)
+  public Homomorphisms(ArrayList<Atom> varSet, ArrayList<Atom> valSet)
   {
-    A1 = ensembleVariables; // l'ensemble de termes (variables)
-    A2 = new TreeSet<>(ensembleValeurs); // l'ensemble de termes (constantes)
-    orderedVariables = new ArrayList<Term>();
-    S = new ArrayList<Substitution>(); // l'ensemble de homomorphismes
-                                       // initialement vide
-  }
-
-  public Homomorphisms(ArrayList<Atom> requete, FactBase bf)
-  {
-    A1 = requete; // l'ensemble de termes (variables)
-    A2 = new TreeSet<>(bf.getAtomList()); // l'ensemble de termes (constantes)
-    orderedVariables = new ArrayList<Term>();
-    S = new ArrayList<Substitution>();
-  }
-
-  public Homomorphisms(Query query, FactBase bf)
-  {
-    A1 = query.getAtomList();
-    A2 = new TreeSet<>(bf.getAtomList());
+    A1 = varSet;
+    A2 = new TreeSet<Atom>(valSet);
     orderedVariables = new ArrayList<Term>();
     S = new ArrayList<Substitution>();
   }
 
   /**
-   * M�thode qui retourne les termes de A2
+   * Constructor
+   * 
+   * @param query
+   *          a list of atoms
+   * @param fb
+   *          a fact base
+   */
+  public Homomorphisms(ArrayList<Atom> query, FactBase fb)
+  {
+    A1 = query;
+    A2 = new TreeSet<Atom>(fb.getAtomList());
+    orderedVariables = new ArrayList<Term>();
+    S = new ArrayList<Substitution>();
+  }
+
+  /**
+   * Constructor
+   * 
+   * @param query
+   *          a {@link Query}
+   * @param fb
+   *          a fact base
+   */
+  public Homomorphisms(Query query, FactBase fb)
+  {
+    A1 = query.getAtomList();
+    A2 = new TreeSet<Atom>(fb.getAtomList());
+    orderedVariables = new ArrayList<Term>();
+    S = new ArrayList<Substitution>();
+  }
+
+  /**
+   * @return the set of {@code Term}s (=constants) in A2
    */
   private TreeSet<Term> getDomain()
   {
@@ -80,7 +94,7 @@ public class Homomorphisms
   }
 
   /**
-   * M�thode qui retourne les variables de A1
+   * @return the set of {@code Term}s (=variables) in A1
    */
   private ArrayList<Term> getVariables()
   {
@@ -96,8 +110,18 @@ public class Homomorphisms
   }
 
   /**
-   * M�thode (BacktrackToutesSolutions) qui g�n�re l'ensemble de homomorphismes
-   * de A1 dans A2 et le stocke dans S
+   * @return A2
+   */
+  public TreeSet<Atom> getA2()
+  {
+    return this.A2;
+  }
+
+  /**
+   * Uses the BackTrackAll algorithm to generate all the homomorphisms from
+   * A1 into A2 and stores them in S
+   * 
+   * @return S : the list of homomorphisms
    */
   public ArrayList<Substitution> getHomomorphisms()
   {
@@ -107,8 +131,13 @@ public class Homomorphisms
   }
 
   /**
-   * M�thode (Backtrack) qui recherche l'existence d'un homomorphisme de A1 dans
-   * A2
+   * Uses the recursive backtrack algorithm (c.f. {@code backTrackrec}) to test
+   * if there exists a homomorphism between
+   * A1 and A2
+   * 
+   * @param s
+   *          the substitution to test
+   * @return True if there exits a homomorphism, False otherwise
    */
   public boolean existsHomomorphismTest(Substitution s)
   {
@@ -117,18 +146,18 @@ public class Homomorphisms
   }
 
   /**
-   * M�thode BacktrackRec le sous-algorithme de existeHomomorphisme
-   */
-
-  // @TODO Nam, can you correct this sentence
-  /**
-   * Search if exist an homomorphism with the given partial solution.
+   * Backtrack algorithm used in the homomorphism existence test (c.f.
+   * {@code existsHomomorphismTest})
+   * Looks for a homomorphism (if it exists) for a given partial solution.
    * 
    * @param sol
    *          the partial solution
-   * @return true if exist an homomorphism, false otherwise.
+   * @param atom_rank
+   * @param rank
+   * @return True if there exists a homomorphism, False otherwise.
    */
-  public boolean backtrackRec(Substitution sol, ArrayList<Atom>[] atom_rank, int rank)
+  public boolean backtrackRec(Substitution sol, ArrayList<Atom>[] atom_rank,
+      int rank)
   {
     Term x;
     Set<Term> candidats;
@@ -144,7 +173,7 @@ public class Homomorphisms
             solPrime = new Substitution(sol);
             solPrime.addPair(new TermPair(x, c));
             if (solPrime.isHomomorphismTest(atom_rank[rank], A2))
-              if (backtrackRec(solPrime, atom_rank, rank+1))
+              if (backtrackRec(solPrime, atom_rank, rank + 1))
                 return true;
           }
         return false;
@@ -152,10 +181,12 @@ public class Homomorphisms
   }
 
   /**
-   * M�thode qui teste si une substitution est un homomorphisme partiel
+   * Checks if a substitution (passed as parameter) is a partial homomorphism
    * 
-   * @param solPrime
-   *          la substitution � consid�rer
+   * @param sol
+   *          the substitution
+   * @param atoms
+   * @param a2
    */
   private boolean isPartialHomomorphismTest(Substitution sol,
       ArrayList<Atom> atoms, TreeSet<Atom> a2)
@@ -164,7 +195,6 @@ public class Homomorphisms
     ArrayList<Atom> A1Prime = new ArrayList<Atom>();
     ArrayList<Term> variables = sol.getVariables();
 
-    // applications de la substitutions au atomes
     for (Atom a : atoms)
       {
         counter = 0;
@@ -181,13 +211,11 @@ public class Homomorphisms
   }
 
   /**
-   * M�thode de pr�traitement des variables de A1 qui calcule un ordre total sur
-   * ces variables
+   * Processes the variables in the atom set A1 in order to put them in a
+   * favourable order
    */
   private ArrayList<Atom>[] preprocessing()
   {
-    // ordonne variables de A1 (donne rang � chacun), ordonne atomes de A1 selon
-    // rang
     orderedVariables = getVariables();
     return getAtomRank(A1, orderedVariables);
   }
@@ -197,7 +225,6 @@ public class Homomorphisms
   {
     int tmp, rank;
 
-    // initialisation
     AtomSet[] atom_rank = new AtomSet[vars.size()];
     for (int i = 0; i < vars.size(); ++i)
       atom_rank[i] = new AtomSet();
@@ -219,13 +246,11 @@ public class Homomorphisms
   }
 
   /**
-   * M�thode qui retourne l'ensemble d'images possibles pour la variable donn�e
-   * en param�tre
+   * Computes the candidates for a given variable (passed as parameter)
    * 
    * @param x
-   *          une variable de A1
-   * @return images l'ensemble de termes (constantes) qui sont les images
-   *         possibles de x
+   *          the variable (in A1)
+   * @return the list of possible candidates
    */
   private TreeSet<Term> computeCandidates(Term x)
   {
@@ -233,24 +258,31 @@ public class Homomorphisms
   }
 
   /**
-   * M�thode qui retourne la prochaine variable non affect�e de A1
+   * Determines the next variable in a given substitution (passed as parameter)
+   * which is to be assigned a value (in the order defined during
+   * pre-processing)
    * 
+   * @return the variable
+   * @param sol
+   *          the substitution
    */
   private Term chooseUnassignedVariable(Substitution sol)
   {
-    for(Term t : orderedVariables)
-      if(!sol.getVariables().contains(t))
+    for (Term t : orderedVariables)
+      if (!sol.getVariables().contains(t))
         return t;
-    
+
     return null;
   }
 
-  // @TODO Nam, can you correct this sentence
+ 
   /**
-   * Search all homomorphism with the given partial solution.
+   * Finds all possible homomorphisms with the given partial solution.
    * 
    * @param sol
    *          the partial solution
+   * @param atom_rank 
+   * @param rank 
    */
   public void backtrackAllRec(Substitution sol, ArrayList<Atom>[] atom_rank,
       int rank)
@@ -278,6 +310,11 @@ public class Homomorphisms
       }
   }
 
+  /**
+   * @param sol
+   * @param atom_rank
+   * @param rank
+   */
   public void backtrackAllRecVar(Substitution sol, ArrayList<Atom>[] atom_rank,
       int rank)
   {
@@ -304,26 +341,5 @@ public class Homomorphisms
       }
   }
 
-  public TreeSet<Atom> getA2()
-  {
-    return this.A2;
-  }
-
-  /* public static void main(String[] args) throws IOException
-   * {
-   * KnowledgeBase k = new KnowledgeBase("ex2.txt");
-   * k.optimizedSaturation_FOL();
-   * Query query = new Query("p('A',y);r(x,y,z)");
-   * Homomorphisms h = new Homomorphisms (query,k.getFB());
-   * System.out.println("A1 = " + query + "\nA2 = " + k.getFB() +
-   * "\n\nExistent-ils d'homomorphismes de A1 dans A2 ?");
-   * if(h.existsHomomorphismTest())
-   * {
-   * System.out.println(" Oui");
-   * System.out.println("La liste de r�ponses est :");
-   * System.out.println(h.getHomomorphisms());
-   * }
-   * else
-   * System.out.println("Non");*
-   * } */
+  
 }

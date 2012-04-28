@@ -20,13 +20,13 @@
 package ac.analysis.structure;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
 
-import ac.util.ArraySet;
-
+/**
+ * Extends functionality to an ArrayList of atoms
+ *
+ */
+@SuppressWarnings("serial")
 public class AtomSet extends ArrayList<Atom>
 {
   
@@ -34,22 +34,29 @@ public class AtomSet extends ArrayList<Atom>
   // METHODS
   // ************************************************************************
   
+  /**
+   * Constructor
+   */
   public AtomSet()
   {
     super();
   }
   
+  /**
+   * Constructor
+   * @param initialCapacity
+   */
   public AtomSet(int initialCapacity)
   {
     super(initialCapacity);
   }
   
   /**
-* Constructeur
+* Constructor
 *
-* @param atomes
-* les atomes, sous forme sous forme textuelle ; cette forme est
-* "atome1;atome2;...atomek"
+* @param string
+* in text form :
+* "atom1;atom2;...atomk"
 */
   public AtomSet(String string)
   {
@@ -58,7 +65,7 @@ public class AtomSet extends ArrayList<Atom>
     StringTokenizer st = new StringTokenizer(string, ";");
     while (st.hasMoreTokens())
     {
-      String s = st.nextToken(); // s représente un atome
+      String s = st.nextToken(); 
       this.add(new Atom(s));
     }
   }

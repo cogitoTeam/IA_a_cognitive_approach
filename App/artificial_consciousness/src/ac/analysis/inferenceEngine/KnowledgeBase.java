@@ -6,24 +6,27 @@ import java.io.*;
 import org.apache.log4j.Logger;
 
 import ac.analysis.structure.*;
-import ac.memory.MemoryException;
-import ac.shared.RelevantPartialBoardState;
 import ac.shared.FOLObjects.Option_FOL;
 import ac.util.LinkedSet;
 
 /**
- * Cette classe est constitu�e d'une base de r�gles et d'une base de faits. �
- * l'aide
- * de ses m�thodes de saturation, elle agit comme un moteur d'inf�rence qui sert
- * de :
- * 1)calculer l'ensemble de tous les faits d�ductibles par cha�nage avant
- * 2)calculer les r�ponses � une requ�te de la forme
- * "trouver tous les x1...xn qui v�rifient P", o�
- * P est une conjonction d'atomes, et o� x1...xn sont les variables apparaissant
- * dans P.
- */
-/**
- * @author namrata10
+ * This class represents a Knowledge Base. It consists of:
+ * <p>
+ * a fact base and
+ * <p>
+ * a set of rules.
+ * <p>
+ * It acts as an Inference Engine which :
+ * <p>
+ * 1)calculates all deducible facts by forward chaining
+ * <p>
+ * 2)answers queries of the form :
+ * <p>
+ * "find all x1...xn that satisfy P", where x1...xn are variables in P and P is
+ * a conjunction of atoms
+ * 
+ * 
+ * @author namratapatel
  * 
  */
 public class KnowledgeBase extends Thread
@@ -58,7 +61,10 @@ public class KnowledgeBase extends Thread
   }
 
   /**
-   * Constructeur par copie
+   * Copy constructor
+   * 
+   * @param k
+   *          to copy
    */
   public KnowledgeBase(KnowledgeBase k)
   {
@@ -69,12 +75,15 @@ public class KnowledgeBase extends Thread
   }
 
   /**
-   * Constructeur � param�tres :
+   * Constructor
+   * 
+   * @param o
+   *          an instance of {@link Option_FOL}
    * 
    * @param BF
-   *          une instance de BaseFaits
+   *          an instance of {@link FactBase}
    * @param BR
-   *          une ArrayList d'instances de Regle
+   *          a list of rules {@link Rule}
    */
   public KnowledgeBase(Option_FOL o, ArrayList<Rule> BR)
   {
@@ -86,40 +95,30 @@ public class KnowledgeBase extends Thread
   }
 
   /**
-   * Constructeur � param�tre :
+   * Constructor
    * 
-   * @param nomFichier
-   *          le nom d'un fichier texte � partir duquel la base sera cr��e
+   * @param filename
+   *          file from which the KB will be created
    * @throws IOException
    */
-  public KnowledgeBase(String nomFichier) throws IOException
+  public KnowledgeBase(String filename) throws IOException
   {
-    sourceFilename = nomFichier;
-    BufferedReader lectureFichier = new BufferedReader(new FileReader(
-        nomFichier));
+    sourceFilename = filename;
+    BufferedReader lectureFichier = new BufferedReader(new FileReader(filename));
     if (LOGGER.isDebugEnabled())
       LOGGER
           .debug("CHARGEMENT D'UNE BASE DE CONNAISSANCES à partir du fichier : "
-              + nomFichier);
+              + filename);
 
-    // cr�ation de la base de faits (utilise les m�thodes de la classe
-    // BaseFaits)
-    String t = lectureFichier.readLine(); // 1e ligne du fichier contient
-    // les faits
+    String t = lectureFichier.readLine();
     BF = new FactBase(t);
-
-    // d�termination de la taille de BR
-    t = lectureFichier.readLine(); // 2e ligne du fichier indique le nombre
-    // de r�gles
+    t = lectureFichier.readLine();
     int n = Integer.parseInt(t);
 
-    // cr�ation de la base de r�gles (utilise les m�thodes de la classe
-    // Regle)
     BR = new ArrayList<Rule>(n);
     for (int i = 0; i < n; i++)
       {
-        t = lectureFichier.readLine(); // les lignes suivantes du fichier
-        // sont les r�gles
+        t = lectureFichier.readLine();
         BR.add(new Rule(t, "Règle " + (i + 1)));
       }
     lectureFichier.close();
@@ -133,9 +132,7 @@ public class KnowledgeBase extends Thread
   // **************************************************************************
 
   /**
-   * M�thode qui permet de vider la base de faits de la base de connaissances
-   * courante
-   * On note qu'elle indique que la base n'est plus satur�e
+   * Clears the fact base
    */
   public void clearFactBase()
   {
@@ -144,26 +141,22 @@ public class KnowledgeBase extends Thread
   }
 
   /**
-   * M�thode qui permet d'ajouter un nouveau fait � la base de faits
-   * de la base de connaissances courante.
-   * On note qu'elle indique que la base n'est plus satur�e
+   * Adds a new fact (atom passed as parameter) to the fact base. Note: it
+   * indicates that the fact base is not saturated anymore
    * 
-   * @param fait
-   *          le fait (un atome) � ajouter
+   * @param fact
+   *          the new fact
    */
-  public void addNewFact(Atom fait)
+  public void addNewFact(Atom fact)
   {
-    BF.addNewFact(fait);
+    BF.addNewFact(fact);
     isSaturated = false;
   }
 
   /**
-   * M�thode qui permet d'ajouter un nouveau fait � la base de faits
-   * de la base de connaissances courante.
-   * On note qu'elle indique que la base n'est plus satur�e
+   * Adds a new rule to the set of rules in the knowledge base
    * 
-   * @param fait
-   *          le fait (un atome) � ajouter
+   * @param newRule
    */
   public void addNewRule(Rule newRule)
   {
@@ -171,14 +164,50 @@ public class KnowledgeBase extends Thread
   }
 
   /**
-   * M�thode de saturation << premier ordre >> de la base de faits
-   * par le cha�nage avant en exploitant le graphe de d�pendances des r�gles
-   * (et des faits)
+   * Saturates the fact base by forward chaining using the rule dependency graph
    * 
-   * @return k la base de connaissances satur�e
+   * @return the saturated fact base
    * @throws IOException
    */
   public LinkedList<Long> optimizedSaturation_FOL() throws IOException
+  {
+    if (isSaturated)
+      return new LinkedList<Long>();
+
+    if (LOGGER.isDebugEnabled())
+      LOGGER.debug("DEBUT SATURATION KB");
+
+    RuleDependencyGraph ruleDependencyGraph = new RuleDependencyGraph(this);
+    ruleDependencyGraph.computeRDG();
+    if (LOGGER.isDebugEnabled())
+      {
+        LOGGER.debug(ruleDependencyGraph.toString());
+        LOGGER.debug("--> Début de l'algorithme de chaînage avant");
+      }
+
+    LinkedSet<Rule> rules = new LinkedSet<Rule>();
+    for (int i = 0; i < BF.getAtomList().size(); i++)
+      {
+        rules.addAll(ruleDependencyGraph.getGraphe().get(i));
+      }
+    LinkedList<Long> list_rpbs = computeNewFacts(rules, this.BF);
+
+    this.isSaturated = true;
+
+    if (LOGGER.isDebugEnabled())
+      LOGGER.debug("FIN SATURATION KB");
+
+    return list_rpbs;
+  }
+
+  /**
+   * Saturates the fact base by forward chaining without using the rule
+   * dependency graph
+   * 
+   * @return the saturated fact base
+   * @throws IOException
+   */
+  public LinkedList<Long> saturation_FOL_without_GDR() throws IOException
   {
     if (isSaturated)
       return new LinkedList<Long>(); // evite le calcul de saturation au cas où
@@ -188,30 +217,8 @@ public class KnowledgeBase extends Thread
     if (LOGGER.isDebugEnabled())
       LOGGER.debug("DEBUT SATURATION KB");
 
-    // déclaration et initialisation des variables
-    RuleDependencyGraph ruleDependencyGraph = new RuleDependencyGraph(this);
-    ruleDependencyGraph.calculeGDR(); // calcule le graphe de d�pendances des
-                                      // r�gles
-    // (et des faits)
-
-    // algorithme de saturation avec affichage des éléments qui illustrent
-    // l'exploitation du graphe de dépendances des règles (et des faits)
-    if (LOGGER.isDebugEnabled())
-      {
-        LOGGER.debug(ruleDependencyGraph.toString());
-        LOGGER.debug("--> Début de l'algorithme de chaînage avant");
-      }
-
-    LinkedSet rules = new LinkedSet<Rule>();
-    for (int i = 0; i < BF.getAtomList().size(); i++)
-      {
-        // appel à la fonction récursive qui calcule des nouveaux faits
-        // en appliquant les successeurs des faits (puis règles) considérés
-
-        // @TODO voir comment gagner en temps
-        rules.addAll(ruleDependencyGraph.getGraphe().get(i));
-      }
-    LinkedList<Long> list_rpbs = computeNewFacts(rules, this.BF);
+    LinkedList<Long> list_rpbs = computeNewFacts(new LinkedList<Rule>(this.BR),
+        this.BF);
 
     this.isSaturated = true; // indique que la base est saturée
 
@@ -222,38 +229,34 @@ public class KnowledgeBase extends Thread
   }
 
   /**
-   * Méthode récursive qui calcule les nouveaux faits générés par des
-   * successeurs
-   * (de faits ou de règles selon le cas) passés en paramètre
+   * Recursively calculates facts generated by the successors
+   * (of facts or rules depending on the case) which are passed as parameters
    * 
-   * @param successeurs
-   *          La liste de successeurs à considérer
-   * @param faits
-   *          La base de faits courante (les nouveux faits y seront ajoutés)
+   * @param successors
+   *          The list of successors
+   * @param facts
+   *          the current fact base (to which the new facts shall be added)
    */
-  private LinkedList<Long> computeNewFacts(LinkedList<Rule> successeurs,
-      FactBase faits)
+  private LinkedList<Long> computeNewFacts(LinkedList<Rule> successors,
+      FactBase facts)
   {
-    // Debut de l'algorithme qui exploite le graphe de
-    // dépendance des régles
     Rule r;
     Long l;
     int size = 0;
     ArrayList<Substitution> substitutions_list;
-    LinkedList<Long> list_rpbs = new LinkedList<>();
+    LinkedList<Long> list_rpbs = new LinkedList<Long>();
     Homomorphisms s;
 
-    while (!successeurs.isEmpty())
+    while (!successors.isEmpty())
       {
-        r = successeurs.removeFirst();
+        r = successors.removeFirst();
 
-        // Affiche l'ordre dans lequel les règles sont considérée
         if (LOGGER.isDebugEnabled())
           LOGGER.debug("\n\tRègle considérée : " + r);
 
         try
           {
-            s = new Homomorphisms(r.getPremise(), faits);
+            s = new Homomorphisms(r.getPremise(), facts);
             substitutions_list = s.getHomomorphisms();
             size = substitutions_list.size();
           }
@@ -278,19 +281,20 @@ public class KnowledgeBase extends Thread
   }
 
   /**
-   * M�thode qui calcule les successeurs d'une r�gle pass�e en param�tre
+   * Computes the successors of a given rule (passed as parameter)
    * 
    * @param r
-   *          La r�gle dont on veut calculer les successeurs
-   * @return La liste de successeurs de r
+   *          The rule
+   * @return The list of successors
    */
+  @SuppressWarnings("unused")
   private LinkedSet<Rule> computeSuccessors(Rule r)
   {
     RuleDependencyGraph g = new RuleDependencyGraph(this);
     int n = Integer.parseInt(r.getName().substring(1))
         + BF.getAtomList().size() - 1;
 
-    g.calculeGDR();
+    g.computeRDG();
     return g.getGraphe().get(n);
   }
 
@@ -308,7 +312,7 @@ public class KnowledgeBase extends Thread
     LinkedList<Long> list_rpbs;
     try
       {
-        list_rpbs = this.optimizedSaturation_FOL_vTEST();
+        list_rpbs = this.saturation_FOL_without_GDR();
 
         for (Long id_rpbs : list_rpbs)
           {
@@ -338,28 +342,48 @@ public class KnowledgeBase extends Thread
   // GETTERS / SETTERS
   // **************************************************************************
 
-  // Les getters de la classe
+  /**
+   * @return the fact base
+   */
   public FactBase getFB()
   {
     return BF;
   }
 
+  /**
+   * @return the list of rules
+   */
   public ArrayList<Rule> getRB()
   {
     return BR;
   }
 
+  /**
+   * @return the source filename
+   */
   public String getSourceFilename()
   {
     return sourceFilename;
   }
 
+  /**
+   * @return True if the fact base is saturated, False otherwise
+   */
   public boolean isSaturated()
   {
     return isSaturated;
   }
 
-  // Test de la classe
+  /**
+   * @param fb
+   *          the fact base to set
+   */
+  public void setBF(FactBase fb)
+  {
+    this.BF = fb;
+    this.isSaturated = false;
+  }
+
   /**
    * @param args
    * @throws IOException
@@ -375,45 +399,6 @@ public class KnowledgeBase extends Thread
     System.out.println("\n\nBase de Faits satur�e par homomorphismes:\n\n"
         + k.BF);
 
-  }
-
-  /**
-   * M�thode de saturation << premier ordre >> de la base de faits
-   * par le cha�nage avant en exploitant le graphe de d�pendances des r�gles
-   * (et des faits)
-   * 
-   * @return k la base de connaissances satur�e
-   * @throws IOException
-   */
-  public LinkedList<Long> optimizedSaturation_FOL_vTEST() throws IOException
-  {
-    if (isSaturated)
-      return new LinkedList<Long>(); // evite le calcul de saturation au cas où
-                                     // la base est
-    // déjà saturée
-
-    if (LOGGER.isDebugEnabled())
-      LOGGER.debug("DEBUT SATURATION KB");
-
-    LinkedList<Long> list_rpbs = computeNewFacts(new LinkedList<Rule>(this.BR),
-        this.BF);
-
-    this.isSaturated = true; // indique que la base est saturée
-
-    if (LOGGER.isDebugEnabled())
-      LOGGER.debug("FIN SATURATION KB");
-
-    return list_rpbs;
-  }
-
-  /**
-   * @param bF
-   *          the bF to set
-   */
-  public void setBF(FactBase BF)
-  {
-    this.BF = BF;
-    this.isSaturated = false;
   }
 
 }
