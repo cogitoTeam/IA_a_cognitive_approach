@@ -40,11 +40,65 @@ Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est r
 \begin{figure}[H]
 \includegraphics[width=\textwidth]{files/neo4j/example_node_type}
 \caption{Exemple de typage des noeuds avec Neo4j.}
+\label{example_node_type}
 \end{figure}
+
+\subsubsection{Éléments en mémoire}
+
+Le module de persistance permet le stockage de la mémoire épisodique et sémantique, les deux étant liées par les relations entre les \emph{MOVE} et les \emph{CBS}. Nous avons donc besoin des types suivants : 
+
+\textbf{Types de noeud :}
+\begin{itemize}
+	\item GAME : une partie en mémoire épisodique, 
+	\item MOVE : un coup joué en mémoire épisodique,
+	\item CBS : un CBS en mémoire sémantique,
+	\item RPBS : un RPBS en mémoire sémantique.
+\end{itemize}
+
+
+\textbf{Types de liens :}
+\begin{itemize}
+	\item Relations maitres
+		\begin{itemize}
+			\item MASTER\_ATTR,
+			\item MASTER\_OBJ,
+			\item MASTER\_GAME,
+			\item MASTER\_MOVE.
+		\end{itemize}
+	\item Relations de type
+		\begin{itemize}
+			\item ATTRIBUTE,
+			\item OBJECT,
+			\item MOVE,
+			\item GAME,
+			\item LAST\_GAME (relation GAME spéciale, signifiant que cette partie est la dernière jouée).
+		\end{itemize}
+	\item Relations en mémoire épisodique
+		\begin{itemize}
+			\item PREV\_GAME : permet à partir d'une partie d'accéder à la précédente,
+			\item LAST\_MOVE : permet à partir d'une partie d'accéder au dernier coup joué,
+			\item PREV\_MOVE : permet à partir d'un coup d'accéder au précédent,
+			\item STATE\_BOARD : permet de lier un coup à l'état de plateau correspondant.
+		\end{itemize}
+	\item Relations en mémoire sémantique
+		\begin{itemize}
+			\item RELATED : décrit la présence d'un RPBS dans un CBS.
+		\end{itemize}
+	\end{itemize}
 
 \subsubsection{Mémoire épisodique}
 
-Etiam consequat, ante eget pellentesque placerat, lacus nisl facilisis lectus, nec luctus risus justo quis orci. Sed porttitor, neque quis ullamcorper venenatis, est augue convallis nisi, eu accumsan tortor magna nec urna. Aliquam erat volutpat. Nullam eget nulla nisl. Phasellus porta turpis id mauris eleifend rutrum. Suspendisse varius rhoncus magna, ut commodo ante lacinia at. Nullam viverra malesuada sapien eu luctus. 
+La représentation sous forme de graphe se prête parfaitement à la mémorisation des parties et des coups sous la forme d'une double liste chaînée. La figure~\ref{episodic_graph} représente la mémoire épisodique telle qu'elle est stockée dans Neo4j.
+
+On visualise parfaitement les trois \og master\_node \fg{} permettant de typer les \emph{GAME}, \emph{MOVE} et \emph{ATTRIBUTES}. Le parcours des parties se fait via la relation \emph{PREV\_GAME} et celui des coups via la relation \emph{PREV\_MOVE}.
+
+On remarque également que les relations \emph{BOARD\_STATE} permettent de faire la liaison entre la mémoire sémantique et la mémoire épisodique.
+
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{files/neo4j/episodic_graph}
+\caption{Représentation de la mémoire épisodique dans Neo4j.}
+\label{episodic_graph}
+\end{figure}
 
 \subsubsection{Mémoire sémantique}
 
