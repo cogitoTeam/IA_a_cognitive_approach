@@ -1,3 +1,41 @@
-Maecenas vel vestibulum arcu. Mauris justo eros, pretium ac vulputate ac, tincidunt quis quam. Fusce imperdiet placerat felis non ornare. Sed mauris tortor, varius a porta in, porttitor quis sem. Vivamus nec dolor libero. Proin quam nisi, cursus sed lacinia ac, vehicula non dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis dictum consectetur dignissim. Morbi aliquam posuere ultricies. Nam tincidunt enim id orci rhoncus nec ullamcorper mauris placerat. Aliquam nec erat sed mi elementum congue at non ligula. Cras sit amet ligula orci. Nulla porttitor ornare ultricies. Sed pulvinar eleifend ipsum, pharetra laoreet leo volutpat eget. Donec consectetur nisl sed magna cursus cursus iaculis neque lacinia. 
+\subsection{Répartition des tâches}
 
-Donec quis aliquam dolor. Mauris vitae diam sit amet urna pharetra blandit et non risus. Suspendisse velit lacus, suscipit eget feugiat a, vulputate sed sem. Ut placerat lectus sed leo vulputate at malesuada nisl cursus. Donec feugiat tempus quam, in commodo mi hendrerit sed. Ut ut mauris nisi, non ultricies lectus. Quisque lobortis ante eu dolor aliquet ut sagittis enim ultrices. Integer luctus facilisis ultricies. Nam non vestibulum turpis. Vestibulum dictum lacus quam, aliquet vulputate arcu. Donec quam nulla, condimentum vitae gravida sit amet, interdum at elit. Donec tempor eros at arcu rutrum ut tristique justo tincidunt. Nullam suscipit mauris et ligula pellentesque viverra vitae at nisi. 
+\subsection{Outils utilisés}
+
+\subsubsection{Gestionnaire de versions}
+Tout au long du projet, nous avons utilisé \emph{git} : un gestionnaire de version décentralisé. Un tel outil permet la mise en commun des travaux, la gestion des versions et la gestion des \emph{merges}\footnote{Fusion de deux fichiers différents.}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{files/outils/git}	
+	\caption{Logo de \emph{git}}
+	\label{git}
+\end{figure}
+
+Nous avons choisi \emph{git} pour plusieurs raisons :
+
+\begin{itemize}
+\item plutôt simple d'utilisation (par rapport à ses homologues comme \emph{SVN}),
+\item hébergement gratuit via GitHub (sous condition de diffusion du code sous une licence libre),
+\item \emph{git} est une solution libre sous licence \gls{GPLv2}.
+\end{itemize}
+
+\subsubsection{EtherPad, un éditeur de texte collaboratif}
+\emph{EtherPad} se présente sous la forme d'un éditeur de texte léger permettant de faire un minimum de mise en page.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{files/outils/etherpad_screenshot}	
+	\caption{Aperçu de l'interface d'\emph{EtherPad} hébergé sur \emph{framapad} (site mis à disposition par Framasoft utilisant le code d'EtherPad).}
+	\label{etherpad_screenshot}
+\end{figure}
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{files/outils/etherpad}
+\end{center}
+
+
+L'interface d'\emph{EtherPad} se présente sous la forme d'une interface web (figure \ref{etherpad_screenshot}) où chaque utilisateur connecté possède une couleur. La singularité de cet outil réside dans le fait que toutes les modifications effectuées sur le pad sont visibles par tous en temps réel.
+
+Un chat est également disponible ce qui facilite la collaboration entre les utilisateurs connectés.
+
+Il est important de noter qu'\emph{EtherPad} est sous licence \gls{Apache v2}.
