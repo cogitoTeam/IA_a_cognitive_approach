@@ -5,12 +5,9 @@
 \subsubsection{Gestionnaire de versions}
 Tout au long du projet, nous avons utilisé \emph{git} : un gestionnaire de version décentralisé. Un tel outil permet la mise en commun des travaux, la gestion des versions et la gestion des \emph{merges}\footnote{Fusion de deux fichiers différents.}. 
 
-\begin{figure}[H]
-	\centering
+\begin{center}
 	\includegraphics[width=0.3\textwidth]{files/outils/git}	
-	\caption{Logo de \emph{git}}
-	\label{git}
-\end{figure}
+\end{center}
 
 Nous avons choisi \emph{git} pour plusieurs raisons :
 
@@ -33,9 +30,27 @@ Nous avons choisi \emph{git} pour plusieurs raisons :
 \includegraphics[width=0.4\textwidth]{files/outils/etherpad}
 \end{center}
 
-
 L'interface d'\emph{EtherPad} se présente sous la forme d'une interface web (figure \ref{etherpad_screenshot}) où chaque utilisateur connecté possède une couleur. La singularité de cet outil réside dans le fait que toutes les modifications effectuées sur le pad sont visibles par tous en temps réel.
 
 Un chat est également disponible ce qui facilite la collaboration entre les utilisateurs connectés.
 
 Il est important de noter qu'\emph{EtherPad} est sous licence \gls{Apache v2}.
+
+\subsubsection{Visualisation de graphes}
+
+Pour débugger la base de données Neo4j, nous avons utilisé \emph{Gephi}, un utilitaire basé sur la \emph{NetBeans Platform}.
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{files/outils/gephi}
+\end{center}
+
+Il permet de visualiser et de manipuler des graphes. C'est un outil libre qui embarque quelques plugins dont un connecteur Neo4j permettant l'import de bases de données du SGBD.
+
+\subsubsection{Outils de développement}
+Voici une liste non exhaustive des outils que nous avons utilisés lors de nos développements :
+\begin{description}
+\item[Eclipse / NetBeans] Il s'agit des deux principaux EDI\footnote{Environnement de Développement Intégré} libres.
+\item[Javadoc] Nous avons pris soin de documenter la totalité de notre code dans le but de rentre notre code réutilisable. Javadoc est aujourd'hui devenu un standard industriel utilisé par la majorité des développement Java.
+\item[Log4j] Librairie Java libre qui permet la journalisation sous formes variées (stdout\footnote{Flux de sortie standard.}, fichiers de log, envoie de mail, etc.).
+\item[YourKit Java Profiler] Afin de permettre d'optimiser certaines méthodes, nous avons utilisé cet outil en version d'évaluation (sous licence propriétaire). Il s'intègre parfaitement dans la plupart des environnement de développement.
+\end{description}
