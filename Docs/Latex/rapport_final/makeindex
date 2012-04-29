@@ -1,0 +1,2 @@
+#!/bin/bash
+makeindex rapport_final_ac.glo -s rapport_final_ac.ist -t rapport_final_ac.glg -o rapport_final_ac.gls
