@@ -45,14 +45,14 @@ Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est r
 
 \subsection{Éléments en mémoire}
 
-Le module de persistance permet le stockage de la mémoire épisodique et sémantique, les deux étant liées par les relations entre les \emph{MOVE} et les \emph{CBS}. Nous avons donc besoin des types suivants : 
+Le module de persistance permet le stockage de la mémoire épisodique et sémantique, les deux étant liées par les relations entre les \emph{MOVE} et les \gls{CBS}. Nous avons donc besoin des types suivants : 
 
 \textbf{Types de noeud :}
 \begin{itemize}
 	\item \texttt{GAME} : une partie en mémoire épisodique, 
 	\item \texttt{MOVE} : un coup joué en mémoire épisodique,
-	\item \texttt{CBS} : un \texttt{CBS} en mémoire sémantique,
-	\item \texttt{RPBS} : un \texttt{RPBS} en mémoire sémantique.
+	\item \texttt{\gls{CBS}} : un \texttt{\gls{CBS}} en mémoire sémantique,
+	\item \texttt{\gls{RPBS}} : un \texttt{\gls{RPBS}} en mémoire sémantique.
 \end{itemize}
 
 
@@ -82,12 +82,12 @@ Le module de persistance permet le stockage de la mémoire épisodique et séman
 		\end{itemize}
 	\item Relations en mémoire sémantique
 		\begin{itemize}
-			\item \texttt{RELATED} : décrit la présence d'un \texttt{RPBS} dans un \texttt{CBS}.
+			\item \texttt{RELATED} : décrit la présence d'un \texttt{\gls{RPBS}} dans un \texttt{\gls{CBS}}.
 		\end{itemize}
 	\end{itemize}
 	
 \subsection{Mémoire sémantique}
-Comme vu dans la partie~\ref{conception_memoire_semantique} (page \pageref{conception_memoire_semantique}, la mémoire sémantique stocke une matrice de booléens ayant comme attributs (colonnes) des \texttt{RPBS}, et comme objets (lignes) des \texttt{CBS}.
+Comme vu dans la partie~\ref{conception_memoire_semantique} (page \pageref{conception_memoire_semantique}, la mémoire sémantique stocke une matrice de booléens ayant comme attributs (colonnes) des \texttt{\gls{RPBS}}, et comme objets (lignes) des \texttt{\gls{CBS}}.
 
 On peut voir sur la figure~\ref{lattice_graph} les deux \og master\_node \fg{} permettant de déclarer des nœuds d'attributs et d'objets. Ces noeuds sont en liés via des relations de type \emph{RELATED}.
 
