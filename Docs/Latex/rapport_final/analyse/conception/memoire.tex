@@ -5,13 +5,13 @@ Le module de mémoire se décompose en trois parties :
 \item la mémoire sémantique
 \end{itemize}
 
-\subsubsection{Mémoire à court terme}
+\subsection{Mémoire à court terme}
 
 La mémoire à court terme est le module avec lequel communiquent les modules d'analyse et de choix. Elle a un rôle de \emph{buffer} permettant de stocker temporairement les choix possibles analysés soumis par le module d'analyse poussé, et sont fournis au module de choix (module de raisonnement).
 
 L'accès aux ressources stockées en mémoire sémantique ou épisodique se fait également par la mémoire à court terme ; elle peut être décrite comme l'interface mémoire.
 
-\subsubsection{Mémoire épisodique}
+\subsection{Mémoire épisodique}
 \label{conception_memoire_episodique}
 
 La mémoire épisodique stocke des parties et des coups appartenant à des parties. Tous les éléments sont datés au moment de l'ajout et peuvent être parcourus par ordre chronologique inversé (du plus récent au plus ancien).
@@ -27,7 +27,7 @@ Cette mémoire est structurée sous la forme d'une double liste chaînée :
 \caption{Représentation de la mémoire, sous la forme d'une double liste chaînée avec accès par ordre chronologique inversé}
 \end{figure}
 
-\subsubsection{Mémoire sémantique}
+\subsection{Mémoire sémantique}
 \label{conception_memoire_semantique}
 
 La mémoire sémantique permet le stockage :

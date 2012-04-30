@@ -1,4 +1,4 @@
-\subsubsection{Interface Mémoire}
+\subsection{Interface Mémoire}
 
 Le module de mémoire a été conçu de manière générique à l'aide d'interfaces java. Pour cela elle se décompose en trois parties :
 
@@ -15,7 +15,7 @@ Le module de mémoire a été conçu de manière générique à l'aide d'interfa
 
 La mémoire doit également assurer la persistance des données, qui se fait via un module de persistance. Celui-ci est utilisé par une implémentation spécifique des interfaces décrites ci-avant.
 
-\subsubsection{Le \gls{SGBD} Neo4j}
+\subsection{Le \gls{SGBD} Neo4j}
 
 La persistance des données est assurée par un SGBD né de la mouvance \gls{NoSQL} : Neo4j. Il permet la gestion d'une base de données orientée graphe. Nous avons fait le choix d'utiliser un tel système pour plusieurs raisons :
 
@@ -43,7 +43,7 @@ Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est r
 \label{example_node_type}
 \end{figure}
 
-\subsubsection{Éléments en mémoire}
+\subsection{Éléments en mémoire}
 
 Le module de persistance permet le stockage de la mémoire épisodique et sémantique, les deux étant liées par les relations entre les \emph{MOVE} et les \emph{CBS}. Nous avons donc besoin des types suivants : 
 
@@ -86,7 +86,7 @@ Le module de persistance permet le stockage de la mémoire épisodique et séman
 		\end{itemize}
 	\end{itemize}
 	
-\subsubsection{Mémoire sémantique}
+\subsection{Mémoire sémantique}
 Comme vu dans la partie~\ref{conception_memoire_semantique} (page \pageref{conception_memoire_semantique}, la mémoire sémantique stocke une matrice de booléens ayant comme attributs (colonnes) des \texttt{RPBS}, et comme objets (lignes) des \texttt{CBS}.
 
 On peut voir sur la figure~\ref{lattice_graph} les deux \og master\_node \fg{} permettant de déclarer des nœuds d'attributs et d'objets. Ces noeuds sont en liés via des relations de type \emph{RELATED}.
@@ -97,7 +97,7 @@ On peut voir sur la figure~\ref{lattice_graph} les deux \og master\_node \fg{} p
 \label{lattice_graph}
 \end{figure}
 
-\subsubsection{Mémoire épisodique}
+\subsection{Mémoire épisodique}
 
 La représentation sous forme de graphe se prête parfaitement à la mémorisation des parties et des coups sous la forme d'une double liste chaînée. La figure~\ref{episodic_graph} représente la mémoire épisodique telle qu'elle est stockée dans Neo4j.
 
@@ -111,7 +111,7 @@ On remarque également que les relations \texttt{BOARD\_STATE} permettent de fai
 \label{episodic_graph}
 \end{figure}
 
-\subsubsection{Vision globale de la mémoire}
+\subsection{Vision globale de la mémoire}
 
 La figure~\ref{full_graph} présente le stockage de la mémoire épisodique et de la mémoire sémantique dans Neo4j. Les relations de type \texttt{BOARD\_STATE} assure la liaison entre ces deux mémoires.
 \begin{figure}[H]
