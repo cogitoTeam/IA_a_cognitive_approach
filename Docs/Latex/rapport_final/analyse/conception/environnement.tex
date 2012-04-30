@@ -1,7 +1,16 @@
-\subsection{\og Agent \fg{} et \og Environnement \fg{}  }
+\subsection{ \og Stigmergie \fg{} }
 
-Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum arcu massa, hendrerit vel tempor in, sollicitudin in erat. Curabitur non risus nec elit consectetur faucibus sed sed purus. Nam blandit porta ipsum vitae vestibulum. Etiam imperdiet, orci sit amet tincidunt faucibus, urna diam porttitor mauris, at auctor metus neque at nibh. Morbi vel elit venenatis mauris rutrum vehicula. Nam scelerisque iaculis suscipit. Quisque pretium euismod ipsum at elementum. Vestibulum sit amet elit fringilla mauris cursus tincidunt eget sed ante. Ut laoreet ultricies lacus, sed aliquam enim rhoncus ut. Aliquam erat volutpat. Donec ac nulla massa. Maecenas laoreet, magna sed congue venenatis, lacus mi luctus elit, sed sagittis justo nisi ut felis. Aliquam interdum, leo non vestibulum euismod, enim eros eleifend ligula, at aliquet mi eros vitae diam. Suspendisse malesuada scelerisque quam at sodales. Fusce ac lacus sed massa pretium bibendum. 
+À fin de bien séparer la logique liée à la réflexion de celui qui structure le jeu, nous suivrons le paradigme \og Agent et Environnement \fg{}. Notre intelligence artificielle sera assimilée à un agent qui évolue dans un environnement qu'il peut observer et modifier. 
+Toute communication entre agents sera donc fait par \og Tableau Noir \fg{}, c'est à dire en laissant des traces dans cet environnement partagé. Cette interaction dite \og Stigmergique \fg{} est nécessairement asynchrone mais possède l'avantage de ne nécessiter qu'un seul canal de communication par agent.
+Ce canal, reliant l'agent à son environnement, est bidirectionnelle: il permet à l'agent de recevoir des stimuli et d'envoyer des impulsions. Par la suite nous parlerons de "percepts" et de "actions":
 
-\subsection{L'environnement vu comme \og arbitre \fg{} }
+%			|      <------ PERCEPTS -------            |
+% AGENT     |                                          |       ENVIRONMENT
+%			|      ------- ACTION   ------->           |
+
+En séparant l'agent de son environnement nous gagnons polyvalence et la flexibilité. D'une part l'agent pourrait être aussi bien un humain qu'une machine, que ce soit notre système ou bien un algorithme de l'état de l'art tel \texsc{MiniMax}\footnote{Stratégie MiniMax : minimisation de la perte maximum (dans le pire des cas).}. Les testes en cours de développement, ainsi que les évaluations à terme.
+D'autre part l'implémentation de l'agent ne sera pas forcé à suivre celui de l'environnement et vice-versa. Étant donnée que l'Agent n'interagit avec l'environnement qu'à travers ses percepts et ses actions, une interface simple permettrait l'interaction entre agents et environnements, peu importe leur fonctionnement interne précise.
+
+\subsection{ Agent \og Arbitre \fg{} }
 
 Nullam pharetra leo eu nulla congue vestibulum. Vestibulum accumsan placerat aliquam. In eu varius quam. Vivamus vel nunc vitae justo rutrum vulputate viverra sit amet nisi. Mauris vel lorem quis lorem imperdiet volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed ante et nulla pharetra condimentum sed tincidunt mauris. Donec nisi enim, porttitor vitae malesuada a, lobortis quis tellus. Sed ligula leo, luctus rutrum fermentum non, tincidunt at leo. Suspendisse potenti. Nullam sit amet arcu in sem hendrerit laoreet. Vivamus ut nibh in tortor pulvinar hendrerit. 
