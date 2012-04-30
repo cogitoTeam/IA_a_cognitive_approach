@@ -1,3 +1,56 @@
-Maecenas vel vestibulum arcu. Mauris justo eros, pretium ac vulputate ac, tincidunt quis quam. Fusce imperdiet placerat felis non ornare. Sed mauris tortor, varius a porta in, porttitor quis sem. Vivamus nec dolor libero. Proin quam nisi, cursus sed lacinia ac, vehicula non dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis dictum consectetur dignissim. Morbi aliquam posuere ultricies. Nam tincidunt enim id orci rhoncus nec ullamcorper mauris placerat. Aliquam nec erat sed mi elementum congue at non ligula. Cras sit amet ligula orci. Nulla porttitor ornare ultricies. Sed pulvinar eleifend ipsum, pharetra laoreet leo volutpat eget. Donec consectetur nisl sed magna cursus cursus iaculis neque lacinia. 
+\section{Répartition des tâches}
 
-Donec quis aliquam dolor. Mauris vitae diam sit amet urna pharetra blandit et non risus. Suspendisse velit lacus, suscipit eget feugiat a, vulputate sed sem. Ut placerat lectus sed leo vulputate at malesuada nisl cursus. Donec feugiat tempus quam, in commodo mi hendrerit sed. Ut ut mauris nisi, non ultricies lectus. Quisque lobortis ante eu dolor aliquet ut sagittis enim ultrices. Integer luctus facilisis ultricies. Nam non vestibulum turpis. Vestibulum dictum lacus quam, aliquet vulputate arcu. Donec quam nulla, condimentum vitae gravida sit amet, interdum at elit. Donec tempor eros at arcu rutrum ut tristique justo tincidunt. Nullam suscipit mauris et ligula pellentesque viverra vitae at nisi. 
+\section{Outils utilisés}
+
+\subsection{Gestionnaire de versions}
+Tout au long du projet, nous avons utilisé \emph{git} : un gestionnaire de version décentralisé. Un tel outil permet la mise en commun des travaux, la gestion des versions et la gestion des \emph{merges}\footnote{Fusion de deux fichiers différents.}. 
+
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{files/outils/git}	
+\end{center}
+
+Nous avons choisi \emph{git} pour plusieurs raisons :
+
+\begin{itemize}
+\item plutôt simple d'utilisation (par rapport à ses homologues comme \emph{SVN}),
+\item hébergement gratuit via GitHub (sous condition de diffusion du code sous une licence libre),
+\item \emph{git} est une solution libre sous licence \gls{GPLv2}.
+\end{itemize}
+
+\subsection{EtherPad, un éditeur de texte collaboratif}
+\emph{EtherPad} se présente sous la forme d'un éditeur de texte léger permettant de faire un minimum de mise en page.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{files/outils/etherpad_screenshot}	
+	\caption{Aperçu de l'interface d'\emph{EtherPad} hébergé sur \emph{framapad} (site mis à disposition par Framasoft utilisant le code d'EtherPad).}
+	\label{etherpad_screenshot}
+\end{figure}
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{files/outils/etherpad}
+\end{center}
+
+L'interface d'\emph{EtherPad} se présente sous la forme d'une interface web (figure \ref{etherpad_screenshot}) où chaque utilisateur connecté possède une couleur. La singularité de cet outil réside dans le fait que toutes les modifications effectuées sur le pad sont visibles par tous en temps réel.
+
+Un chat est également disponible ce qui facilite la collaboration entre les utilisateurs connectés.
+
+Il est important de noter qu'\emph{EtherPad} est sous licence \gls{Apache v2}.
+
+\subsection{Visualisation de graphes}
+
+Pour débugger la base de données Neo4j, nous avons utilisé \emph{Gephi}, un utilitaire basé sur la \emph{NetBeans Platform}.
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{files/outils/gephi}
+\end{center}
+
+Il permet de visualiser et de manipuler des graphes. C'est un outil libre qui embarque quelques plugins dont un connecteur Neo4j permettant l'import de bases de données du SGBD.
+
+\subsection{Outils de développement}
+Voici une liste non exhaustive des outils que nous avons utilisés lors de nos développements :
+\begin{description}
+\item[Eclipse / NetBeans] Il s'agit des deux principaux EDI\footnote{Environnement de Développement Intégré} libres.
+\item[Javadoc] Nous avons pris soin de documenter la totalité de notre code dans le but de rentre notre code réutilisable. Javadoc est aujourd'hui devenu un standard industriel utilisé par la majorité des développement Java.
+\item[Log4j] Librairie Java libre qui permet la journalisation sous formes variées (stdout\footnote{Flux de sortie standard.}, fichiers de log, envoie de mail, etc.).
+\item[YourKit Java Profiler] Afin de permettre d'optimiser certaines méthodes, nous avons utilisé cet outil en version d'évaluation (sous licence propriétaire). Il s'intègre parfaitement dans la plupart des environnement de développement.
+\end{description}
