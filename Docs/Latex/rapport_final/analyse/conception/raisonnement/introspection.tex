@@ -23,6 +23,8 @@ Par exemple, sur la figure \ref{img_reco_forme_0}, nous considérons deux enviro
 
 \subsubsection{Application aux jeux de plateau}
 
+La figure \ref{img_cbs_reco0} représente, de façon graphique, le type d'environnement avec lequel doit travailler le moteur d'introspection.
+
 \begin{figure}[H] 
 \begin{center}
 \includegraphics[width=0.7\textwidth]{files/raisonneur/cbs_reco0} 
@@ -31,26 +33,22 @@ Par exemple, sur la figure \ref{img_reco_forme_0}, nous considérons deux enviro
 \label{img_cbs_reco0}
 \end{figure}
 
+Bien entendu, l'environnement ne sera pas manipuler à partir d'une représentation graphique mais à partir d'une représentation logique. Le but de ce module consiste dans un premier temps à rechercher en mémoire deux plateau s'étant vu attribuer la même annotation, c'est à dire \og{}~perdant~\fg{} ou \og{}~gagnant~\fg{}, présentant des formes connues identiques (cf. figure \ref{img_cbs_reco1}).
+
 \begin{figure}[H] 
 \begin{center}
 \includegraphics[width=0.7\textwidth]{files/raisonneur/cbs_reco1} 
 \end{center}
-\caption{Illustration de l'injection} 
+\caption{Illustration de formes connues} 
 \label{img_cbs_reco1}
 \end{figure}
 
-\begin{figure}[H] 
-\begin{center}
-\includegraphics[width=0.7\textwidth]{files/raisonneur/cbs_reco2} 
-\end{center}
-\caption{Illustration de l'injection} 
-\label{img_cbs_reco2}
-\end{figure}
+Le module doit ensuite étendre cette forme à partir d'un des plateaux tout en vérifiant que cette forme étendu peux toujours être injectée dans l'autre plateau, comme illustré dans la figure \ref{img_cbs_reco_forme_injection}.
 
 \begin{figure}[H] 
 \begin{center}
 \includegraphics[width=0.7\textwidth]{files/raisonneur/cbs_reco3} 
 \end{center}
-\caption{Illustration de l'injection} 
-\label{img_cbs_reco3}
+\caption{Illustration de l'injection sur des plateaux} 
+\label{img_cbs_reco_forme_injection}
 \end{figure}
