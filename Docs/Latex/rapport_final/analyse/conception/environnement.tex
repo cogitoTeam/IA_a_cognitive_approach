@@ -7,7 +7,7 @@ Ce canal, reliant l'agent à son environnement, est bidirectionnelle: il permett
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/env/agent_env} 
-\caption{Schéma du modèle \og Agent et Environnement \fg{}} 
+\caption{Modèle \og Agent et Environnement \fg{}} 
 \label{agent_env}
 \end{figure}
 
@@ -20,10 +20,11 @@ Cette abstraction permettra d'une part d'évaluer notre agent à la fin du déve
 Dans notre cas l'environnement est un jeu de plateau, donc une grille dont les cases peuvent contenir un pion ou être vide. L'environnement doit aussi "connaître", pour ainsi dire, quel est le prochain joueur qui doit jouer ainsi que toute autre information qui ne peut pas être directement déduite de l'état du plateau. Finalement il doit pouvoir juger de la légalité des coups proposés par l'agent, et par le même biais savoir comment initialiser le plateau de la bonne manière.
 Il se décompose donc en trois modules: un plateau, une liste de règles et un processeur qui les manipule. Au lieu de briser le métaphore du \og Tableau Noir \fg{} en parlant d'environnement-agent, nous ce processeur sera en effet un agent tiers: une sorte d'arbitre neutre. C'est un agent purement réactif qui maintient l'état du jeu en exécutant les coups qui lui sont envoyés par les agents joueurs dans la mesure du légale. Il devrait bien-sur les notifier de l'éventuelle faillite de leurs actions, ainsi que leur envoyer l'état du plateau en cas de demande. 
 
-%    ---------- ACTION --------->              PROCESSEUR                ---------- RESULTAT --------->
-%                                       /                      \
-%                             consulte /                        \ pour modifier
-%                                     v                          v
-%                                    RÈGLES                  PLATEAU
+\begin{figure}[H] 
+\centering
+\includegraphics[width=\textwidth]{files/env/arbitre} 
+\caption{Interactions entre l'Arbitre et les autres agents} 
+\label{arbitre}
+\end{figure}
 
 Finalement c'est à travers cet agent-filtre que les autres iront modifier l'environnement et donc communiquer entre eux. Suite à cette étude préalable, il nous semble claire qu'une architecture client-serveur serait recommandé pour l'implémentation des interactions entre les agents et leur environnement.
