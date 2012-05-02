@@ -1,0 +1,25 @@
+Le rôle de l'analyseur est de représenter l'environnement en concepts et d'en tirer de nouveaux par reconnaissance de formes. Ayant choisi des formules de logique du premier ordre comme vocabulaire pour ces concepts, on a chargé le module d'analyse de tout traiter dans ce vocabulaire. Pour ce faire, il prend des classes de l'environnement et en crée de nouvelles qui sont partagées par toute l'IA :
+\begin{itemize}
+  \item \textbf {Choices (environnement)} : Cette classe est un pacquet qui représente un plateau courant, un coup et l'ensemble des plateaux résultants de ce coup, où chaque plateau est une instance de la classe BoardMatrix définie ci-après. Elle appartient à la bibliothèque game\_logic.jar de l'environnement.
+  \item \textbf {BoardMatrix(environnement)} : C'est la classe de base qui représente un plateau en forme d'une matrice. 
+  \item \textbf {Choices\_FOL (IA)} : Elle est la version convertie par l'analyseur de Choices (même structure, attributs décrits par des formules logiques) avec, en addition, une liste de formes pertinantes associée à chaque plateau du pacquet.
+  \item \textbf {CompleteBoardState (IA)} : C'est la version logique du premier ordre de
+  BoardMatrix définie ci-dessus.
+  \item \textbf {RelevantPartialBoardState (IA)} : La classe qui décrit la configuration d'une sous-partie pertinante d'un plateau comme une règle logique. Elle correspond aux \og formes \fg{} extraites par le module de raisonnement qui doivent être reconnues dans les CompleteBoardState.
+\end{itemize}
+\subsection{L'analyseur conceptuel de base}
+Lors de chaque coup du jeu, l'analyseur conceptuel de base (comme défini dans la partie~\ref{def:analyseur de base}, page~\pageref{def:analyseur de base}), convertit donc, plus précisément, une instance de Choices en une instance the Choices\_FOL en se servant de classes qui modélisent la logique du premier ordre. 
+
+Une première analyse d'un plateau en forme de matrice BoardMatrix permet l'analyseur de générer des faits logiques correspondants à la configuration du plateau. Cette liste de faits est ensuite rassemblée pour former une base de faits qui est stockée comme attribut de la classe CompleteBoardState correspondante à ce plateau. L'analyseur crée alors le pacquet Choices\_FOL correspondant au pacquet Choices de l'environnement en convertissant chaque plateau (BoardMatrix) de Choices en un plateau (CompleteBoardState) de Choices\_FOL. Elle passe ensuite ce pacquet à l'analyseur conceptuel poussé. 
+\subsection{L'analyseur conceptuel poussé}
+L'analyseur conceptuel poussé prend ce pacquet et, comme défini dans la partie~\ref{def:analyseur pousse}(page~\pageref{def:analyseur pousse}), associe des formes pertinantes (des RelevantPartialBoardState) récupérées par la mémoire, à chaque plateau présent dans ce pacquet. 
+
+Les formes (RelevantPartialBoardState) récupérées de la mémoire correspondent à des règles logiques représentées comme une conjonction d'atomes, le dernier atome étant la conclusion de cette règle. Ici, l'hypothèse décrit une configuration (forme) pertinante, et la conclusion l'associe un id. Par exemple, le fait d'avoir pris un coin est représenté par la règle :
+
+\textit{$isCorner() \wedge is(Mine) \Longrightarrow \_rpbs034$}. 
+
+Ensuite, l'analyseur, en tant que moteur d'inférence, sature la base de faits de chaque plateau rencontré dans le pacquet Choices\_FOL par application de l'ensemble de ces règles. La reconnaissance des formes dans chacun de ces plateaux revient alors à rechercher l'homomorphisme de l'atome représentant l'id d'une forme pertinante dans la base de faits saturée de ce plateau. Une fois la reconnaissance (l'existance d'un homomorphisme) est établie, la règle ReleventPartialBoard state est ajoutée à la liste de formes pertinantes associée à ce plateau.
+
+Pour résumer, le rôle de l'analyseur conceptuel poussé est donc de déterminer et d'ajouter cette liste de formes pertinantes à chaque plateau présent dans le pacquet Choices\_FOL. 
+
+L'analyseur passe enfin ce pacquet enrichi à la mémoire et stimule le module de raisonnement afin de commencer son processus. 
