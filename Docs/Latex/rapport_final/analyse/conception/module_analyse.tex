@@ -1,5 +1,5 @@
-Le module d'analyse est chargé de la représentation des connaissances requises de l'environnement et de la reconnaissance de formes extraites par le module de raisonnement. Il est donc subdivisé en deux parties : \og l'analyseur conceptuel de base \fg{} et \og l'analyseur conceptuel poussé \fg{}.
-\subsection{L'analyseur conceptuel de base}
+Le module d'analyse est chargé de la représentation de l'environnement et de la reconnaissance de formes extraites par le module de raisonnement. Il est donc subdivisé en deux parties : \og l'analyseur conceptuel de base \fg{} et \og l'analyseur conceptuel poussé \fg{}.
+\subsection{L'analyseur conceptuel de base}\label{def:analyseur de base}
 Cet analyseur prend en entrée les données de l'environnement et les convertit en concepts selon un vocabulaire qui est partagé par la mémoire et le module de raisonnement. Ainsi, chaque plateau du jeu est traduit selon sa configuration en un concept qui est stocké dans la mémoire. L'analyseur conceptuel de base agit donc comme un simple traducteur.
-\subsection{L'analyseur conceptuel poussé}
-Cet analyseur est chargé de la reconnaissance de formes extraites par le module de raisonnement. Il permet ainsi d'associer à chaque plateau l'ensemble de formes pertinantes qui y sont présentes. Pour ce faire, il agit comme un moteur d'inférence qui reconnait des formes par le mécanisme de recherche d'homomorphismes.
+\subsection{L'analyseur conceptuel poussé}\label{def:analyseur pousse}
+Cet analyseur est chargé de la reconnaissance de formes extraites par le module de raisonnement : il génère des concepts avancés à partir de concepts simples. Il permet ainsi d'associer à chaque plateau l'ensemble de formes pertinantes qui y sont présentes. Pour ce faire, il agit comme un moteur d'inférence qui reconnait des formes par le mécanisme de recherche d'homomorphismes.
