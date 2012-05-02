@@ -4,6 +4,7 @@ package service;
 
 import game.BoardMatrix.Position;
 import game.Game;
+import game.Game.Player;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GameServlet extends HttpServlet 
 {
     /* ATTRIBUTES */
-    Game game = null;
+    private Game game = null;
     
     /* MAIN METHODS */
     
@@ -33,7 +34,7 @@ public class GameServlet extends HttpServlet
         if(parameters.containsKey("game_id"))
             game = gm.getGame(Integer.parseInt(parameters.get("game_id")[0]));
        
-        // if the game is still null (game number not found)
+        // If the game is still null (game number not found)
         if(game == null)
             game = gm.findGame();
         
@@ -55,12 +56,6 @@ public class GameServlet extends HttpServlet
                 else if(parameters.containsKey("row") || parameters.containsKey("col")
                 || parameters.containsKey("player"))
                     game.setState(Game.State.MOVE_FAILURE);
-                
-                /*else
-                // A simple refresh, nothing has changed since last update
-                    game.setState(Game.State.NO_CHANGE);
-                    * 
-                    */
             }
         }
         

@@ -131,7 +131,7 @@ public class Game
      * Reset the state of the Game to reflect that the most recent event is,
      * for instance, the joining of a new player.
      */
-    public void setState(State new_state)
+    public synchronized void setState(State new_state)
     {
         current_state = new_state;
     }
@@ -145,7 +145,7 @@ public class Game
      * @param player 
      * The player to play the move.
      */
-    public void tryMove(Position move, Player player)
+    public synchronized void tryMove(Position move, Player player)
     {
         // check that it's the right player playing
         if(player != current_player)
@@ -188,7 +188,7 @@ public class Game
      * Reset the board, the current player and the game state back to their
      * original settings, based on the game rules.
      */
-    public final void restart()
+    public synchronized final void restart()
     {
         rules.reset(board);
         current_player = rules.getFirstPlayer();

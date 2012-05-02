@@ -32,7 +32,7 @@ public class Test
         if (agent.getState() != Agent.State.NORMAL)
           stop = true;
 
-        // let other processes execute
+        // let other processes execute and don't spam serveur
         Thread.sleep(1000);
       }
 
