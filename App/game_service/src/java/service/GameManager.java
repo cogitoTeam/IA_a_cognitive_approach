@@ -46,10 +46,28 @@ public class GameManager
     }
     
     // query
-    public synchronized Game getGame(int id)
+    
+    public synchronized String performRequest(GameRequest request) 
     {
-        return games.get(id);
+        // Try to retrieve the correct game
+        Integer game_id = request.getID();
+        Game game = (game_id != null) ? games.get(game_id) : null;
+       
+        // If the game is null (no id or invalid id specified not found)
+        if(game == null)
+            game = findGame();
+        // Is the client requesting the current game be reset ?
+        else if(request.isRestart())
+            game.restart();
+        // Is the client requesting a move ?
+        else if(request.isMove())
+            game.tryMove(request.getPosition(), request.getPlayer());    
+        
+        // Whatever the case return the game's XML tag
+        return game.toString();
     }
+    
+
     
     // modification
     public synchronized void setRules(Rules _rules)
@@ -57,7 +75,10 @@ public class GameManager
         rules = _rules;
     }
     
-    public synchronized Game findGame()
+    
+    /* SUBROUTINES */
+    
+    private Game findGame()
     {
         // always join a game if possible
         if(waiting.isEmpty())
@@ -65,8 +86,6 @@ public class GameManager
         else
             return openGame();
     }
-    
-    /* SUBROUTINES */
     
     private synchronized Game newGame()
     {
