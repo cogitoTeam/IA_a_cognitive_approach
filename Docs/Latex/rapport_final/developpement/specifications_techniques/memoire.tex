@@ -13,11 +13,11 @@ Le module de mémoire a été conçu de manière générique à l'aide d'interfa
 \caption{Interface mémoire}
 \end{figure}
 
-La mémoire doit également assurer la persistance des données, qui se fait via un module de persistance. Celui-ci est utilisé par une implémentation spécifique des interfaces décrites ci-avant.
+La mémoire assure également la persistance des données, qui se fait via un module de persistance. Celui-ci est utilisé par une implémentation spécifique des interfaces décrites ci-avant.
 
 \subsection{Le \gls{SGBD} Neo4j}
 
-La persistance des données est assurée par un SGBD né de la mouvance \gls{NoSQL} : Neo4j. Il permet la gestion d'une base de données orientée graphe. Nous avons fait le choix d'utiliser un tel système pour plusieurs raisons :
+La persistance des données est assurée par un \gls{SGBD} né de la mouvance \gls{NoSQL} : Neo4j. Il permet la gestion d'une base de données orientée graphe. Nous avons fait le choix d'utiliser un tel système pour plusieurs raisons :
 
 \begin{itemize}
 \item nous avions la volonté de découvrir une solution \gls{NoSQL}, que nous n'avons pas eu l'occasion d'étudier lors de notre formation,
@@ -45,14 +45,14 @@ Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est r
 
 \subsection{Éléments en mémoire}
 
-Le module de persistance permet le stockage de la mémoire épisodique et sémantique, les deux étant liées par les relations entre les \emph{MOVE} et les \gls{CBS}. Nous avons donc besoin des types suivants : 
+Le module de persistance permet le stockage de la mémoire épisodique et sémantique, les deux étant liées par les relations entre les \emph{MOVE} et les \gls{CompleteBoardState}. Nous avons donc besoin des types suivants : 
 
 \textbf{Types de noeud :}
 \begin{itemize}
 	\item \texttt{GAME} : une partie en mémoire épisodique, 
 	\item \texttt{MOVE} : un coup joué en mémoire épisodique,
-	\item \texttt{\gls{CBS}} : un \texttt{\gls{CBS}} en mémoire sémantique,
-	\item \texttt{\gls{RPBS}} : un \texttt{\gls{RPBS}} en mémoire sémantique.
+	\item \texttt{\gls{CompleteBoardState}} : un \texttt{\gls{CompleteBoardState}} en mémoire sémantique,
+	\item \texttt{\gls{RelevantPartialBoardState}} : un \texttt{\gls{RelevantPartialBoardState}} en mémoire sémantique.
 \end{itemize}
 
 
@@ -82,12 +82,12 @@ Le module de persistance permet le stockage de la mémoire épisodique et séman
 		\end{itemize}
 	\item Relations en mémoire sémantique
 		\begin{itemize}
-			\item \texttt{RELATED} : décrit la présence d'un \texttt{\gls{RPBS}} dans un \texttt{\gls{CBS}}.
+			\item \texttt{RELATED} : décrit la présence d'un \texttt{\gls{RelevantPartialBoardState}} dans un \texttt{\gls{CompleteBoardState}}.
 		\end{itemize}
 	\end{itemize}
 	
 \subsection{Mémoire sémantique}
-Comme vu dans la partie~\ref{conception_memoire_semantique} (page \pageref{conception_memoire_semantique}, la mémoire sémantique stocke une matrice de booléens ayant comme attributs (colonnes) des \texttt{\gls{RPBS}}, et comme objets (lignes) des \texttt{\gls{CBS}}.
+Comme vu dans la partie~\ref{conception_memoire_semantique} (page \pageref{conception_memoire_semantique}, la mémoire sémantique stocke une matrice de booléens ayant comme attributs (colonnes) des \texttt{\gls{RelevantPartialBoardState}}, et comme objets (lignes) des \texttt{\gls{CompleteBoardState}}.
 
 On peut voir sur la figure~\ref{lattice_graph} les deux \og master\_node \fg{} permettant de déclarer des nœuds d'attributs et d'objets. Ces noeuds sont en liés via des relations de type \emph{RELATED}.
 
