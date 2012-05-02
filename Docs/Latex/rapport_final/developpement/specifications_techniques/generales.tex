@@ -16,5 +16,18 @@ EN VRAC :
 \label{specs_game_logic}
 \subsection{spécifications classes RPBS / CBS}
 \label{specs_shared_classes}
-\subsection{définition vocabulaire FOL}
+\subsection{Représentation des connaissances}
+	Les connaissances seront représentées en logique du première ordre. D'une part le plateau sera représenter comme un ensemble de faits et d'autres part les \og formes \fg{} seront représenter par des règles dont l'hypothèse représente la forme à reconnaître et la conclusion représente un identifiant de forme.
+	
+	\subsubsection{Vocabulaire} 
+	\begin{itemize}
+	\item isWhite(x)
+  \item isBlack(x)
+  \item isEmpty(x)
+  \item isEdge(x)
+  \item isCorner(x)
+  \item near(x,y)
+  \item aligned(x,y,z)
+	\end{itemize}
+
 \label{specs_voc_fol}
