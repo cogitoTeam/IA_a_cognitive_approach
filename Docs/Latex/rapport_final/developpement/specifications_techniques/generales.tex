@@ -4,12 +4,13 @@ EN VRAC :
 (partie rédigée par Nam au mauvais endroit)
 
 \begin{itemize}
-  \item \textbf {\gls{Choices} (environnement)} : Cette classe est un pacquet qui représente un plateau courant, un coup et l'ensemble des plateaux résultants de ce coup, où chaque plateau est une instance de la classe \gls{BoardMatrix} définie ci-après. Elle appartient à la bibliothèque game\_logic.jar de l'environnement.
-  \item \textbf {\gls{BoardMatrix}(environnement)} : C'est la classe de base qui représente un plateau en forme d'une matrice. 
-  \item \textbf {\gls{Choices_FOL} (IA)} : Elle est la version convertie par l'analyseur de Choices (même structure, attributs décrits par des formules logiques) avec, en addition, une liste de formes pertinentes associée à chaque plateau du paquet.
-  \item \textbf {\gls{CompleteBoardState} (IA)} : C'est la version logique du premier ordre de
-  \gls{BoardMatrix} définie ci-dessus.
-  \item \textbf {\gls{RelevantPartialBoardState} (IA)} : La classe qui décrit la configuration d'une sous-partie pertinente d'un plateau comme une règle logique. Elle correspond aux \og formes \fg{} extraites par le module de raisonnement qui doivent être reconnues dans les \gls{CompleteBoardState}.
+  \item \textbf {\texttt{\gls{Choices} (environnement)}} : Cette classe est un pacquet qui représente un plateau courant, un coup et l'ensemble des plateaux résultants de ce coup, où chaque plateau est une instance de la classe \texttt{\gls{BoardMatrix}} définie ci-après. Elle appartient à la bibliothèque \texttt{\gls{game_logic}} de l'environnement.
+  \item \textbf {\texttt{\gls{BoardMatrix}(environnement)}} : C'est la classe de base qui représente un plateau en forme d'une matrice. 
+  \item \textbf {\texttt{\gls{Choices_FOL}} (IA)} : Elle est la version convertie par l'analyseur de Choices (même structure, attributs décrits par des formules logiques) avec, en addition, une liste de formes pertinentes associée à chaque plateau du paquet.
+  \item \textbf {\texttt{\gls{CompleteBoardState}} (IA)} : C'est la version logique du premier ordre de
+  \texttt{\gls{BoardMatrix}} définie ci-dessus.
+  \item \textbf {\texttt{\gls{RelevantPartialBoardState}} (IA)} : La classe qui décrit la configuration d'une sous-partie pertinente d'un plateau comme une règle logique. Elle correspond aux \og formes \fg{} extraites par le module de raisonnement qui doivent être reconnues dans les \texttt{\gls{CompleteBoardState}}.
+  \item ne pas oublier \texttt{\gls{Option_FOL}} !!
 \end{itemize}
 
 \subsection{spécifications \texttt{\gls{game_logic}}}

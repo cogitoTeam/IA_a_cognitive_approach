@@ -1,7 +1,11 @@
-Le module d'analyse a un rôle de convertisseur. Il transforme le plateau fournis sous la forme de en une représentation logique du premier ordre, tout en lui associant un ensemble de formes reconnaissables dans ce dernier. 
+Le module d'analyse a un rôle de convertisseur. Le plateau fournit par l'environnement est un objet \texttt{\gls{BoardMatrix}} qui est transformé par le \emph{RuleBook} en un ensemble de \texttt{\gls{BoardMatrix}}, chacun correspondant à un coup possible. Ces objets sont ensuite convertit par l' \emph{analyseur conceptuel de base} en une représentation logique du premier ordre encapsulée dans des objets \texttt{\gls{CompleteBoardState}}.
 
-Ce module est divisé en deux 
-Pour ce faire, il prend des classes de l'environnement et en crée de nouvelles qui sont partagées par toute l'IA :
+L'\emph{analyseur conceptuel poussé} associe à chaque \texttt{\gls{CompleteBoardState}} des ensembles de \texttt{\gls{RelevantPartialBoardState}} correspondant aux formes reconnues dans le plateau.
+
+Enfin, le couple \texttt{\gls{CompleteBoardState}} / liste de \texttt{\gls{RelevantPartialBoardState}} est déposé en mémoire à court terme sous la forme d'un object \texttt{\gls{Option_FOL}} avant de réveiller le module de raisonnement.
+
+\subsection{Le \og RuleBook \fg{}}
+
 \subsection{L'analyseur conceptuel de base}
 Lors de chaque coup du jeu, l'analyseur conceptuel de base (comme défini dans la partie~\ref{def:analyseur de base}, page~\pageref{def:analyseur de base}), convertit donc, plus précisément, une instance de Choices en une instance the Choices\_FOL en se servant de classes qui modélisent la logique du premier ordre. 
 
