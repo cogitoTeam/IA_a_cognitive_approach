@@ -1,0 +1,20 @@
+\emph{need bla bla sur les specs générales}
+
+EN VRAC :
+(partie rédigée par Nam au mauvais endroit)
+
+\begin{itemize}
+  \item \textbf {Choices (environnement)} : Cette classe est un pacquet qui représente un plateau courant, un coup et l'ensemble des plateaux résultants de ce coup, où chaque plateau est une instance de la classe BoardMatrix définie ci-après. Elle appartient à la bibliothèque game\_logic.jar de l'environnement.
+  \item \textbf {BoardMatrix(environnement)} : C'est la classe de base qui représente un plateau en forme d'une matrice. 
+  \item \textbf {Choices\_FOL (IA)} : Elle est la version convertie par l'analyseur de Choices (même structure, attributs décrits par des formules logiques) avec, en addition, une liste de formes pertinantes associée à chaque plateau du pacquet.
+  \item \textbf {CompleteBoardState (IA)} : C'est la version logique du premier ordre de
+  BoardMatrix définie ci-dessus.
+  \item \textbf {RelevantPartialBoardState (IA)} : La classe qui décrit la configuration d'une sous-partie pertinante d'un plateau comme une règle logique. Elle correspond aux \og formes \fg{} extraites par le module de raisonnement qui doivent être reconnues dans les CompleteBoardState.
+\end{itemize}
+
+\subsection{spécifications \texttt{game\_logic}}
+\label{specs_game_logic}
+\subsection{spécifications classes RPBS / CBS}
+\label{specs_shared_classes}
+\subsection{définition vocabulaire FOL}
+\label{specs_voc_fol}
