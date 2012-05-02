@@ -5,17 +5,17 @@
 À chaque fois que le module reçoit un environnement annoté, celui-ci effectue une mise à jour des probabilités d'apparition d'une annotation en fonction d'une forme.
 \[ P(Annotation|Forme) = \frac{P(Forme|Annotation) \times P(Annotation)}{P(Forme)} \]
 
-Par exemple, imaginons que nous souhaitons entraîner notre IA à identifier des formes géométrique basique : rond, carré, croix et triangle. Admettons que notre IA est capable de reconnaître dans son environnement les formes correspondantes mais qu'elle ne sait pas les associer au concept correspondant. Nous pouvons représenter cette état par le tableau représenté en figure \ref{img_annotations}.
+Par exemple, imaginons que nous souhaitons entraîner notre IA à identifier des formes géométrique basique : rond, carré, croix et triangle. Admettons que notre IA est capable de reconnaître dans son environnement les formes correspondantes mais qu'elle ne sait pas les associer aux annotations correspondantes. Nous pouvons représenter cette état par le tableau représenté en figure \ref{img_annotations}.
 
 \begin{figure}[H] 
   \begin{center}
     \includegraphics[width=0.5\textwidth]{files/raisonneur/annotations} 
   \end{center}
-\caption{Association forme-concept} 
+\caption{Association forme-annotations} 
 \label{img_annotations}
 \end{figure}
 
-À partir de là, notre IA doit apprendre de ces expériences et pour ce faire elle doit mettre à jour les probabilités qu'une annotation soit rattacher à un environnement à chaque environnement rencontré. Par exemple, sur la figure \ref{img_annotations_1} nous pouvons voir qu'un environnement présentant la forme \og{}~rond~\fg{} et correctement annoté mettra à jour les probabilités de cette forme comme illustré.
+À partir de là, notre IA doit apprendre de ces expériences et pour ce faire elle doit mettre à jour les probabilités qu'une annotation soit rattachée à un environnement à chaque environnement rencontré. Par exemple, sur la figure \ref{img_annotations_1} nous pouvons voir qu'un environnement présentant la forme \og{} rond \fg{} et correctement annoté mettra à jour les probabilités de cette forme comme illustré.
 
 \begin{figure}[H] 
 \includegraphics[width=\textwidth]{files/raisonneur/annotations_1} 
