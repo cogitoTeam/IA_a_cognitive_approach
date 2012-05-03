@@ -28,27 +28,50 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  	#wood_game { text-align:center; 
                 background-image:url('data/wood.jpg'); 
                 width: 480px; height: 480px; display:inline-block; 
-                border:3px solid black;border-width:0 3px 3px 0 !important;}
+                border:3px solid black;border-width:0 3px 3px 0 !important; }
 	.active { box-shadow: 0px 0px 50px white; border:3px solid #7E3000 !important;}
 	#pub { position:fixed; top:0px; right:0px; padding:10px;}
+        #felt_box { margin:40px; align:center; border: 2px solid #7E3000; 
+                border-width:2px 0 0 2px; background:rgb(0,113,35);
+                width: 400px; height: 400px;}
+        table{ padding:16px; }
+        td { text-align:left;}
+        th { height:48px; text-algin:center;}
+        .radio { width:32px; height:32px; }
     </style>
 </head>
 	
 <body>
     <h1>AC-cogito</h1>
     <div id="pub" >
-	<a href="https://github.com/marminthibaut/artificial_consciousness"><img src="data/logo.png"></a>
+	<a href="https://github.com/marminthibaut/artificial_consciousness">
+            <img src="data/logo.png"></a>
     </div>
     <div id="wood_game" class="">
         
-    <b>Join a game</b>
-    <form action="game.jsp" method="get">
-    <input type="text" name="game_id" />
-    <input type="submit" value="Join" /> <br>
-    <input type="radio" name="join_type" value="join" checked="yes">Participate<br>
-    <input type="radio" name="join_type" value="watch">Observe<br>
+    <div id="felt_box" class="">
+    <table align="center">
+        <tr><th colspan="2">Join a game</th></tr>
+        <form action="game.jsp" method="get">
+        <tr>
+            <td><input type="text" name="game_id" /></td>
+            <td><input type="submit" value="Join" /></td>
+        </tr>
+        <tr>
+            <td>(leave blank to search)</td>
+            <td><input type="radio" name="join_type" value="join" checked="yes">
+                Participate</td>
+        <tr>
+        <tr>
+            <td></td>
+            <td><input type="radio" name="join_type" value="watch">
+                Observe</td>
+        </tr>
+    </table>
     
     </form> 
+    </div>
+        
     </div>
 </body>
 
