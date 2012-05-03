@@ -3,38 +3,35 @@
  * @date 31-Mar-2012
  *****************/
 
-package test;
+package ac;
 
-import agent.Agent;
-import ac.AC;
-
-public class Test
+public class Cogito
 {
+
+  static final boolean BOOSTRAP = false;
+  static final boolean THINK = false;
+
   /* MAIN */
-
-  public static void main(String[] args) throws InterruptedException
+  public static void main(String[] args)
   {
-    boolean bootstrap = false;
-    // create agent(s)
-    Agent agent = new AC();
 
-    if (bootstrap)
-      agent.bootstrap();
+    // create agent(s)
+    AC agent = new AC();
+
+    if (BOOSTRAP)
+      {
+        agent.bootstrap();
+        System.exit(0);
+      }
+
+    if (THINK)
+      {
+        agent.think();
+        System.exit(0);
+      }
 
     // main loop
-    boolean stop = false;
-    while (!stop)
-      {
-        // update the agent(s)
-        agent.act();
-
-        // stop if the agent breaks down or requests euthanasia
-        if (agent.getState() != Agent.State.NORMAL)
-          stop = true;
-
-        // let other processes execute
-        Thread.sleep(1000);
-      }
+    agent.run();
 
     System.out.println("Stopped");
   }
