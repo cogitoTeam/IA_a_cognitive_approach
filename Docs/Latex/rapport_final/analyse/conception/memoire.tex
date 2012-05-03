@@ -7,14 +7,14 @@ Le module de mémoire se décompose en trois parties :
 
 \subsection{Mémoire à court terme}
 
-La mémoire à court terme est le module avec lequel communiquent les modules d'analyse et de choix. Elle a un rôle de \emph{buffer} permettant de stocker temporairement les choix possibles analysés soumis par le module d'analyse poussé, et sont fournis au module de choix (module de raisonnement).
+La mémoire à court terme est le module avec lequel communiquent les modules d'analyse et de raisonnement. Elle a un rôle de \emph{buffer} permettant de stocker temporairement les données soumises par le module d'analyse poussé, et sont fournis au module de raisonnement.
 
 L'accès aux ressources stockées en mémoire sémantique ou épisodique se fait également par la mémoire à court terme ; elle peut être décrite comme l'interface mémoire.
 
 \subsection{Mémoire épisodique}
 \label{conception_memoire_episodique}
 
-La mémoire épisodique stocke des parties et des coups appartenant à des parties. Tous les éléments sont datés au moment de l'ajout et peuvent être parcourus par ordre chronologique inversé (du plus récent au plus ancien).
+La mémoire épisodique stocke des parties et des coups. Tous les éléments sont datés au moment de l'ajout et peuvent être parcourus par ordre chronologique inversé (du plus récent au plus ancien).
 
 Cette mémoire est structurée sous la forme d'une double liste chaînée :
 \begin{itemize}
@@ -46,7 +46,7 @@ La structure d'une telle mémoire peu être vue comme :
 \end{figure}
 
 
-\item un graphe biparti avec présence d'un arc x -> y signifiant la présence de la forme y dans le plateau x.
+\item un graphe biparti avec présence d'un arc x $\rightarrow$ y signifiant la présence de la forme y dans le plateau x.
 \begin{figure}[H]
 \includegraphics[width=\textwidth]{files/memoire/context_graph}
 \caption{Représentation de la mémoire sémantique sous la forme d'un graphe biparti.}
