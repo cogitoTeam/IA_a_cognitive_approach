@@ -1,8 +1,5 @@
 package ac;
 
-import game.Game;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -16,7 +13,6 @@ import ac.memory.Neo4jActiveMemory;
 import ac.memory.episodic.Neo4jEpisodicMemory;
 import ac.memory.semantic.Neo4jSemanticMemory;
 import ac.reasoning.Reasoning;
-import ac.shared.CompleteBoardState;
 import ac.shared.GameStatus;
 import ac.shared.RelevantPartialBoardState;
 import agent.Agent;
@@ -84,7 +80,7 @@ public class AC extends Agent
       {
         if (LOGGER.isDebugEnabled())
           LOGGER.debug("Put new RPBS in memory");
-        
+
         this._memory.putRelevantStructure(new RelevantPartialBoardState(
             atoms_list));
       }
@@ -92,7 +88,7 @@ public class AC extends Agent
       {
         LOGGER.error("An error occured when putting RPBS in memory", e);
       }
-    
+
     atoms_list.clear();
     atoms_list.add(new Atom("isOpp(x)"));
 
@@ -100,7 +96,7 @@ public class AC extends Agent
       {
         if (LOGGER.isDebugEnabled())
           LOGGER.debug("Put new RPBS in memory");
-        
+
         this._memory.putRelevantStructure(new RelevantPartialBoardState(
             atoms_list));
       }
@@ -108,14 +104,13 @@ public class AC extends Agent
       {
         LOGGER.error("An error occured when putting RPBS in memory", e);
       }
-    
+
     atoms_list.clear();
     atoms_list.add(new Atom("isMine(x)"));
     atoms_list.add(new Atom("isMine(y)"));
     atoms_list.add(new Atom("near(x,y)"));
     atoms_list.add(new Atom("near(y,x)"));
 
-
     try
       {
         if (LOGGER.isDebugEnabled())
@@ -127,14 +122,13 @@ public class AC extends Agent
       {
         LOGGER.error("An error occured when putting RPBS in memory", e);
       }
-    
+
     atoms_list.clear();
     atoms_list.add(new Atom("isOpp(x)"));
     atoms_list.add(new Atom("isOpp(y)"));
     atoms_list.add(new Atom("near(x,y)"));
     atoms_list.add(new Atom("near(y,x)"));
 
-
     try
       {
         if (LOGGER.isDebugEnabled())
@@ -146,14 +140,13 @@ public class AC extends Agent
       {
         LOGGER.error("An error occured when putting RPBS in memory", e);
       }
-    
+
     atoms_list.clear();
     atoms_list.add(new Atom("isOpp(x)"));
     atoms_list.add(new Atom("isMine(y)"));
     atoms_list.add(new Atom("near(x,y)"));
     atoms_list.add(new Atom("near(y,x)"));
 
-
     try
       {
         if (LOGGER.isDebugEnabled())
@@ -165,7 +158,7 @@ public class AC extends Agent
       {
         LOGGER.error("An error occured when putting RPBS in memory", e);
       }
-    
+
     atoms_list.clear();
     atoms_list.add(new Atom("isMine(x)"));
     atoms_list.add(new Atom("isMine(y)"));
@@ -188,7 +181,7 @@ public class AC extends Agent
       {
         LOGGER.error("An error occured when putting RPBS in memory", e);
       }
-    
+
     atoms_list.clear();
     atoms_list.add(new Atom("isOpp(x)"));
     atoms_list.add(new Atom("isOpp(y)"));
@@ -211,7 +204,7 @@ public class AC extends Agent
       {
         LOGGER.error("An error occured when putting RPBS in memory", e);
       }
-    
+
     atoms_list.clear();
     atoms_list.add(new Atom("isMine(x)"));
     atoms_list.add(new Atom("isOpp(y)"));
@@ -234,7 +227,7 @@ public class AC extends Agent
       {
         LOGGER.error("An error occured when putting RPBS in memory", e);
       }
-    
+
     atoms_list.clear();
     atoms_list.add(new Atom("isOpp(x)"));
     atoms_list.add(new Atom("isMine(y)"));
@@ -261,9 +254,9 @@ public class AC extends Agent
   }
 
   @Override
-  protected void think()
+  public void think()
   {
-    // nothing to do
+    this._reasoning.think();
   }
 
   @Override
@@ -302,7 +295,8 @@ public class AC extends Agent
             {
               if (LOGGER.isDebugEnabled())
                 LOGGER.debug("Call the analysis module to make a choice");
-              action = this._analysis.analyse((Percept.Choices) percept, this.getPlayer());
+              action = this._analysis.analyse((Percept.Choices) percept,
+                  this.getPlayer());
             }
           catch (Exception e)
             {
@@ -312,7 +306,7 @@ public class AC extends Agent
 
         case GAME_END:
           if (LOGGER.isDebugEnabled())
-            LOGGER.debug("AC have to finish the current game");
+            LOGGER.debug("AC has to finish the current game");
           this.existGame = false;
 
           Percept.GameEnd game_end = (Percept.GameEnd) percept;
@@ -345,17 +339,23 @@ public class AC extends Agent
 
           if (LOGGER.isDebugEnabled())
             LOGGER.debug("Restarting new Game :)");
-          
-        try
-          {
-            Thread.sleep(10000);
-          }
-        catch (InterruptedException e)
-          {}
-        
+
+          try
+            {
+              Thread.sleep(10000);
+            }
+          catch (InterruptedException e)
+            {
+            }
+
+          _reasoning.think();
+          _reasoning.think();
           action = new Action.Restart();
 
           break;
+
+        case WAITING_FOR_PLAYER:
+        case OPPONENT_TURN:
 
       }
 

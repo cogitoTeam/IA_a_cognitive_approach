@@ -65,32 +65,15 @@ class IntrospectionEngine extends Thread
     if (LOGGER.isDebugEnabled())
       LOGGER.debug("I think…");
 
-    while (!this.isInterrupted())
+    try
       {
-        /* Warning : if you use this.sleep, you have to do this
-         * 
-         * try
-         * {
-         * this.sleep(1000);
-         * }
-         * catch (InterruptedException e)
-         * {
-         * this.interrupt();
-         * }
-         * * */
-
-        try
-          {
-            this.searchNewRPBS();
-          }
-        catch (MemoryException e)
-          {
-            LOGGER.error("An error occured during introspection", e);
-          }
-
-        // @todo implement this method and remove next line
-        break;
+        this.searchNewRPBS();
       }
+    catch (MemoryException e)
+      {
+        LOGGER.error("An error occured during introspection", e);
+      }
+
   }
 
   /* **************************************************************************
@@ -100,11 +83,15 @@ class IntrospectionEngine extends Thread
   private void searchNewRPBS() throws MemoryException
   {
     rpbs_list = this._memory.getRelevantPartialBoardStates();
+    List<Game> list_games = null;
+    Move m1, m2;
 
     // @todo get last won game
     int nb_game = 10;
-    List<Game> list_games = this._memory.getLastWonGames(nb_game);
-    Move m1, m2;
+    if (pileOuFace())
+      list_games = this._memory.getLastWonGames(nb_game);
+    else
+      list_games = this._memory.getLastLostGames(nb_game);
 
     for (int i = 0; i < list_games.size(); i++)
       for (int j = i + 1; j < list_games.size(); j++)
@@ -115,6 +102,8 @@ class IntrospectionEngine extends Thread
           while ((m1 = m1.getPreviousMove()) != null
               && (m2 = m2.getPreviousMove()) != null)
             {
+              if (LOGGER.isDebugEnabled())
+                LOGGER.debug("searchNewRPBS");
               this.searchNewRPBS(m1, m2);
             }
         }
@@ -124,7 +113,7 @@ class IntrospectionEngine extends Thread
   private void searchNewRPBS(Move m1, Move m2) throws MemoryException
   {
     RelevantPartialBoardState new_rpbs;
-    CompleteBoardState cbs1, cbs2;  
+    CompleteBoardState cbs1, cbs2;
     long cbs1_id, cbs2_id;
 
     try
@@ -134,7 +123,7 @@ class IntrospectionEngine extends Thread
 
         cbs1_id = cbs1.getId();
         cbs2_id = cbs2.getId();
-        
+
         cbs1.generalise("w");
         cbs2.generalise("z");
 
@@ -143,6 +132,9 @@ class IntrospectionEngine extends Thread
               .getRelevantPartialBoardStates())
             if (rs1.equals(rs2))
               {
+                if (LOGGER.isDebugEnabled())
+                  LOGGER.debug("extend " + rs1.getRule() + "?");
+
                 new_rpbs = this.extension(rs1, cbs1, cbs2);
 
                 if (new_rpbs != null)
@@ -209,8 +201,11 @@ class IntrospectionEngine extends Thread
         TreeMap<Term, LinkedList<TreeSet<Term>>> current_map = (TreeMap<Term, LinkedList<TreeSet<Term>>>) term_map
             .clone();
 
+        if (LOGGER.isDebugEnabled())
+          LOGGER.debug("parcours rpbs de l'env 1");
+
         // retrait de tous les atomes déjà utiliser dans la substitution
-        ArrayList<Term> used_vars = sub1.getSubstitues();
+        ArrayList<Term> used_vars = sub1.getSubstitutes();
         for (Term t : used_vars)
           for (TreeSet<Term> current_tree : current_map.get(t))
             current_tree.remove(t);
@@ -243,6 +238,9 @@ class IntrospectionEngine extends Thread
 
                 if (homo_cbs.existsHomomorphismTest(sub2))
                   {
+                    if (LOGGER.isDebugEnabled())
+                      LOGGER.debug("test existance rpbs");
+
                     if (!this.rpbs_list.contains(new_rs))
                       {
                         haveNewRPBS = true;
@@ -257,10 +255,9 @@ class IntrospectionEngine extends Thread
                 new_rs.renameVars();
                 if (LOGGER.isDebugEnabled())
                   LOGGER.debug("Add new rpbs: " + new_rs.getRule());
-                
+
                 return new_rs;
-                /*
-                 * for (TreeSet<Term> current_tree : current_map.get(t))
+                /* for (TreeSet<Term> current_tree : current_map.get(t))
                  * current_tree.remove(t); */
               }
             else
@@ -314,4 +311,8 @@ class IntrospectionEngine extends Thread
     ac.getReasoning().think();
   }
 
+  private static boolean pileOuFace()
+  {
+    return Math.random() < 0.5;
+  }
 }
