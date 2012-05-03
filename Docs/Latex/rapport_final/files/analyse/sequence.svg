@@ -76,10 +76,10 @@
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="713" y="200" width="14" height="260"/>
   </g>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.525" y1="100" x2="953.525" y2="220"/>
-    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.525" y1="300" x2="953.525" y2="370"/>
-    <rect style="fill: #ffffff" x="946.525" y="220" width="14" height="80"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="946.525" y="220" width="14" height="80"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.524" y1="100" x2="953.524" y2="220"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.524" y1="300" x2="953.524" y2="370"/>
+    <rect style="fill: #ffffff" x="946.524" y="220" width="14" height="80"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="946.524" y="220" width="14" height="80"/>
   </g>
   <g>
     <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="1165.85" y1="100" x2="1165.85" y2="240"/>
@@ -112,48 +112,48 @@
     <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="609.95" y="192">Coups possibles (Con. Base)</text>
   </g>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="929.525" y1="220" x2="727" y2="220"/>
-    <polygon style="fill: #000000" points="929.525,225 945.525,220 929.525,215 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="929.525,225 945.525,220 929.525,215 "/>
-    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="836.713" y="212">Requête en mémoire</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="929.524" y1="220" x2="727" y2="220"/>
+    <polygon style="fill: #000000" points="929.524,225 945.524,220 929.524,215 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="929.524,225 945.524,220 929.524,215 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="836.712" y="212">Requête en mémoire</text>
   </g>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" x1="744" y1="300" x2="946.525" y2="300"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" x1="744" y1="300" x2="946.524" y2="300"/>
     <polygon style="fill: #000000" points="744,295 728,300 744,305 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="744,295 728,300 744,305 "/>
-    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="836.713" y="292">Élements en mémoire</text>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="836.712" y="292">Élements en mémoire</text>
   </g>
   <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="670" y="320" width="310" height="120"/>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.525" y1="300" x2="953.525" y2="380"/>
-    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.525" y1="420" x2="953.525" y2="480"/>
-    <rect style="fill: #ffffff" x="946.525" y="380" width="14" height="40"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="946.525" y="380" width="14" height="40"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.524" y1="300" x2="953.524" y2="380"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.524" y1="420" x2="953.524" y2="480"/>
+    <rect style="fill: #ffffff" x="946.524" y="380" width="14" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="946.524" y="380" width="14" height="40"/>
   </g>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="939.82" y1="380" x2="727" y2="380"/>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="927.172,385 943.172,380 927.172,375 "/>
-    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="836.713" y="372">Ajout d'un concept (Con. Poussé)</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="939.819" y1="380" x2="727" y2="380"/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="927.171,385 943.171,380 927.171,375 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="836.712" y="372">Ajout d'un concept (Con. Poussé)</text>
   </g>
   <g>
     <g>
       <rect style="fill: #ffffff" x="670" y="320" width="190" height="25.2"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="670" y="320" width="190" height="25.2"/>
     </g>
-    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="765" y="337.05">
+    <text style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal" x="765" y="337.05">
       <tspan x="765" y="337.05">loop(i=nb_coups_possibles)</tspan>
     </text>
   </g>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1141.85" y1="240" x2="960.525" y2="240"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1141.85" y1="240" x2="960.524" y2="240"/>
     <polygon style="fill: #000000" points="1141.85,245 1157.85,240 1141.85,235 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1141.85,245 1157.85,240 1141.85,235 "/>
     <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="1059.64" y="232">Transmission de la requête</text>
   </g>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" x1="977.525" y1="280" x2="1158.85" y2="280"/>
-    <polygon style="fill: #000000" points="977.525,275 961.525,280 977.525,285 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="977.525,275 961.525,280 977.525,285 "/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" x1="977.524" y1="280" x2="1158.85" y2="280"/>
+    <polygon style="fill: #000000" points="977.524,275 961.524,280 977.524,285 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="977.524,275 961.524,280 977.524,285 "/>
     <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="1059.64" y="272">Réponse</text>
   </g>
   <g>
@@ -164,24 +164,24 @@
   <g>
     <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1451.99" y1="479.768" x2="1285.58" y2="480"/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1439.35,484.786 1455.34,479.763 1439.33,474.786 "/>
-    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="1372.08" y="471.879">Inibition de l'introspection</text>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="1372.08" y="471.88">Inibition de l'introspection</text>
   </g>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.525" y1="420" x2="953.525" y2="500"/>
-    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.525" y1="540" x2="953.525" y2="640"/>
-    <rect style="fill: #ffffff" x="946.525" y="500" width="14" height="40"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="946.525" y="500" width="14" height="40"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.524" y1="420" x2="953.524" y2="500"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 8; stroke: #000000" x1="953.524" y1="540" x2="953.524" y2="640"/>
+    <rect style="fill: #ffffff" x="946.524" y="500" width="14" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="946.524" y="500" width="14" height="40"/>
   </g>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="977.525" y1="500" x2="1271.58" y2="500"/>
-    <polygon style="fill: #000000" points="977.525,495 961.525,500 977.525,505 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="977.525,495 961.525,500 977.525,505 "/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="977.524" y1="500" x2="1271.57" y2="500"/>
+    <polygon style="fill: #000000" points="977.524,495 961.524,500 977.524,505 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="977.524,495 961.524,500 977.524,505 "/>
     <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="1116" y="492">Demande Concepts Poussés</text>
   </g>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" x1="1254.58" y1="540" x2="960.525" y2="540"/>
-    <polygon style="fill: #000000" points="1254.58,545 1270.58,540 1254.58,535 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1254.58,545 1270.58,540 1254.58,535 "/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" x1="1254.57" y1="540" x2="960.524" y2="540"/>
+    <polygon style="fill: #000000" points="1254.57,545 1270.57,540 1254.57,535 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1254.57,545 1270.57,540 1254.57,535 "/>
     <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="1116" y="532">Élements en mémoire</text>
   </g>
   <g>
@@ -191,7 +191,7 @@
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="493" y="180" width="14" height="20"/>
   </g>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" x1="144" y1="580" x2="1271.58" y2="580"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" x1="144" y1="580" x2="1271.57" y2="580"/>
     <polygon style="fill: #000000" points="144,575 128,580 144,585 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="144,575 128,580 144,585 "/>
     <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="699.238" y="572">Choix</text>
@@ -208,13 +208,13 @@
   </g>
   <g>
     <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" x1="16.9822" y1="599.976" x2="113" y2="600"/>
-    <polygon style="fill: #000000" points="16.9834,594.976 0.982189,599.972 16.9809,604.976 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="16.9834,594.976 0.982189,599.972 16.9809,604.976 "/>
-    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="50.4884" y="592.221">État de plateau</text>
+    <polygon style="fill: #000000" points="16.9834,594.976 0.982181,599.972 16.9809,604.976 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="16.9834,594.976 0.982181,599.972 16.9809,604.976 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="50.4884" y="592.22">Choix</text>
   </g>
   <g>
-    <ellipse style="fill: #000000" cx="-7.00543" cy="599.97" rx="6" ry="6"/>
-    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="-7.00543" cy="599.97" rx="6" ry="6"/>
+    <ellipse style="fill: #000000" cx="-7.00544" cy="599.97" rx="6" ry="6"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="-7.00544" cy="599.97" rx="6" ry="6"/>
   </g>
   <g>
     <ellipse style="fill: #000000" cx="1465" cy="479.75" rx="6" ry="6"/>
