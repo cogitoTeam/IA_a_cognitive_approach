@@ -248,14 +248,14 @@ public class ObjectNode extends
 
                 underlyingNode.createRelationshipTo(
                     attribute.getUnderlyingNode(), RelTypes.RELATED);
-                try
+               /* try
                   {
                     attribute.performMark();
                   }
                 catch (NodeException e)
                   {
                     logger.error("Error when perfoming mark", e);
-                  }
+                  }*/
 
               }
             else
