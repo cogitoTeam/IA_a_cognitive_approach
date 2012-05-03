@@ -15,16 +15,26 @@ La séparation entre l'agent et son environnement permet de gagner en flexibilit
 
 L'agent peut donc être un humain ou une machine. Une machine pouvant exécuter notre modèle aussi bien qu'une intelligence artificielle tiers. 
 
-Ainsi, nous disposons d'une abstraction du fonctionnement interne de chaque agent, ce qui permet
+Ainsi, nous disposons d'une abstraction du fonctionnement interne de chaque agent, ce qui permet :
 \begin{itemize}
 \item d'une part de faire jouer notre agent contre un autre agent basé sur une stratégie connue, facilitant ainsi l'évaluation de notre modèle,
-\item d'autre part de tester les développements qui concernent l'environnement avant même que notre IA ne soit fonctionnelle en faisant jouer des agents naïfs. Cette méthode permet d'isoler pleinement le développement de la plateforme de tests de celui de l'IA.
+\item d'autre part de tester les développements qui concernent l'environnement avant même que notre IA ne soit fonctionnelle en faisant jouer des agents naïfs entre eux. Cette méthode permet d'isoler pleinement le développement de la plateforme de tests de celui de l'IA.
 \end{itemize}
 
 \subsection{ Agent \og Arbitre \fg{} }
 
-Dans notre cas l'environnement est un jeu de plateau, donc une grille dont les cases peuvent contenir un pion ou être vide. L'environnement doit aussi "connaître", pour ainsi dire, quel est le prochain joueur qui doit jouer ainsi que toute autre information qui ne peut pas être directement déduite de l'état du plateau. Finalement il doit pouvoir juger de la légalité des coups proposés par l'agent, et par le même biais savoir comment initialiser le plateau de la bonne manière.
-Il se décompose donc en trois modules: un plateau, une liste de règles et un processeur qui les manipule. Au lieu de briser le métaphore du \og Tableau Noir \fg{} en parlant d'environnement-agent, nous ce processeur sera en effet un agent tiers: une sorte d'arbitre neutre. C'est un agent purement réactif qui maintient l'état du jeu en exécutant les coups qui lui sont envoyés par les agents joueurs dans la mesure du légale. Il devrait bien-sur les notifier de l'éventuelle faillite de leurs actions, ainsi que leur envoyer l'état du plateau en cas de demande. 
+Comme indiqué dans la section~\ref{section:domaine_application_le_jeu_de_plateau} (page~\pageref{section:domaine_application_le_jeu_de_plateau}) l'environnement est un jeu de plateau. Il s'agit d'une grille dont les cases peuvent contenir un pion ou être vides.
+
+L'environnement doit aussi être capable de déterminer le prochain joueur qui doit prendre la main ainsi que toute autre information qui ne peut pas être déterminée via l'état du plateau. Il doit également pouvoir juger de la légalité des coups proposés par un agent, et par le même biais savoir comment initialiser le plateau lors d'une nouvelle partie.
+
+Il se décompose donc en trois modules :
+\begin{itemize}
+\item un plateau,
+\item une liste de règles,
+\item et un processeur qui les manipules.
+\end{itemize}
+
+Plutôt que de briser la métaphore du \og Tableau Noir \fg{} en parlant d'\emph{environnement-agent}, nous avons fait le choix de voir ce processeur comme un agent tiers : une sorte d'arbitre neutre. C'est un agent purement réactif qui maintient l'état du jeu en exécutant les coups qui lui sont envoyés par les agents joueurs dans la mesure du légale. Il doit veiller à notifier le résultat des actions effectuées et envoyer l'état du plateau en cas de demande.
 
 \begin{figure}[H] 
 \centering
@@ -33,4 +43,6 @@ Il se décompose donc en trois modules: un plateau, une liste de règles et un p
 \label{arbitre}
 \end{figure}
 
-Finalement c'est à travers cet agent-filtre que les autres iront modifier l'environnement et donc communiquer entre eux. Suite à cette étude préalable, il nous semble claire qu'une architecture client-serveur serait recommandé pour l'implémentation des interactions entre les agents et leur environnement.
+C'est donc à travers cet \emph{agent-filtre} que les joueurs peuvent modifier l'environnement et, par conséquent, communiquer entre eux.
+
+Suite à cette étude préalable, il est claire qu'une architecture \emph{client-serveur} est recommandé pour l'implémentation des interactions entre les agents et leur environnement.
