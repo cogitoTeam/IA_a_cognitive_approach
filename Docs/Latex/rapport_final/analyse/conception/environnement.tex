@@ -1,8 +1,8 @@
 \subsection{ \og Stigmergie \fg{} }
 
-À fin de bien séparer la logique liée à la réflexion de celle qui structure le jeu, nous suivrons le paradigme \og Agent et Environnement \fg{}. Notre intelligence artificielle sera assimilée à un agent qui évolue dans un environnement qu'il peut observer et modifier. 
-Toute communication entre agents se fera donc par \og Tableau Noir \fg{}, c'est à dire en laissant des traces dans cet environnement partagé. Cette interaction dite \og Stigmergique \fg{} est nécessairement asynchrone mais possède l'avantage de ne nécessiter qu'un seul canal de communication par agent.
-Ce canal, reliant l'agent à son environnement, est bidirectionnelle: il permettra à l'agent de recevoir des stimuli et d'envoyer des impulsions. Par la suite nous parlerons de \og percepts\fg{} et \og actions\fg{}:
+Dans le but de bien dissocier la logique liée à la réflexion de celle qui structure le jeu, nous avons choisi de suivre le paradigme \og Agent et Environnement \fg{}. Notre IA est assimilée à un agent qui évolue dans un environnement qu'il peut observer et modifier.
+
+Toute communication entre agents se fait donc par \og Tableau Noir \fg{}, c'est à dire en laissant des traces dans cet environnement partagé. Cette interaction dite \og Stigmergique\footnote{La stigmergie est une méthode de communication indirecte dans un environnement émergent auto-organisé, où les individus communiquent entre eux en modifiant leur environnement. (Article \og Stigmergie \fg{} de Wikipédia en français, licence CC-BY-SA)} \fg{} est nécessairement asynchrone mais possède l'avantage de ne nécessiter qu'un seul canal de communication par agent. Ce canal, qui relie l'agent à son environnement, est bidirectionnelle : il permet à l'agent de recevoir des stimuli et d'envoyer des impulsions. Dans la suite de ce document, nous parlerons de \og percepts\fg{} et \og actions\fg{}.
 
 \begin{figure}[H] 
 \centering
@@ -11,9 +11,15 @@ Ce canal, reliant l'agent à son environnement, est bidirectionnelle: il permett
 \label{agent_env}
 \end{figure}
 
-En séparant l'agent de son environnement nous avons gagnés beaucoup de flexibilité: l'agent peut être aussi bien un humain qu'une machine. Celle-ci pouvant être notre système aussi bien qu'une intelligence artificielle tiers. 
-En effet, tant que celui-ci n'a besoin de pouvoir communiquer avec son environnement qu'à travers des envoies de messages précises, tout algorithme pourrait être encapsulé avec une interface simple pour en faire un agent. Nous nous abstrairions ainsi du fonctionnement interne de chaque agent.
-Cette abstraction permettra d'une part d'évaluer notre agent à la fin du développement, en le faisant joueur contre un autre agent basé sur une stratégie connu. D'autre part nous pourrions tester échafaudage de l'application en cours d'implémentation sans que nous ayons besoin pour autant que notre propre agent soit encore fonctionnelle. Le développement de la plateforme de teste sera alors complètement découplé de celui de l'IA.
+La séparation entre l'agent et son environnement permet de gagner en flexibilité : la communication ne se faisant qu'au travers de l'envoie de messages précis, tout algorithme peut être encapsulé avec une interface simple pour en faire un agent.
+
+L'agent peut donc être un humain ou une machine. Une machine pouvant exécuter notre modèle aussi bien qu'une intelligence artificielle tiers. 
+
+Ainsi, nous disposons d'une abstraction du fonctionnement interne de chaque agent, ce qui permet
+\begin{itemize}
+\item d'une part de faire jouer notre agent contre un autre agent basé sur une stratégie connue, facilitant ainsi l'évaluation de notre modèle,
+\item d'autre part de tester les développements qui concernent l'environnement avant même que notre IA ne soit fonctionnelle en faisant jouer des agents naïfs. Cette méthode permet d'isoler pleinement le développement de la plateforme de tests de celui de l'IA.
+\end{itemize}
 
 \subsection{ Agent \og Arbitre \fg{} }
 
