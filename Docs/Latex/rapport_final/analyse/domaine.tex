@@ -21,25 +21,37 @@ Obéissant à ce format nous avions par exemple :
 
 Le jeu principal que nous considérons est le \og Reversi \footnote{ \og Reversi \fg{} : connu également sous le nom de marque \og Othello \fg{}. }\fg{}, mais l'IA doit être capable d'apprendre à jouer à tout autre jeu de plateau appartenant suivant les contraintes définis ci-dessus.
 
+\subsubsection{Convergence entre spécialités }
+Dans les années précédentes les Masters DECOL\footnote{ Master DECOL : \og Données Connaissances et Langues \fg{} } et IMAGINA\footnote{ Master IMAGINA : \og Images Games and Intelligent Agents \fg{} } étaient rassemblés en un seul appelé I2A\footnote { Maste I2A : \og Ingénierie de l'Intelligence Artificielle \fg{} }.
+Nous étions plusieurs dans ce groupe à devoir choisir un camp ou l'autre, donc un projet sur la cognition appliqué aux jeux présentait un très bon moyen de rassembler nos connaissances et de travailler ensemble sur l'intelligence artificielle généralisé.
+
 \subsubsection{Activité purement cognitive}
 Nous avions déjà parlé de la simulation des parties bases du modèle de cognition, à savoir l'inconscient. La restriction du domaine d'application au jeu de plateau permet de l'ignorer presque complètement. Certes l'intuition peut jouer un rôle dans le jeu, mais ce défi reste principalement un travail de réflexion d'ordre conscient. Nous n'aurions notamment besoin ni de reflexes, ni de mémoire procédurale.
 
 \subsubsection{Activité cognitive complète}
-Gagner un jeu de plateau n'est pourtant pas un travail simple. Il ne suffit pas de prendre le \og meilleur \fg{} coup à chaque tour: pour bien joueur il faut que nous soyons capables de \emph{modéliser} notre adversaire à fin de préduire ses coups, voir de modéliser le modèle qu'il se fait de nous. Il faut ensuite être capable d'utiliser ce modèle pour élaborer une stratégie, donc de \emph{plannifier}. Nous devions \emph{apprendre} suite à erreure si nous ne voulions pas tomber constamment dans les même pièges. 
-
-\subsubsection{Abondance d'études théoriques}
-%C'est gr
+Gagner un jeu de plateau n'est pourtant pas un travail simple. Il ne suffit pas de prendre le \og meilleur \fg{} coup à chaque tour: pour bien joueur il faut que nous soyons capables de \emph{modéliser} notre adversaire à fin de préduire ses coups, voir de modéliser le modèle qu'il se fait de nous. Il faut ensuite être capable d'utiliser ce modèle pour élaborer une stratégie, donc de \emph{plannifier}. Nous devions finalement \emph{apprendre} suite à erreure si nous ne voulions pas tomber constamment dans les même pièges. 
 
 \subsubsection{Évaluations et comparaison faciles}
-Pour mesurer la performance, donc la rationalité, de notre agent il suffirait de le mettre à l'épreuve contre un agent choisissant aléatoirement ses coups. Nous pourrions alors conclure grâce au rapport statistique $\frac{victoires}{victoires + d\acute{e}faites}$ :
+Pour mesurer empiriquement la performance de notre agent il suffit de le mettre à l'épreuve contre un autre agent à de multiple reprises pour calculer le pourcentage de parties gagnés. Prenons par exemple un agent choisissant aléatoirement ses coups et regardons notre :
+
 \begin{itemize}
-\item $>> 50 perc$ l'agent joue de façon rationnelle, 
-\item $tilde 50 perc$ l'agent choisi aléatoirement, donc de manière irrationnelle,
-\item $< 50 perc$ l'agent cherche à perdre.
+\item $\gg 50 \% $ notre agent joue de façon \emph{rationnelle}, 
+\item $\approx 50 \% $ notre agent joue \emph{aléatoirement},
+\item $\ll 50 \% $ notre agent joue de manière \emph{irrationnelle}.
 \end{itemize}
-L'existence d'une stratégie théoriquement optimale nous permettra de mettre notre système à l'épreuve en le faisant jouer contre un \og MiniMax \fg{}. 
 
+Le vrai défi est évidemment de mettre notre agent face à agent basé sur la stratégie \og MiniMax \fg{}, théoriquement optimale si appliqué de façon exacte. Cependant il ne faut pas oublier que l'efficacité n'est pas le but principale de ce projet.
 
-\subsubsection{Convergence entre spécialités }
-Dans les années précédentes les Masters DECOL\footnote{ Master DECOL : \og Données Connaissances et Langues \fg{} } et IMAGINA\footnote{ Master IMAGINA : \og Images Games and Intelligent Agents \fg{} } étaient rassemblés en un seul appelé I2A\footnote { Maste I2A : \og Ingénierie de l'Intelligence Artificielle \fg{} }.
-Nous étions plusieurs dans ce groupe à devoir choisir un camp ou l'autre, donc un projet sur la cognition appliqué aux jeux présentait un très bon moyen de rassembler nos connaissances et de travailler ensemble sur l'intelligence artificielle généralisé.
+\subsubsection{Existence d'une stratégie optimale}
+
+Si nous parlons du \og MiniMax \fg{} ce n'est pas par hazard. En effet en 1928 John Von Neumann publie un théorème prouvant que cette stratégie de minisation de perte maximum est théoriquement optimale des confrontations tels que:
+
+\begin{itemize}
+\item deux \og joueurs \fg{} y participent,
+\item le \og jeu \fg est à \og somme nulle \fg{} \footnote{ jeu à \og somme nulle \fg{}: le gain de l'un est exactement la perte de l'autre et vice-vera. },
+\item la durée de l'engagement est fini, ainsi que le nombre d'options possibles.
+\end{itemize}
+
+Depuis le tournant du siècle les ordinateurs ont dépassé les meilleurs humains aux échecs. Pourtant certains jeux comme le Go résistent encore: c'est que la simple combinatoire empêche les ordinateurs d'appliquer de manière exacte la stratégie optimale, qui même avec triage et élagage \og Alpha-Beta \fg \footnote{ \og Élagage Alpha-Beta \fg : forme de séparation et évaluation permettant d'éviter des explorations inutiles de l'espace des possibilités. } est en $O(b^{\frac{d}{2}})$.
+
+En résulte que le \og MiniMax \fg{} doit maintenant être supplémenté d'heuristiques, donc d'expertise humaine, à fin de répondre dans un délai acceptable. Nous pouvions alors nous demander si \emph{la machine ne pourrait pas acquérir de lui-même cette expertise \dots }
