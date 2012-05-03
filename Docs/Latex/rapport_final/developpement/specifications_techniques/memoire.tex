@@ -22,7 +22,7 @@ La persistance des données est assurée par un \gls{SGBD} né de la mouvance \g
 \begin{itemize}
 \item nous avions la volonté de découvrir une solution \gls{NoSQL}, que nous n'avons pas eu l'occasion d'étudier lors de notre formation,
 
-\item Neo4j est disponible en plusieurs versions, notamment en version serveur, version webservice REST et version java embarquée. La mémoire n'étant pas accédée de manière concurrente ainsi que pour des soucis de légèreté, c'est la version embarquée (\emph{embedded java})qui a été utilisée,
+\item Neo4j est disponible en plusieurs versions, notamment en version serveur, version webservice REST et version java embarquée. La mémoire ne nécessitant pas d'accès concurrents mais aussi par soucis de légèreté, c'est la version embarquée (\emph{embedded java}) qui a été utilisée,
 
 \item ce type de \gls{SGBD} \gls{NoSQL} permet d'obtenir des temps d'accès plus rapides qu'avec des \gls{SGBD} relationnels traditionnels,
 
@@ -35,7 +35,7 @@ La persistance des données est assurée par un \gls{SGBD} né de la mouvance \g
 \item Neo4j est une solution libre distribuée sous licence \gls{GPLv3}.
 \end{itemize}
 
-Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est représentée sous la forme d'un graphe orienté, composé d'un nœud \og root \fg{}. Chaque nœud et chaque arc peut posséder des attributs. Cependant, il n'est possible de définir que des types d'arc, pour les nœuds on utilise donc une astuce qui consiste en la création d'un \og master\_node \fg{} comme le montre le schéma suivant : 
+Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est représentée sous la forme d'un graphe orienté, composé d'un nœud \og root \fg{}. Chaque nœud et chaque arc peut posséder des attributs. Cependant, il n'est possible de typer que les arcs, pour typer les nœuds on utilise donc une astuce qui consiste en la création d'un \og master\_node \fg{} comme le montre le schéma suivant : 
 
 \begin{figure}[H]
 \includegraphics[width=\textwidth]{files/neo4j/example_node_type}
