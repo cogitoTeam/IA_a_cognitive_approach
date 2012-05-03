@@ -1,3 +1,26 @@
+Suite à victoire de Deep Blue contre Gasparov en 1997, un certain Robert Levinson nota que la machine \og ne sait même pas qu'il joue aux échecs \fg{}. Ici nous tentons justement de construire une intelligence artificielle qui fonctionne comme un être vivant au lieu d'un calculateur.
+
+Cependant, une IA \og forte \fg{} étant hors de la portée d'un projet TER de Master, nous devions nous limiter en plus à une application et un environnement précis. C'est donc en s'inspirant de l'exemple de dessus que nous avions choisi le jeu de plateau comme arène.
+
+Plus précisément nous nous limiterons à des jeux suivant des contraintes très précises, à savoir :
+
+\begin{itemize}
+\item Deux-joueurs, noir et blanc.
+\item Placement, à tour de rôle, d'un nouveau pion (pas de déplacements).
+\item Un seul type de pion.
+\item Plateau matricielle, cases et côtés sans valeurs associés.
+\end{itemize}
+
+Obéissant à ce format nous avions par exemple :
+
+\begin{itemize}
+\item Morpion / Puissance-4
+\item Go
+\item Reversi
+\end{itemize}
+
+Le jeu principal que nous considérons est le \og Reversi \footnote{ \og Reversi \fg{} : connu également sous le nom de marque \og Othello \fg{}. }\fg{}, mais l'IA doit être capable d'apprendre à jouer à tout autre jeu de plateau appartenant suivant les contraintes définis ci-dessus.
+
 \subsubsection{Activité purement cognitive}
 Nous avions déjà parlé de la simulation des parties bases du modèle de cognition, à savoir l'inconscient. La restriction du domaine d'application au jeu de plateau permet de l'ignorer presque complètement. Certes l'intuition peut jouer un rôle dans le jeu, mais ce défi reste principalement un travail de réflexion d'ordre conscient. Nous n'aurions notamment besoin ni de reflexes, ni de mémoire procédurale.
 
@@ -8,6 +31,13 @@ Gagner un jeu de plateau n'est pourtant pas un travail simple. Il ne suffit pas 
 %C'est gr
 
 \subsubsection{Évaluations et comparaison faciles}
+Pour mesurer la performance, donc la rationalité, de notre agent il suffirait de le mettre à l'épreuve contre un agent choisissant aléatoirement ses coups. Nous pourrions alors conclure grâce au rapport statistique $\frac{victoires}{victoires + d\acute{e}faites}$ :
+\begin{itemize}
+\item $>> 50 perc$ l'agent joue de façon rationnelle, 
+\item $tilde 50 perc$ l'agent choisi aléatoirement, donc de manière irrationnelle,
+\item $< 50 perc$ l'agent cherche à perdre.
+\end{itemize}
+L'existence d'une stratégie théoriquement optimale nous permettra de mettre notre système à l'épreuve en le faisant jouer contre un \og MiniMax \fg{}. 
 
 
 \subsubsection{Convergence entre spécialités }
