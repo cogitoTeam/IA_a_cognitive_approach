@@ -32,6 +32,32 @@ public abstract class Agent
   /* INTERFACE */
 
   /**
+   * start the main loop
+   */
+  public void run()
+  {
+    boolean stop = false;
+    while (!stop)
+      {
+        // update the agent(s)
+        this.act();
+
+        // stop if the agent breaks down or requests euthanasia
+        if (this.getState() != Agent.State.NORMAL)
+          stop = true;
+
+        // let other processes execute
+        try
+          {
+            Thread.sleep(1000);
+          }
+        catch (InterruptedException e)
+          {
+          }
+      }
+  }
+
+  /**
    * Called whenever the Agent tries to act but has no Percept to act upon:
    * this method can be implemented to perform some kind of optimisation or
    * compression while waiting for the enemy to make a move.

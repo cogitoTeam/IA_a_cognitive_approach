@@ -32,6 +32,15 @@ public class RandomAgent extends SwitchAgent
   protected Action gameEndReaction(Percept.GameEnd percept)
   {
     // restart the game
+    try
+      {
+        Thread.sleep(10000);
+      }
+    catch (InterruptedException e)
+      {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     return new Action.Restart();
   }
 
