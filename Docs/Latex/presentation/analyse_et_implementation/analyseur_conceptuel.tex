@@ -9,12 +9,11 @@
 \begin{itemize}
   \item Représentation des connaissances : \textbf{vocabulaire}
   \begin{itemize}
-    \item Graphes conceptuels de base ou
     \item Formules de logique du premier ordre
   \end{itemize}
+  \pause
   \item Analyse des connaissances : \textbf{mécanisme}
   \begin{itemize}
-    \item Interrogation avec la mémoire
     \item Recherche d'homomorphismes
   \end{itemize}
 \end{itemize}
@@ -22,14 +21,14 @@
 
 \begin{frame}{Analyseur conceptuel}{Implémentation : Rôles du module}
 \begin{itemize}
-  \item Convertisseur :
+  \item \textbf{Convertisseur :}
   \begin{itemize}
     \item Rend les données de l'environnement \enquote{lisibles} par l'IA
   \end{itemize}
-  \item Moteur d'inférence :
+  \item \textbf{Moteur d'inférence :}
   \begin{itemize}
     \item Applique les règles générés par l'IA afin d'en
-    sortir des nouveaux concepts
+    sortir des nouvelles informations
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -37,17 +36,21 @@
 \begin{frame}{Analyseur conceptuel}{Implémentation : Classes principales}
 \begin{itemize}
   \item \textbf {Choices (environnement)} : représente un plateau
-  courant, un coup et l'ensemble des plateaux résultants de ce coup
+  courant et l'ensemble des plateaux résultants des coups possibles
+  \pause
   \item \textbf {BoardMatrix(environnement)} : représente un plateau en forme
   d'une matrice
+  \pause
   \item \textbf {Choices\_FOL (IA)} : version logique du premier ordre de
   Choices (même structure, attributs décrits par des formules logiques)
+  \pause
   \item \textbf {CompleteBoardState (IA)} : version logique du premier ordre de
   BoardMatrix (classe qui décrit la configuration
   d'un plateau complet comme une liste de faits logiques)
+  \pause
   \item \textbf {RelevantPartialBoardState (IA)} : classe qui décrit la
   configuration d'une sous-partie pertinante d'un plateau comme une règle
-  logique
+  logique 
 \end{itemize}
 \end{frame}
 
@@ -56,22 +59,41 @@
 \begin{itemize}
   \item \textbf {Convertisseur} :
   \begin{itemize}
-    \item Entrée (de l'environnement): instance de \enquote{Choices}
-    \item Algorithme qui transforme un \enquote{BoardMatrix} en un
-    \enquote{CompleteBoardState}
+    \item Entrée (de l'environnement): instance de \texttt{Choices}
+    \pause
+    \item Génération de faits logiques représentant la configuration d'un
+    plateau en forme matricielle (\texttt{BoardMatrix})
+    \pause
+    \item Base de faits correspondante stockée dans une instance de
+    \texttt{CompleteBoardState}
+    \pause
     \item Sortie: instance de
-    \enquote{Choices\_FOL}
+    \texttt{Choices\_FOL}
   \end{itemize}
-  \item \textbf {Moteur d'inférence} :
-  \begin{itemize}
-    \item Entrée (de la mémoire) : instance de
-    \enquote{RelevantPartialBoardState}
-    \item Algorithme de saturation de la base de faits des
-    \enquote{CompleteBoardState} par la règle d'entrée
-    \item Ajout d'une liste de \enquote{RelevantPartialBoardState} présents dans
-    chaque \enquote{CompleteBoardState} du pacquet \enquote{Choices\_FOL}
-    \item Sortie (passée à la mémoire) : instance de
-    \enquote{Choices\_FOL}
-  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Analyseur conceptuel}{Implémentation détaillée}
+\begin{itemize}
+\item \textbf {Moteur d'inférence} :
+\begin{itemize}
+  \item Entrée (de la mémoire) : liste de \texttt{RelevantPartialBoardState},
+  règles du type : 
+  \pause
+  \emph{$isCorner() \wedge is(Mine) \Longrightarrow \_rpbs034$}
+  \pause
+  \item Saturation de la base de faits des \texttt{CompleteBoardState} en
+  appliquant l'ensemble de ces règles
+  \pause
+  \item Reconnaissance de formes : recherche d'homomorphisme entre l'atome de
+  conclusion de la règle (\texttt{RelevantPartialBoardState}) et la base de
+  faits de chaque plateau
+  \pause
+  \item Ajout de la liste de \texttt{RelevantPartialBoardState} présents dans
+  chaque \texttt{CompleteBoardState} du paquet \texttt{Choices\_FOL}
+  \pause
+  \item Appel à la méthode \texttt{stimulate} du module de raisonnement
+  \item Sortie (passée à la mémoire) : instance de \texttt{Choices\_FOL}
+\end{itemize}
 \end{itemize}
 \end{frame}
