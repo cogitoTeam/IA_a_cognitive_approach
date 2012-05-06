@@ -1,27 +1,85 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
-<svg width="26cm" height="14cm" viewBox="262 77 513 274" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="37cm" height="25cm" viewBox="139 -21 722 490" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <rect style="fill: #ffffff" x="263" y="78" width="510.5" height="42"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="263" y="78" width="510.5" height="42"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:italic;font-weight:700" x="518.25" y="97">Memory</text>
-    <text style="fill: #000000;text-anchor:middle;font-size:11.2;font-family:sanserif;font-style:italic;font-weight:normal" x="518.25" y="112.5">Interface</text>
-    <rect style="fill: #ffffff" x="263" y="120" width="510.5" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="263" y="120" width="510.5" height="8"/>
-    <rect style="fill: #ffffff" x="263" y="128" width="510.5" height="222"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="263" y="128" width="510.5" height="222"/>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="142">+getRelevantPartialBoardStates(): List&lt;RelevantPartialBoardState&gt;</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="158">+putOption(option:Option_FOL)</text>
-    <text style="fill: #000000;text-anchor:start;font-size:11.2;font-family:sanserif;font-style:italic;font-weight:normal" x="266" y="172.5"></text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="195">+getGradedOptions(): List&lt;Pair&lt;Option_FOL, Double&gt;&gt;</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="211">+OptionChosen(option:Option_FOL)</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="227">+BeginOfGame()</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="243">+EndOfGame(status:GameStatus,score:int)</text>
-    <text style="fill: #000000;text-anchor:start;font-size:11.2;font-family:sanserif;font-style:italic;font-weight:normal" x="266" y="257.5"></text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="280">+getLastWonGames(n:int): List&lt;Game&gt;</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="296">+getLastLostGames(n:int): List&lt;Game&gt;</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="312">+getAllRPBS(n:int): List&lt;Pair&lt;RelevantPartialBoardState, Double&gt;&gt;</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="328">+putRelevantStructure(rpbs:RelevantPartialBoardState): long</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="266" y="344">+addAssociation(cbs_id:long,rpbs:RelevantPartialBoardState)</text>
+    <rect style="fill: #ffffff" x="260" y="-20" width="510.5" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="260" y="-20" width="510.5" height="44"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="515.25" y="-4">&lt;&lt;interface&gt;&gt;</text>
+    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="515.25" y="15">Memory</text>
+    <rect style="fill: #ffffff" x="260" y="24" width="510.5" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="260" y="24" width="510.5" height="8"/>
+    <rect style="fill: #ffffff" x="260" y="32" width="510.5" height="222"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="260" y="32" width="510.5" height="222"/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="46">+getRelevantPartialBoardStates(): List&lt;RelevantPartialBoardState&gt;</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="62">+putOption(option:Option_FOL)</text>
+    <text style="fill: #000000;text-anchor:start;font-size:11.2;font-family:sanserif;font-style:italic;font-weight:normal" x="263" y="76.5"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="99">+getGradedOptions(): List&lt;Pair&lt;Option_FOL, Double&gt;&gt;</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="115">+OptionChosen(option:Option_FOL)</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="131">+BeginOfGame()</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="147">+EndOfGame(status:GameStatus,score:int)</text>
+    <text style="fill: #000000;text-anchor:start;font-size:11.2;font-family:sanserif;font-style:italic;font-weight:normal" x="263" y="161.5"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="184">+getLastWonGames(n:int): List&lt;Game&gt;</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="200">+getLastLostGames(n:int): List&lt;Game&gt;</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="216">+getAllRPBS(n:int): List&lt;Pair&lt;RelevantPartialBoardState, Double&gt;&gt;</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="232">+putRelevantStructure(rpbs:RelevantPartialBoardState): long</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="263" y="248">+addAssociation(cbs_id:long,rpbs:RelevantPartialBoardState)</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="140" y="280" width="157.6" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="140" y="280" width="157.6" height="44"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="218.8" y="296">&lt;&lt;interface&gt;&gt;</text>
+    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="218.8" y="315">EpisodicMemory</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="680" y="280" width="166.6" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="680" y="280" width="166.6" height="44"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="763.3" y="296">&lt;&lt;interface&gt;&gt;</text>
+    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="763.3" y="315">SemanticMemory</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="513.55,373.172 513.55,393.496 324.75,393.496 324.75,438.993 "/>
+    <polygon style="fill: #000000" points="513.55,348 518.35,362 513.55,376 508.75,362 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="513.55,348 518.35,362 513.55,376 508.75,362 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="419.15" y="390.496"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="524.55" y="360"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="328.75" y="434.993"></text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="444" y="320" width="139.1" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="444" y="320" width="139.1" height="28"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="513.55" y="339">ActiveMemory</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="515.25,273.244 515.25,287.001 513.55,287.001 513.55,318.993 "/>
+    <polygon style="fill: #ffffff" points="523.25,273.244 515.25,257.244 507.25,273.244 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="523.25,273.244 515.25,257.244 507.25,273.244 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="220" y="440" width="209.5" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="220" y="440" width="209.5" height="28"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="324.75" y="459">Neo4jEpisodicMemory</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="580" y="440" width="218.5" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="580" y="440" width="218.5" height="28"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="689.25" y="459">Neo4jSemanticMemory</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="218.8,342.236 218.8,380 140,380 140,454 220,454 "/>
+    <polygon style="fill: #ffffff" points="226.8,342.236 218.8,326.236 210.8,342.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="226.8,342.236 218.8,326.236 210.8,342.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="763.3,343.224 763.3,381.999 860,381.999 860,454 798.5,454 "/>
+    <polygon style="fill: #ffffff" points="771.3,343.224 763.3,327.224 755.3,343.224 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="771.3,343.224 763.3,327.224 755.3,343.224 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="513.55,374.179 513.55,394 689.25,394 689.25,438.993 "/>
+    <polygon style="fill: #000000" points="513.55,349.007 518.35,363.007 513.55,377.007 508.75,363.007 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="513.55,349.007 518.35,363.007 513.55,377.007 508.75,363.007 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="601.4" y="394"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="524.55" y="361.007"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="693.25" y="434.993"></text>
   </g>
 </svg>
