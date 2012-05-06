@@ -1,6 +1,14 @@
 tex_cmd=pdflatex
 
+
 all:
+	make simple
+
+double:
+	make simple
+	make simple
+
+simple:
 	${tex_cmd} ac_beamer.tex
 
 clean:
