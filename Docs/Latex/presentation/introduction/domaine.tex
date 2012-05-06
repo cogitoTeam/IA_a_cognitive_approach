@@ -1,0 +1,61 @@
+%----------------------------------------
+% DOMAINE D'APPLICATION : POUQUOI
+%----------------------------------------
+\begin{frame}{Domaine d'application}{Jeu de plateau}
+
+\begin{block}{Pourquoi le jeu de plateau ?}
+\begin{itemize}
+\item Convergence \texttt{DECOL} / \texttt{IMAGINA}.
+\pause
+\item Activité purement cognitif.
+\pause
+\item Activité cognitif complète.
+\pause
+\item Évaluation facile de la performance.
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
+%----------------------------------------
+% LE MINIMAX
+%----------------------------------------
+\begin{frame}{Domaine d'application}{Théorie des jeux}
+
+\begin{block}{Théorème du MiniMax}
+\begin{itemize}
+\item J. Von Neumann, 1928.
+\item \textit{Stratégie optimale pour un joueur donné.}
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+%----------------------------------------
+% LIMITES DU MINIMAX
+%----------------------------------------
+
+\begin{frame}{Domaine d'application}{Limites du MiniMax}
+
+\begin{block}{Type de confrontation}
+\begin{itemize}
+\item \underline{Minimax}: Jeux compétitifs, à deux joueurs, à somme nulle.
+\item \underline{Minimax \& Nash}: Durée et nombre d'options finis.
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{Temps de calcul}
+\begin{itemize}
+\item En moyenne : \emph{$O(b^{\frac{d}{2}})$}.
+	\begin{itemize}
+	\item d : longeur partie.
+	\item b : options par tour.
+	\end{itemize}
+\item En pratique : besoin d'heuristiques $\Rightarrow$ perte d'optimalité.
+\end{itemize}
+\end{block}
+
+\end{frame}
