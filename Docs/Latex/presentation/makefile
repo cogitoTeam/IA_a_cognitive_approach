@@ -21,6 +21,11 @@ simple:
 simple_print:
 	${tex_cmd} ac_beamer_print.tex
 
+help:
+	@cat makefile
+	@echo
+	@echo Débrouille toi avec ça!
+
 clean:
 	@rm *.aux
 	@rm *.glg
