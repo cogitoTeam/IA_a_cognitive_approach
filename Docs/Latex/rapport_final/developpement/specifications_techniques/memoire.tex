@@ -82,14 +82,14 @@ Le module de persistance permet le stockage de la mémoire épisodique et séman
 		\end{itemize}
 	\item Relations en mémoire sémantique
 		\begin{itemize}
-			\item \texttt{RELATED} : décrit la présence d'un \texttt{\gls{RelevantPartialBoardState}} dans un \texttt{\gls{CompleteBoardState}}.
+			\item \texttt{RELATED} : décrit la présence d'une forme remarquable (\texttt{ATTRIBUTE}) dans un plateau (\texttt{OBJECT}).
 		\end{itemize}
 	\end{itemize}
 	
 \subsection{Mémoire sémantique}
-Comme vu dans la partie~\ref{conception_memoire_semantique} (page \pageref{conception_memoire_semantique}, la mémoire sémantique stocke une matrice de booléens ayant comme attributs (colonnes) des \texttt{\gls{RelevantPartialBoardState}}, et comme objets (lignes) des \texttt{\gls{CompleteBoardState}}.
+Comme vu dans la partie~\ref{conception_memoire_semantique} (page \pageref{conception_memoire_semantique}, la mémoire sémantique stocke une matrice de booléens ayant comme attributs (colonnes) des formes remarquables, et comme objets (lignes) des plateaux.
 
-On peut voir sur la figure~\ref{lattice_graph} les deux \og master\_node \fg{} permettant de déclarer des nœuds d'attributs et d'objets. Ces noeuds sont en liés via des relations de type \emph{RELATED}.
+On peut voir sur la figure~\ref{lattice_graph} les deux \og master\_node \fg{} permettant de déclarer des nœuds d'attributs et d'objets. Ces nœuds sont en liés via des relations de type \emph{RELATED}.
 
 \begin{figure}[H]
 \includegraphics[width=\textwidth]{files/neo4j/lattice_graph}
@@ -101,9 +101,13 @@ On peut voir sur la figure~\ref{lattice_graph} les deux \og master\_node \fg{} p
 
 La représentation sous forme de graphe se prête parfaitement à la mémorisation des parties et des coups sous la forme d'une double liste chaînée. La figure~\ref{episodic_graph} représente la mémoire épisodique telle qu'elle est stockée dans Neo4j.
 
-On visualise parfaitement les trois \og master\_node \fg{} permettant de typer les \texttt{GAME}, \texttt{MOVE} et \texttt{ATTRIBUTES}. Le parcours des parties se fait via la relation \texttt{PREV\_GAME} et celui des coups via la relation \texttt{PREV\_MOVE}.
+On visualise les trois \og master\_node \fg{} permettant de typer les \texttt{GAME}, \texttt{MOVE} et \texttt{ATTRIBUTES}. Le parcours des parties se fait via la relation \texttt{PREV\_GAME} et celui des coups via la relation \texttt{PREV\_MOVE}.
 
-On remarque également que les relations \texttt{BOARD\_STATE} permettent de faire la liaison entre la mémoire sémantique et la mémoire épisodique.
+On remarque également que :
+\begin{itemize}
+\item le \og master\_node \fg{} \texttt{GAME} possède une relation sortant \texttt{LAST\_GAME} permettant l'accès au dernier jeu joué,
+\item les relations \texttt{BOARD\_STATE} permettent de faire la liaison entre la mémoire sémantique et la mémoire épisodique.
+\end{itemize}
 
 \begin{figure}[H]
 \includegraphics[width=\textwidth]{files/neo4j/episodic_graph}
