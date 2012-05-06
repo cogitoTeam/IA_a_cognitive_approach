@@ -1,7 +1,7 @@
 # PROJET TER
 ## CONSCIENCE ARTIFICIELLE
 
-Dans le cadre de notre formation\ (Première année de Master Informatique à l'Université de Montpellier 2) nous avons réalisé un projet TER (Travail d'Étude et de Recherche) encadré par [Violaine Prince](http://www2.lirmm.fr/~prince/) et Guillaume Tisserant, respectivement Professeur et Doctorant au [Laboratoire d'Informatique, de Robotique et de Microélectronique de Montpellier](http://www.lirmm.fr/).
+Dans le cadre de notre formation (Première année de Master Informatique à l'Université de Montpellier 2) nous avons réalisé un projet TER (Travail d'Étude et de Recherche) encadré par [Violaine Prince](http://www2.lirmm.fr/~prince/) et Guillaume Tisserant, respectivement Professeur et Doctorant au [Laboratoire d'Informatique, de Robotique et de Microélectronique de Montpellier](http://www.lirmm.fr/).
 
 Le but de ce TER fut d'implémenter un modèle d'intelligence artificielle basé sur une approche cognitive. L'agent développé devait être capable d'acquérir de nouveaux concepts sémantiques à partir de son environnent courant et de ses expériences passées.
 
