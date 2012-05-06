@@ -1,90 +1,82 @@
 %----------------------------------------
-% DÉCOMPOSITION AGENT-ENVIRONEMENT
+% ARCHITECTURE GLOBALE
 %----------------------------------------
-
-\begin{frame}{Environnement}{Décomposition}
-\begin{itemize}
-\item Séparation entre l'agent et son environment.
-\item Configurations quelconques d'agents sont possibles.
-\end{itemize}
-\includegraphics[width=\textwidth]{img/william/agent_env}\\
+\begin{frame}{Environnement}{Architecture Globale}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/william/archi_full}\\
+\end{center}
 \end{frame}
-
+%----------------------------------------
+% DÉCOUPLAGE AGENT-ENVIRONEMENT
+%----------------------------------------
+\begin{frame}{Environnement}{Découplage}
+\begin{itemize}
+\item Modèle \og Black Board \fg{}.
+\item Communication \og Stigmergique \fg{}.
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/william/agent_env}\\
+\end{center}
+\end{frame}
 %----------------------------------------
 % ARBITRE
 %----------------------------------------
-
 \begin{frame}{Environnement}{Arbitre}
-\begin{itemize}
-\item L'environment est assimilé à un arbitre.
-\item L'agent-joueur interagit avec celui-ci de manière asynchrone.
-\end{itemize}
-\includegraphics[width=\textwidth]{img/env_sim/arbitre}\\
+\begin{center}
+\includegraphics[width=\textwidth]{img/william/arbitre}\\
+\end{center}
 \end{frame}
-
-
 %----------------------------------------
-% WEBSERVICE "GAME SERVICE"
+% GAME_LOGIC -- SHARED
 %----------------------------------------
-
-\begin{frame}{Environnement}{Webservice \texttt{game\_service}}
-
-\begin{block}{Serveur: Servlets Java}
-\begin{itemize}
-\item Classe Java instancié pour chaque requète HTTP.
-\item Répond avec un XML représentative d'état (REST).
-\end{itemize}
-\end{block}
-
-\pause
-
-\begin{block}{Client: Page HTML 5}
-\begin{itemize}
-\item Maintient l'état du jeu par polling (jQuery / AJAX).
-\item Réponses asynchrones traités par callback.
-\end{itemize}
-\end{block}
-
-
+\begin{frame}{Environnement}{Redondance}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/william/game_logic_shared}\\
+\end{center}
 \end{frame}
-
-
 %----------------------------------------
-% RULEBOOK
+% GAME_LOGIC -- VUE GLOBALE
 %----------------------------------------
-
-\begin{frame}{Simulation}{Rulebook}
-
-\includegraphics[width=\textwidth]{img/env_sim/rulebook}
-
+\begin{frame}{Environnement}{Bibliothèque \texttt{game\_logic}}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/william/archi_lib}\\
+\end{center}
 \end{frame}
-
-
 %----------------------------------------
-% LIBRARIE "GAME LOGIC"
+% GAME_LOGIC -- IN DEPTH
 %----------------------------------------
-
-\begin{frame}{Simulation}{Bibliothèque \texttt{game\_logic}}
-
-\begin{block}{Classe \texttt{BoardMatrix}}
-Plateau sous forme matricielle avec accesseurs adaptés.
-\end{block}
-
-\pause
-
-\begin{block}{Classe abstraite \texttt{Rules}}
-\begin{itemize}
-\item Forme du plateau? Configuration initiale?
-\item Qui joue en premier?
-\item Quand a-t-on gagné? Perdu? Un match nul?
-\item Quelles sont les coups possibles?
-\end{itemize}
-\end{block}
-
-\pause
-
-\begin{block}{Classe \texttt{Game}}
-Associe un \texttt{Rules}, un \texttt{BoardMatrix}, un état, un joueur courant...
-\end{block}
-
+%\begin{frame}{Environnement}{Bibliothèque \texttt{game\_logic}}
+%\begin{center}
+%\includegraphics[height=0.5\textwidth]{img/william/game_logic}\\
+%\end{center}
+%\end{frame}
+%----------------------------------------
+% SERVEUR -- IN DEPTH
+%----------------------------------------
+%\begin{frame}{Environnement}{Serveur \texttt{game\_service}}
+%\includegraphics[width=\textwidth]{img/william/game_service}\\
+%\end{frame}
+%----------------------------------------
+% SERVEUR -- VUE GLOBALE
+%----------------------------------------
+\begin{frame}{Environnement}{Serveur \texttt{game\_service}}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/william/archi_server}\\
+\end{center}
+\end{frame}
+%----------------------------------------
+% CLIENTS
+%----------------------------------------
+\begin{frame}{Environnement}{Clients}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/william/archi_clients}\\
+\end{center}
+\end{frame}
+%----------------------------------------
+% PASSONS À COGITO
+%----------------------------------------
+\begin{frame}{Environnement}{Agents}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/william/archi_agents}\\
+\end{center}
 \end{frame}
