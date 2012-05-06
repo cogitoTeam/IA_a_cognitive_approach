@@ -7,7 +7,7 @@ Le but de ce TER fut d'implémenter un modèle d'intelligence artificielle basé
 
 L'intelligence artificielle moderne se basant principalement sur une vision opérationnelle, il nous semblait intéressant de porter une démarche différente avec un modèle proche de la cognition humaine.
 
-Pour ce faire, nous avons débuté notre étude par l'analyse d'un travail théorique proposant une conceptualisation du fonctionnement du cerveau humain, étude qui a été réalisée en 2010 par Guillaume Tisserant, Guillaume} Maurin, Ndongo Wade et Anthony Willemot dans le cadre de l'unité d'enseignement "Cognition Individuelle et Collective" proposée par l'offre du Master Informatique de l'université Montpellier 2.
+Pour ce faire, nous avons débuté notre étude par l'analyse d'un travail théorique proposant une conceptualisation du fonctionnement du cerveau humain, étude qui a été réalisée en 2010 par Guillaume Tisserant, Guillaume Maurin, Ndongo Wade et Anthony Willemot dans le cadre de l'unité d'enseignement "Cognition Individuelle et Collective" proposée par l'offre du Master Informatique de l'université Montpellier 2.
 
 Ce projet a été réalisé par l'équipe COGITO composée de quatre étudiants :
 
