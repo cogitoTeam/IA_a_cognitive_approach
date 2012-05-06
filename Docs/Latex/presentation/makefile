@@ -8,8 +8,23 @@ double:
 	make simple
 	make simple
 
+print:
+	make simple_print
+
+double_print:
+	make simple_print
+	make simple_print
+
 simple:
 	${tex_cmd} ac_beamer.tex
+
+simple_print:
+	${tex_cmd} ac_beamer_print.tex
+
+help:
+	@cat makefile
+	@echo
+	@echo Débrouille toi avec ça!
 
 clean:
 	@rm *.aux
