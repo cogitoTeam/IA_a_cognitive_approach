@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GameServlet extends HttpServlet 
 {
-    /* ATTRIBUTES */
-    private Game game = null;
-    
     /* MAIN METHODS */
     
     protected void processRequest(HttpServletRequest request, 
