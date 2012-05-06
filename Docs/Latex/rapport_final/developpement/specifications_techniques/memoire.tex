@@ -3,39 +3,39 @@
 Le module de mémoire a été conçu de manière générique à l'aide d'interfaces java. Pour cela elle se décompose en trois parties :
 
 \begin{itemize}
-\item l'interface principale de la mémoire, qui déclare les méthodes appelées par les autres modules (Analyse et Raisonnement), et qui est implémentée en tant que mémoire à court terme (ActiveMemory),
+\item l'interface principale de la mémoire (\texttt{Memory}), qui déclare les méthodes appelées par les autres modules (Analyse et Raisonnement), et qui est implémentée en tant que mémoire à court terme (\texttt{ActiveMemory}),
 
-\item l'interface de la mémoire épisodique et l'interface de la mémoire sémantique, qui déclarent les méthodes appelées par le module Mémoire.
+\item l'interface de la mémoire épisodique (\texttt{EpisodicMemory}) et l'interface de la mémoire sémantique (\texttt{SemanticMemory}), qui déclarent les méthodes appelées par les implémentations de l'interface \texttt{Memory}.
 \end{itemize}
 
 \begin{figure}[H]
 \includegraphics[width=\textwidth]{files/memoire/interface}
-\caption{Interface mémoire}
+\caption{Diagramme de classe du module mémoire simplifié.}
 \end{figure}
 
-La mémoire assure également la persistance des données, qui se fait via un module de persistance qui sera utilisé par l'implémentation des différentes interfaces citées précédemment. 
+La mémoire assure également la persistance des données, qui se fait via un module de persistance qui est utilisé les implémentations \texttt{Neo4jEpisodicMemory} et \texttt{Neo4jSemanticMemory}. 
 
 \subsection{Le \gls{SGBD} Neo4j}
 
 La persistance des données est assurée par un \gls{SGBD} né de la mouvance \gls{NoSQL} : Neo4j. Il permet la gestion d'une base de données orientée graphe. Nous avons fait le choix d'utiliser un tel système pour plusieurs raisons :
 
 \begin{itemize}
-\item nous avions la volonté de découvrir une solution \gls{NoSQL}, que nous n'avons pas eu l'occasion d'étudier lors de notre formation,
+\item nous avions la volonté de \textbf{découvrir une solution \gls{NoSQL}}, que nous n'avons pas eu l'occasion d'étudier lors de notre formation,
 
-\item Neo4j est disponible en plusieurs versions, notamment en version serveur, version webservice REST et version java embarquée. La mémoire ne nécessitant pas d'accès concurrents mais aussi par soucis de légèreté, c'est la version embarquée (\emph{embedded java}) qui a été utilisée,
+\item Neo4j est disponible en \textbf{plusieurs versions}, notamment en version serveur, version webservice REST et version java embarquée. La mémoire ne nécessitant pas d'accès concurrents mais aussi par soucis de légèreté, c'est la version embarquée (\emph{embedded java}) qui a été utilisée,
 
-\item ce type de \gls{SGBD} \gls{NoSQL} permet d'obtenir des temps d'accès plus rapides qu'avec des \gls{SGBD} relationnels traditionnels,
+\item ce type de \gls{SGBD} \gls{NoSQL} permet d'obtenir des \textbf{temps d'accès} plus rapides qu'avec des \gls{SGBD} relationnels traditionnels,
 
-\item la vision graphe de la base de données est adaptée à la conception de notre mémoire\footnote{Notons tout de même qu'il aurait était été possible de stocker les données sous forme de tables},
+\item la vision graphe de la base de données est \textbf{adaptée} à la conception de notre mémoire\footnote{Notons tout de même qu'il aurait était été possible de stocker les données sous forme de tables relationnelles classiques.},
 
-\item cette solution conserve les propriétés \gls{ACID} des transactions des \gls{SGBD} relationnels traditionnels,
+\item cette solution conserve les \textbf{propriétés \gls{ACID}} des transactions des \gls{SGBD} relationnels traditionnels,
 
-\item la documentation complète et la communauté active permettent de s'initier très rapidement à cette nouvelle technologie,
+\item la \textbf{documentation complète} et la \textbf{communauté active} permettent de s'initier très rapidement à cette nouvelle technologie,
 
-\item Neo4j est une solution libre distribuée sous licence \gls{GPLv3}.
+\item Neo4j est une \textbf{solution libre} distribuée sous licence \gls{GPLv3}.
 \end{itemize}
 
-Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est représentée sous la forme d'un graphe orienté, composé d'un nœud \og root \fg{}. Chaque nœud et chaque arc peut posséder des attributs. Cependant, il n'est possible de typer que les arcs, pour typer les nœuds on utilise donc une astuce qui consiste en la création d'un \og master\_node \fg{} comme le montre le schéma suivant : 
+Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est représentée sous la forme d'un graphe orienté, composé d'un nœud \og root \fg{}. Chaque nœud et chaque arc peut posséder des attributs. Cependant, il n'est possible de typer que les arcs. Pour typer les nœuds une astuce consiste en la création d'un \og master\_node \fg{} comme le montre la figure~\ref{example_node_type}.
 
 \begin{figure}[H]
 \includegraphics[width=\textwidth]{files/neo4j/example_node_type}
@@ -45,14 +45,14 @@ Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est r
 
 \subsection{Éléments en mémoire}
 
-Le module de persistance permet le stockage de la mémoire épisodique et sémantique, les deux étant liées par les relations entre les \emph{MOVE} et les \gls{CompleteBoardState}. Nous avons donc besoin des types suivants : 
+Le module de persistance permet le stockage de la mémoire épisodique et sémantique, les deux étant liées par les relations entre les \emph{MOVE} et les \emph{OBJECTS}. Nous avons donc besoin des types suivants : 
 
 \textbf{Types de noeud :}
 \begin{itemize}
 	\item \texttt{GAME} : une partie en mémoire épisodique, 
 	\item \texttt{MOVE} : un coup joué en mémoire épisodique,
-	\item \texttt{\gls{CompleteBoardState}} : un \texttt{\gls{CompleteBoardState}} en mémoire sémantique,
-	\item \texttt{\gls{RelevantPartialBoardState}} : un \texttt{\gls{RelevantPartialBoardState}} en mémoire sémantique.
+	\item \texttt{OBJECT} : un plateau en mémoire sémantique,
+	\item \texttt{ATTRIBUTE} : une forme remarquable en mémoire sémantique.
 \end{itemize}
 
 
