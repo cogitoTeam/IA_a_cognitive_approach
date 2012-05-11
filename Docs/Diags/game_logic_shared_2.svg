@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="24cm" height="17cm" viewBox="240 399 480 338" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <polygon style="fill: #ffffff" points="483.027,560 586.054,647.512 483.027,735.023 380,647.512 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="483.027,560 586.054,647.512 483.027,735.023 380,647.512 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:18.0622;font-family:monospace;font-style:normal;font-weight:normal" x="483.027" y="653.023">
+      <tspan x="483.027" y="653.023">game_logic</tspan>
+    </text>
+  </g>
+  <text style="fill: #000000;text-anchor:start;font-size:15.8044;font-family:sanserif;font-style:normal;font-weight:normal" x="240" y="540">
+    <tspan x="240" y="540"></tspan>
+    <tspan x="240" y="559.756">Options?</tspan>
+    <tspan x="240" y="579.511">Leurs conséquences?</tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:end;font-size:15.8044;font-family:sanserif;font-style:normal;font-weight:normal" x="720" y="560">
+    <tspan x="720" y="560">Coup légal?</tspan>
+    <tspan x="720" y="579.756">Comment l'appliquer?</tspan>
+  </text>
+  <g>
+    <g>
+      <rect style="fill: #ffffff" x="560" y="400" width="119" height="116"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="560" y="400" width="119" height="116"/>
+    </g>
+    <text style="fill: #000000;text-anchor:middle;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="619.5" y="452.961">
+      <tspan x="619.5" y="452.961">Agent</tspan>
+      <tspan x="619.5" y="475.539">Arbitre</tspan>
+    </text>
+  </g>
+  <g>
+    <g>
+      <rect style="fill: #ffffff" x="280" y="400" width="119" height="116"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="280" y="400" width="119" height="116"/>
+    </g>
+    <text style="fill: #000000;text-anchor:middle;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="339.5" y="452.961">
+      <tspan x="339.5" y="452.961">Agent</tspan>
+      <tspan x="339.5" y="475.539">Joueur</tspan>
+    </text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 10; stroke: #000000" x1="399" y1="458" x2="454.52" y2="583.217"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 10; stroke: #000000" x1="560" y1="458" x2="508.784" y2="581.878"/>
+</svg>
