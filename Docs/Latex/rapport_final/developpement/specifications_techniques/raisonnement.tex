@@ -11,12 +11,20 @@ Le module de raisonnement à été implémenté en trois classes comme représen
 \subsection{Introspection}
 \input{developpement/specifications_techniques/raisonnement/introspection}
 
-Le module d'introspection est implémenter en tant que \og thread \fg{}, ce qui lui donne l'avantage de pouvoir s'exécuter en continue. On s'éloigne donc de l'analyse qui a été décrite précédemment  
+Le module d'introspection est implémenter en tant que \og thread \fg{}, ce qui lui donne l'avantage de pouvoir s'exécuter en continue. On s'éloigne donc de l'analyse décrite section \vref{subsection_introspection}.
 
 
 \subsection{Valuation des formes}
-\input{developpement/specifications_techniques/raisonnement/valuation}
+\input{developpement/specifications_techniques/raisonnement/valuation}  
 
+Afin d'attribuer un poids à chacune des formes présente en mémoire, nous avons choisi de nous appuyer sur la théorie de la probabilité. Nous cherchons donc, pour chaque forme, à déterminer la probabilité suivante : \[ P(Gain|Forme) \]
+
+En s'appuyant sur le théorème de Bayes, nous obtenons la formule suivante :
+
+\[ P(Gain|Forme) = \frac{P(Forme|Gain) \times P(Gain)}{P(Forme)} \]
 
 \subsection{Moteur de choix}
 \input{developpement/specifications_techniques/raisonnement/choix}
+
+Le moteur de choix est implémenté à travers la classe \class{ChoiceEngine}, celle-ci est extrêmement simple. Dans un premier temps, la liste des plateaux possibles est récupérée en mémoire sous la forme d'une \class{List<Option\_FOL>}. Ensuite, pour chaque plateau un poids est calculé, celui-ci correspond à la moyenne des probabilités de gain de chaque \class{\gls{Rpbs}} qui lui est associé. Finalement, le plateau ayant le poids le plus élevé est choisi. Si deux plateaux ont un poids maximum, le plateau choisi est tiré aléatoirement.
+
