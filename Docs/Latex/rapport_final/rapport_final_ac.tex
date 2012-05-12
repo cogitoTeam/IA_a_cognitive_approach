@@ -15,6 +15,7 @@
 \usepackage[french,ruled,vlined,linesnumbered]{algorithm2e}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage[french]{varioref}
 \usepackage[bookmarks=true]{hyperref}
 
 \hypersetup{pdfborder={0 0 0}}
@@ -23,8 +24,7 @@
 \renewcommand{\labelitemi}{\textbullet}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 
-\def\doctitle{Intelligence artificielle : une approche cognitive}
-\def\cogito{\emph{COGITO}}
+\include{def}
 
 \pagestyle{fancy}
 
@@ -78,6 +78,7 @@
 \begin{document}
 \include{glossary_defines}
 \renewcommand{\labelitemii}{\textasteriskcentered}
+
 
 \dominitoc
 

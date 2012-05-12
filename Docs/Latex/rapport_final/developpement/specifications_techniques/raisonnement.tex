@@ -1,13 +1,17 @@
 
+Le module de raisonnement à été implémenté en trois classes comme représenté sur la figure \ref{class_diag_reasoning_engine}. La classe \texttt{ReasoningEngine} sert d'interface avec les autres modules de \cogito{}. 
+
 \begin{figure}[H] 
 \center
 \includegraphics[width=0.8\textwidth]{files/class_diagram/reasoningEngine} 
 \caption{Diagramme de classe du module de raisonnement.}
-\label{img_reco_forme_0}
+\label{class_diag_reasoning_engine}
 \end{figure}
 
 \subsection{Introspection}
 \input{developpement/specifications_techniques/raisonnement/introspection}
+
+Le module d'introspection est implémenter en tant que \og thread \fg{}, ce qui lui donne l'avantage de pouvoir s'exécuter en continue. On s'éloigne donc de l'analyse qui a été décrite précédemment  
 
 
 \subsection{Valuation des formes}
