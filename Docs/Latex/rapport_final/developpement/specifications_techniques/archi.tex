@@ -46,13 +46,13 @@ Le client a également besoin d'envoyer ses coups au serveur. Pour ceci il suffi
 \item une ligne,
 \item une colonne.
 \end{itemize}
-Il nous est désormais possible d'interagir avec le serveur en écrivant manuellement nos coups dans la barre d'adresse et en lisant le document XML renvoié. Cette manière de jouer est peu ergonomique, mais elle nous a permi de tester le fonctionnement du serveur en son intégralité bien avant la construction d'une interface graphique.
+Il nous est désormais possible d'interagir avec le serveur en écrivant manuellement nos coups dans la barre d'adresse et en lisant le document XML renvoyé. Cette manière de jouer est peu ergonomique, mais elle nous a permis de tester le fonctionnement du serveur en son intégralité bien avant la construction d'une interface graphique.
 
 À noter également, vu qu'il n'y a pas d'authentification ou de suivi des clients, qu'il est possible de \og tricher \fg{} en prenant le tour de l'autre joueur  : nous supposons ici qu'il n'y a simplement pas de félons. Par la suite identificateur de session, dans un cookie par exemple, pourrait empêcher ce genre d'abus. 
 \subsubsection{Constitution des réponses}
 Pour analyser toutes ces requêtes paramétrés et composer une réponse la technologie \og Java Servlet \fg {} est utilisé. Une classe Java est instancié par notre serveur Tomcat pour traiter une seule requête : l'objet est détruit immédiatement après avoir envoyé sa réponse, dans ce cas sous forme d'un document XML.
 
-Cette technologie orienté prototypage rapide est très simple à utiliser mais nous permet pourtant de gérer de multiples requêtes concurrentes, donc de faire tourner un très grand nombre de jeux entre différentes paires de clients. Il suffit d'ajouter un paramètre de plus à la requête pour préciser l'identificateur du jeu, et un singleton côté serveur pour stoquer les jeux et gérer les accès concurrents.
+Cette technologie orienté prototypage rapide est très simple à utiliser mais nous permet pourtant de gérer de multiples requêtes concurrentes, donc de faire tourner un très grand nombre de jeux entre différentes paires de clients. Il suffit d'ajouter un paramètre de plus à la requête pour préciser l'identificateur du jeu, et un singleton côté serveur pour stoker les jeux et gérer les accès concurrents.
 \subsubsection{Conclusion}
 Le serveur correspond finalement un \og Service Web \fg{}, c'est à dire un programme fournissant des données destinés à etre lus par des autres programmes et non des humains :
 \begin{figure}[H] 
@@ -61,7 +61,7 @@ Le serveur correspond finalement un \og Service Web \fg{}, c'est à dire un prog
 \caption{Classes du Service Web \texttt{game\_service}} 
 \label{game_service}
 \end{figure}
-Ici le \texttt{GameManager} sert de base de données temporaire : c'est un conteneur de \texttt{Game}, classe de la bibliothèque \texttt{game\_logic} que nous venons d'introduire. Chaque \texttt{Game} possédant une réference vers un \texttt{Rules} il est possible pour le serveur d'arbitrer tous les parties simultanément.
+Ici le \texttt{GameManager} sert de base de données temporaire : c'est un conteneur de \texttt{Game}, classe de la bibliothèque \texttt{game\_logic} que nous venons d'introduire. Chaque \texttt{Game} possédant une référence vers le singleton \texttt{Rules} il est possible pour le serveur d'arbitrer tous les parties simultanément.
 
 %---------------------------------------------------------------------------------------------------
 % CLIENTS
@@ -71,6 +71,11 @@ Ici le \texttt{GameManager} sert de base de données temporaire : c'est un conte
 % CLIENT HUMAIN
 %---------------------------------------------------------------------------------------------------
 \subsubsection{Client humain}
+L'homme se repose sur sa vision pour comprendre le monde, donc avoir une sortie graphique prototypique au plus tôt possible facilite développent et débogage. L'\texttt{HTML 5} tient l'avantage d'être multi-plateforme et non-compilé. Il suffit pour l'interpréter d'un logiciel que nous possédons quasiment tous désormais : un navigateur web.  
+
+\og \texttt{HTML 5} \fg{} est un vrai un nom quelque-peu trompeur. Il s'agit en vrai d'une petite ensemble de balises \texttt{HTML} mais surtout d'une bibliothèque \texttt{javascript} pour les exploiter. Ce dernier langage étant conçu pour parcourir et analyser les \texttt{DOM}\footnote{DOM : Document Object Model. } nous pouvions facilement interpréter les réponses de notre serveur que nous rappelons sont en \texttt{XML}.
+
+Tout ceci nous permet, encore une fois, d'éviter le développent d'infrastructure peu intéressant en utilisant des technologies Libres, standardisé et couramment utilisés.   
 
 %---------------------------------------------------------------------------------------------------
 % CLIENT MACHINE
