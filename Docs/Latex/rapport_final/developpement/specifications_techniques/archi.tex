@@ -1,15 +1,34 @@
 %---------------------------------------------------------------------------------------------------
 % GAME LOGIC
 %---------------------------------------------------------------------------------------------------
+\subsection{Aperçu globale}
+
+Ce nous appelons système est en fait une assemblage de plusieurs logicielles qui communiquent entre eux :
+
+\begin{figure}[H] 
+\centering
+\includegraphics[width=\textwidth]{files/william/archi_full} 
+\caption{Aperçu globale du système} 
+\end{figure}
+
+Avant de passer sur la l'IA lui même nous passerons rapidement sur l'implémentation de l'infrastructure de teste, ou environnement.
+
 \subsection{Bibliothèque \texttt{\gls{game_logic}}}
+
 Dans le chapitre \ref{subsection_architecture_generale} nous avions introduit le module conceptuelle \og Rule Book \fg{}, qui génère un ensemble de pairs coup possible et plateau conséquence. Pour ce faire ce module doit pouvoir décider de la légalité d'un coup et de connaître ses conséquences. 
+
+\begin{figure}[H] 
+\centering
+\includegraphics[width=\textwidth]{files/william/archi_lib} 
+\caption{Rôle de \texttt{\gls{game_logic}} dans le système} 
+\end{figure}
 
 Nous avions également parlé dans le chapitre \ref{section_analyse_environnement} d'un agent \og Arbitre \fg{} maître du jeu qui a besoin d'un ensemble de règles à fin d'initialiser le plateau et d'appliquer ou de refuser les coups respectivement légaux et illégaux.
 
 Il est claire que ces deux objets partagent un même ensemble de fonctions et de structures, donc une bibliothèque que nous appèlerons \texttt{game\_logic}  :
 \begin{figure}[H] 
 \centering
-\includegraphics[width=\textwidth]{files/env/game_logic_shared} 
+\includegraphics[width=0.75\textwidth]{files/env/game_logic_shared} 
 \caption{Partage de la bibliothèque \texttt{game\_logic}} 
 \label{game_logic_shared}
 \end{figure}
@@ -27,7 +46,7 @@ Précisement cette bibliothèque contient trois classes principales :
 \end{itemize}
 \begin{figure}[H] 
 \centering
-\includegraphics[width=\textwidth]{files/env/game_logic} 
+\includegraphics[width=0.75\textwidth]{files/env/game_logic} 
 \caption{Classes de la bibliothèque \texttt{game\_logic}} 
 \label{game_logic}
 \end{figure}
@@ -36,7 +55,15 @@ Précisement cette bibliothèque contient trois classes principales :
 % GAME SERVICE
 %---------------------------------------------------------------------------------------------------
 \subsection{Serveur \texttt{game\_service}}
-Le chapitre \ref{section_analyse_environnement} conclut en proposant le modèle client-serveur pour les communications entre l'\emph{agent-joueur} et l'\emph{agent-arbitre}. L'arbitre et l'environnement, c'est à dire l'état du jeu, seront hébergés dans une application à part entière: un \og web service \fg{} appelé \texttt{game\_service}.
+Le chapitre \ref{section_analyse_environnement} conclut en proposant le modèle client-serveur pour les communications entre l'\emph{agent-joueur} et l'\emph{agent-arbitre} :
+
+\begin{figure}[H] 
+\centering
+\includegraphics[width=\textwidth]{files/william/archi_serveur} 
+\caption{Rôle de \texttt{game\_service} dans le système} 
+\end{figure}
+
+L'arbitre et l'environnement, c'est à dire l'état du jeu, seront hébergés dans une application à part entière: un \og web service \fg{} appelé \texttt{game\_service}.
 \subsubsection{Transfert des percepts}
 Le client-joueur a tout d'abord besoin de percevoir son environnement, c'est à dire de connaître l'état courant du jeu. Ceci est envoyé par le serveur sous forme d'un  document \texttt{XML}\footnote{ XML : Extensible markup language. } grâce au protocole \texttt{HTTP}\footnote{ HTTP : Hyper-text transfer  protocol. }. Pilier du web, l'\texttt{HTTP} a l'avantage d'être très  répandu, ubiquité qui assure l'existence de bibliothèques ouvertes,  complètes, bien documentés et simples d'utilisation pour tout langage et  plateforme. Étant donnée que le développement du serveur ait débuté avant le reste du système, ce choix nous permettait d'éviter de se retrouver avec trop  de contraintes par la suite.
 \subsubsection{Transfert des action}
@@ -70,8 +97,17 @@ Ici le \texttt{GameManager} sert de base de données temporaire : c'est un conte
 %---------------------------------------------------------------------------------------------------
 % CLIENT HUMAIN
 %---------------------------------------------------------------------------------------------------
+
 \subsubsection{Client humain}
-L'homme se repose sur sa vision pour comprendre le monde, donc avoir une sortie graphique prototypique au plus tôt possible facilite développent et débogage. L'\texttt{HTML 5} tient l'avantage d'être multi-plateforme et non-compilé. Il suffit pour l'interpréter d'un logiciel que nous possédons quasiment tous désormais : un navigateur web.  
+Le client humain est notre plateforme de visualisation des performances de notre IA :
+
+\begin{figure}[H] 
+\centering
+\includegraphics[width=\textwidth]{files/william/archi_client_humain} 
+\caption{Rôle du client humain dans le système} 
+\end{figure} 
+
+L'homme se repose sur sa vision pour comprendre le monde, donc avoir une sortie graphique prototypique au plus tôt possible facilite développent et débogage. L'\texttt{HTML 5} tient l'avantage d'être multi-plateforme et non-compilé. Il suffit pour l'interpréter d'un logiciel que nous possédons quasiment tous désormais : un navigateur web.
 
 \og \texttt{HTML 5} \fg{} est un vrai un nom quelque-peu trompeur. Il s'agit en vrai d'une petite ensemble de balises \texttt{HTML} mais surtout d'une bibliothèque \texttt{javascript} pour les exploiter. Ce dernier langage étant conçu pour parcourir et analyser les \texttt{DOM}\footnote{DOM : Document Object Model. } nous pouvions facilement interpréter les réponses de notre serveur que nous rappelons sont en \texttt{XML}.
 
@@ -81,3 +117,24 @@ Tout ceci nous permet, encore une fois, d'éviter le développent d'infrastructu
 % CLIENT MACHINE
 %---------------------------------------------------------------------------------------------------
 \subsubsection{Client machine}
+
+\begin{figure}[H] 
+\centering
+\includegraphics[width=\textwidth]{files/william/archi_client_machine} 
+\caption{Rôle de l'agent-client dans le système.} 
+\end{figure}
+
+\subsubsection{Classe \texttt{Frontier}}
+La frontière est une module purement réactif composé d'un \texttt{Actuator}, traduisant les objets \texttt{Action} qu'il reçoit en requêtes \texttt{HTTP}, et d'un \texttt{Sensor}, qui transforme les réponses \texttt{XML} en objets \texttt{Percept} dont le plus important est le percept \texttt{Choices}.
+
+En claire ce sont des traducteurs : le \texttt{Sensor} traduit du langage \texttt{Agent} au langage arbitre, l' \texttt{Actuator} l'inverse. La \texttt{Frontier} comporte aussi une sorte de mémoire sensorielle lui permettant de juger si son environnement ait changé. Nous ne passons donc que les percept intéressantes aux couches plus hautes dans l'hiérarchie.  
+
+\subsubsection{Classe abstraite \texttt{Agent}}
+Un \texttt{Frontier} est toujours encapsulé par un \texttt{Agent} et sert d'outil pour celui-ci. Cette classe \texttt{Agent} est instancié au démarrage du client machine : le fil d'exécution principale boucle à l'intérieure de celui-ci pour alterner entre demandes de mises à jour du serveur, réflexion et choix de coup. C'est une classe purement abstraite, car l'implémentation de ces deux dernières fonctionnalités varie énormément d'un algorithme et un autre. Parmi nos agents-paramètres se trouvent :
+\begin{itemize}
+\item \texttt{MiniMaxAgent} qui applique la stratégie de maximisation de gain minimale. 
+\item \texttt{RandomAgent} qui génère de nombres aléatoires pour choix au hasard ses coups.
+\item \texttt{MechTurkAgent} qui pour des raisons que nous ignorons exhibe une intelligence quasi-humaine\footnote{nous vous taquinons : en vrai c'est à l'utilisateur de choisir ses coups avec la console. }.
+\item \texttt{Cogito} notre cognition artificielle qui apprend à jouer en jouant contre les autres.
+\end{itemize}
+Notons que rien d'empêche les confrontations entre deux clients machines avec des IA différents, un client humain et un client machine ou bien deux clients humains. Par la suite nous nous focaliserons entièrement sur l'implémentation de ce dernière : tout cette architecture fut, d'après tout, posons que pour lui.
