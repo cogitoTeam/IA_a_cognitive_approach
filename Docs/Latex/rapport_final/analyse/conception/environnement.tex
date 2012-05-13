@@ -1,13 +1,13 @@
 \subsection{ \og Stigmergie \fg{} }
 
-Dans le but de bien dissocier la logique liée à la réflexion de celle qui structure le jeu, nous avons choisi de suivre le paradigme \og Agent et Environnement \fg{}. Notre IA est assimilée à un agent qui évolue dans un environnement qu'il peut observer et modifier.
+Dans le but de bien dissocier la logique liée à la réflexion de celle qui structure le jeu, nous avons choisi de suivre le paradigme \og Agent et Environnement \fg{}. \cogito{} est assimilé à un agent qui évolue dans un environnement qu'il peut observer et modifier.
 
-Toute communication entre agents se fait donc par \og Black Board \footnote{ \og Black Board \fg{} (Tableau Noir) : base de connaissance partagée et itérativement construite par un ensemble d'agents. (Article \og Blackboard system \fg{} de Wikipédia en anglais, licence CC-BY-SA)} \fg{}, c'est à dire en laissant des traces dans cet environnement partagé. Cette interaction dite \og Stigmergique\footnote{\og Stigmergie \fg{} : méthode de communication indirecte dans un environnement émergent auto-organisé, où les individus communiquent entre eux en modifiant leur environnement. (Article \og Stigmergie \fg{} de Wikipédia en français, licence CC-BY-SA)} \fg{} est nécessairement asynchrone mais possède l'avantage de ne nécessiter qu'un seul canal de communication par agent. Ce canal, qui relie l'agent à son environnement, est bidirectionnelle : il permet à l'agent de recevoir des stimuli et d'envoyer des impulsions. Dans la suite de ce document, nous parlerons de \og percepts\fg{} et \og actions\fg{}.
+Toute communication entre agents se fait donc par \og Black Board \fg{}\footnote{ \og Black Board \fg{} (Tableau Noir) : base de connaissance partagée et itérativement construite par un ensemble d'agents. (Article \og Blackboard system \fg{} de Wikipédia en anglais, licence CC-BY-SA)}, c'est à dire en laissant des traces dans cet environnement partagé. Cette interaction dite \og Stigmergique \fg{}\footnote{\og Stigmergie \fg{} : méthode de communication indirecte dans un environnement émergent auto-organisé, où les individus communiquent entre eux en modifiant leur environnement. (Article \og Stigmergie \fg{} de Wikipédia en français, licence CC-BY-SA)} est nécessairement asynchrone mais possède l'avantage de ne nécessiter qu'un seul canal de communication par agent. Ce canal, qui relie l'agent à son environnement, est bidirectionnelle : il permet à l'agent de recevoir des stimuli et d'envoyer des impulsions. Dans la suite de ce document, nous parlerons de \og percepts\fg{} et d'\og actions\fg{}.
 
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/env/agent_env} 
-\caption{Modèle \og Agent et Environnement \fg{}} 
+\caption{Modèle \og Agent et Environnement \fg{}.} 
 \label{agent_env}
 \end{figure}
 
@@ -15,13 +15,13 @@ La séparation entre l'agent et son environnement permet de gagner en flexibilit
 
 L'agent peut donc être un humain ou une machine. Une machine pouvant exécuter notre modèle aussi bien qu'une intelligence artificielle tiers. 
 
-Ainsi, nous disposons d'une abstraction du fonctionnement interne de chaque agent, ce qui permet d'une part de faire jouer notre agent contre un autre agent basé sur une stratégie connue, facilitant ainsi l'évaluation de notre modèle, d'autre part de tester les développements qui concernent l'environnement avant même que notre IA ne soit fonctionnelle en faisant jouer des agents naïfs entre eux. Cette méthode permet d'isoler pleinement le développement de la plateforme de tests de celui de l'IA.
+Ainsi, nous disposons d'une abstraction du fonctionnement interne de chaque agent, ce qui permet d'une part de faire jouer \cogito{} contre un autre agent basé sur une stratégie connue, facilitant ainsi l'évaluation de notre modèle, d'autre part de tester les développements qui concernent l'environnement avant même que notre IA ne soit fonctionnelle en faisant jouer des agents naïfs entre eux. Cette méthode permet d'isoler pleinement le développement de la plateforme de tests de celui de l'IA.
 
 \subsection{ Agent \og Arbitre \fg{} }
 
 Comme indiqué dans la section~\ref{section:domaine_application_le_jeu_de_plateau} (page~\pageref{section:domaine_application_le_jeu_de_plateau}) l'environnement est un jeu de plateau. Il possède donc une grille dont les cases peuvent contenir un pion de couleur donnée ou être vides.
 
-L'environnement doit aussi connaître le prochain joueur qui doit prendre la main ainsi que toute autre information qui ne peut pas être déduit de l'état du plateau. Il doit également pouvoir juger de la légalité des coups proposés par un agent, et par le même biais savoir comment initialiser le plateau lors d'une nouvelle partie.
+L'environnement doit aussi connaître le prochain joueur qui doit prendre la main ainsi que toute autre information qui ne peut pas être déduite de l'état du plateau. Il doit également pouvoir juger de la légalité des coups proposés par un agent, et par le même biais savoir comment initialiser le plateau lors d'une nouvelle partie.
 
 Il se décompose donc en trois modules :
 \begin{itemize}
@@ -35,10 +35,10 @@ Plutôt que de briser la métaphore du \og Black Board \fg{} en parlant d'\emph{
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/env/arbitre} 
-\caption{Interactions entre l'Arbitre et les autres agents} 
+\caption{Interactions entre l'Arbitre et les autres agents.} 
 \label{arbitre}
 \end{figure}
 
 C'est donc à travers cet \emph{agent-filtre} que les joueurs peuvent modifier l'environnement et, par conséquent, communiquer entre eux.
 
-Suite à cette étude préalable, il est claire qu'une architecture \emph{client-serveur} est recommandé pour l'implémentation des interactions entre les agents et leur environnement.
+Suite à cette étude préalable, il est claire qu'une architecture \emph{client-serveur} est recommandée pour l'implémentation des interactions entre les agents et leur environnement.
