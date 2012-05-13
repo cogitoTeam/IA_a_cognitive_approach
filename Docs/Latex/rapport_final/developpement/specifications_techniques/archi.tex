@@ -3,51 +3,51 @@
 %---------------------------------------------------------------------------------------------------
 \subsection{Aperçu globale}
 
-Ce nous appelons système est en fait une assemblage de plusieurs logicielles qui communiquent entre eux :
+Ce que nous appelons système est en réalité une assemblage de plusieurs logicielles qui communiquent entre eux :
 
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/william/archi_full} 
-\caption{Aperçu globale du système} 
+\caption{Aperçu global du système.} 
 \end{figure}
 
-Avant de passer sur la l'IA lui même nous passerons rapidement sur l'implémentation de l'infrastructure de teste, ou environnement.
+Avant de se concentrer sur la \cogito{} lui même nous expliquerons rapidement l'implémentation de l'infrastructure de test, que nous pouvons voir comme l'environnement.
 
 \subsection{Bibliothèque \texttt{\gls{game_logic}}}
 
-Dans le chapitre \ref{subsection_architecture_generale} nous avions introduit le module conceptuelle \og Rule Book \fg{}, qui génère un ensemble de pairs coup possible et plateau conséquence. Pour ce faire ce module doit pouvoir décider de la légalité d'un coup et de connaître ses conséquences. 
+Dans le chapitre~\ref{subsection_architecture_generale} nous avons introduit le module conceptuel \emph{Rule Book}, qui génère un ensemble coups possibles, chacun associé à son plateau résultant. Pour ce faire ce module doit pouvoir décider de la légalité d'un coup et connaître ses conséquences. 
 
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/william/archi_lib} 
-\caption{Rôle de \texttt{\gls{game_logic}} dans le système} 
+\caption{Rôle de \texttt{\gls{game_logic}} dans le système.} 
 \end{figure}
 
-Nous avions également parlé dans le chapitre \ref{section_analyse_environnement} d'un agent \og Arbitre \fg{} maître du jeu qui a besoin d'un ensemble de règles à fin d'initialiser le plateau et d'appliquer ou de refuser les coups respectivement légaux et illégaux.
+Nous avons également parlé dans le chapitre~\ref{section_analyse_environnement} d'un agent \og Arbitre \fg{} maître du jeu qui a besoin d'un ensemble de règles afin d'initialiser le plateau et d'appliquer ou de refuser respectivement les coups légaux et illégaux.
 
-Il est claire que ces deux objets partagent un même ensemble de fonctions et de structures, donc une bibliothèque que nous appèlerons \texttt{game\_logic}  :
+Il est claire que ces deux objets partagent un même ensemble de fonctions et de structures. Nous avons donc fait le choix de les factoriser dans une bibliothèque que nous appellerons \texttt{game\_logic}.
 \begin{figure}[H] 
 \centering
 \includegraphics[width=0.75\textwidth]{files/env/game_logic_shared} 
-\caption{Partage de la bibliothèque \texttt{game\_logic}} 
+\caption{Partage de la bibliothèque \texttt{game\_logic}.} 
 \label{game_logic_shared}
 \end{figure}
-Précisement cette bibliothèque contient trois classes principales :
+Cette bibliothèque contient trois classes principales :
 \begin{itemize}
-\item \texttt{BoardMatrix} : Plateau sous forme matricielle avec accesseurs adaptés.
-\item \texttt{Rules} : Interface implémenté par chaque jeu. Ses méthodes permettent de connaître :
+\item \texttt{BoardMatrix} : plateau sous forme matricielle avec accesseurs adaptés,
+\item \texttt{Rules} : interface implémentée par chaque jeu. Ses méthodes permettent de connaître :
 \begin{itemize}
-\item La forme du plateau et sa configuration initiale.
-\item Qui joue en premier.
-\item Quand la partie est gagné ou perdu et par qui, quand le match est nul.
-\item Les coups possibles pour un joueur donnée.
+\item la forme du plateau et sa configuration initiale,
+\item qui joue en premier,
+\item quand la partie est gagnée ou perdue et par qui, quand le match est nul,
+\item les coups possibles pour un joueur donné.
 \end{itemize}
-\item \texttt{Game} : Associe un \texttt{Rules}, un \texttt{BoardMatrix}, un état et un joueur courant.
+\item \texttt{Game} : associe un objet \texttt{Rules}, un objet \texttt{BoardMatrix}, un état et un joueur courant.
 \end{itemize}
 \begin{figure}[H] 
 \centering
 \includegraphics[width=0.75\textwidth]{files/env/game_logic} 
-\caption{Classes de la bibliothèque \texttt{game\_logic}} 
+\caption{Classes de la bibliothèque \texttt{game\_logic}.} 
 \label{game_logic}
 \end{figure}
 
@@ -55,19 +55,19 @@ Précisement cette bibliothèque contient trois classes principales :
 % GAME SERVICE
 %---------------------------------------------------------------------------------------------------
 \subsection{Serveur \texttt{game\_service}}
-Le chapitre \ref{section_analyse_environnement} conclut en proposant le modèle client-serveur pour les communications entre l'\emph{agent-joueur} et l'\emph{agent-arbitre} :
+Le chapitre~\ref{section_analyse_environnement} conclu en proposant le modèle client-serveur pour les communications entre l'\emph{agent-joueur} et l'\emph{agent-arbitre}.
 
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/william/archi_serveur} 
-\caption{Rôle de \texttt{game\_service} dans le système} 
+\caption{Rôle de \texttt{game\_service} dans le système.} 
 \end{figure}
 
-L'arbitre et l'environnement, c'est à dire l'état du jeu, seront hébergés dans une application à part entière: un \og web service \fg{} appelé \texttt{game\_service}.
+L'arbitre et l'environnement, c'est à dire l'état du jeu, seront hébergés dans une application à part entière : un \og web service \fg{} appelé \texttt{game\_service}.
 \subsubsection{Transfert des percepts}
-Le client-joueur a tout d'abord besoin de percevoir son environnement, c'est à dire de connaître l'état courant du jeu. Ceci est envoyé par le serveur sous forme d'un  document \texttt{XML}\footnote{ XML : Extensible markup language. } grâce au protocole \texttt{HTTP}\footnote{ HTTP : Hyper-text transfer  protocol. }. Pilier du web, l'\texttt{HTTP} a l'avantage d'être très  répandu, ubiquité qui assure l'existence de bibliothèques ouvertes,  complètes, bien documentés et simples d'utilisation pour tout langage et  plateforme. Étant donnée que le développement du serveur ait débuté avant le reste du système, ce choix nous permettait d'éviter de se retrouver avec trop  de contraintes par la suite.
-\subsubsection{Transfert des action}
-Le client a également besoin d'envoyer ses coups au serveur. Pour ceci il suffit d'utiliser un paramétrage de la requête pour indiquer :
+Le client-joueur a tout d'abord besoin de percevoir son environnement, c'est à dire de connaître l'état courant du jeu. Il est envoyé par le serveur sous forme d'un  document \texttt{XML}\footnote{ XML : Extensible markup language. } grâce au protocole \texttt{HTTP}\footnote{ HTTP : Hyper-text transfer  protocol. }. Pilier du web, l'\texttt{HTTP} a l'avantage d'être très  répandu, ubiquité qui assure l'existence de bibliothèques ouvertes,  complètes, bien documentées et simples d'utilisation pour tous langages et plateformes. Ce choix nous a permit de faciliter le développement du serveur indépendamment du reste du système.
+\subsubsection{Transfert des actions}
+Le client a également besoin d'envoyer ses coups au serveur. Pour ceci il suffit de paramétrer la requête pour indiquer :
 \begin{itemize}
 \item celui qui joue,
 \item une ligne,
@@ -75,20 +75,20 @@ Le client a également besoin d'envoyer ses coups au serveur. Pour ceci il suffi
 \end{itemize}
 Il nous est désormais possible d'interagir avec le serveur en écrivant manuellement nos coups dans la barre d'adresse et en lisant le document XML renvoyé. Cette manière de jouer est peu ergonomique, mais elle nous a permis de tester le fonctionnement du serveur en son intégralité bien avant la construction d'une interface graphique.
 
-À noter également, vu qu'il n'y a pas d'authentification ou de suivi des clients, qu'il est possible de \og tricher \fg{} en prenant le tour de l'autre joueur  : nous supposons ici qu'il n'y a simplement pas de félons. Par la suite identificateur de session, dans un cookie par exemple, pourrait empêcher ce genre d'abus. 
+À noter également qu'il n'y a pas d'authentification ou de gestion des utilisateurs. Il est donc possible de \og tricher \fg{} en prenant le tour de l'autre joueur  : nous supposons ici qu'il n'y a simplement pas de tricheur. Nous avons choisi d'ignorer ces problèmes de sécurité dans le but de se concentrer sur d'autres parties du système plus en rapport avec notre sujet. Il serait cependant simple d'ajouter une identification via des sessions et des cookies.
 \subsubsection{Constitution des réponses}
-Pour analyser toutes ces requêtes paramétrés et composer une réponse la technologie \og Java Servlet \fg {} est utilisé. Une classe Java est instancié par notre serveur Tomcat pour traiter une seule requête : l'objet est détruit immédiatement après avoir envoyé sa réponse, dans ce cas sous forme d'un document XML.
+Pour analyser ces requêtes paramétrées et générer une réponse, la technologie \og Java Servlet \fg {} est utilisée. Une classe Java est instanciée par un serveur \emph{Tomcat} pour traiter une seule requête : l'objet est détruit immédiatement après avoir envoyé sa réponse sous la forme d'un document XML.
 
-Cette technologie orienté prototypage rapide est très simple à utiliser mais nous permet pourtant de gérer de multiples requêtes concurrentes, donc de faire tourner un très grand nombre de jeux entre différentes paires de clients. Il suffit d'ajouter un paramètre de plus à la requête pour préciser l'identificateur du jeu, et un singleton côté serveur pour stoker les jeux et gérer les accès concurrents.
+Cette technologie orientée prototypage rapide est très simple à utiliser mais nous permet pourtant de gérer de multiples requêtes concurrentes, donc lancer un très grand nombre de jeux entre différentes paires de clients. Il suffit d'ajouter un paramètre à la requête pour préciser l'identificateur du jeu, et un singleton côté serveur pour stoker les jeux et gérer les accès concurrents.
 \subsubsection{Conclusion}
-Le serveur correspond finalement un \og Service Web \fg{}, c'est à dire un programme fournissant des données destinés à etre lus par des autres programmes et non des humains :
+Le serveur correspond finalement un service web, c'est à dire un programme fournissant des données destinées à être lues par des autres programmes et non des humains.
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/env/game_service} 
-\caption{Classes du Service Web \texttt{game\_service}} 
+\caption{Classes du Service Web \texttt{game\_service}.} 
 \label{game_service}
 \end{figure}
-Ici le \texttt{GameManager} sert de base de données temporaire : c'est un conteneur de \texttt{Game}, classe de la bibliothèque \texttt{game\_logic} que nous venons d'introduire. Chaque \texttt{Game} possédant une référence vers le singleton \texttt{Rules} il est possible pour le serveur d'arbitrer tous les parties simultanément.
+Le \texttt{GameManager} sert de base de données temporaire : c'est un conteneur de \texttt{Game}, classe de la bibliothèque \texttt{game\_logic}. Chaque \texttt{Game} possédant une référence vers le singleton \texttt{Rules}, il est possible pour le serveur d'arbitrer tous les parties simultanément.
 
 %---------------------------------------------------------------------------------------------------
 % CLIENTS
@@ -99,17 +99,17 @@ Ici le \texttt{GameManager} sert de base de données temporaire : c'est un conte
 %---------------------------------------------------------------------------------------------------
 
 \subsubsection{Client humain}
-Le client humain est notre plateforme de visualisation des performances de notre IA :
+Le client humain est notre plateforme de visualisation des performances de \cogito{}.
 
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/william/archi_client_humain} 
-\caption{Rôle du client humain dans le système} 
+\caption{Rôle du client humain dans le système.} 
 \end{figure} 
 
-L'homme se repose sur sa vision pour comprendre le monde, donc avoir une sortie graphique prototypique au plus tôt possible facilite développent et débogage. L'\texttt{HTML 5} tient l'avantage d'être multi-plateforme et non-compilé. Il suffit pour l'interpréter d'un logiciel que nous possédons quasiment tous désormais : un navigateur web.
+L'homme se repose sur sa vision pour comprendre le monde.Posséder une sortie graphique prototypique au début du développement a facilité le développent et le débogage. L'\texttt{HTML 5} a comme avantage d'être un standard multi-plateforme et non-compilé. Seul un navigateur web récent est nécessaire.
 
-\og \texttt{HTML 5} \fg{} est un vrai un nom quelque-peu trompeur. Il s'agit en vrai d'une petite ensemble de balises \texttt{HTML} mais surtout d'une bibliothèque \texttt{javascript} pour les exploiter. Ce dernier langage étant conçu pour parcourir et analyser les \texttt{DOM}\footnote{DOM : Document Object Model. } nous pouvions facilement interpréter les réponses de notre serveur que nous rappelons sont en \texttt{XML}.
+\og \texttt{HTML 5} \fg{} est plus qu'un ensemble de balises \texttt{HTML}. Il s'agit surtout d'une bibliothèque \texttt{javascript}, étant conçu pour parcourir et manipuler le \texttt{DOM}\footnote{DOM : Document Object Model.}. Couplé avec la technologie \texttt{AJAX}\footnote{AJAX : acronyme d'Asynchronous Javascript and XML.} nous pouvons facilement interagir avec notre serveur via des requêtes \texttt{HTTP} formatées en \texttt{XML}.
 
 Tout ceci nous permet, encore une fois, d'éviter le développent d'infrastructure peu intéressant en utilisant des technologies Libres, standardisé et couramment utilisés.   
 
