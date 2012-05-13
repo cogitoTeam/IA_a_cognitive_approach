@@ -5,16 +5,16 @@ Pour chaque environnement annoté, le module de raisonnement effectue une mise �
 \[ P(Annotation|Forme) = \frac{P(Forme|Annotation) \times P(Annotation)}{P(Forme)} \]
 
 \paragraph{Exemple de la figure~\ref{img_annotations}}
-Imaginons que nous souhaitons entraîner notre IA à identifier des formes géométrique basique : \emph{rond}, \emph{carré}, \emph{croix} et \emph{triangle}. Admettons que notre IA soit capable de reconnaître dans son environnement les formes correspondantes mais qu'elle ne sache pas les associer aux annotations correspondantes.
+Imaginons que nous souhaitons entraîner \cogito{} à identifier des formes géométriques basiques : \emph{rond}, \emph{carré}, \emph{croix} et \emph{triangle}. Admettons que notre IA soit capable de reconnaître dans son environnement les formes correspondantes mais qu'elle ne sache pas les associer aux annotations correspondantes.
 
 \begin{figure}[H] 
 \centering
     \includegraphics[width=0.5\textwidth]{files/raisonneur/annotations} 
-\caption{Association formes-annotations} 
+\caption{Association formes-annotations.} 
 \label{img_annotations}
 \end{figure}
 
-Partant de cet état initial, notre IA doit apprendre de ses expériences. Pour ce faire elle doit mettre à jour les probabilités qu'une annotation soit rattachée à un environnement à chaque nouvel environnement rencontré. La figure~\ref{img_annotations_1} met en évidence les probabilités calculées suite à la rencontre d'un environnement présentant la forme \emph{rond}.
+Partant de cet état initial, l'IA doit apprendre de ses expériences. Pour ce faire elle doit mettre à jour les probabilités qu'une annotation soit rattachée à un environnement pour chaque nouvel environnement rencontré. La figure~\ref{img_annotations_1} met en évidence les probabilités calculées suite à la rencontre d'un environnement présentant la forme \emph{rond}.
 
 \begin{figure}[H] 
 \centering
@@ -31,7 +31,7 @@ Le calcul des probabilités s'effectue de la même manière pour un environnemen
 \label{img_annotations_2}
 \end{figure}
 
-Cependant, cette ambiguïté est levée par l'expérience qui confrontera le système avec des ensembles variés de formes. Par conséquent, seul l'annotation correcte pour chaque forme conserve une probabilité certaine comme il est possible de l'observer sur les figures \ref{img_annotations_3}, \ref{img_annotations_4} et \ref{img_annotations_5} qui illustrent l'évolution du système. 
+Cependant, cette ambiguïté est levée par l'expérience qui confrontera le système avec des ensembles variés de formes. Par conséquent, seul l'annotation correcte pour chaque forme conserve une probabilité certaine comme il est possible de l'observer sur les figures \ref{img_annotations_3}, \ref{img_annotations_4} et \ref{img_annotations_5} illustrant l'évolution du système. 
 
 \begin{figure}[H] 
 \includegraphics[width=\textwidth]{files/raisonneur/annotations_3} 
@@ -51,11 +51,11 @@ Cependant, cette ambiguïté est levée par l'expérience qui confrontera le sys
 \label{img_annotations_5}
 \end{figure}
 
-Il est important de noter que la certitude, représenté par une probabilité de un, ne peut être garanti que si les annotations fournit au système lors de sa période d'apprentissage sont exemptes d'erreurs. Cependant, une erreur d'annotations lors de l'apprentissage, certes diminuerai la probabilité associé à l'annotation correct mais, pour vu que le jeux d'apprentissage soit assez grands, celle-ci resterai la plus probable.
+Il est important de noter que la certitude, représentée par une probabilité égale à $1$, ne peut être garanti que si les annotations fournies au système lors de sa période d'apprentissage sont exemptes d'erreurs. Cependant, une erreur d'annotations lors de l'apprentissage certes diminuerai la probabilité associé à l'annotation correct mais pour vu que le jeux d'apprentissage soit assez grands, celle-ci resterai la plus probable.
 
 \subsubsection{Application aux jeux de plateau}
 
-Dans le cadre des jeux de plateau deux annotations seront fournies :
+Dans le cadre des jeux de plateau deux annotations sont fournies :
 \begin{itemize}
 \item \emph{victoire},
 \item \emph{défaite}.
@@ -66,4 +66,4 @@ Il est évident, mais nécessaire, de préciser que :
 \item \emph{défaite} $\rightarrow{}\neg{}$ \emph{victoire}
 \end{itemize}
 
-Ces annotations doivent être fournies directement par l'environnement sans intervention humaine, nous sommes donc sur de l'apprentissage par renforcement.
+Ces annotations doivent être fournies directement par l'environnement sans intervention humaine, nous sommes donc sûr de l'apprentissage par renforcement.
