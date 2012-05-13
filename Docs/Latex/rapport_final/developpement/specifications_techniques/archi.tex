@@ -130,11 +130,11 @@ La frontière est un module purement réactif composé d'un \texttt{Actuator}, t
 En claire ce sont des traducteurs : le \texttt{Sensor} traduit du langage \texttt{Agent} au langage arbitre, l' \texttt{Actuator} l'inverse. La \texttt{Frontier} comporte aussi une sorte de mémoire sensorielle lui permettant de juger si son environnement a changé. Nous ne passons donc que les percepts intéressants aux couches plus hautes dans la hiérarchie.  
 
 \subsubsection{Classe abstraite \texttt{Agent}}
-Une \texttt{Frontier} est toujours encapsulé par un \texttt{Agent} et sert d'outil pour celui-ci. Cette classe \texttt{Agent} est instanciée au démarrage du client machine : le fil d'exécution principale boucle à l'intérieure de celui-ci pour alterner entre demandes de mises à jour du serveur, réflexion et choix de coup. C'est une classe purement abstraite, car l'implémentation de ces deux dernières fonctionnalités varie énormément d'un algorithme à un autre. Parmi nos agents-paramètres se trouvent :
+Un \texttt{Frontier} est toujours encapsulé par un \texttt{Agent} et lui sert d'outil. Cette classe \texttt{Agent} est instanciée au démarrage du client machine. Le fil d'exécution principal alterne entre demandes de mises à jour du serveur, réflexion et choix de coup. C'est une classe purement abstraite, car l'implémentation de ces deux dernières fonctionnalités varie énormément d'un algorithme à un autre. Parmi nos agents-paramètres se trouvent :
 \begin{itemize}
-\item \texttt{MiniMaxAgent} qui applique la stratégie de maximisation de gain minimale. 
-\item \texttt{RandomAgent} qui génère des nombres aléatoires pour choisir au hasard ses coups.
-\item \texttt{MechTurkAgent} qui pour des raisons que nous ignorons exhibe une intelligence quasi-humaine\footnote{nous vous taquinons : en vrai c'est à l'utilisateur de choisir ses coups avec la console. }.
-\item \texttt{Cogito} notre cognition artificielle qui apprend à jouer en jouant contre les autres.
+\item \texttt{MiniMaxAgent} : qui applique la stratégie de maximisation de gain minimale,
+\item \texttt{RandomAgent} : qui joue au hasard,
+\item \texttt{MechTurkAgent} : qui exhibe une intelligence quasi-humaine\footnote{En réalité c'est bien un utilisateur qui joue via la console.},
+\item \texttt{Cogito} : notre cognition artificielle qui apprend à jouer en s'exerçant contre les autres.
 \end{itemize}
-Notons que rien d'empêche les confrontations entre deux clients machines avec des IA différentes, un client humain et un client machine ou bien deux clients humains. Par la suite nous nous focaliserons entièrement sur l'implémentation de ce derniers : tout cette architecture fut, après tout, implémentée pour lui seul.
+Notons que rien n'empêche les confrontations entre deux clients machines avec des IA différentes, un client humain et un client machine ou bien deux clients humains.
