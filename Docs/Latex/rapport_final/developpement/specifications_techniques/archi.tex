@@ -125,16 +125,16 @@ Tout ceci nous permet, encore une fois, d'éviter le développent d'infrastructu
 \end{figure}
 
 \subsubsection{Classe \texttt{Frontier}}
-La frontière est une module purement réactif composé d'un \texttt{Actuator}, traduisant les objets \texttt{Action} qu'il reçoit en requêtes \texttt{HTTP}, et d'un \texttt{Sensor}, qui transforme les réponses \texttt{XML} en objets \texttt{Percept} dont le plus important est le percept \texttt{Choices}.
+La frontière est un module purement réactif composé d'un \texttt{Actuator}, traduisant les objets \texttt{Action} qu'il reçoit en requêtes \texttt{HTTP}, et d'un \texttt{Sensor}, qui transforme les réponses \texttt{XML} en objets \texttt{Percept} dont le plus important est le percept \texttt{Choices}.
 
-En claire ce sont des traducteurs : le \texttt{Sensor} traduit du langage \texttt{Agent} au langage arbitre, l' \texttt{Actuator} l'inverse. La \texttt{Frontier} comporte aussi une sorte de mémoire sensorielle lui permettant de juger si son environnement ait changé. Nous ne passons donc que les percept intéressantes aux couches plus hautes dans l'hiérarchie.  
+En claire ce sont des traducteurs : le \texttt{Sensor} traduit du langage \texttt{Agent} au langage arbitre, l' \texttt{Actuator} l'inverse. La \texttt{Frontier} comporte aussi une sorte de mémoire sensorielle lui permettant de juger si son environnement a changé. Nous ne passons donc que les percept intéressants aux couches plus hautes dans la hiérarchie.  
 
 \subsubsection{Classe abstraite \texttt{Agent}}
-Un \texttt{Frontier} est toujours encapsulé par un \texttt{Agent} et sert d'outil pour celui-ci. Cette classe \texttt{Agent} est instancié au démarrage du client machine : le fil d'exécution principale boucle à l'intérieure de celui-ci pour alterner entre demandes de mises à jour du serveur, réflexion et choix de coup. C'est une classe purement abstraite, car l'implémentation de ces deux dernières fonctionnalités varie énormément d'un algorithme et un autre. Parmi nos agents-paramètres se trouvent :
+Un \texttt{Frontier} est toujours encapsulé par un \texttt{Agent} et lui sert d'outil. Cette classe \texttt{Agent} est instanciée au démarrage du client machine. Le fil d'exécution principal alterne entre demandes de mises à jour du serveur, réflexion et choix de coup. C'est une classe purement abstraite, car l'implémentation de ces deux dernières fonctionnalités varie énormément d'un algorithme et un autre. Parmi nos agents-paramètres se trouvent :
 \begin{itemize}
-\item \texttt{MiniMaxAgent} qui applique la stratégie de maximisation de gain minimale. 
-\item \texttt{RandomAgent} qui génère de nombres aléatoires pour choix au hasard ses coups.
-\item \texttt{MechTurkAgent} qui pour des raisons que nous ignorons exhibe une intelligence quasi-humaine\footnote{nous vous taquinons : en vrai c'est à l'utilisateur de choisir ses coups avec la console. }.
-\item \texttt{Cogito} notre cognition artificielle qui apprend à jouer en jouant contre les autres.
+\item \texttt{MiniMaxAgent} : qui applique la stratégie de maximisation de gain minimale,
+\item \texttt{RandomAgent} : qui joue au hasard,
+\item \texttt{MechTurkAgent} : qui exhibe une intelligence quasi-humaine\footnote{En réalité c'est bien un utilisateur qui joue via la console.},
+\item \texttt{Cogito} : notre cognition artificielle qui apprend à jouer en s'exerçant contre les autres.
 \end{itemize}
-Notons que rien d'empêche les confrontations entre deux clients machines avec des IA différents, un client humain et un client machine ou bien deux clients humains. Par la suite nous nous focaliserons entièrement sur l'implémentation de ce dernière : tout cette architecture fut, d'après tout, posons que pour lui.
+Notons que rien n'empêche les confrontations entre deux clients machines avec des IA différentes, un client humain et un client machine ou bien deux clients humains.
