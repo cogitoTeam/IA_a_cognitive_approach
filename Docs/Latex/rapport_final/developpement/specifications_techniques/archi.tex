@@ -11,11 +11,11 @@ Ce que nous appelons système est en réalité une assemblage de plusieurs logic
 \caption{Aperçu global du système.} 
 \end{figure}
 
-Avant de se concentrer sur la \cogito{} lui même nous expliquerons rapidement l'implémentation de l'infrastructure de test, que nous pouvons voir comme l'environnement.
+Avant de se concentrer sur \cogito{} lui même nous expliquerons rapidement l'implémentation de l'infrastructure de test, que nous pouvons voir comme l'environnement.
 
 \subsection{Bibliothèque \texttt{\gls{game_logic}}}
 
-Dans le chapitre~\ref{subsection_architecture_generale} nous avons introduit le module conceptuel \emph{Rule Book}, qui génère un ensemble coups possibles, chacun associé à son plateau résultant. Pour ce faire ce module doit pouvoir décider de la légalité d'un coup et connaître ses conséquences. 
+Dans le chapitre~\ref{subsection_architecture_generale} nous avons introduit le module conceptuel \emph{Rule Book}, qui génère un ensemble de coups possibles, chacun étant associé à son plateau résultant. Pour ce faire ce module doit pouvoir décider de la légalité d'un coup et connaître ses conséquences. 
 
 \begin{figure}[H] 
 \centering
@@ -65,7 +65,7 @@ Le chapitre~\ref{section_analyse_environnement} conclu en proposant le modèle c
 
 L'arbitre et l'environnement, c'est à dire l'état du jeu, seront hébergés dans une application à part entière : un \og web service \fg{} appelé \texttt{game\_service}.
 \subsubsection{Transfert des percepts}
-Le client-joueur a tout d'abord besoin de percevoir son environnement, c'est à dire de connaître l'état courant du jeu. Il est envoyé par le serveur sous forme d'un  document \texttt{XML}\footnote{ XML : Extensible markup language. } grâce au protocole \texttt{HTTP}\footnote{ HTTP : Hyper-text transfer  protocol. }. Pilier du web, l'\texttt{HTTP} a l'avantage d'être très  répandu, ubiquité qui assure l'existence de bibliothèques ouvertes,  complètes, bien documentées et simples d'utilisation pour tous langages et plateformes. Ce choix nous a permit de faciliter le développement du serveur indépendamment du reste du système.
+Le client-joueur à tout d'abord besoin de percevoir son environnement, c'est à dire de connaître l'état courant du jeu. Il est envoyé par le serveur sous forme d'un  document \texttt{XML}\footnote{ XML : Extensible markup language. } grâce au protocole \texttt{HTTP}\footnote{ HTTP : Hyper-text transfer  protocol. }. Pilier du web, l'\texttt{HTTP} a l'avantage d'être très  répandu, ubiquité qui assure l'existence de bibliothèques ouvertes,  complètes, bien documentées et simples d'utilisation pour tous langages et plateformes. Ce choix nous a permit de faciliter le développement du serveur indépendamment du reste du système.
 \subsubsection{Transfert des actions}
 Le client a également besoin d'envoyer ses coups au serveur. Pour ceci il suffit de paramétrer la requête pour indiquer :
 \begin{itemize}
@@ -73,7 +73,7 @@ Le client a également besoin d'envoyer ses coups au serveur. Pour ceci il suffi
 \item une ligne,
 \item une colonne.
 \end{itemize}
-Il nous est désormais possible d'interagir avec le serveur en écrivant manuellement nos coups dans la barre d'adresse et en lisant le document XML renvoyé. Cette manière de jouer est peu ergonomique, mais elle nous a permis de tester le fonctionnement du serveur en son intégralité bien avant la construction d'une interface graphique.
+Il nous est désormais possible d'interagir avec le serveur en écrivant manuellement nos coups dans la barre d'adresse et en lisant le document XML renvoyé. Cette manière de jouer est peu ergonomique, mais elle nous a permis de tester le fonctionnement du serveur dans son intégralité bien avant la construction d'une interface graphique.
 
 À noter également qu'il n'y a pas d'authentification ou de gestion des utilisateurs. Il est donc possible de \og tricher \fg{} en prenant le tour de l'autre joueur  : nous supposons ici qu'il n'y a simplement pas de tricheur. Nous avons choisi d'ignorer ces problèmes de sécurité dans le but de se concentrer sur d'autres parties du système plus en rapport avec notre sujet. Il serait cependant simple d'ajouter une identification via des sessions et des cookies.
 \subsubsection{Constitution des réponses}
@@ -81,7 +81,7 @@ Pour analyser ces requêtes paramétrées et générer une réponse, la technolo
 
 Cette technologie orientée prototypage rapide est très simple à utiliser mais nous permet pourtant de gérer de multiples requêtes concurrentes, donc lancer un très grand nombre de jeux entre différentes paires de clients. Il suffit d'ajouter un paramètre à la requête pour préciser l'identificateur du jeu, et un singleton côté serveur pour stoker les jeux et gérer les accès concurrents.
 \subsubsection{Conclusion}
-Le serveur correspond finalement un service web, c'est à dire un programme fournissant des données destinées à être lues par des autres programmes et non des humains.
+Le serveur correspond finalement un service web, c'est à dire un programme fournissant des données destinées à être lues par d'autres programmes et non des humains.
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/env/game_service} 
@@ -107,7 +107,7 @@ Le client humain est notre plateforme de visualisation des performances de \cogi
 \caption{Rôle du client humain dans le système.} 
 \end{figure} 
 
-L'homme se repose sur sa vision pour comprendre le monde.Posséder une sortie graphique prototypique au début du développement a facilité le développent et le débogage. L'\texttt{HTML 5} a comme avantage d'être un standard multi-plateforme et non-compilé. Seul un navigateur web récent est nécessaire.
+L'homme se repose sur sa vision pour comprendre le monde. Posséder une sortie graphique prototypique au début du développement a facilité le développement et le débogage. L'\texttt{HTML 5} a comme avantage d'être un standard multi-plateforme et non-compilé. Seul un navigateur web récent est nécessaire.
 
 \og \texttt{HTML 5} \fg{} est plus qu'un ensemble de balises \texttt{HTML}. Il s'agit surtout d'une bibliothèque \texttt{javascript}, étant conçu pour parcourir et manipuler le \texttt{DOM}\footnote{DOM : Document Object Model.}. Couplé avec la technologie \texttt{AJAX}\footnote{AJAX : acronyme d'Asynchronous Javascript and XML.} nous pouvons facilement interagir avec notre serveur via des requêtes \texttt{HTTP} formatées en \texttt{XML}.
 
@@ -127,10 +127,10 @@ Tout ceci nous permet, encore une fois, d'éviter le développent d'infrastructu
 \subsubsection{Classe \texttt{Frontier}}
 La frontière est un module purement réactif composé d'un \texttt{Actuator}, traduisant les objets \texttt{Action} qu'il reçoit en requêtes \texttt{HTTP}, et d'un \texttt{Sensor}, qui transforme les réponses \texttt{XML} en objets \texttt{Percept} dont le plus important est le percept \texttt{Choices}.
 
-En claire ce sont des traducteurs : le \texttt{Sensor} traduit du langage \texttt{Agent} au langage arbitre, l' \texttt{Actuator} l'inverse. La \texttt{Frontier} comporte aussi une sorte de mémoire sensorielle lui permettant de juger si son environnement a changé. Nous ne passons donc que les percept intéressants aux couches plus hautes dans la hiérarchie.  
+En claire ce sont des traducteurs : le \texttt{Sensor} traduit du langage \texttt{Agent} au langage arbitre, l' \texttt{Actuator} l'inverse. La \texttt{Frontier} comporte aussi une sorte de mémoire sensorielle lui permettant de juger si son environnement a changé. Nous ne passons donc que les percepts intéressants aux couches plus hautes dans la hiérarchie.  
 
 \subsubsection{Classe abstraite \texttt{Agent}}
-Un \texttt{Frontier} est toujours encapsulé par un \texttt{Agent} et lui sert d'outil. Cette classe \texttt{Agent} est instanciée au démarrage du client machine. Le fil d'exécution principal alterne entre demandes de mises à jour du serveur, réflexion et choix de coup. C'est une classe purement abstraite, car l'implémentation de ces deux dernières fonctionnalités varie énormément d'un algorithme et un autre. Parmi nos agents-paramètres se trouvent :
+Un \texttt{Frontier} est toujours encapsulé par un \texttt{Agent} et lui sert d'outil. Cette classe \texttt{Agent} est instanciée au démarrage du client machine. Le fil d'exécution principal alterne entre demandes de mises à jour du serveur, réflexion et choix de coup. C'est une classe purement abstraite, car l'implémentation de ces deux dernières fonctionnalités varie énormément d'un algorithme à un autre. Parmi nos agents-paramètres se trouvent :
 \begin{itemize}
 \item \texttt{MiniMaxAgent} : qui applique la stratégie de maximisation de gain minimale,
 \item \texttt{RandomAgent} : qui joue au hasard,
