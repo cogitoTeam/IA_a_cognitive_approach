@@ -11,7 +11,134 @@ Le module de raisonnement à été implémenté en trois classes comme représen
 \subsection{Introspection}
 \input{developpement/specifications_techniques/raisonnement/introspection}
 
-Le module d'introspection est implémenter en tant que \og thread \fg{}, ce qui lui donne l'avantage de pouvoir s'exécuter en continue. On s'éloigne donc de l'analyse décrite section \vref{subsection_introspection}.
+Le module d'introspection est implémenter en tant que \og thread \fg{}, ce qui lui donne l'avantage de pouvoir s'exécuter en continue. On s'éloigne donc de l'analyse décrite section \vref{subsection_introspection}. Ce module implémente la recherche de nouvelles formes décrit en \vref{subsection_introspection_jeux}, pour ce faire il implémente les algorithme suivant.
+
+
+L'algorithme \vref{algo_searchNewRpbs} sert de point d'entrée du moteur d'introspection. Il est appelé indéfiniment dans une boucle \og tant que \fg{} lorsque le moteur d'introspection et activé.
+
+
+\begin{algorithm}[H]
+	\caption{searchNewRpbs}
+	\label{algo_searchNewRpbs}
+	\KwData{memory}	
+  \vspace{0.2cm}
+  
+	Cbs cbs1, cbs2\;
+	List<Rpbs> list\;	
+	Game game1, game2\;
+	
+	\eIf(\tcc*[f]{Won games}){random() > 0.5}
+		{
+			game1 = memory.getRandomWonGame()\;
+			\Repeat{cbs1 != cbs2}
+			{
+				game2 = memory.getRandomWonGame()\;
+			}
+		}(\tcc*[f]{Lost games})
+		{
+			game1 = memory.getRandomLostGame()\;
+			\Repeat{cbs1 != cbs2}
+			{
+				game2 = memory.getRandomLostGame()\;
+			}
+		}
+  \vspace{0.2cm}
+  
+	cbs1 = game1.getLastCbs()\;
+	cbs2 = game2.getLastCbs()\;
+	\While{(cbs1 = cbs1.getPrevious()) != nil \&\& \\ (cbs2 = cbs2.getPrevious()) != nil}
+		{ 
+			list = findCommonRpbs(cbs1,cbs2)\;
+			\ForAll{rpbs in list}
+			{
+				extendRpbs(rpbs, cbs1, cbs2);
+			}
+		}
+		
+\end{algorithm}
+
+L'algorithme \vref{algo_findCommonRpbs} recherche les formes identiques associées à deux plateaux.
+ 
+\begin{algorithm}[H]
+	\caption{findCommonRpbs}
+	\label{algo_findCommonRpbs}
+	\KwData
+	{
+		\\
+		Cbs cbs1\;
+		Cbs cbs2\;
+	}	
+	\KwResult{List<Rpbs>}
+  \vspace{0.2cm}
+  
+  List<Rpbs> list\;
+  \ForEach{$rpbs1$ associated with cbs1}
+		{
+			\ForEach{$rpbs2$ associated with cbs2}
+				{
+					\If{rpbs1 == rpbs2}
+					{
+						list.add(rpbs1);
+					}
+				}
+		}
+		\Return list\;
+\end{algorithm}
+
+Enfin, l'algorithme \vref{algo_extendRpbs} cherche une nouvelle forme à partir de deux plateaux et d'une forme connue et contenue dans les deux plateaux.
+
+
+\begin{algorithm}[H]
+	\caption{extendRpbs}
+	\label{algo_extendRpbs}
+	\KwData
+	{
+	\\
+		Rpbs rpbs\;
+		Cbs cbs1\;
+		Cbs cbs2\;
+		Memory memory\;
+	}	
+  \vspace{0.2cm}
+  
+  Rpbs new\_rpbs\;
+  list<Term> choices\;
+  list<Term> used\_terms\;
+  Term t\;
+	List<Substitution> substitution\_list1 = cbs1.getHomomorphisms(rpbs)\;
+  List<Substitution> substitution\_list2 = cbs2.getHomomorphisms(rpbs)\;
+
+  \ForEach{$substitution1$ in substitution\_list1 }
+		{
+			
+			\tcc*[f]{On recherche un terme qui, si il est instancié, transforme un atome partiellement instancié en un atome complètement instancié.}
+			choices = cbs1.getChoices(rpbs.getTerms())\;
+			\While{choices.size() > 0}
+				{
+					t = choices.getRandom()\;
+					choices.remove(t)\;
+					
+					used\_terms.clear()\;
+					used\_terms.add(rpbs.getTerms())\;
+					used\_terms.add(t)\;
+						
+					\tcc*[f]{Création d'un nouveau rpbs}
+					new\_rpbs = cbs1.getPart(used\_terms)\;
+					\ForEach{$substitution2$ in substitution\_list2 }
+						{
+							\If{cbs2.existsHomomorphisms(new\_rpbs, substitution\_list2)}
+							{
+								\If{!memory.contains(new\_rpbs)}
+								{
+									memory.putRpbs(new\_rpbs)\;
+								}
+							
+							}
+						}
+				}
+		}
+		\Return list\;
+\end{algorithm}
 
 
 \subsection{Valuation des formes}
