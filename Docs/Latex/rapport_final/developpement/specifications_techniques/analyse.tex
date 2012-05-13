@@ -1,14 +1,15 @@
-Le rôle de l'analyseur est de traduire la représentation de l'environnement dans un format compréhensible par le système pour ensuite y reconnaître des formes connues. Pour ce faire, le module réutilise les bibliothèques \texttt{game\_logic} ainsi que \texttt{Agent}, et introduit une nouvelle bibliothèque \texttt{FOL\_objects} qui est partagée par toute l'IA. Dont voici les principales classes utilisées :
+Le rôle de l'analyseur est de traduire la représentation de l'environnement dans un format compréhensible par le système pour ensuite y reconnaître des formes connues. Pour ce faire, le module réutilise les bibliothèques \texttt{game\_logic} ainsi que \texttt{Agent}, et introduit une nouvelle bibliothèque \texttt{FOL\_objects} qui est partagée par toute l'IA. Voici les principales classes utilisées :
+
 \begin{itemize}
-  \item \textbf {Choices \texttt{Agent}} : Cette classe est un paquet qui représente un plateau courant et l'ensemble des plateaux résultants des coups possibles, où chaque plateau est une instance de la classe BoardMatrix définie ci-après. 
-  \item \textbf {BoardMatrix \texttt{Game\_logic}} : Cette classe représente un plateau dans un format matriciel. 
-  \item \textbf {Choices\_FOL \texttt{FOL\_objects}} : Elle est la version convertie par l'analyseur de Choices (même structure, attributs décrits par des formules logiques) avec, en addition, une liste de formes pertinentes associée à chaque plateau du paquet.
-  \item \textbf {CompleteBoardState \texttt{FOL\_objects}} : C'est la version logique du premier ordre de
-  BoardMatrix définie ci-dessus.
-  \item \textbf {RelevantPartialBoardState \texttt{shared\_objects}} : Cette classe décrit la configuration d'une forme pertinente d'un plateau comme une règle logique. Elle correspond aux formes extraites par le module de raisonnement qui doivent être reconnues dans les CompleteBoardState.
+  \item \class{Choices} (\texttt{Agent}) : cette classe représente un plateau courant et l'ensemble des plateaux résultants des coups possibles, où chaque plateau est une instance de la classe \class{BoardMatrix} définie ci-après,
+  \item \\class{BoardMatrix} (\texttt{Game\_logic}) : elle représente un plateau dans un format matriciel,
+  \item \class{Choices\_FOL} (\texttt{FOL\_objects}) : elle est la version convertie par l'analyseur de Choices (même structure, attributs décrits par des formules logiques) avec, en supplément, une liste de formes pertinentes associée à chaque plateau du paquet,
+  \item \class{CompleteBoardState} (\texttt{FOL\_objects}) : C'est la version logique du premier ordre de
+  \class{BoardMatrix} définie ci-dessus,
+  \item \class{RelevantPartialBoardState} (\texttt{shared\_objects}) : cette classe décrit la configuration d'une forme pertinente d'un plateau sous la forme d'une règle logique. Elle correspond aux formes extraites par le module de raisonnement qui doivent être reconnues dans les \class{CompleteBoardState},
 \end{itemize}
 
-Ce module est divisé en deux parties \og l'analyseur conceptuel de base \fg{} et \og l'analyseur conceptuel poussé \fg{} décrites ci-dessous.
+Ce module est divisé en deux parties l'\emph{analyseur conceptuel de base} et l'\emph{analyseur conceptuel poussé} décrites ci-dessous.
  
 \subsection{L'analyseur conceptuel de base}
 L'analyseur conceptuel de base (comme défini dans la partie~\ref{def:analyseur de base}, page~\pageref{def:analyseur de base}), convertit donc, plus précisément, une instance de \texttt{Choices} en une instance de \texttt{Choices\_FOL} en se servant de classes qui modélisent la logique du premier ordre. 
