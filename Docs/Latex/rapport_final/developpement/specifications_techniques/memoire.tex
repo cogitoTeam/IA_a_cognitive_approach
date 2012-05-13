@@ -3,7 +3,7 @@
 Le module de mémoire a été conçu de manière générique à l'aide d'interfaces java. Pour cela elle se décompose en trois parties :
 
 \begin{itemize}
-\item l'interface principale de la mémoire (\texttt{Memory}), qui déclare les méthodes appelées par les autres modules (Analyse et Raisonnement), et qui est implémentée en tant que mémoire à court terme (\texttt{ActiveMemory}),
+\item l'interface principale de la mémoire (\texttt{Memory}), qui déclare les méthodes appelées par les autres modules (Analyse et Raisonnement), et qui est implémentée en tant que mémoire à court terme (\texttt{ActiveMemory}). Cette implémentation joue un rôle de \emph{buffer} en stockant temporairement les options possibles fournies par le \emph{module d'analyse} et récupérées par le \emph{module de raisonnement}. Elle est également composée d'une mémoire épisodique et d'une mémoire épisodique,
 
 \item l'interface de la mémoire épisodique (\texttt{EpisodicMemory}) et l'interface de la mémoire sémantique (\texttt{SemanticMemory}), qui déclarent les méthodes appelées par les implémentations de l'interface \texttt{Memory}.
 \end{itemize}
@@ -39,7 +39,7 @@ Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est r
 
 \begin{figure}[H]
 \includegraphics[width=\textwidth]{files/neo4j/example_node_type}
-\caption{Exemple de typage des noeuds avec Neo4j.}
+\caption{Exemple de typage des nœuds avec Neo4j.}
 \label{example_node_type}
 \end{figure}
 
@@ -47,7 +47,7 @@ Neo4j étant un \gls{SGBD} \gls{NoSQL} orienté graphe, la base de donnée est r
 
 Le module de persistance permet le stockage de la mémoire épisodique et sémantique, les deux étant liées par les relations entre les \emph{MOVE} et les \emph{OBJECTS}. Nous avons donc besoin des types suivants : 
 
-\textbf{Types de noeud :}
+\textbf{Types de nœud :}
 \begin{itemize}
 	\item \texttt{GAME} : une partie en mémoire épisodique, 
 	\item \texttt{MOVE} : un coup joué en mémoire épisodique,

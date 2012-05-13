@@ -1,5 +1,5 @@
 
-Le module de raisonnement à été implémenté en trois classes comme représenté sur la figure \ref{class_diag_reasoning_engine}. La classe \texttt{ReasoningEngine} sert d'interface avec les autres modules de \cogito{}. 
+Le module de raisonnement a été implémenté en trois classes comme la montre la figure \ref{class_diag_reasoning_engine}. La classe \class{ReasoningEngine} sert d'interface avec les autres modules de \cogito{}. 
 
 \begin{figure}[H] 
 \center
@@ -11,10 +11,10 @@ Le module de raisonnement à été implémenté en trois classes comme représen
 \subsection{Introspection}
 \input{developpement/specifications_techniques/raisonnement/introspection}
 
-Le module d'introspection est implémenter en tant que \og thread \fg{}, ce qui lui donne l'avantage de pouvoir s'exécuter en continue. On s'éloigne donc de l'analyse décrite section \vref{subsection_introspection}. Ce module implémente la recherche de nouvelles formes décrit en \vref{subsection_introspection_jeux}, pour ce faire il implémente les algorithme suivant.
+Le module d'introspection est implémenté en tant que \emph{thread}, ce qui lui permet de pouvoir s'exécuter en continue. On s'éloigne donc de l'analyse décrite section \vref{subsection_introspection}. Ce module implémente la recherche de nouvelles formes décrit en \vref{subsection_introspection_jeux}, pour ce faire il implémente les algorithmes détaillés ci-après.
 
 
-L'algorithme \vref{algo_searchNewRpbs} sert de point d'entrée du moteur d'introspection. Il est appelé indéfiniment dans une boucle \og tant que \fg{} lorsque le moteur d'introspection et activé.
+L'algorithme~\vref{algo_searchNewRpbs} sert de point d'entrée du moteur d'introspection. Il est appelé indéfiniment dans une boucle \og tant que \fg{} lorsque le moteur d'introspection et activé.
 
 
 \begin{algorithm}[H]
@@ -57,7 +57,7 @@ L'algorithme \vref{algo_searchNewRpbs} sert de point d'entrée du moteur d'intro
 		
 \end{algorithm}
 
-L'algorithme \vref{algo_findCommonRpbs} recherche les formes identiques associées à deux plateaux.
+L'algorithme~\vref{algo_findCommonRpbs} recherche les formes identiques associées à deux plateaux.
  
 \begin{algorithm}[H]
 	\caption{findCommonRpbs}
@@ -85,7 +85,7 @@ L'algorithme \vref{algo_findCommonRpbs} recherche les formes identiques associé
 		\Return list\;
 \end{algorithm}
 
-Enfin, l'algorithme \vref{algo_extendRpbs} cherche une nouvelle forme à partir de deux plateaux et d'une forme connue et contenue dans les deux plateaux.
+Enfin, l'algorithme~\vref{algo_extendRpbs} cherche une nouvelle forme à partir de deux plateaux et d'une forme connue (et contenue) dans les deux plateaux.
 
 
 \begin{algorithm}[H]
@@ -144,7 +144,7 @@ Enfin, l'algorithme \vref{algo_extendRpbs} cherche une nouvelle forme à partir 
 \subsection{Valuation des formes}
 \input{developpement/specifications_techniques/raisonnement/valuation}  
 
-Afin d'attribuer un poids à chacune des formes présente en mémoire, nous avons choisi de nous appuyer sur la théorie de la probabilité. Nous cherchons donc, pour chaque forme, à déterminer la probabilité suivante : \[ P(Gain|Forme) \]
+Afin d'attribuer un poids à chacune des formes présente en mémoire, nous avons choisi de nous appuyer sur la théorie de la probabilité. Nous cherchons donc, pour chaque forme, à déterminer la probabilité qu'une forme remarquable soit présente dans un jeu gagnant : \[ P(Gain|Forme) \]
 
 En s'appuyant sur le théorème de Bayes, nous obtenons la formule suivante :
 
@@ -153,5 +153,5 @@ En s'appuyant sur le théorème de Bayes, nous obtenons la formule suivante :
 \subsection{Moteur de choix}
 \input{developpement/specifications_techniques/raisonnement/choix}
 
-Le moteur de choix est implémenté à travers la classe \class{ChoiceEngine}, celle-ci est extrêmement simple. Dans un premier temps, la liste des plateaux possibles est récupérée en mémoire sous la forme d'une \class{List<Option\_FOL>}. Ensuite, pour chaque plateau un poids est calculé, celui-ci correspond à la moyenne des probabilités de gain de chaque \class{\gls{Rpbs}} qui lui est associé. Finalement, le plateau ayant le poids le plus élevé est choisi. Si deux plateaux ont un poids maximum, le plateau choisi est tiré aléatoirement.
+Le moteur de choix est implémenté à travers la classe \class{ChoiceEngine}. Celle-ci est extrêmement simple. Dans un premier temps, la liste des plateaux possibles est récupérée en mémoire sous la forme d'une \class{List<Option\_FOL>}. Ensuite, pour chaque plateau un poids est calculé, celui-ci correspond à la moyenne des probabilités de gain de chaque \class{\gls{Rpbs}} qui lui est associé. Finalement, le plateau ayant le poids le plus élevé est choisi. Si deux plateaux ont un poids maximum, le plateau choisi est tiré aléatoirement.
 
