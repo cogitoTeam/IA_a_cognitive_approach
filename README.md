@@ -23,6 +23,7 @@ Ce projet a été réalisé par l'équipe COGITO composée de quatre étudiants 
 * **Sources de COGITO** : App/cogito/src/
 * **Sources de game_logic** : App/game_logic/src/
 * **Sources de game_service** : App/game_service/src/
+* **Jars (cogito, randomIA et game_service)** : Jars/
 
 ## USAGE
 
