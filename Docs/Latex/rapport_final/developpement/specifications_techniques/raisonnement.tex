@@ -1,5 +1,5 @@
 
-Le module de raisonnement a été implémenté en trois classes comme la montre la figure \ref{class_diag_reasoning_engine}. La classe \class{ReasoningEngine} sert d'interface avec les autres modules de \cogito{}. 
+Le module de raisonnement a été implémenté en trois classes comme le montre la figure \vref{class_diag_reasoning_engine}. La classe \class{ReasoningEngine} sert d'interface avec les autres modules de \cogito{}. 
 
 \begin{figure}[H] 
 \center
@@ -11,10 +11,10 @@ Le module de raisonnement a été implémenté en trois classes comme la montre 
 \subsection{Introspection}
 \input{developpement/specifications_techniques/raisonnement/introspection}
 
-Le module d'introspection est implémenté en tant que \emph{thread}, ce qui lui permet de pouvoir s'exécuter en continue. On s'éloigne donc de l'analyse décrite section \vref{subsection_introspection}. Ce module implémente la recherche de nouvelles formes décrit en \vref{subsection_introspection_jeux}, pour ce faire il implémente les algorithmes détaillés ci-après.
+Le module d'introspection est implémenté en tant que \emph{thread}, ce qui lui permet de pouvoir s'exécuter en continue. On s'éloigne donc de l'analyse décrite section \vref{subsection_introspection}. Ce module implémente la recherche de nouvelles formes, pour ce faire il implémente les algorithmes détaillés ci-après.
 
 
-L'algorithme~\vref{algo_searchNewRpbs} sert de point d'entrée du moteur d'introspection. Il est appelé indéfiniment dans une boucle \og tant que \fg{} lorsque le moteur d'introspection et activé.
+L'algorithme~\vref{algo_searchNewRpbs} sert de point d'entrée du moteur d'introspection. Il est appelé indéfiniment dans une boucle \og tant que \fg{} lorsque le moteur d'introspection est activé.
 
 
 \begin{algorithm}[H]
@@ -144,14 +144,16 @@ Enfin, l'algorithme~\vref{algo_extendRpbs} cherche une nouvelle forme à partir 
 \subsection{Valuation des formes}
 \input{developpement/specifications_techniques/raisonnement/valuation}  
 
-Afin d'attribuer un poids à chacune des formes présente en mémoire, nous avons choisi de nous appuyer sur la théorie de la probabilité. Nous cherchons donc, pour chaque forme, à déterminer la probabilité qu'une forme remarquable soit présente dans un jeu gagnant : \[ P(Gain|Forme) \]
+Afin d'attribuer un poids à chacune des formes présentes en mémoire, nous avons choisi de nous appuyer sur la théorie de la probabilité. Nous cherchons donc, pour chaque forme, à déterminer la probabilité qu'une forme remarquable soit présente dans un jeu gagnant : \[ P(Gain|Forme) \]
 
 En s'appuyant sur le théorème de Bayes, nous obtenons la formule suivante :
 
 \[ P(Gain|Forme) = \frac{P(Forme|Gain) \times P(Gain)}{P(Forme)} \]
 
+Pour des raisons de simplicité, cette valuation est implémentée dans le module de mémoire et est exécutée par l'appel à la méthode \method{endOfGame}. Cette méthode prend en paramètre le statut de la partie, à savoir : \og VICTORY \fg{}, \og DEFEAT \fg{}, \og DRAW \fg{} et \og INTERRUPTED \fg{}.
+
 \subsection{Moteur de choix}
 \input{developpement/specifications_techniques/raisonnement/choix}
 
-Le moteur de choix est implémenté à travers la classe \class{ChoiceEngine}. Celle-ci est extrêmement simple. Dans un premier temps, la liste des plateaux possibles est récupérée en mémoire sous la forme d'une \class{List<Option\_FOL>}. Ensuite, pour chaque plateau un poids est calculé, celui-ci correspond à la moyenne des probabilités de gain de chaque \class{\gls{Rpbs}} qui lui est associé. Finalement, le plateau ayant le poids le plus élevé est choisi. Si deux plateaux ont un poids maximum, le plateau choisi est tiré aléatoirement.
+Le moteur de choix est implémenté à travers la classe \class{ChoiceEngine}. Celle-ci est extrêmement simple. Dans un premier temps, la liste des plateaux possibles est récupérée en mémoire sous la forme d'une \class{List<Option\_FOL>}. Ensuite, pour chaque plateau un poids est calculé, celui-ci correspond à la moyenne des poids de chaque \class{\gls{Rpbs}} qui lui est associé. Finalement, le plateau ayant le poids le plus élevé est choisi. Si deux plateaux ont un poids maximum, le plateau choisi est tiré aléatoirement%.
 
