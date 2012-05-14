@@ -1,16 +1,18 @@
+Jusqu'à présent nous nous sommes intéressés au système d'un point de vue globale. Nous passons désormais à une analyse détaillée de l'agent \cogito{}.
+
 \subsection{Représentation des connaissances}
 \label{subsection_representation_co}
 	Les connaissances sont décrites en logique du première ordre. D'une part le plateau sera représenté comme un ensemble de faits et d'autres part les \og formes \fg{} seront exprimées par des règles dont l'hypothèse symbolise la sous structure à reconnaître et la conclusion un identifiant de cette forme.
 	
 	\subsubsection{Vocabulaire} 
 	\begin{itemize}
-		\item $isMine(x)$
-  	\item $isOpp(x)$
-  	\item $isEmpty(x)$
-  	\item $isEdge(x)$
-  	\item $isCorner(x)$
-  	\item $near(x,y)$
-  	\item $aligned(x,y,z)$
+	\item $isMine(x)$ : un qui m'appartient occupe la case $x$,
+  	\item $isOpp(x)$ : un qui appartient à l'adversaire occupe la case $x$,
+  	\item $isEmpty(x)$ : il n'y a pas de pion sur la case $x$,
+  	\item $isEdge(x)$ : la case $x$ se trouve au bord du plateau,
+  	\item $isCorner(x)$ : la case $x$ se trouve dans un coin du plateau,
+  	\item $near(x,y)$ : les cases $x$ et $y$ sont adjacentes horizontalement, verticalement ou en diagonale,
+  	\item $aligned(x,y,z)$ : les cases $x$, $y$ et $z$ sont sur la même ligne, colonne ou diagonale dans cet ordre (ou dans l'ordre inverse).
 	\end{itemize}
 
 \label{specs_voc_fol}
