@@ -20,7 +20,7 @@ Ce projet a été réalisé par l'équipe COGITO composée de quatre étudiants 
 
 * **Rapport du projet** : rapport_final_ac.pdf
 * **Transparents de la soutenance** : ac_beamer.pdf
-* **Sources de COGITO** : App/artificial_consciousness/src/
+* **Sources de COGITO** : App/cogito/src/
 * **Sources de game_logic** : App/game_logic/src/
 * **Sources de game_service** : App/game_service/src/
 
@@ -28,9 +28,9 @@ Ce projet a été réalisé par l'équipe COGITO composée de quatre étudiants 
 
 ### INSTALLATION DU SERVEUR DE JEU
 
-* Installer Tomcat
-* Placer le fichier game_service.war dans le dossier webapp de votre installation Tomcat
-* Démarer ou redémarer Tomcat
+* Installer Tomcat,
+* Placer le fichier game_service.war dans le dossier webapp de votre installation Tomcat,
+* Démarrer ou redémarrer Tomcat,
 * Ouvrer la page web http://localhost:8080/game_service/
 
 ### LANCEMENT DE COGITO
