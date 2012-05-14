@@ -18,8 +18,8 @@ Ce projet a été réalisé par l'équipe COGITO composée de quatre étudiants 
 
 ## CONTENU
 
-* **Rapport du projet** : Docs/Latex/rapport_final/rapport_final_ac.pdf
-* **Transparents de la soutenance** : Docs/Latex/presentation/ac_beamer.pdf
+* **Rapport du projet** : rapport_final_ac.pdf
+* **Transparents de la soutenance** : ac_beamer.pdf
 * **Sources de COGITO** : App/artificial_consciousness/src/
 * **Sources de game_logic** : App/game_logic/src/
 * **Sources de game_service** : App/game_service/src/
