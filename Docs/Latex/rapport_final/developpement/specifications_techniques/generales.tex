@@ -2,7 +2,7 @@ Jusqu'à présent nous nous sommes intéressés au système d'un point de vue gl
 
 \subsection{Représentation des connaissances}
 \label{subsection_representation_co}
-	Les connaissances sont décrites en logique du première ordre. D'une part le plateau sera représenté comme un ensemble de faits et d'autres part les \og formes \fg{} seront exprimées par des règles dont l'hypothèse symbolise la sous structure à reconnaître et la conclusion un identifiant de cette forme.
+	Les connaissances sont décrites en logique du première ordre. D'une part le plateau sera représenté comme un ensemble de faits et d'autre part les \og formes \fg{} seront exprimées par des règles dont l'hypothèse symbolise la sous structure à reconnaître et la conclusion un identifiant de cette forme.
 	
 	\subsubsection{Vocabulaire} 
 	\begin{itemize}
@@ -44,9 +44,3 @@ Le package \package{FOL}\footnote{FOL pour \og First Order Logic \fg{} (\og Logi
 \end{figure}
 
 Les classes \class{\gls{Cbs}} et \class{\gls{Rpbs}} représentent respectivement un plateau et une sous configuration d'un plateau dans le format logique décrit dans la section \vref{subsection_representation_co}. 
-
-\subsection{Misc.}
-\begin{itemize}
-  \item \textbf {\texttt{\gls{Choices} (environnement)}} :cCette classe est un paquet qui représente un plateau courant, un coup et l'ensemble des plateaux résultants de ce coup, où chaque plateau est une instance de la classe \texttt{\gls{BoardMatrix}} définie ci-après. Elle appartient à la bibliothèque \texttt{\gls{game_logic}} de l'environnement,
-  \item \textbf {\texttt{\gls{BoardMatrix}(environnement)}} : c'est la classe de base qui représente un plateau en forme d'une matrice. 
-  \end{itemize}
