@@ -3,9 +3,9 @@ Le rôle de l'analyseur est de traduire la représentation de l'environnement da
 \begin{itemize}
   \item \class{\gls{Choices}} (paquetage \package{agent}) : un plateau courant plus un ensemble de paires coup/plateau résultant, où chaque plateau est une instance de la classe \class{BoardMatrix} définie ci-après,
   \item \class{BoardMatrix} (bibliothèque \gls{game_logic}) : plateau sous forme matriciel,
-  \item \class{Choices\_FOL} (\texttt{FOL\_objects}) : version convertie par l'analyseur de Choices (même structure, attributs décrits par des formules logiques) avec, en supplément, une liste de formes pertinentes associée à chaque plateau du paquet,
-  \item \class{CompleteBoardState} (\texttt{FOL\_objects}) : C'est la version logique du premier ordre de
-  \class{BoardMatrix} définie ci-dessus,
+  \item \class{Choices\_FOL} (\texttt{FOL\_objects}) : version conversion d'un \gls{Choices} sous forme de logique du première ordre avec, en supplément, une liste de formes pertinentes associée à chaque plateau du paquet,
+  \item \class{CompleteBoardState} (\texttt{FOL\_objects}) : version logique du premier ordre de
+  \gls{BoardMatrix} définie ci-dessus,
   \item \class{RelevantPartialBoardState} (\texttt{shared\_objects}) : cette classe décrit la configuration d'une forme pertinente d'un plateau sous la forme d'une règle logique. Elle correspond aux formes extraites par le module de raisonnement qui doivent être reconnues dans les \class{CompleteBoardState},
 \end{itemize}
 
