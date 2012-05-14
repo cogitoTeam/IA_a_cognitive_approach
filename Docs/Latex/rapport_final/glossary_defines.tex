@@ -10,32 +10,36 @@
 
 \storeglosentry{ACID}{name=ACID, description={Propriété ACID d'une transaction : Atomique, Cohérente Isolée et Durable}}
 
-\storeglosentry{BoardMatrix}{name=\class{BoardMatrix}, description={Classe correspondent à un plateau de jeu sous forme matricielle avec un ensemble d'accesseurs adaptés aux jeux de plateau}}
+\storeglosentry{BoardMatrix}{name={BoardMatrix}, description={Classe correspondent à un plateau de jeu sous forme matricielle avec un ensemble d'accesseurs adaptés aux jeux de plateau}}
 
-\storeglosentry{Choices}{name=\class{Percept.Choices}, description={Classe héritier de la classe abstraite Percept, contenant un ensemble de pairs action (Action.Move) et résultat (BoarMatrix)}}
+\storeglosentry{Choices}{name={Percept.Choices}, description={Classe héritier de la classe abstraite Percept, contenant un ensemble d'instances de Action.Option}}
 
 \storeglosentry{Choices_FOL}{name=Choices\_FOL, description={// TODO}}
 
+\storeglosentry{FOL_objects}{name={FOL\_objects}, description={// TODO}}
+
+\storeglosentry{Option}{name={Action.Option}, description={Pair Action.Move-BoardMatrix correspondant à un action et son résultat}}
+
 \storeglosentry{Option_FOL}{name=Option\_FOL, description={// TODO}}
 
-\storeglosentry{CompleteBoardState}{name=CompleteBoardState, description={// TODO}}
+\storeglosentry{CompleteBoardState}{name=CompleteBoardState, description={Complete Board state (cf. \vref{subsection_cbs_rpbs})}}
 
-\storeglosentry{RelevantPartialBoardState}{name=RelevantPartialBoardState, description={// TODO}}
+\storeglosentry{RelevantPartialBoardState}{name=RelevantPartialBoardState, description={Relevant partial board state (cf. \vref{subsection_cbs_rpbs})}}
 
-\storeglosentry{game_logic}{name=\package{game\_logic}, description={Bibliothèque composé des classes BoarMatrix, Rules et Game, permettant de définir et de gérer des jeux de plateau génériques}}
+\storeglosentry{game_logic}{name={game\_logic}, description={Bibliothèque composé des classes BoarMatrix, Rules et Game, permettant de définir et de gérer des jeux de plateau génériques}}
 
-\storeglosentry{game_service}{name=\package{game\_service}, description={Serveur arbitre des parties jouées qui répond par un document XML aux requêtes HTTP envoyés par ses clients}}
+\storeglosentry{game_service}{name={game\_service}, description={Serveur arbitre des parties jouées qui répond par un document XML aux requêtes HTTP envoyés par ses clients}}
 
 \storeglosentry{client-humain}{name={client humain}, description={Client HTML 5 permettant à un humain de visualiser et d'interagir avec le serveur jeu à travers un navigateur web. Utilise la technologie AJAX avec jquery}}
 
-\storeglosentry{AJAX}{name={\texttt{AJAX}}, description={Asynchronous Javascript and XML : technologie permettant la mise à jour en continue d'une page web grâce à des requêtes lancés par un script coté client, avec des réponses en XML}}
+\storeglosentry{AJAX}{name={AJAX}, description={Asynchronous Javascript and XML : technologie permettant la mise à jour en continue d'une page web grâce à des requêtes lancés par un script coté client, avec des réponses en XML}}
 
-\storeglosentry{REST}{name={\texttt{REST}}, description={Representational State Transfer : transfert d'un représentatif de l'état courant du serveur, généralement sous forme HTML ou XML. Un échange RESTful a la particularité d'être sans état, donc sans identification du client}}
+\storeglosentry{REST}{name={REST}, description={Representational State Transfer : transfert d'un représentatif de l'état courant du serveur, généralement sous forme HTML ou XML. Un échange RESTful a la particularité d'être sans état, donc sans identification du client}}
 
 \storeglosentry{stigmergie}{name={stigmergie}, description={communication indirecte par le biais d'un environnement partagé, utilisé par exemple par les fourmis}}
 
 \storeglosentry{client-machine}{name={client machine}, description={Client HTML implémenté par la classe agent.Frontier qui sert à communiquer avec le serveur jeu pour que nos agents puissent rester synchronisés avec le jeu}}
 
-\storeglosentry{Cbs}{name=Cbs, description={Complete Board state (cf. \vref{subsection_cbs_rpbs})}}
+\storeglosentry{Cbs}{name=Cbs, description={voir CompleteBoardState}}
 
-\storeglosentry{Rpbs}{name=Rpbs, description={Relevant partial board state (cf. \vref{subsection_cbs_rpbs})}}
+\storeglosentry{Rpbs}{name=Rpbs, description={voir RelevantPartialBoardState}}
