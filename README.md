@@ -16,6 +16,14 @@ Ce projet a été réalisé par l'équipe COGITO composée de quatre étudiants 
 * Namrata Patel
 * [Clément Sipieter](http://clement-sipieter.fr)
 
+## CONTENU
+
+* **Rapport du projet** : Docs/Latex/rapport_final/rapport_final_ac.pdf
+* **Transparents de la soutenance** : Docs/Latex/presentation/ac_beamer.pdf
+* **Sources de COGITO** : App/artificial_consciousness/src/
+* **Sources de game_logic** : App/game_logic/src/
+* **Sources de game_service** : App/game_service/src/
+
 ## LICENCE CC BY-SA 3.0
 
 Le projet COGITO réalisé par l'équipe [cogitoTeam](https://github.com/cogitoTeam/artificial_consciousness) est mis à disposition selon les termes de la [licence Creative Commons Paternité - Partage à l'Identique 3.0 France](http://creativecommons.org/licenses/by-sa/3.0/fr/).
