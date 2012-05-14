@@ -24,6 +24,20 @@ Ce projet a été réalisé par l'équipe COGITO composée de quatre étudiants 
 * **Sources de game_logic** : App/game_logic/src/
 * **Sources de game_service** : App/game_service/src/
 
+## USAGE
+
+### INSTALLATION DU SERVEUR DE JEU
+
+* Installer Tomcat
+* Placer le fichier game_service.war dans le dossier webapp de votre installation Tomcat
+* Démarer ou redémarer Tomcat
+* Ouvrer la page web http://localhost:8080/game_service/
+
+### LANCEMENT DE COGITO
+
+* Exécuter le fichier cogito.jar (java -jar ./cogito.jar)
+* Le répertoire neo4j doit se trouver dans le répertoire d'où est exécuté COGITO
+
 ## LICENCE CC BY-SA 3.0
 
 Le projet COGITO réalisé par l'équipe [cogitoTeam](https://github.com/cogitoTeam/artificial_consciousness) est mis à disposition selon les termes de la [licence Creative Commons Paternité - Partage à l'Identique 3.0 France](http://creativecommons.org/licenses/by-sa/3.0/fr/).
