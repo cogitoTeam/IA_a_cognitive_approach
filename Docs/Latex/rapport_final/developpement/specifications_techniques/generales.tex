@@ -23,13 +23,12 @@ Jusqu'à présent nous nous sommes intéressés au système d'un point de vue gl
 Le package \package{FOL}\footnote{FOL pour \og First Order Logic \fg{} (\og Logique du Premier Ordre \fg{} en Français). } contient l'ensemble des classes représentant des informations en logique du premier ordre.
 
 \begin{itemize}
-  \item \textbf{\class{\gls{Cbs}}} : \og Complete Board State \fg{}, c'est la version logique du premier ordre de \class{\gls{BoardMatrix}} définie section \vref{game_logic_shared},
+  \item \textbf{\class{\gls{CompleteBoardState}}} : version logique du premier ordre de \class{\gls{BoardMatrix}} définie section \vref{game_logic_shared},
   
-  \item \textbf{\class{\gls{Rpbs}}} : \og Relevant Partial Board State \fg{}, classe qui décrit la configuration d'une sous-partie pertinente d'un plateau comme une règle logique. Elle correspond aux \og formes \fg{} extraites par le module de raisonnement qui doivent être reconnues dans les \class{\gls{CompleteBoardState}},
+  \item \textbf{\class{\gls{RelevantPartialBoardState}}} : classe qui décrit la configuration d'une sous-partie pertinente d'un plateau comme une règle logique. Elle correspond aux \og formes \fg{} extraites par le module de raisonnement qui doivent être reconnues dans les \class{\gls{CompleteBoardState}},
   
-   \item \textbf{\class{\gls{Option_FOL}}} : c'est la version logique de la classe \class{Option},
-   
-   \item \textbf{\class{\gls{Choices_FOL}}} : elle est la version convertie par l'analyseur de \emph{Choices} (même structure, attributs décrits par des formules logiques) avec, en supplément, une liste de formes pertinentes, chacune associée à chaque plateau du paquet.
+   \item \textbf{\class{\gls{Option_FOL}}} : c'est la version logique de la classe \gls{Option},
+   \item \class{Choices\_FOL} (\texttt{FOL\_objects}) : version conversion d'un \gls{Choices} sous forme de logique du première ordre avec, en supplément, une liste de formes pertinentes associée à chaque plateau du paquet.
 \end{itemize}
 
 
