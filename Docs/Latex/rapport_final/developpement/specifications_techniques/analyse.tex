@@ -1,22 +1,21 @@
-Le rôle de l'analyseur est de traduire la représentation de l'environnement dans un format compréhensible par le système pour ensuite y reconnaître des formes connues. Pour ce faire, le module réutilise les bibliothèques \texttt{game\_logic} ainsi que \texttt{Agent}
+Le rôle de l'analyseur est de traduire la représentation de l'environnement dans un format compréhensible par le système pour ensuite y reconnaître des formes connues. Pour ce faire, le module réutilise la bibliothèque \package{\gls{game_logic}} ainsi que le paquetage \package{agent}. Les classes principaux utilisés sont :
 \begin{itemize}
-  \item \class{\gls{Choices}} (paquetage \package{agent}) : un plateau courant plus un ensemble de paires coup/plateau résultant, où chaque plateau est une instance de la classe \class{BoardMatrix} définie ci-après,
-  \item \gls{BoardMatrix} (\gls{game_logic}),
-  \item \gls{Choices_FOL} (\gls{FOL_objects}),
-  \item \gls{CompleteBoardState} (\gls{FOL_objects}),
-  \item \gls{RelevantPartialBoardState} (\gls{FOL_objects}),
+  \item \class{\gls{Choices}} (\package{agent}),
+  \item \class{\gls{BoardMatrix}} (\package{\gls{game_logic}}),
+  \item \class{\gls{Choices_FOL}} (\package{\gls{FOL_objects}}),
+  \item \class{\gls{CompleteBoardState}} (\package{\gls{FOL_objects}}),
+  \item \class{\gls{RelevantPartialBoardState}} (\package{\gls{FOL_objects}}),
 \end{itemize}
-
-Ce module est divisé en deux parties l'\emph{analyseur conceptuel de base} et l'\emph{analyseur conceptuel poussé} décrites ci-dessous.
+Le module est divisé en deux parties l'\emph{analyseur conceptuel de base} et l'\emph{analyseur conceptuel poussé} décrites ci-dessous.
  
 \subsection{L'analyseur conceptuel de base}
-L'analyseur conceptuel de base (comme défini dans la partie~\ref{def:analyseur de base}, page~\pageref{def:analyseur de base}), convertit donc, plus précisément, une instance de \texttt{Choices} en une instance de \texttt{Choices\_FOL} en se servant de classes qui modélisent la logique du premier ordre. 
-
-Une première analyse d'un plateau au format matriciel (\texttt{BoardMatrix}) permet de générer l'ensemble des faits logiques représentant la configuration de celui-ci. Cet ensemble de faits constitue une base de faits qui est ensuite stockée comme attribut de la classe \texttt{CompleteBoardState} correspondante à ce plateau. L'analyseur crée alors le paquet \texttt{Choices\_FOL} correspondant au paquet \texttt{Choices} fournit par l'environnement en convertissant chaque plateau (\texttt{BoardMatrix}) de \texttt{Choices} en un plateau (\texttt{CompleteBoardState}) de \texttt{Choices\_FOL}. Elle passe ensuite ce paquet à l'analyseur conceptuel poussé. 
+L'analyseur conceptuel de base (comme défini dans la partie~\ref{def:analyseur de base}, page~\pageref{def:analyseur de base}) convertit, plus précisément, une instance de \class{\gls{Choices}} en une instance de \package{\gls{Choices_FOL}} en se servant de classes qui modélisent la logique du premier ordre. 
+% NB - swap word "package" for "instance" as this prets à confusion with Java packages.%
+Une première analyse de plateau format matriciel (\class{\gls{BoardMatrix}}) permet de générer l'ensemble des faits logiques représentant la configuration de celui-ci. Cet ensemble de faits constitue une base de faits qui est ensuite stockée comme attribut de la l'objet \texttt{CompleteBoardState} correspondante à ce plateau. L'analyseur crée alors un instance \texttt{Choices\_FOL} correspondant à l'instance \class{\gls{Choices}} fournit par le \gls{client-machine} en convertissant chaque plateau (\texttt{BoardMatrix}) de \class{\gls{Choices}} en un plateau (\texttt{CompleteBoardState}) de \texttt{Choices\_FOL}. Elle passe ensuite ce paquet à l'analyseur conceptuel poussé. 
 \subsection{L'analyseur conceptuel poussé}
-Lorsque l'analyseur conceptuel poussé, comme défini dans la partie~\ref{def:analyseur pousse}(page~\pageref{def:analyseur pousse}), reçoit ce paquet, il associe à chaque plateau du paquet, les formes pertinantes reconnues (des \texttt{RelevantPartialBoardState}).
+Lorsque l'analyseur conceptuel poussé, comme défini dans la partie~\ref{def:analyseur pousse}(page~\pageref{def:analyseur pousse}), reçoit ce paquet, il associe à chaque plateau l'ensemble les formes pertinentes reconnues (des \texttt{RelevantPartialBoardState}).
 
-Les formes (\texttt{RelevantPartialBoardState}) récupérées de la mémoire correspondent à des règles logiques représentées comme une conjonction d'atomes, le dernier atome étant la conclusion de cette règle. Ici, l'hypothèse décrit une configuration (forme) pertinante, et la conclusion introduit un identifiant. Par exemple, le fait d'avoir pris un coin est représenté par la règle :
+Les formes (\texttt{RelevantPartialBoardState}) récupérées de la mémoire correspondent à des règles logiques représentées comme une conjonction d'atomes, le dernier atome étant la conclusion de cette règle. Ici, l'hypothèse décrit une configuration (forme) pertinente, et la conclusion introduit un identifiant. Par exemple, le fait d'avoir pris un coin est représenté par la règle :
 
 \textit{$isCorner() \wedge is(Mine) \Longrightarrow \_rpbs034$}. 
 
