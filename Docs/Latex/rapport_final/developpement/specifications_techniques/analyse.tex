@@ -1,4 +1,5 @@
-Le rôle de l'analyseur est de traduire la représentation de l'environnement dans un format compréhensible par le système pour ensuite y reconnaître des formes connues. Pour ce faire, le module réutilise la bibliothèque \package{\gls{game_logic}} ainsi que le paquetage \package{agent}. Les classes principaux utilisés sont :
+Le rôle de l'analyseur est de traduire la représentation de l'environnement dans un format compréhensible par le système pour ensuite y reconnaître des formes connues. Pour ce faire, le module utilise la bibliothèque \package{\gls{game_logic}} paquetage \package{agent}. Les classes principales utilisées sont :
+
 \begin{itemize}
   \item \class{\gls{Choices}} (\package{agent}),
   \item \class{\gls{BoardMatrix}} (\package{\gls{game_logic}}),
@@ -6,12 +7,14 @@ Le rôle de l'analyseur est de traduire la représentation de l'environnement da
   \item \class{\gls{CompleteBoardState}} (\package{\gls{FOL_objects}}),
   \item \class{\gls{RelevantPartialBoardState}} (\package{\gls{FOL_objects}}),
 \end{itemize}
-Le module est divisé en deux parties l'\emph{analyseur conceptuel de base} et l'\emph{analyseur conceptuel poussé} décrites ci-dessous.
+
+Le module est divisé en deux parties : l'\emph{analyseur conceptuel de base} et l'\emph{analyseur conceptuel poussé} décrites ci-après.
  
 \subsection{L'analyseur conceptuel de base}
-L'analyseur conceptuel de base (comme défini dans la partie~\ref{def:analyseur de base}, page~\pageref{def:analyseur de base}) convertit, plus précisément, une instance de \class{\gls{Choices}} en une instance de \package{\gls{Choices_FOL}} en se servant de classes qui modélisent la logique du premier ordre. 
+L'analyseur conceptuel de base (comme défini dans la partie~\ref{def:analyseur de base}, page~\pageref{def:analyseur de base}) convertit une instance de \class{\gls{Choices}} en une instance de \package{\gls{Choices_FOL}} en se servant de classes qui modélisent la logique du premier ordre. 
+
 % NB - swap word "package" for "instance" as this prets à confusion with Java packages.%
-Une première analyse de plateau format matriciel (\class{\gls{BoardMatrix}}) permet de générer l'ensemble des faits logiques représentant la configuration de celui-ci. Cet ensemble de faits constitue une base de faits qui est ensuite stockée comme attribut de la l'objet \texttt{CompleteBoardState} correspondante à ce plateau. L'analyseur crée alors un instance \texttt{Choices\_FOL} correspondant à l'instance \class{\gls{Choices}} fournit par le \gls{client-machine} en convertissant chaque plateau (\texttt{BoardMatrix}) de \class{\gls{Choices}} en un plateau (\texttt{CompleteBoardState}) de \texttt{Choices\_FOL}. Elle passe ensuite ce paquet à l'analyseur conceptuel poussé. 
+Une première analyse de plateau au format matriciel (\class{\gls{BoardMatrix}}) génère l'ensemble des faits logiques permettant de représenter sa configuration. Cet ensemble constitue une base de faits qui est ensuite stockée comme attribut de la l'objet \texttt{CompleteBoardState} correspondante à ce plateau. L'analyseur crée alors un instance \texttt{Choices\_FOL} correspondant à l'instance \class{\gls{Choices}} fournit par le \gls{client-machine} en convertissant chaque plateau (\texttt{BoardMatrix}) de \class{\gls{Choices}} en un plateau (\texttt{CompleteBoardState}) de \texttt{Choices\_FOL}. Elle passe ensuite ce paquet à l'analyseur conceptuel poussé. 
 \subsection{L'analyseur conceptuel poussé}
 Lorsque l'analyseur conceptuel poussé, comme défini dans la partie~\ref{def:analyseur pousse}(page~\pageref{def:analyseur pousse}), reçoit ce paquet, il associe à chaque plateau l'ensemble les formes pertinentes reconnues (des \texttt{RelevantPartialBoardState}).
 
