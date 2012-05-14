@@ -23,21 +23,21 @@ L'algorithme~\vref{algo_searchNewRpbs} sert de point d'entrée du moteur d'intro
 	\KwData{memory}	
   \vspace{0.2cm}
   
-	Cbs cbs1, cbs2\;
-	List<Rpbs> list\;	
-	Game game1, game2\;
+	$Cbs$ cbs1, cbs2\;
+	$List<Rpbs>$ list\;	
+	$Game$ game1, game2\;
 	
-	\eIf(\tcc*[f]{Won games}){random() > 0.5}
+	\eIf(\tcc*[f]{Won games}){random() $>$ 0.5}
 		{
 			game1 = memory.getRandomWonGame()\;
-			\Repeat{cbs1 != cbs2}
+			\Repeat{cbs1 $\neq$ cbs2}
 			{
 				game2 = memory.getRandomWonGame()\;
 			}
 		}(\tcc*[f]{Lost games})
 		{
 			game1 = memory.getRandomLostGame()\;
-			\Repeat{cbs1 != cbs2}
+			\Repeat{cbs1 $\neq$ cbs2}
 			{
 				game2 = memory.getRandomLostGame()\;
 			}
@@ -46,10 +46,10 @@ L'algorithme~\vref{algo_searchNewRpbs} sert de point d'entrée du moteur d'intro
   
 	cbs1 = game1.getLastCbs()\;
 	cbs2 = game2.getLastCbs()\;
-	\While{(cbs1 = cbs1.getPrevious()) != nil \&\& \\ (cbs2 = cbs2.getPrevious()) != nil}
+	\While{(cbs1 $=$ cbs1.getPrevious()) $\neq$ nil $\&\&$ \\ (cbs2 $=$ cbs2.getPrevious()) $\neq$ nil}
 		{ 
 			list = findCommonRpbs(cbs1,cbs2)\;
-			\ForAll{rpbs in list}
+			\ForAll{rpbs $\subseteq$ list}
 			{
 				extendRpbs(rpbs, cbs1, cbs2);
 			}
@@ -65,18 +65,18 @@ L'algorithme~\vref{algo_findCommonRpbs} recherche les formes identiques associé
 	\KwData
 	{
 		\\
-		Cbs cbs1\;
-		Cbs cbs2\;
+		$Cbs$ cbs1\;
+		$Cbs$ cbs2\;
 	}	
-	\KwResult{List<Rpbs>}
+	\KwResult{$List<Rpbs>$}
   \vspace{0.2cm}
   
-  List<Rpbs> list\;
+  $List<Rpbs>$ list\;
   \ForEach{$rpbs1$ associated with cbs1}
 		{
 			\ForEach{$rpbs2$ associated with cbs2}
 				{
-					\If{rpbs1 == rpbs2}
+					\If{rpbs1 $==$ rpbs2}
 					{
 						list.add(rpbs1);
 					}
@@ -94,26 +94,26 @@ Enfin, l'algorithme~\vref{algo_extendRpbs} cherche une nouvelle forme à partir 
 	\KwData
 	{
 	\\
-		Rpbs rpbs\;
-		Cbs cbs1\;
-		Cbs cbs2\;
-		Memory memory\;
+		$Rpbs$ rpbs\;
+		$Cbs$ cbs1\;
+		$Cbs$ cbs2\;
+		$Memory$ memory\;
 	}	
   \vspace{0.2cm}
   
-  Rpbs new\_rpbs\;
-  list<Term> choices\;
-  list<Term> used\_terms\;
-  Term t\;
-	List<Substitution> substitution\_list1 = cbs1.getHomomorphisms(rpbs)\;
-  List<Substitution> substitution\_list2 = cbs2.getHomomorphisms(rpbs)\;
+  $Rpbs$ new\_rpbs\;
+  $list<Term>$ choices\;
+  $list<Term>$ used\_terms\;
+  $Term$ t\;
+	$List<Substitution>$ substitution\_list1 = cbs1.getHomomorphisms(rpbs)\;
+  $List<Substitution>$ substitution\_list2 = cbs2.getHomomorphisms(rpbs)\;
 
-  \ForEach{$substitution1$ in substitution\_list1 }
+  \ForEach{$substitution1$ $\subseteq$ substitution\_list1 }
 		{
 			
-			\tcc*[f]{On recherche un terme qui, si il est instancié, transforme un atome partiellement instancié en un atome complètement instancié.}
+			\tcc*[f]{On recherche un terme qui, si il est instancié, transforme un atome partiellement instancié en un atome complètement instancié.} \\
 			choices = cbs1.getChoices(rpbs.getTerms())\;
-			\While{choices.size() > 0}
+			\While{choices.size() $>$ 0}
 				{
 					t = choices.getRandom()\;
 					choices.remove(t)\;
@@ -124,7 +124,7 @@ Enfin, l'algorithme~\vref{algo_extendRpbs} cherche une nouvelle forme à partir 
 						
 					\tcc*[f]{Création d'un nouveau rpbs}
 					new\_rpbs = cbs1.getPart(used\_terms)\;
-					\ForEach{$substitution2$ in substitution\_list2 }
+					\ForEach{$substitution2$ $\subseteq$ substitution\_list2 }
 						{
 							\If{cbs2.existsHomomorphisms(new\_rpbs, substitution\_list2)}
 							{
