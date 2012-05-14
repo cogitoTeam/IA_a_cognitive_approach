@@ -8,11 +8,11 @@
 
 \storeglosentry{Apache v2}{name=Apache v2, description={Licence libre en version 2 proposée par la \emph{Apache Software Foundation}}}
 
-\storeglosentry{ACID}{name=ACID, description={propriété ACID d'une transaction : Atomique  Cohérente Isolée et Durable}}
+\storeglosentry{ACID}{name=ACID, description={Propriété ACID d'une transaction : Atomique, Cohérente Isolée et Durable}}
 
-\storeglosentry{BoardMatrix}{name=BoardMatrix, description={// TODO}}
+\storeglosentry{BoardMatrix}{name=BoardMatrix, description={Classe correspondent à un plateau de jeu sous forme matricielle avec un ensemble d'accesseurs adaptés aux jeux de plateau}}
 
-\storeglosentry{Choices}{name=Choices, description={// TODO}}
+\storeglosentry{Choices}{name=Choices, description={Classe héritier de la classe abstraite Percept, contenant un ensemble de pairs action (Action.Move) et résultat (BoarMatrix)}}
 
 \storeglosentry{Choices_FOL}{name=Choices\_FOL, description={// TODO}}
 
@@ -22,7 +22,19 @@
 
 \storeglosentry{RelevantPartialBoardState}{name=RelevantPartialBoardState, description={// TODO}}
 
-\storeglosentry{game_logic}{name=game\_logic, description={// TODO}}
+\storeglosentry{game_logic}{name=game\_logic, description={Bibliothèque composé des classes BoarMatrix, Rules et Game, permettant de définir et de gérer des jeux de plateau génériques}}
+
+\storeglosentry{game_service}{name=game\_service, description={Serveur arbitre des parties jouées qui répond par un document XML aux requêtes HTTP envoyés par ses clients}}
+
+\storeglosentry{client-humain}{name={client humain}, description={Client HTML 5 permettant à un humain de visualiser et d'interagir avec le serveur jeu à travers un navigateur web. Utilise la technologie AJAX avec jquery}}
+
+\storeglosentry{AJAX}{name=AJAX, description={Asynchronous Javascript and XML : technologie permettant la mise à jour en continue d'une page web grâce à des requêtes lancés par un script coté client, avec des réponses en XML}}
+
+\storeglosentry{REST}{name=REST, description={Representational State Transfer : transfert d'un représentatif de l'état courant du serveur, généralement sous forme HTML ou XML. Un échange RESTful a la particularité d'être sans état, donc sans identification du client}}
+
+\storeglosentry{stigmergie}{name={stigmergie}, description={communication indirecte par le biais d'un environnement partagé, utilisé par exemple par les fourmis}}
+
+\storeglosentry{client-machine}{name={client machine}, description={Client HTML implémenté par la classe agent.Frontier qui sert à communiquer avec le serveur jeu pour que nos agents puissent rester synchronisés avec le jeu}}
 
 \storeglosentry{Cbs}{name=Cbs, description={Complete Board state (cf. \vref{subsection_cbs_rpbs})}}
 
