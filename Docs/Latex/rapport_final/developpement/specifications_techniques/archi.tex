@@ -8,7 +8,7 @@ Ce que nous appelons système est en réalité une assemblage de plusieurs logic
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/william/archi_full} 
-\caption{Aperçu global du système.} 
+\caption{Aperçu global du système} 
 \end{figure}
 
 Avant de se concentrer sur \cogito{} lui même nous expliquerons rapidement l'implémentation de l'infrastructure de test, que nous pouvons voir comme l'environnement.
@@ -20,7 +20,7 @@ Dans le chapitre~\ref{subsection_architecture_generale} nous avons introduit le 
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/william/archi_lib} 
-\caption{Rôle de \texttt{\gls{game_logic}} dans le système.} 
+\caption{Rôle de \texttt{\gls{game_logic}} dans le système} 
 \end{figure}
 
 Nous avons également parlé dans le chapitre~\ref{section_analyse_environnement} d'un agent \og Arbitre \fg{} maître du jeu qui a besoin d'un ensemble de règles afin d'initialiser le plateau et d'appliquer ou de refuser respectivement les coups légaux et illégaux.
@@ -29,7 +29,7 @@ Il est claire que ces deux objets partagent un même ensemble de fonctions et de
 \begin{figure}[H] 
 \centering
 \includegraphics[width=0.75\textwidth]{files/env/game_logic_shared} 
-\caption{Partage de la bibliothèque \texttt{game\_logic}.} 
+\caption{Partage de la bibliothèque \texttt{game\_logic}} 
 \label{game_logic_shared}
 \end{figure}
 Cette bibliothèque contient trois classes principales :
@@ -47,7 +47,7 @@ Cette bibliothèque contient trois classes principales :
 \begin{figure}[H] 
 \centering
 \includegraphics[width=0.75\textwidth]{files/env/game_logic} 
-\caption{Classes de la bibliothèque \texttt{game\_logic}.} 
+\caption{Classes de la bibliothèque \texttt{game\_logic}} 
 \label{game_logic}
 \end{figure}
 
@@ -60,7 +60,7 @@ Le chapitre~\ref{section_analyse_environnement} conclu en proposant le modèle c
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/william/archi_serveur} 
-\caption{Rôle de \texttt{game\_service} dans le système.} 
+\caption{Rôle de \texttt{game\_service} dans le système} 
 \end{figure}
 
 L'arbitre et l'environnement, c'est à dire l'état du jeu, seront hébergés dans une application à part entière : un \og web service \fg{} appelé \texttt{game\_service}.
@@ -85,7 +85,7 @@ Le serveur correspond finalement un service web, c'est à dire un programme four
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/env/game_service} 
-\caption{Classes du Service Web \texttt{game\_service}.} 
+\caption{Classes du Service Web \texttt{game\_service}} 
 \label{game_service}
 \end{figure}
 Le \texttt{GameManager} sert de base de données temporaire : c'est un conteneur de \texttt{Game}, classe de la bibliothèque \texttt{game\_logic}. Chaque \texttt{Game} possédant une référence vers le singleton \texttt{Rules}, il est possible pour le serveur d'arbitrer tous les parties simultanément.
@@ -104,7 +104,7 @@ Le client humain est notre plateforme de visualisation des performances de \cogi
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/william/archi_client_humain} 
-\caption{Rôle du client humain dans le système.} 
+\caption{Rôle du client humain dans le système} 
 \end{figure} 
 
 L'homme se repose sur sa vision pour comprendre le monde. Posséder une sortie graphique prototypique au début du développement a facilité le développement et le débogage. L'\texttt{HTML 5} a comme avantage d'être un standard multi-plateforme et non-compilé. Seul un navigateur web récent est nécessaire.
@@ -121,7 +121,7 @@ En résumé, nous nous sommes basés sur des standards Libres qui nous ont donn�
 \begin{figure}[H] 
 \centering
 \includegraphics[width=\textwidth]{files/william/archi_client_machine} 
-\caption{Rôle de l'agent-client dans le système.} 
+\caption{Rôle de l'agent-client dans le système} 
 \end{figure}
 
 \subsubsection{Classe \texttt{Frontier}}
