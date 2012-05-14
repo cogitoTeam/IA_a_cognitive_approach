@@ -15,3 +15,7 @@ Ce projet a été réalisé par l'équipe COGITO composée de quatre étudiants 
 * [Thibaut Marmin](http://www.thibautmarmin.fr)
 * Namrata Patel
 * [Clément Sipieter](http://clement-sipieter.fr)
+
+## LICENCE CC BY-SA 3.0
+
+Le projet COGITO réalisé par l'équipe [cogitoTeam](https://github.com/cogitoTeam/artificial_consciousness) est mis à disposition selon les termes de la [licence Creative Commons Paternité - Partage à l'Identique 3.0 France](http://creativecommons.org/licenses/by-sa/3.0/fr/).
