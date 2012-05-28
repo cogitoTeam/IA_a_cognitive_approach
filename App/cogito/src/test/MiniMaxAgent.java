@@ -16,6 +16,12 @@ import java.util.List;
 
 public class MiniMaxAgent extends SwitchAgent
 {
+  /* MAIN */
+  public static void main(String[] args) throws InterruptedException
+  {
+    (new MiniMaxAgent()).run();
+  }  
+    
   /* IMPLEMENTATIONS */
 
   @Override

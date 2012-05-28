@@ -14,6 +14,12 @@ import java.util.Scanner;
 
 public class MTurkAgent extends SwitchAgent
 {
+  /* MAIN */
+  public static void main(String[] args) throws InterruptedException
+  {
+    (new MiniMaxAgent()).run();
+  }  
+    
   /* ATTRIBUTES */
 
   private Scanner console = new Scanner(System.in);

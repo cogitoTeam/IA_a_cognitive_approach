@@ -36,25 +36,28 @@ public abstract class Agent
    */
   public void run()
   {
+    // run startup code if needed
+    bootstrap();
+      
     boolean stop = false;
     while (!stop)
-      {
+    {
         // update the agent(s)
         this.act();
 
         // stop if the agent breaks down or requests euthanasia
         if (this.getState() != Agent.State.NORMAL)
-          stop = true;
+            stop = true;
 
         // let other processes execute
         try
-          {
+        {
             Thread.sleep(1000);
-          }
+        }
         catch (InterruptedException e)
-          {
-          }
-      }
+        {
+        }
+    }
   }
 
   /**
@@ -202,9 +205,11 @@ public abstract class Agent
     actionResult(frontier.tryAction(action), action);
   }
 
-  /**
-   * If the agent need to be bootstraped for the first game
+  /** Overridden if the agent needs to execute special code on startup.
    */
-  public abstract void bootstrap();
+  protected void bootstrap()
+  {
+      // nothing by default
+  }
 
 }

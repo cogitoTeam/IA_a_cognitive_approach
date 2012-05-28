@@ -11,7 +11,12 @@ import agent.Percept.Choices;
 
 public class RandomAgent extends SwitchAgent
 {
-
+  /* MAIN */
+  public static void main(String[] args) throws InterruptedException
+  {
+    (new RandomAgent()).run();
+  }
+    
   /* IMPLEMENTATIONS */
 
   @Override

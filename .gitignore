@@ -34,9 +34,12 @@ log/*
 *.launch
 
 # Netbeans projects
+App/game_logic/nbproject/**
+App/game_service/nbproject/**
+App/cogito/nbproject/**
 **/build.xml
 **/manifest.mf
-**/nbproject/**
+**/project.properties
 
 # CDT-specific
 .cproject
