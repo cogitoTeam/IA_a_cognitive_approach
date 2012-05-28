@@ -33,6 +33,11 @@ log/*
 # Locally stored "Eclipse launch configurations"
 *.launch
 
+# Netbeans projects
+**/build.xml
+**/manifest.mf
+**/nbproject/**
+
 # CDT-specific
 .cproject
 
@@ -59,3 +64,4 @@ log/*
 
 #Tools
 Tools/*
+/App/_cogito/nbproject/private/
