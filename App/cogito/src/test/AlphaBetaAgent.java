@@ -13,6 +13,13 @@ import java.util.List;
 
 public class AlphaBetaAgent extends MiniMaxAgent
 {
+    /* MAIN */
+  public static void main(String[] args) throws InterruptedException
+  {
+    (new AlphaBetaAgent()).run();
+  }  
+  
+  
   /* OVERRIDES */
 
   @Override

@@ -14,6 +14,12 @@ import java.util.List;
 
 public class NegaMaxAgent extends MiniMaxAgent
 {
+    /* MAIN */
+    public static void main(String[] args) throws InterruptedException
+    {
+      (new NegaMaxAgent()).run();
+    }  
+  
     /* OVERRIDES */
 
     @Override
