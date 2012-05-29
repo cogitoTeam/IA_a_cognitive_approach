@@ -131,11 +131,18 @@ public class MorpionRules extends Rules
         return false;
     }
     
+    @Override
+    public float estimateValue(BoardMatrix board, Player player) 
+    {
+        return 0.5f; /// FIXME
+    }
     
     @Override
-    public int getValue(BoardMatrix board, Player player) 
+    public int getScore(BoardMatrix board, Player player) 
     {
-        return hasWon(board, player) ? 1 : isDraw(board) ? 0 : -1;
+        return hasWon(board, player) ? 1 
+              : hasWon(board, Game.otherPlayer(player)) ? -1 
+              : 0;
     }
 
     @Override

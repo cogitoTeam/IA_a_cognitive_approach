@@ -60,8 +60,8 @@ public class ReversiRules extends Rules
     {
         return (!canMove(board, Player.WHITE) 
                 && !canMove(board, Player.BLACK)
-                && getValue(board, Player.WHITE) 
-                    == getValue(board, Player.BLACK));
+                && getScore(board, Player.WHITE) 
+                    == getScore(board, Player.BLACK));
     }
 
     @Override
@@ -69,14 +69,22 @@ public class ReversiRules extends Rules
     {
         return (!canMove(board, Player.WHITE) 
                 && !canMove(board, Player.BLACK)
-                && getValue(board, player) 
-                        > getValue(board, Game.otherPlayer(player)));
+                && getScore(board, player) 
+                        > getScore(board, Game.otherPlayer(player)));
     }
     
     @Override
-    public int getValue(BoardMatrix board, Player player) 
+    public float estimateValue(BoardMatrix board, Player player) 
     {
-        return board.count_player_pieces(player);
+      int player_pieces = board.count_player_pieces(player),
+          enemy_pieces =  board.count_player_pieces(Game.otherPlayer(player));
+        return ((player_pieces - enemy_pieces) / board.get_n_cells());
+    }
+    
+    @Override
+    public int getScore(BoardMatrix board, Player player) 
+    {
+        return (board.count_player_pieces(player));
     }
 
     @Override

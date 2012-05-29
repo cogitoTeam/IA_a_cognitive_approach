@@ -19,8 +19,7 @@ public abstract class Rules
     /* METHODS */
 
     // query
-    
-        
+  
     /**
      * Create a board to play the game defined by these rules.
      * @return 
@@ -184,6 +183,7 @@ public abstract class Rules
  
     // query
     
+    
     /**
      * Check the size of the board defined by these rules.
      * @return 
@@ -240,20 +240,30 @@ public abstract class Rules
      */
     public abstract boolean hasWon(BoardMatrix board, Player player);
     
-    
+    /**
+     * Return the specified player's score at this point, by these rules.
+     * @param board
+     * The board in consideration.
+     * @param player
+     * The player whose victory or defeat we wish estimate.
+     * @return 
+     * A real value between -1 and 1 corresponding to the heuristic estimate 
+     * value of the specified board for the specified player, based on this 
+     * rule-set.
+     */
+    public abstract float estimateValue(BoardMatrix board, Player player);
     
     /**
      * Return the specified player's score at this point, by these rules.
      * @param board
      * The board in consideration.
      * @param player
-     * The player whose score we wish to know or estimate.
+     * The player whose score we wish to know.
      * @return 
      * The integer value of the specified board for the specified player, based
-     * on this rule-set: can be a heuristic estimate or 0 for games with no
-     * scoring system.
+     * on this rule-set. 0 if this game has no scoring system.
      */
-    public abstract int getValue(BoardMatrix board, Player player);
+    public abstract int getScore(BoardMatrix board, Player player);
 
     
     /**

@@ -67,7 +67,7 @@ class Sensor extends XMLClient
         Node board_node = 
             doc.getDocumentElement().getElementsByTagName("board").item(0);
         board.parseCells(board_node);
-        int board_value = rules.getValue(board, player);
+        int board_value = rules.getScore(board, player);
         
         // otherwise reason based on perceived state
         switch(current_state)
