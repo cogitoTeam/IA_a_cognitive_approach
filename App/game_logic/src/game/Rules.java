@@ -61,7 +61,36 @@ public abstract class Rules
     }
     
     /**
-     * Get the list of board resulting from all possible legal of a given player
+     * Get the list of boards resulting from all the specified moves of the 
+     * given player on the given board.
+     * @param parent
+     * The board from which the result will be generated.
+     * @param player
+     * The player making the move which will modify the parent.
+     * @param moves
+     * The moves to be applied to generated the list of child boards.
+     * @return 
+     * The list of boards resulting from each move in the list being applied for
+     * the specified player using these rules
+     */
+    public List<BoardMatrix> getResultingBoards(BoardMatrix parent, Player player, 
+            List<Position> moves)
+    {
+        // local variables
+        List<BoardMatrix> children = new LinkedList<BoardMatrix>();
+
+        // collect possible children
+        for(Position move : moves)
+            children.add(getResultingBoard(parent, player, move));
+
+        // return the result
+        return children;
+    }
+        
+        
+    
+    /**
+     * Get the list of boards resulting from all possible legal of a given player
      * on a given board.
      * @param parent
      * The board from which the result will be generated.
@@ -73,16 +102,7 @@ public abstract class Rules
      */
     public List<BoardMatrix> getChildBoards(BoardMatrix parent, Player player)
     {
-        // local variables
-        List<BoardMatrix> children = new LinkedList<BoardMatrix>();
-        List<Position> moves = getLegalMoves(parent, player);
-
-        // collect possible children
-        for(Position move : moves)
-            children.add(getResultingBoard(parent, player, move));
-
-        // return the result
-        return children;
+        return getResultingBoards(parent, player, getLegalMoves(parent, player));
     }
 
     /**
