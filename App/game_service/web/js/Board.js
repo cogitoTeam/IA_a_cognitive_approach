@@ -115,8 +115,9 @@ function Board()
             context.drawImage(image, col*cell_w, row*cell_h, cell_w, cell_h);
         else
         {
-            context.fillStyle = Game.C_BACKGROUND;
-            context.fillRect(col*cell_w, row*cell_h, cell_w, cell_h);
+          // erase what was there before
+          context.fillStyle = Game.C_BACKGROUND;
+          context.fillRect(col*cell_w, row*cell_h, cell_w, cell_h);
         }
 
     }
@@ -127,6 +128,8 @@ function Board()
     
     obj.draw_option = function(r, c, current_turn)
     {
+        context.fillStyle = Game.C_BACKGROUND;
+        context.fillRect(c*cell_w, r*cell_h, cell_w, cell_h);
         if(current_turn == Game.WHITE)
             draw_cell(r, c, Board.CELL_POTENTIAL_WHITE);
         else if(current_turn == Game.BLACK) 

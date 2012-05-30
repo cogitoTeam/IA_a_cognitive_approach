@@ -21,6 +21,7 @@ public class MiniMaxAgent extends SwitchAgent
   /* MAIN */
   public static void main(String[] args) throws InterruptedException
   {
+    System.out.println("MINIMAX");
     (new MiniMaxAgent()).run();
   }  
     
@@ -40,12 +41,12 @@ public class MiniMaxAgent extends SwitchAgent
 
     // we'll choose a random move from amongst the best we can find
     List<Action> best_moves = new LinkedList<Action>();
-    float best_utility = Float.MIN_VALUE;
+    int best_utility = Integer.MIN_VALUE;
 
     for(Action.Option o : percept.getOptions())
     {
       // get the utility using evaluate (with or without alphabeta)
-      float o_utility = evaluate(getRules(), o.getResult(), enemy, 0);
+      int o_utility = evaluate(getRules(), o.getResult(), enemy, 0);
 
       // result is as good ? Add to list of possible moves
       if(o_utility >= best_utility)
@@ -62,12 +63,9 @@ public class MiniMaxAgent extends SwitchAgent
       }
     }
 
-    // restart if no moves are possible
-    if(best_moves.isEmpty())
-      return new Action.Restart();
+
     // perform a random action from amongst the best
-    else
-      return best_moves.get((int)(Math.random()*best_moves.size()));
+    return best_moves.get((int)(Math.random()*best_moves.size()));
   }
 
   @Override
@@ -97,22 +95,22 @@ public class MiniMaxAgent extends SwitchAgent
 
   /* SUBROUTINES */
 
-  protected Float value(Rules rules, BoardMatrix board, Player player, int depth)
+  protected Integer value(Rules rules, BoardMatrix board, Player player, int depth)
   {
     // cut off with a heuritic value is search-depth is too high
 
     if(depth > getMaxDepth())
-      return rules.estimateValue(board, player);
+      return (int)((Integer.MAX_VALUE-1) * rules.estimateValue(board, player));
 
 
     // a zero-sum value is returned if the rules dictate that the game is over
 
     if(rules.hasWon(board, player))
-      return 1.0f;
+      return Integer.MAX_VALUE-1;
     else if(rules.hasWon(board, Game.otherPlayer(player)))
-      return -1.0f;
+      return Integer.MIN_VALUE+1;
     else if(rules.isDraw(board))
-      return 0.0f;
+      return 0;
 
     // null is returned if the game is not over
 
@@ -120,14 +118,14 @@ public class MiniMaxAgent extends SwitchAgent
       return null;
   }
 
-  protected float evaluate(Rules rules, BoardMatrix board, Player current, 
+  protected int evaluate(Rules rules, BoardMatrix board, Player current, 
                         int depth)
   {
       // Maximise my own gain, not the other player's
       Player me = getPlayer();
 
       // Check whether this is a leaf-node (victory, defeat, draw)
-      Float value = value(rules, board, me, depth);
+      Integer value = value(rules, board, me, depth);
       if(value != null)
         return value;
 
@@ -146,13 +144,13 @@ public class MiniMaxAgent extends SwitchAgent
               : evaluate_min(rules, children, current, depth);
   }
 
-  protected float evaluate_min(Rules rules, List<BoardMatrix> children,
+  protected int evaluate_min(Rules rules, List<BoardMatrix> children,
                               Player current, int depth)
   {
-      float beta = Float.MAX_VALUE;
+      int beta = Integer.MAX_VALUE;
       for(BoardMatrix child : children)
       {
-        float beta_prime = evaluate(rules, child, Game.otherPlayer(current), 
+        int beta_prime = evaluate(rules, child, Game.otherPlayer(current), 
                                   depth + 1);
         if(beta_prime < beta)
           beta = beta_prime;
@@ -160,13 +158,13 @@ public class MiniMaxAgent extends SwitchAgent
       return beta;
   }
 
-  protected float evaluate_max(Rules rules, List<BoardMatrix> children,
+  protected int evaluate_max(Rules rules, List<BoardMatrix> children,
                               Player current, int depth)
   {
-      float alpha = Float.MIN_VALUE;
+      int alpha = Integer.MIN_VALUE;
       for(BoardMatrix child : children)
       {
-        float alpha_prime = evaluate(rules, child, Game.otherPlayer(current), 
+        int alpha_prime = evaluate(rules, child, Game.otherPlayer(current), 
                                     depth +1);
         if(alpha_prime > alpha)
           alpha = alpha_prime;
