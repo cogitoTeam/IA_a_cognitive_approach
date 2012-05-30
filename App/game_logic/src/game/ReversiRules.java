@@ -41,7 +41,7 @@ public class ReversiRules extends Rules
     {
       // Reversi has quite a high branching-factor, so we need to limit the
       // depth of searches
-      return 7;
+      return 6;
     }
     
         

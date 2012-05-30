@@ -79,7 +79,7 @@ public class AlphaBetaAgent extends MiniMaxAgent
         float alpha_prime = evaluate_ab(rules, child, Game.otherPlayer(current), 
                                       depth +1, alpha, beta);
         alpha = Math.max(alpha, alpha_prime);
-        if(alpha > beta)
+        if(alpha >= beta)
             break;
       }
       return alpha;

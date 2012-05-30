@@ -6,7 +6,6 @@
 package service;
 
 import game.Game;
-import game.MorpionRules;
 import game.ReversiRules;
 import game.Rules;
 import java.util.HashMap;
@@ -40,8 +39,8 @@ public class GameManager
     // singleton
     private GameManager()
     {
-        rules = MorpionRules.getInstance();
-        //rules = ReversiRules.getInstance();
+        //rules = MorpionRules.getInstance();
+        rules = ReversiRules.getInstance();
         games = new HashMap<Integer, Game>();
         waiting = new LinkedList<Game>();
     }
