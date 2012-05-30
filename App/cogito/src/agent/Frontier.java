@@ -15,7 +15,7 @@ class Frontier
 { 
     /* CONSTANTS */
     protected static final String DEFAULT_S_SERVER_URL = 
-                                "http://localhost:8084/game_service/ws";
+                                "http://localhost:8080/game_service/ws";
     
   
     /* ATTRIBUTES */
