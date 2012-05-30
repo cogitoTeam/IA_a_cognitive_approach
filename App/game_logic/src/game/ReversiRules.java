@@ -84,7 +84,7 @@ public class ReversiRules extends Rules
     @Override
     public float estimateValue(BoardMatrix board, Player player) 
     {
-      int player_pieces = board.count_player_pieces(player),
+      float player_pieces = board.count_player_pieces(player),
           enemy_pieces =  board.count_player_pieces(Game.otherPlayer(player));
         return ((player_pieces - enemy_pieces) / board.get_n_cells());
     }

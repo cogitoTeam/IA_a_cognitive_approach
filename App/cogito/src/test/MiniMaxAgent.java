@@ -62,8 +62,12 @@ public class MiniMaxAgent extends SwitchAgent
       }
     }
 
+    // restart if no moves are possible
+    if(best_moves.isEmpty())
+      return new Action.Restart();
     // perform a random action from amongst the best
-    return best_moves.get((int)(Math.random()*best_moves.size()));
+    else
+      return best_moves.get((int)(Math.random()*(best_moves.size() - 1)));
   }
 
   @Override
