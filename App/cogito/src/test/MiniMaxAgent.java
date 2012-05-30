@@ -86,83 +86,91 @@ public class MiniMaxAgent extends SwitchAgent
         sleep(2);
       }
   }
-
-    /* SUBROUTINES */
   
-    protected Float value(Rules rules, BoardMatrix board, Player player, int depth)
-    {
-      // cut off with a heuritic value is search-depth is too high
-      
-      if(depth > rules.getMaxSearchDepth())
-        return rules.estimateValue(board, player);
-      
-      
-      // a zero-sum value is returned if the rules dictate that the game is over
-      
-      if(rules.hasWon(board, player))
-        return 1.0f;
-      else if(rules.hasWon(board, Game.otherPlayer(player)))
-        return -1.0f;
-      else if(rules.isDraw(board))
-        return 0.0f;
-      
-      // null is returned if the game is not over
-      
-      else
-        return null;
-    }
-    
-    protected float evaluate(Rules rules, BoardMatrix board, Player current, 
-                          int depth)
-    {
-        // Maximise my own gain, not the other player's
-        Player me = getPlayer();
+  /* OVERRIDEN */
+  
+  public int getMaxDepth()
+  {
+    // NB - complexity if O(b^depth) where b is the number of options per turn
+    return 3; 
+  }
 
-        // Check whether this is a leaf-node (victory, defeat, draw)
-        Float value = value(rules, board, me, depth);
-        if(value != null)
-          return value;
-        
-        // Get the list of possible moves 
-        List<Position> legal_moves = rules.getLegalMoves(board, current);
-        if(legal_moves.isEmpty())
-          return 0;
-        
-        // There should be possible moves to play...
-        List<BoardMatrix> children =
-                rules.getResultingBoards(board, current, legal_moves);
+  /* SUBROUTINES */
 
-        // Is min mode ? Is max node ?
-        return (current == me) 
-                ? evaluate_max(rules, children, current, depth)
-                : evaluate_min(rules, children, current, depth);
-    }
+  protected Float value(Rules rules, BoardMatrix board, Player player, int depth)
+  {
+    // cut off with a heuritic value is search-depth is too high
 
-    protected float evaluate_min(Rules rules, List<BoardMatrix> children,
-                                Player current, int depth)
-    {
-        float beta = Float.MAX_VALUE;
-        for(BoardMatrix child : children)
-        {
-          float beta_prime = evaluate(rules, child, Game.otherPlayer(current), 
-                                    depth + 1);
-          if(beta_prime < beta)
-            beta = beta_prime;
-        }
-        return beta;
-    }
+    if(depth > getMaxDepth())
+      return rules.estimateValue(board, player);
 
-    protected float evaluate_max(Rules rules, List<BoardMatrix> children,
-                                Player current, int depth)
-    {
-        float alpha = Float.MIN_VALUE;
-        for(BoardMatrix child : children)
-        {
-          float alpha_prime = evaluate(rules, child, Game.otherPlayer(current), 
-                                      depth +1);
-          if(alpha_prime > alpha)
-            alpha = alpha_prime;
-        }
-        return alpha;
-    }
+
+    // a zero-sum value is returned if the rules dictate that the game is over
+
+    if(rules.hasWon(board, player))
+      return 1.0f;
+    else if(rules.hasWon(board, Game.otherPlayer(player)))
+      return -1.0f;
+    else if(rules.isDraw(board))
+      return 0.0f;
+
+    // null is returned if the game is not over
+
+    else
+      return null;
+  }
+
+  protected float evaluate(Rules rules, BoardMatrix board, Player current, 
+                        int depth)
+  {
+      // Maximise my own gain, not the other player's
+      Player me = getPlayer();
+
+      // Check whether this is a leaf-node (victory, defeat, draw)
+      Float value = value(rules, board, me, depth);
+      if(value != null)
+        return value;
+
+      // Get the list of possible moves 
+      List<Position> legal_moves = rules.getLegalMoves(board, current);
+      if(legal_moves.isEmpty())
+        return 0;
+
+      // There should be possible moves to play...
+      List<BoardMatrix> children =
+              rules.getResultingBoards(board, current, legal_moves);
+
+      // Is min mode ? Is max node ?
+      return (current == me) 
+              ? evaluate_max(rules, children, current, depth)
+              : evaluate_min(rules, children, current, depth);
+  }
+
+  protected float evaluate_min(Rules rules, List<BoardMatrix> children,
+                              Player current, int depth)
+  {
+      float beta = Float.MAX_VALUE;
+      for(BoardMatrix child : children)
+      {
+        float beta_prime = evaluate(rules, child, Game.otherPlayer(current), 
+                                  depth + 1);
+        if(beta_prime < beta)
+          beta = beta_prime;
+      }
+      return beta;
+  }
+
+  protected float evaluate_max(Rules rules, List<BoardMatrix> children,
+                              Player current, int depth)
+  {
+      float alpha = Float.MIN_VALUE;
+      for(BoardMatrix child : children)
+      {
+        float alpha_prime = evaluate(rules, child, Game.otherPlayer(current), 
+                                    depth +1);
+        if(alpha_prime > alpha)
+          alpha = alpha_prime;
+      }
+      return alpha;
+  }
 }

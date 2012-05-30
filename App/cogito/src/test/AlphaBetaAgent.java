@@ -29,6 +29,14 @@ public class AlphaBetaAgent extends MiniMaxAgent
             Float.MIN_VALUE, Float.MAX_VALUE);
   }
   
+  @Override
+  public int getMaxDepth()
+  {
+    // NB - complexity if O(b^(depth/2)) where b is the number of options
+    // per turn, so we can double the depth wrt standard Minimax.
+    return 6; 
+  }
+  
   /* SUBROUTINES */
   
   private float evaluate_ab(Rules rules, BoardMatrix board, Player current, 
