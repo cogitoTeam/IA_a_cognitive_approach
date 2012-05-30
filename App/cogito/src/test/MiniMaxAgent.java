@@ -67,7 +67,7 @@ public class MiniMaxAgent extends SwitchAgent
       return new Action.Restart();
     // perform a random action from amongst the best
     else
-      return best_moves.get((int)(Math.random()*(best_moves.size() - 1)));
+      return best_moves.get((int)(Math.random()*best_moves.size()));
   }
 
   @Override
