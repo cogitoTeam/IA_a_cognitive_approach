@@ -34,6 +34,13 @@ public class MorpionRules extends Rules
     // query
     
     @Override
+    public int getMaxSearchDepth()
+    {
+      // we can permit ourselves to search the full possibility space
+      return 9;
+    }
+    
+    @Override
     public Size getBoardSize()
     {
         return BOARD_SIZE;

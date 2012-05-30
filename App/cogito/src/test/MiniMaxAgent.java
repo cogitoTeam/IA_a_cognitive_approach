@@ -40,12 +40,12 @@ public class MiniMaxAgent extends SwitchAgent
 
     // we'll choose a random move from amongst the best we can find
     List<Action> best_moves = new LinkedList<Action>();
-    int best_utility = Integer.MIN_VALUE;
+    float best_utility = Float.MIN_VALUE;
 
     for(Action.Option o : percept.getOptions())
     {
       // get the utility using evaluate (with or without alphabeta)
-      int o_utility = evaluate(getRules(), o.getResult(), enemy, 0);
+      float o_utility = evaluate(getRules(), o.getResult(), enemy, 0);
 
       // result is as good ? Add to list of possible moves
       if(o_utility >= best_utility)
@@ -85,16 +85,22 @@ public class MiniMaxAgent extends SwitchAgent
 
     /* SUBROUTINES */
   
-    protected Integer value(Rules rules, BoardMatrix board, Player player)
+    protected Float value(Rules rules, BoardMatrix board, Player player, int depth)
     {
+      // cut off with a heuritic value is search-depth is too high
+      
+      if(depth > rules.getMaxSearchDepth())
+        return rules.estimateValue(board, player);
+      
+      
       // a zero-sum value is returned if the rules dictate that the game is over
       
       if(rules.hasWon(board, player))
-        return 1;
+        return 1.0f;
       else if(rules.hasWon(board, Game.otherPlayer(player)))
-        return -1;
+        return -1.0f;
       else if(rules.isDraw(board))
-        return 0;
+        return 0.0f;
       
       // null is returned if the game is not over
       
@@ -102,14 +108,14 @@ public class MiniMaxAgent extends SwitchAgent
         return null;
     }
     
-    protected int evaluate(Rules rules, BoardMatrix board, Player current, 
+    protected float evaluate(Rules rules, BoardMatrix board, Player current, 
                           int depth)
     {
         // Maximise my own gain, not the other player's
         Player me = getPlayer();
 
         // Check whether this is a leaf-node (victory, defeat, draw)
-        Integer value = value(rules, board, me);
+        Float value = value(rules, board, me, depth);
         if(value != null)
           return value;
         
@@ -128,13 +134,13 @@ public class MiniMaxAgent extends SwitchAgent
                 : evaluate_min(rules, children, current, depth);
     }
 
-    protected int evaluate_min(Rules rules, List<BoardMatrix> children,
+    protected float evaluate_min(Rules rules, List<BoardMatrix> children,
                                 Player current, int depth)
     {
-        int beta = Integer.MAX_VALUE;
+        float beta = Float.MAX_VALUE;
         for(BoardMatrix child : children)
         {
-          int beta_prime = evaluate(rules, child, Game.otherPlayer(current), 
+          float beta_prime = evaluate(rules, child, Game.otherPlayer(current), 
                                     depth + 1);
           if(beta_prime < beta)
             beta = beta_prime;
@@ -142,13 +148,13 @@ public class MiniMaxAgent extends SwitchAgent
         return beta;
     }
 
-    protected int evaluate_max(Rules rules, List<BoardMatrix> children,
+    protected float evaluate_max(Rules rules, List<BoardMatrix> children,
                                 Player current, int depth)
     {
-        int alpha = Integer.MIN_VALUE;
+        float alpha = Float.MIN_VALUE;
         for(BoardMatrix child : children)
         {
-          int alpha_prime = evaluate(rules, child, Game.otherPlayer(current), 
+          float alpha_prime = evaluate(rules, child, Game.otherPlayer(current), 
                                       depth +1);
           if(alpha_prime > alpha)
             alpha = alpha_prime;

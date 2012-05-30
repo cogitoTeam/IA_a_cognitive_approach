@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AlphaBetaAgent extends MiniMaxAgent
 {
-    /* MAIN */
+  /* MAIN */
   public static void main(String[] args) throws InterruptedException
   {
     (new AlphaBetaAgent()).run();
@@ -23,23 +23,23 @@ public class AlphaBetaAgent extends MiniMaxAgent
   /* OVERRIDES */
 
   @Override
-  protected int evaluate(Rules rules, BoardMatrix board, Player current, 
+  protected float evaluate(Rules rules, BoardMatrix board, Player current, 
                           int depth)
   {
     return evaluate_ab(rules, board, current, depth, 
-            Integer.MIN_VALUE, Integer.MAX_VALUE);
+            Float.MIN_VALUE, Float.MAX_VALUE);
   }
   
   /* SUBROUTINES */
   
-  private int evaluate_ab(Rules rules, BoardMatrix board, Player current, 
-                          int depth, int alpha, int beta)
+  private float evaluate_ab(Rules rules, BoardMatrix board, Player current, 
+                          int depth, float alpha, float beta)
   {
     // maximise my own gain, not the other player's
     Player me = getPlayer();
 
     // Check whether this is a leaf-node (victory, defeat, draw)
-    Integer value = value(rules, board, me);
+    Float value = value(rules, board, me, depth);
     if(value != null)
       return value;
 
@@ -58,12 +58,12 @@ public class AlphaBetaAgent extends MiniMaxAgent
             : evaluate_min_ab(rules, children, current, depth, alpha, beta);
   }
 
-  protected int evaluate_min_ab(Rules rules, List<BoardMatrix> children,
-                                Player current, int depth, int alpha, int beta)
+  protected float evaluate_min_ab(Rules rules, List<BoardMatrix> children,
+                                Player current, int depth, float alpha, float beta)
   {
       for(BoardMatrix child : children)
       {
-        int beta_prime = evaluate_ab(rules, child, Game.otherPlayer(current), 
+        float beta_prime = evaluate_ab(rules, child, Game.otherPlayer(current), 
                                       depth +1, alpha, beta);
         beta = Math.min(beta, beta_prime);
         if(beta <= alpha)
@@ -72,12 +72,12 @@ public class AlphaBetaAgent extends MiniMaxAgent
       return beta;
   }
 
-  protected int evaluate_max_ab(Rules rules, List<BoardMatrix> children,
-                              Player current, int depth, int alpha, int beta)
+  protected float evaluate_max_ab(Rules rules, List<BoardMatrix> children,
+                              Player current, int depth, float alpha, float beta)
   {
       for(BoardMatrix child : children)
       {
-        int alpha_prime = evaluate_ab(rules, child, Game.otherPlayer(current), 
+        float alpha_prime = evaluate_ab(rules, child, Game.otherPlayer(current), 
                                       depth +1, alpha, beta);
         alpha = Math.max(alpha, alpha_prime);
         if(beta <= alpha)

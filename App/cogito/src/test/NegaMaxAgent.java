@@ -23,7 +23,7 @@ public class NegaMaxAgent extends MiniMaxAgent
     /* OVERRIDES */
 
     @Override
-    protected int evaluate(Rules rules, BoardMatrix board, Player current,
+    protected float evaluate(Rules rules, BoardMatrix board, Player current,
                            int depth)
     {
         // maximise my own gain, not the other player's
@@ -32,14 +32,14 @@ public class NegaMaxAgent extends MiniMaxAgent
         // Is leaf node ?
         List<Position> legal_moves = rules.getLegalMoves(board, current);
         if(legal_moves.isEmpty())
-            return ((current == me) ? 1 : -1) * value(rules, board, me);
+            return ((current == me) ? 1 : -1) * value(rules, board, me, depth);
 
         // Otherwise there should be possible moves to play...
         List<BoardMatrix> children =
                 rules.getResultingBoards(board, current, legal_moves);
 
         // Symetrical evaluation
-        int alpha = Integer.MIN_VALUE;
+        float alpha = Float.MIN_VALUE;
         for(BoardMatrix child : children)
             alpha = Math.max(alpha,
                 -evaluate(rules, child, Game.otherPlayer(current), depth + 1));

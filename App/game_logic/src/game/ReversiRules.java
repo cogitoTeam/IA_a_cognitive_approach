@@ -36,6 +36,14 @@ public class ReversiRules extends Rules
     
     // query
     
+    @Override
+    public int getMaxSearchDepth()
+    {
+      // Reversi has quite a high branching-factor, so we need to limit the
+      // depth of searches
+      return 7;
+    }
+    
         
     @Override
     public Size getBoardSize()

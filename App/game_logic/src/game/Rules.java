@@ -183,6 +183,15 @@ public abstract class Rules
  
     // query
     
+    /**
+     * How far should Minimax or Alpha-beta search the possibility-space of this
+     * game?
+     * @return 
+     * The maximum search depth that a decent Alpha-beta algorithm should be
+     * able to tolerate for the game defined by this set of rules.
+     */
+    public abstract int getMaxSearchDepth();
+    
     
     /**
      * Check the size of the board defined by these rules.

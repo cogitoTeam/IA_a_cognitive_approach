@@ -68,3 +68,4 @@ App/cogito/nbproject/**
 #Tools
 Tools/*
 /App/_cogito/nbproject/private/
+/App/cogito/build/
