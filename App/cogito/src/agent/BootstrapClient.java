@@ -8,6 +8,7 @@ package agent;
 
 import game.Game.Player;
 import game.*;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
@@ -31,7 +32,14 @@ class BootstrapClient extends XMLClient
         super(_s_server_url);
 
         // ask the server for a new game, complete with identifier
-        Element game_element = getXML().getDocumentElement();
+        Document doc = this.getXML();
+        if(doc == null)
+        {
+            System.err.println("L'uri \""+_s_server_url+"\" est introuvable.");
+            System.exit(1);
+        }
+            
+        Element game_element = doc.getDocumentElement();
         NamedNodeMap attributes = game_element.getAttributes();
         
         // parse the game identifier from the reply
