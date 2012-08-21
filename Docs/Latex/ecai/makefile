@@ -1,7 +1,7 @@
 tex_cmd=pdflatex
 
 simple:
-	${tex_cmd} ac_beamer.tex
+	${tex_cmd} ecai_beamer.tex
 
 all:
 	make simple
@@ -23,7 +23,7 @@ double_print:
 	make simple_print
 
 simple_print:
-	${tex_cmd} ac_beamer_print.tex
+	${tex_cmd} ecai_beamer_print.tex
 
 help:
 	@cat makefile
