@@ -90,7 +90,7 @@ public class MiniMaxAgent extends SwitchAgent
   public int getMaxDepth()
   {
     // NB - complexity if O(b^depth) where b is the number of options per turn
-    return 3; 
+    return 12; 
   }
 
   /* SUBROUTINES */
