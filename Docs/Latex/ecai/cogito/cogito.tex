@@ -1,27 +1,51 @@
-%--------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 % BOARD ENCODING
-%--------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 \subsection{Board encoding}
 \begin{frame}{"Cogito" system overview}{Board encoding}
+
+Each encountered state of the board is an object, while certain configurations 
+deemed are attributes. A configuration is invariant with regards to translations 
+and rotations.
+
 \end{frame}
 
-%--------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 % EVALUATING CONFIGURATIONS
-%--------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 \subsection{Evaluating configurations}
 \begin{frame}{"Cogito" system overview}{Evaluating configurations}
+
+When the game ends the final configuration is given a value based on whether the 
+agent has won or last. This value and is propagated backwards through previous
+board states with linear attenuation. The value of a state board the value 
+of its configurations.
+
 \end{frame}
 
-%--------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 % GENERATING NEW CONFIGURATIONS
-%--------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 \subsection{Generating new configurations}
 \begin{frame}{"Cogito" system overview}{Generating new configurations}
+
+New relevant configurations are deduced by attempting to locally extend an 
+existing configuration shared by two or more winning or losing board states.
+
 \end{frame}
 
-%--------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 % PUTTING IT ALL TOGETHER
-%--------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 \subsection{Putting it all together}
 \begin{frame}{"Cogito" system overview}{Putting it all together}
+
+The system receives a set of possible moves to choose from. By evaluating each 
+resulting board state based on prior experience it is able to choose the one 
+which seems most beneficial.
+
+Nota Bene: there is no look-ahead, but as we are essentially engineering a 
+dynamic heuristic the system could be easily combined with a limited-depth 
+Minimax implementation.
+
 \end{frame}
