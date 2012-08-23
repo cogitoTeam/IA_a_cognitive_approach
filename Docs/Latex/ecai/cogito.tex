@@ -4,11 +4,62 @@
 \subsection{Board encoding}
 \begin{frame}{``Cogito" system overview}{Board encoding}
 
+Board was encoded in first order logic format.
+
 Each encountered state of the board is an object, while certain configurations 
 deemed are attributes. A configuration is invariant with regards to translations 
 and rotations.
 
 \end{frame}
+
+\begin{frame}{``Cogito" system overview}{Board encoding}
+	\begin{minipage}{0.45\textwidth}
+		\only<1|handout:0>{
+			\includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_0}	
+		}
+		\only<2|handout:0>{
+			\includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_1}	
+		}
+		\only<3|handout:1>{
+			\includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_2}	
+		}
+	\end{minipage}
+	\begin{minipage}{0.50\textwidth}
+		\begin{itemize}
+			\uncover<2->{
+				\item $isCorner(x) \wedge isMine(x)$
+			}
+			\uncover<3->{
+				\item $isMine(w) \wedge isOpp(x) \wedge isOpp(y) \wedge aligned(w,x,y) \wedge isEmpty(z) \wedge aligned (x,y,z)$
+			}
+		\end{itemize}
+	\end{minipage}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% MEMORY STRUCTURE
+%-------------------------------------------------------------------------------
+\subsection{Memory structure}
+\begin{frame}{``Cogito" system overview}{Memory structure}
+     
+  \only<1|handout:1>{
+    \begin{block}{Vision matricielle}
+      \begin{center}
+        \includegraphics[width=0.6\textwidth]{img/cogito/context_matrix}
+      \end{center}
+    \end{block}
+  }
+  \only<2|handout:2>{
+    \begin{block}{Vision en graphe}
+      \begin{center}
+        \includegraphics[width=0.6\textwidth]{img/cogito/context_graph}
+      \end{center}
+    \end{block}
+  }
+\end{frame}
+
+
+
 
 %-------------------------------------------------------------------------------
 % EVALUATING CONFIGURATIONS
