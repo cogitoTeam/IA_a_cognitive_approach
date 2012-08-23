@@ -4,20 +4,34 @@
 \subsection{Reducing redundancy}
 \begin{frame}{What FCA brings to the table}{Reducing redundancy}
 
+\begin{itemize}
+\item Attributes always found together can be merged,
+\item<2-> beware of introducing errors!
+\end{itemize}
 
-\begin{minipage}[t]{0.40\linewidth}
-  \begin{figure}[ht]
+\begin{figure}[ht]
+  \begin{minipage}[t]{0.3\linewidth}
+    \vspace{0pt}
     \centering
-    \includegraphics[width=\textwidth]{img/fca/lattice1}
-  \end{figure}
-\end{minipage}
-\begin{minipage}{0.60\linewidth}
-  \begin{itemize}
-    \item attributs inutiles car ils ne différencient aucun objet
-    \item possible appliction d'une compression de ces configurations
-      toutes les n parties
-  \end{itemize}
-\end{minipage}
+    \includegraphics[width=\textwidth]{img/fca/duck1}
+    \\ \color{green}{\footnotesize $hasBill(x) \wedge isDuck(x)$}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.3\linewidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics[width=\textwidth]{img/fca/duck2}
+    \\ \color{green}{\footnotesize $hasBill(y) \wedge isDuck(y)$}
+  \end{minipage}
+  \hfill
+  \pause
+  \begin{minipage}[t]{0.3\linewidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics[width=\textwidth]{img/fca/platypus}
+    \\ \color{red}{\footnotesize $hasBill(y) \wedge \neg{}isDuck(y)$}
+  \end{minipage}
+\end{figure}
 
 \end{frame}
 
