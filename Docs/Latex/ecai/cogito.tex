@@ -40,7 +40,7 @@
 \subsection{Memory structure}
 \begin{frame}{``Cogito" system overview}{Memory structure}
 
-\begin{block}{Remember}
+\begin{block}{Nota bene}
 Objects are board-states, attributes are local configurations.
 \end{block}
 
@@ -67,14 +67,22 @@ Objects are board-states, attributes are local configurations.
 
 %-------------------------------------------------------------------------------
 % EVALUATING CONFIGURATIONS
+% When the game ends the final configuration is given a value based on whether the 
+% agent has won or last. This value and is propagated backwards through previous
+% board states with linear attenuation. The value of a state board influences the value 
+% of its configurations.
 %-------------------------------------------------------------------------------
 \subsection{Evaluating configurations}
 \begin{frame}{``Cogito" system overview}{Evaluating configurations}
 
-When the game ends the final configuration is given a value based on whether the 
-agent has won or last. This value and is propagated backwards through previous
-board states with linear attenuation. The value of a state board the value 
-of its configurations.
+\begin{block}{When the game ends\ldots}
+\begin{enumerate}
+\item Fixed utilities for win/loss/stalemate configurations,
+\item value is propagated back to previous states,
+\item configuration values are adjusted.
+\end{enumerate}
+\end{block}
+
 
 \end{frame}
 
