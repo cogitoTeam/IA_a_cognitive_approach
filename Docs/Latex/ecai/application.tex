@@ -32,6 +32,12 @@
 \begin{frame}{Application: game modeling}{Chosen game: ``Reversi"}
 
 \begin{figure}[ht]
+\begin{minipage}[t]{0.4\linewidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=\textwidth]{img/application/reversi.png}
+\end{minipage}
+\hfill
 \begin{minipage}[t]{0.5\linewidth}
 \vspace{0pt}
 \begin{block}{Basic idea}
@@ -42,12 +48,7 @@
 \end{itemize}
 \end{block}
 \end{minipage}
-\hfill
-\begin{minipage}[t]{0.4\linewidth}
-\vspace{0pt}
-\centering
-\includegraphics[width=\textwidth]{img/application/reversi.png}
-\end{minipage}
+
 \end{figure}
 
 \end{frame}
@@ -57,9 +58,10 @@
 %-------------------------------------------------------------------------------
 \subsection{Von Neumann's theorem}
 \begin{frame}{Application: game modeling}{Von Neumann's theorem}
+\begin{block}{``I cut, you choose"}
 \centering
 \includegraphics[height=0.6\paperheight]{img/application/cakes.pdf}
-
+\end{block}
 \end{frame}
 
 %-------------------------------------------------------------------------------
@@ -68,9 +70,17 @@
 \subsection{Drawbacks of Minimax}
 \begin{frame}{Application: game modeling}{Drawbacks of Minimax}
 
-Minimax is exponential so cannot the used in an exact manner. Search depth must 
-be capped and heuristics used. A heuristic is the condensation of an expert's 
-knowledge: difficult to codify as based on multum in parvo (many tiny factors).
+\begin{block}{Exponential-time algorithm}
+\begin{itemize}
+\item Search-depth must be capped,
+\item heuristics must be used,
+\item theoretical optimality is lost.
+\end{itemize}
+\end{block}
+
+\begin{block}{``Multum in parvo"}
+It's difficult to condense expert knowledge into a heuristic!
+\end{block}
 
 \end{frame}
 
@@ -80,6 +90,6 @@ knowledge: difficult to codify as based on multum in parvo (many tiny factors).
 \subsection{An alternative}
 \begin{frame}{Application: game modeling}{An alternative}
 
-Why can have the system develop its own heuristic evaluation through experience?
+\huge{Why not have the system develop its own heuristic through trial and error?}
 
 \end{frame}
