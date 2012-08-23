@@ -2,38 +2,36 @@
 % BOARD ENCODING
 %-------------------------------------------------------------------------------
 \subsection{Board encoding}
-\begin{frame}{``Cogito" system overview}{Board encoding}
-
-Board was encoded in first order logic format.
-
-Each encountered state of the board is an object, while certain configurations 
-deemed are attributes. A configuration is invariant with regards to translations 
-and rotations.
-
-\end{frame}
 
 \begin{frame}{``Cogito" system overview}{Board encoding}
-	\begin{minipage}{0.45\textwidth}
-		\only<1|handout:0>{
-			\includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_0}	
-		}
-		\only<2|handout:0>{
-			\includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_1}	
-		}
-		\only<3|handout:1>{
-			\includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_2}	
-		}
-	\end{minipage}
-	\begin{minipage}{0.50\textwidth}
-		\begin{itemize}
-			\uncover<2->{
-				\item $isCorner(x) \wedge isMine(x)$
-			}
-			\uncover<3->{
-				\item $isMine(w) \wedge isOpp(x) \wedge isOpp(y) \wedge aligned(w,x,y) \wedge isEmpty(z) \wedge aligned (x,y,z)$
-			}
-		\end{itemize}
-	\end{minipage}
+
+\begin{block}{First-order logic}
+  \begin{itemize}
+    \item translation- and rotation-invariant,
+    \item pattern-matching using homomorphisms.
+  \end{itemize}
+\end{block}
+\pause
+%\begin{exampleblock}
+\begin{figure}[ht]
+  \begin{minipage}[t]{0.4\linewidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_2}	
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.55\textwidth}
+    \vspace{0pt}
+    \begin{itemize}
+	\item $isCorner(x) \wedge isMine(x)$
+	\item $isMine(w) \wedge isOpp(x) \wedge isOpp(y) 
+		  \wedge aligned(w,x,y) \wedge isEmpty(z) 
+		  \wedge aligned (x,y,z)$
+    \end{itemize}
+  \end{minipage}
+\end{figure}
+%\end{exampleblock}
+
 \end{frame}
 
 %-------------------------------------------------------------------------------
@@ -41,21 +39,27 @@ and rotations.
 %-------------------------------------------------------------------------------
 \subsection{Memory structure}
 \begin{frame}{``Cogito" system overview}{Memory structure}
-     
-  \only<1|handout:1>{
-    \begin{block}{Vision matricielle}
-      \begin{center}
-        \includegraphics[width=0.6\textwidth]{img/cogito/context_matrix}
-      \end{center}
-    \end{block}
-  }
-  \only<2|handout:2>{
-    \begin{block}{Vision en graphe}
-      \begin{center}
-        \includegraphics[width=0.6\textwidth]{img/cogito/context_graph}
-      \end{center}
-    \end{block}
-  }
+
+\begin{block}{Remember}
+Objects are board-states, attributes are local configurations.
+\end{block}
+
+\begin{figure}[ht]
+  \begin{minipage}[t]{0.45\linewidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics[width=\textwidth]{img/cogito/context_matrix}
+    \\ Matrix representation
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\textwidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics[width=\textwidth]{img/cogito/context_graph}
+    \\ Graph representation
+  \end{minipage}
+\end{figure}
+
 \end{frame}
 
 
