@@ -2,38 +2,36 @@
 % BOARD ENCODING
 %-------------------------------------------------------------------------------
 \subsection{Board encoding}
-\begin{frame}{``Cogito" system overview}{Board encoding}
-
-Board was encoded in first order logic format.
-
-Each encountered state of the board is an object, while certain configurations 
-deemed are attributes. A configuration is invariant with regards to translations 
-and rotations.
-
-\end{frame}
 
 \begin{frame}{``Cogito" system overview}{Board encoding}
-	\begin{minipage}{0.45\textwidth}
-		\only<1|handout:0>{
-			\includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_0}	
-		}
-		\only<2|handout:0>{
-			\includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_1}	
-		}
-		\only<3|handout:1>{
-			\includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_2}	
-		}
-	\end{minipage}
-	\begin{minipage}{0.50\textwidth}
-		\begin{itemize}
-			\uncover<2->{
-				\item $isCorner(x) \wedge isMine(x)$
-			}
-			\uncover<3->{
-				\item $isMine(w) \wedge isOpp(x) \wedge isOpp(y) \wedge aligned(w,x,y) \wedge isEmpty(z) \wedge aligned (x,y,z)$
-			}
-		\end{itemize}
-	\end{minipage}
+
+\begin{block}{First-order logic}
+  \begin{itemize}
+    \item translation- and rotation-invariant,
+    \item pattern-matching using homomorphisms.
+  \end{itemize}
+\end{block}
+\pause
+%\begin{exampleblock}
+\begin{figure}[ht]
+  \begin{minipage}[t]{0.4\linewidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/cogito/raisonneur_choix_2}	
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.55\textwidth}
+    \vspace{0pt}
+    \begin{itemize}
+	\item $isCorner(x) \wedge isMine(x)$
+	\item $isMine(w) \wedge isOpp(x) \wedge isOpp(y) 
+		  \wedge aligned(w,x,y) \wedge isEmpty(z) 
+		  \wedge aligned (x,y,z)$
+    \end{itemize}
+  \end{minipage}
+\end{figure}
+%\end{exampleblock}
+
 \end{frame}
 
 %-------------------------------------------------------------------------------
@@ -41,21 +39,27 @@ and rotations.
 %-------------------------------------------------------------------------------
 \subsection{Memory structure}
 \begin{frame}{``Cogito" system overview}{Memory structure}
-     
-  \only<1|handout:1>{
-    \begin{block}{Vision matricielle}
-      \begin{center}
-        \includegraphics[width=0.6\textwidth]{img/cogito/context_matrix}
-      \end{center}
-    \end{block}
-  }
-  \only<2|handout:2>{
-    \begin{block}{Vision en graphe}
-      \begin{center}
-        \includegraphics[width=0.6\textwidth]{img/cogito/context_graph}
-      \end{center}
-    \end{block}
-  }
+
+\begin{block}{Nota bene}
+Objects are board-states, attributes are local configurations.
+\end{block}
+
+\begin{figure}[ht]
+  \begin{minipage}[t]{0.45\linewidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics[width=\textwidth]{img/cogito/context_matrix}
+    \\ Matrix representation
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\textwidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics[width=\textwidth]{img/cogito/context_graph}
+    \\ Graph representation
+  \end{minipage}
+\end{figure}
+
 \end{frame}
 
 
@@ -63,14 +67,22 @@ and rotations.
 
 %-------------------------------------------------------------------------------
 % EVALUATING CONFIGURATIONS
+% When the game ends the final configuration is given a value based on whether the 
+% agent has won or last. This value and is propagated backwards through previous
+% board states with linear attenuation. The value of a state board influences the value 
+% of its configurations.
 %-------------------------------------------------------------------------------
 \subsection{Evaluating configurations}
 \begin{frame}{``Cogito" system overview}{Evaluating configurations}
 
-When the game ends the final configuration is given a value based on whether the 
-agent has won or last. This value and is propagated backwards through previous
-board states with linear attenuation. The value of a state board the value 
-of its configurations.
+\begin{block}{When the game ends\ldots}
+\begin{enumerate}
+\item Fixed utilities for win/loss/stalemate configurations,
+\item value is propagated back to previous states,
+\item configuration values are adjusted.
+\end{enumerate}
+\end{block}
+
 
 \end{frame}
 
@@ -80,6 +92,7 @@ of its configurations.
 \subsection{Generating new configurations}
 \begin{frame}{``Cogito" system overview}{Generating new configurations}
 
+TODO!
 New relevant configurations are deduced by attempting to locally extend an 
 existing configuration shared by two or more winning or losing board states.
 
@@ -91,12 +104,19 @@ existing configuration shared by two or more winning or losing board states.
 \subsection{Putting it all together}
 \begin{frame}{``Cogito" system overview}{Putting it all together}
 
-The system receives a set of possible moves to choose from. By evaluating each 
-resulting board state based on prior experience it is able to choose the one 
-which seems most beneficial.
+\begin{block}{It's as easy as\dots}
+\begin{enumerate}
+\item \textbf{Receive} a set of legal moves,
+\item \textbf{evaluate} each resulting state,
+\item \textbf{pick} the move resulting in the ``best" state.
+\end{enumerate}
+\end{block}
 
-Nota Bene: there is no look-ahead, but as we are essentially engineering a 
-dynamic heuristic the system could be easily combined with a limited-depth 
-Minimax implementation.
+\begin{block}{Possible extensions}
+\begin{itemize}
+\item Combine with \textbf{MiniMax} for look-ahead,
+\item what about \textbf{FCA}?
+\end{itemize}
+\end{block}
 
 \end{frame}
