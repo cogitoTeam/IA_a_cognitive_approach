@@ -95,12 +95,19 @@ existing configuration shared by two or more winning or losing board states.
 \subsection{Putting it all together}
 \begin{frame}{``Cogito" system overview}{Putting it all together}
 
-The system receives a set of possible moves to choose from. By evaluating each 
-resulting board state based on prior experience it is able to choose the one 
-which seems most beneficial.
+\begin{block}{It's as easy as\dots}
+\begin{enumerate}
+\item \textbf{Receive} a set of legal moves,
+\item \textbf{evaluate} each resulting state,
+\item \textbf{pick} the move resulting in the ``best" state.
+\end{enumerate}
+\end{block}
 
-Nota Bene: there is no look-ahead, but as we are essentially engineering a 
-dynamic heuristic the system could be easily combined with a limited-depth 
-Minimax implementation.
+\begin{block}{Possible extensions}
+\begin{itemize}
+\item Combine with \textbf{MiniMax} for look-ahead,
+\item what about \textbf{FCA}?
+\end{itemize}
+\end{block}
 
 \end{frame}
