@@ -1,25 +1,85 @@
 %-------------------------------------------------------------------------------
 % ELIMINATIONS OF REDUNDANCY
 %-------------------------------------------------------------------------------
-\subsection{Elimination of redundancy}
-\begin{frame}{What FCA brings to the table}{Elimination of redundancy}
+\subsection{Reducing redundancy}
+\begin{frame}{What FCA brings to the table}{Reducing redundancy}
 
 
+\begin{minipage}[t]{0.40\linewidth}
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{img/fca/lattice1}
+  \end{figure}
+\end{minipage}
+\begin{minipage}{0.60\linewidth}
+  \begin{itemize}
+    \item attributs inutiles car ils ne différencient aucun objet
+    \item possible appliction d'une compression de ces configurations
+      toutes les n parties
+  \end{itemize}
+\end{minipage}
 
 \end{frame}
 
 %-------------------------------------------------------------------------------
 % FASTER QUERIES
+%
+%% on peut en dégager une hiérarchie des RPBS. Celle-ci pourrait
+%% permettre une recherche plus intelligente des RPBS (réduction du
+%% nombre d'homomorphismes à appliquer sur chaque plateau) et donc un
+%% gain de temps pour la prise de décision sans devoir réduire
+%% drastiquement le nombre de RPBS. On peut imaginer que le système
+%% effectuerait une recherche approfondie à posteriori afin de ne pas
+%% biaiser l'apprentissage. (L'idée générale est, pendant la phase de
+%% jeu, de classer le CBS à évaluer dans un concept et de lui
+%% attribuer le point associé à celui-ci. Ce qui permettrait de
+%% profiter de la structure du treillis pour diminuer drastiquement le
+%% nombre de RPBS rechercher. À savoir que c'est l'étape la plus
+%% coûteuse.)
 %-------------------------------------------------------------------------------
 \subsection{Faster queries}
 \begin{frame}{What FCA brings to the table}{Faster queries}
+
+
+  \begin{itemize}
+    \item Le treillis de FCA nous offre un ordre partiel sur les
+      configurations de plateau
+    \item Il est possible de ce servir de cette ordre pour effectuer
+      une exploration partiel des configurations lors de l'analyse
+      d'un plateau
+    \item toutefois pour ne pas biaiser cette ordre partiel il est
+      important d'effectuer une recherche complète a posteriori
+    
+  \end{itemize}
+
+
+
 \end{frame}
 
 %-------------------------------------------------------------------------------
-% CHOOSING NEW CONFIGURATIONS
-%-------------------------------------------------------------------------------
-\subsection{Choosing new configurations}
-\begin{frame}{What FCA brings to the table}{Choosing new configurations}
+% CHOOSING NEW CONFIGURATIONS 
+%
+%% Les RPBS introduit dans des concepts
+%% parents d'un concept commun (introduisant au moins un CBS), ont
+%% potentiellement une sous-partie commune qu'il peut-être intéressant
+%% d'extraire comme un nouveau RPBS. (voir common_part.png)
+% -------------------------------------------------------------------------------
+\subsection{Discovering new configurations}
+\begin{frame}{What FCA brings to the table}{Discovering new
+    configurations}
+
+\begin{minipage}[t]{0.40\linewidth}
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{img/fca/common_part}
+  \end{figure}
+\end{minipage}
+\begin{minipage}{0.60\linewidth}
+  \begin{itemize}
+    \item 
+  \end{itemize}
+\end{minipage}
+
 \end{frame}
 
 
@@ -27,4 +87,17 @@
 %-------------------------------------------------------------------------------
 \subsection{Added insight}
 \begin{frame}{What FCA brings to the table}{Added insight}
+
+\begin{minipage}[t]{0.40\linewidth}
+  \begin{figure}[ht]
+    \centering
+    %\includegraphics[width=\textwidth]{}
+  \end{figure}
+\end{minipage}
+\begin{minipage}{0.60\linewidth}
+  \begin{itemize}
+    \item 
+  \end{itemize}
+\end{minipage}
+
 \end{frame}
