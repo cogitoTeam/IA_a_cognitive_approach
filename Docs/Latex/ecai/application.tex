@@ -7,12 +7,13 @@
 \begin{figure}[ht]
 \begin{minipage}[t]{0.5\linewidth}
 \vspace{0pt}
-Strategic game play:
+\begin{block}{Strategic game play}
 \begin{itemize}
-\item a good test of cognition,
+\item A good test of cognition,
 \item easy performance evaluation,
 \item a well documented problem.
 \end{itemize}
+\end{block}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.4\linewidth}
@@ -30,13 +31,24 @@ Strategic game play:
 \subsection{Chosen game: ``Reversi"}
 \begin{frame}{Application: game modeling}{Chosen game: ``Reversi"}
 
-The game takes place on a 8 by 8 grid: players take turns placing pieces of 
-their colour in such a way that at least one line of their opponents pieces are
-surrounded. Surrounded pieces change colour, the goal being to have the most 
-pieces of one's own colour on the board when the game end.
-
-NB - we can see that pieces on the corners and edges will form configurations of 
-interest...
+\begin{figure}[ht]
+\begin{minipage}[t]{0.5\linewidth}
+\vspace{0pt}
+\begin{block}{Basic idea}
+\begin{itemize} 
+\item Place coloured pieces,
+\item convert the opponents',
+\item have more pieces at the end.
+\end{itemize}
+\end{block}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.4\linewidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=\textwidth]{img/application/reversi.png}
+\end{minipage}
+\end{figure}
 
 \end{frame}
 
@@ -45,8 +57,8 @@ interest...
 %-------------------------------------------------------------------------------
 \subsection{Von Neumann's theorem}
 \begin{frame}{Application: game modeling}{Von Neumann's theorem}
-
-Minimax algorithm is theoretically optimal if applied in an exact manner.
+\centering
+\includegraphics[height=0.6\paperheight]{img/application/cakes.pdf}
 
 \end{frame}
 
