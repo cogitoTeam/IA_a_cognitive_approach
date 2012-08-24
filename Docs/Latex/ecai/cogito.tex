@@ -29,9 +29,9 @@ Objects are board-states, attributes are local configurations.
 %-------------------------------------------------------------------------------
 % BOARD ENCODING
 %-------------------------------------------------------------------------------
-\subsection{Board encoding}
+\subsection{Encoding configurations}
 
-\begin{frame}{``Cogito" system overview}{Board encoding}
+\begin{frame}{``Cogito" system overview}{Encoding configurations}
 
 \begin{block}{First-order logic}
   \begin{itemize}
@@ -40,7 +40,7 @@ Objects are board-states, attributes are local configurations.
   \end{itemize}
 \end{block}
 \pause
-%\begin{exampleblock}
+
 \begin{figure}[ht]
   \begin{minipage}[t]{0.4\linewidth}
     \vspace{0pt}
@@ -58,7 +58,6 @@ Objects are board-states, attributes are local configurations.
     \end{itemize}
   \end{minipage}
 \end{figure}
-%\end{exampleblock}
 
 \end{frame}
 
@@ -89,9 +88,26 @@ Objects are board-states, attributes are local configurations.
 \subsection{Generating configurations}
 \begin{frame}{``Cogito" system overview}{Generating configurations}
 
-TODO!
-New relevant configurations are deduced by attempting to locally extend an 
-existing configuration shared by two or more winning or losing board states.
+\begin{itemize}
+\item Start with a configuration shared by two winning/losing board-states,
+\item<2> attempt to extend the configuration locally.
+\end{itemize}
+
+\begin{figure}[ht]
+  \begin{minipage}[t]{0.4\linewidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics<1-1>[width=\textwidth]{img/cogito/build_a1}	
+    \includegraphics<2-2>[width=\textwidth]{img/cogito/build_a2}	
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.4\linewidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics<1-1>[width=\textwidth]{img/cogito/build_b1}
+    \includegraphics<2-2>[width=\textwidth]{img/cogito/build_b2}		
+  \end{minipage}
+\end{figure}
 
 \end{frame}
 
@@ -106,7 +122,7 @@ existing configuration shared by two or more winning or losing board states.
 \item \textbf{Receive} a set of legal moves,
 \item \textbf{evaluate} each resulting state,
 \item \textbf{pick} the move resulting in the ``best" state.
-\end{enumerate}
+\end{enumerate}  
 \end{block}
 
 \begin{block}{Possible extensions}

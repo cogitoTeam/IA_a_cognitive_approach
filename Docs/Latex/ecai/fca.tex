@@ -1,14 +1,4 @@
 %-------------------------------------------------------------------------------
-% ADDED INSIGHT
-%-------------------------------------------------------------------------------
-\subsection{Added insight}
-\begin{frame}{What FCA brings to the table}{Added insight}
-
-\Large{What concepts contribute to a winning board? A losing board?}
-
-\end{frame}
-
-%-------------------------------------------------------------------------------
 % ELIMINATIONS OF REDUNDANCY
 %-------------------------------------------------------------------------------
 \subsection{Reducing redundancy}
@@ -64,13 +54,23 @@
 \subsection{Faster queries}
 \begin{frame}{What FCA brings to the table}{Faster queries}
 
-\begin{block}{Structured data}
-  \begin{itemize}
-    \item Lattice provides a partial-order of configurations,
-    \item fewer homomorphismes are required,
-    \item intermittent extensive searches should prevent bias.
-  \end{itemize}
-\end{block}
+\begin{figure}[ht]
+  \begin{minipage}[t]{0.52\linewidth}
+    \vspace{0pt}
+      \begin{itemize}
+      \item Lattice provides partial-order,
+      \item prune unnecessary checks,
+      \item<2> avoid bias with intermittent extensive searches.
+      \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\linewidth}
+    \vspace{0pt}
+    \centering
+    \includegraphics<1-1>[width=\textwidth]{img/fca/hierarchy1}	
+    \includegraphics<2-2>[width=\textwidth]{img/fca/hierarchy2}		
+  \end{minipage}
+\end{figure}
 
 \end{frame}
 
@@ -85,10 +85,13 @@
 \subsection{Generating configurations}
 \begin{frame}{What FCA brings to the table}{Generating configurations}
 \vspace{0.05\paperheight}
-Use the hierarchy to choose new relevant partial board-states.
+\begin{itemize}
+\item The lattice shows attributes instantiated together,
+\item they may well have something in common!
+\end{itemize}
 \vspace{0.02\paperheight}
 \begin{figure}[ht]
-  \includegraphics[height=0.60\paperheight]{img/fca/fca_new_configuration}
+  \includegraphics[height=0.55\paperheight]{img/fca/fca_new_configuration}
 \end{figure}
 
 \end{frame}
