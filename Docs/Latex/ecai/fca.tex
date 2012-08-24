@@ -1,4 +1,14 @@
 %-------------------------------------------------------------------------------
+% ADDED INSIGHT
+%-------------------------------------------------------------------------------
+\subsection{Added insight}
+\begin{frame}{What FCA brings to the table}{Added insight}
+
+\Large{What concepts contribute to a winning board? A losing board?}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
 % ELIMINATIONS OF REDUNDANCY
 %-------------------------------------------------------------------------------
 \subsection{Reducing redundancy}
@@ -54,19 +64,13 @@
 \subsection{Faster queries}
 \begin{frame}{What FCA brings to the table}{Faster queries}
 
-TODO
+\begin{block}{Structured data}
   \begin{itemize}
-    \item Le treillis de FCA nous offre un ordre partiel sur les
-      configurations de plateau
-    \item Il est possible de ce servir de cette ordre pour effectuer
-      une exploration partiel des configurations lors de l'analyse
-      d'un plateau
-    \item toutefois pour ne pas biaiser cette ordre partiel il est
-      important d'effectuer une recherche complète a posteriori
-    
+    \item Lattice provides a partial-order of configurations,
+    \item fewer homomorphismes are required,
+    \item intermittent extensive searches should prevent bias.
   \end{itemize}
-
-
+\end{block}
 
 \end{frame}
 
@@ -80,40 +84,11 @@ TODO
 % -------------------------------------------------------------------------------
 \subsection{Generating configurations}
 \begin{frame}{What FCA brings to the table}{Generating configurations}
-TODO
-\begin{minipage}[t]{0.40\linewidth}
-  \begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{img/fca/common_part}
-  \end{figure}
-\end{minipage}
-\begin{minipage}{0.50\linewidth}
-  \begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{img/fca/fca_new_configuration}
-  \end{figure}  
-
-\end{minipage}
-
-\end{frame}
-
-
-% ADDED INSIGHT
-%-------------------------------------------------------------------------------
-\subsection{Added insight}
-\begin{frame}{What FCA brings to the table}{Added insight}
-
-TODO
-\begin{minipage}[t]{0.40\linewidth}
-  \begin{figure}[ht]
-    \centering
-    %\includegraphics[width=\textwidth]{}
-  \end{figure}
-\end{minipage}
-\begin{minipage}{0.59\linewidth}
-  \begin{itemize}
-    \item 
-  \end{itemize}
-\end{minipage}
+\vspace{0.05\paperheight}
+Use the hierarchy to choose new relevant partial board-states.
+\vspace{0.02\paperheight}
+\begin{figure}[ht]
+  \includegraphics[height=0.60\paperheight]{img/fca/fca_new_configuration}
+\end{figure}
 
 \end{frame}
