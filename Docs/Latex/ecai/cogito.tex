@@ -3,11 +3,13 @@
 %-------------------------------------------------------------------------------
 \subsection{Memory structure}
 \begin{frame}{``Cogito" system overview}{Memory structure}
-
 \begin{block}{Nota bene}
-Objects are board-states, attributes are local configurations.
+Objects are board-states, attributes are local configurations:
+\begin{itemize}
+\item \textbf{``Semantic memory"}: objects linked to their attributes.
+\item \textbf{``Episodic memory"}: list of ``episodes" (lists of objects).
+\end{itemize}
 \end{block}
-
 \begin{figure}[ht]
   \begin{minipage}[t]{0.45\linewidth}
     \vspace{0pt}
@@ -74,8 +76,8 @@ Objects are board-states, attributes are local configurations.
 \begin{block}{When the game ends\ldots}
 \begin{enumerate}
 \item Fixed utilities for win/loss/stalemate configurations,
-\item value is propagated back to previous states,
-\item configuration values are adjusted.
+\item value is propagated back through episode,
+\item configuration utility values are adjusted.
 \end{enumerate}
 \end{block}
 
