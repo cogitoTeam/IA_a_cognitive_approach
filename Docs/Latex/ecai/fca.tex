@@ -2,6 +2,13 @@
 % EVALUATING CONCEPTS RATHER THAN ATTRIBUTES
 %-------------------------------------------------------------------------------
 \subsection{Abstraction}
+
+\begin{frame}{What FCA brings to the table}{Abstraction}
+\vspace{0pt}
+\centering
+\includegraphics[width=0.9\linewidth]{img/fca/lattice_abstraction}
+\end{frame}
+
 \begin{frame}{What FCA brings to the table}{Abstraction}
 \begin{figure}[ht]
 \begin{minipage}[t]{0.55\linewidth}
@@ -27,24 +34,23 @@ Evaluate concepts, not just objects and attributes.
 
 \end{frame}
 
-\begin{frame}{What FCA brings to the table}{Abstraction}
-\vspace{0pt}
-\centering
-\includegraphics[width=0.9\linewidth]{img/fca/lattice_abstraction}
-\end{frame}
-
 
 %-------------------------------------------------------------------------------
 % ELIMINATION OF REDUNDANCY
 %-------------------------------------------------------------------------------
 \subsection{Reducing redundancy}
-\begin{frame}{What FCA brings to the table}{Reducing redundancy}
 
+\begin{frame}{What FCA brings to the table}{Reducing redundancy}
+\vspace{0pt}
+\centering
+\includegraphics[width=\linewidth]{img/fca/lattice_redundancy}
+\end{frame}
+
+\begin{frame}{What FCA brings to the table}{Reducing redundancy}
 \begin{itemize}
 \item Attributes always found together can be merged,
-\item<2-> beware of introducing errors!
+\item beware of introducing errors!
 \end{itemize}
-
 \begin{figure}[ht]
   \begin{minipage}[t]{0.3\linewidth}
     \vspace{0pt}
@@ -60,7 +66,6 @@ Evaluate concepts, not just objects and attributes.
     \\ \color{green}{\footnotesize $hasBill(y) \wedge isDuck(y)$}
   \end{minipage}
   \hfill
-  \pause
   \begin{minipage}[t]{0.3\linewidth}
     \vspace{0pt}
     \centering
@@ -70,13 +75,6 @@ Evaluate concepts, not just objects and attributes.
 \end{figure}
 
 \end{frame}
-
-\begin{frame}{What FCA brings to the table}{Reducing redundancy}
-\vspace{0pt}
-\centering
-\includegraphics[width=\linewidth]{img/fca/lattice_redundancy}
-\end{frame}
-
 
 %-------------------------------------------------------------------------------
 % FASTER QUERIES
@@ -95,30 +93,33 @@ Evaluate concepts, not just objects and attributes.
 %% coûteuse.)
 %-------------------------------------------------------------------------------
 \subsection{Faster queries}
-\begin{frame}{What FCA brings to the table}{Faster queries}
 
+\begin{frame}{What FCA brings to the table}{Faster queries}
+    \begin{itemize}
+      \item Lattice provides partial-order,
+      \item prune unnecessary checks,
+    \end{itemize}
+    \center{ \includegraphics[width=\linewidth]{img/fca/lattice_hierarchy} }
+\end{frame}
+
+\begin{frame}{What FCA brings to the table}{Faster queries}
 \begin{figure}[ht]
   \begin{minipage}[t]{0.52\linewidth}
     \vspace{0pt}
       \begin{itemize}
       \item Lattice provides partial-order,
       \item prune unnecessary checks,
-      \item<2> avoid bias with intermittent extensive searches.
+      \item avoid bias with intermittent extensive searches.
       \end{itemize}
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.45\linewidth}
     \vspace{0pt}
     \centering
-    \includegraphics<1-1>[width=\textwidth]{img/fca/hierarchy1}	
-    \includegraphics<2-2>[width=\textwidth]{img/fca/hierarchy2}		
+    \includegraphics[width=\textwidth]{img/fca/hierarchy2}		
   \end{minipage}
 \end{figure}
 
-\end{frame}
-
-\begin{frame}{What FCA brings to the table}{Faster queries}
-    \center{ \includegraphics[width=0.9\linewidth]{img/fca/lattice_hierarchy} }
 \end{frame}
 
 
@@ -131,27 +132,26 @@ Evaluate concepts, not just objects and attributes.
 %% d'extraire comme un nouveau RPBS. (voir common_part.png)
 % -------------------------------------------------------------------------------
 \subsection{Generating configurations}
-\begin{frame}{What FCA brings to the table}{Generating configurations}
 
+\begin{frame}{What FCA brings to the table}{Generating configurations}
+  \centering
+  \includegraphics[width=\textwidth]{img/fca/lattice_generating}
+\end{frame}
+
+\begin{frame}{What FCA brings to the table}{Generating configurations}
 \begin{figure}[ht]
   \begin{minipage}[t]{0.45\linewidth}
     \vspace{0pt}
     \centering
-    \includegraphics<1-1>[width=\textwidth]{img/fca/ressemble1}	
-    \includegraphics<2-2>[width=\textwidth]{img/fca/ressemble2}		
+    \includegraphics[width=\textwidth]{img/fca/ressemble2}		
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.52\linewidth}
     \vspace{0pt}
   \begin{itemize}
     \item The lattice shows attributes instantiated together,
-    \item<2> they may well have something in common!
+    \item they may well have something in common!
   \end{itemize}
   \end{minipage}
 \end{figure}
-\end{frame}
-
-\begin{frame}{What FCA brings to the table}{Generating configurations}
-  \centering
-  \includegraphics[width=\textwidth]{img/fca/lattice_generating}
 \end{frame}
